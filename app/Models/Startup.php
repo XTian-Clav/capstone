@@ -13,4 +13,10 @@ class Startup extends Model
         'submission_date',
         'status',
     ];
+
+    public const STATUS = [
+        'Pending' => 'Pending',
+        'Approved' => 'Approved',
+        'Rejected' => 'Rejected',
+    ];
 }

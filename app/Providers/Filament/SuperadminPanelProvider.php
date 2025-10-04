@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use Filament\Enums\ThemeMode;
+
 class SuperadminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -26,11 +28,28 @@ class SuperadminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('superadmin')
-            ->path('superadmin')
+            ->path('portal')
             ->login()
+            ->brandName('PITBI Portal')
+
+            ->profile()
+            ->profile(isSimple: false)
+            ->authGuard('web')
+
+            ->font('Poppins')
+            ->defaultThemeMode(ThemeMode::Light)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
+                'secondary' => Color::Gray,
+                'success' => Color::Green,
+                'danger' => Color::Red,
+                'warning' => Color::Yellow,
+                'info' => Color::Indigo,
             ])
+
+            ->resourceCreatePageRedirect('index')
+            ->resourceEditPageRedirect('index')
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
