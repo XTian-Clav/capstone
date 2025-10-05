@@ -40,7 +40,7 @@ class StartupsTable
                     ->toggleable(),
 
                 TextColumn::make('submission_date')
-                    ->date()
+                    ->dateTime('F j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
                     

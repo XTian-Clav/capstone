@@ -32,14 +32,14 @@ class EventForm
                         ->default(now())
                         ->required()
                         ->displayFormat('F j, Y h:i A')
-                        ->minutesStep(15)
+                        ->step(900)
                         ->Seconds(false)
                         ->native(false),
 
                     DateTimePicker::make('end_date')
                         ->required()
                         ->displayFormat('F j, Y h:i A')
-                        ->minutesStep(15)
+                        ->step(900)
                         ->Seconds(false)
                         ->native(false),
                     

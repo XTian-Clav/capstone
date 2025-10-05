@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('startup_name');
             $table->string('founder');
-            $table->date('submission_date');
+            $table->dateTime('submission_date');
             $table->string('status');
             $table->timestamps();
         });

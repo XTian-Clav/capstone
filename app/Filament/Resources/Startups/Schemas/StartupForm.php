@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Startups\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -31,6 +30,8 @@ class StartupForm
                 DateTimePicker::make('submission_date')
                     ->default(now())
                     ->required()
+                    ->displayFormat('F j, Y h:i A')
+                    ->step(900)
                     ->seconds(false)
                     ->native(false),
 
