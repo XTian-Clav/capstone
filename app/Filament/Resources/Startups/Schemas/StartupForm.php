@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Startups\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
-
 use Filament\Schemas\Schema;
+
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\DateTimePicker;
@@ -31,7 +31,7 @@ class StartupForm
                 DateTimePicker::make('submission_date')
                     ->default(now())
                     ->required()
-                    ->withoutSeconds()
+                    ->seconds(false)
                     ->native(false),
 
                 Select::make('status')

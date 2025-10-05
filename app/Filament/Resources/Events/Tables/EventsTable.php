@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Startups\Tables;
+namespace App\Filament\Resources\Events\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -14,52 +14,49 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 
-class StartupsTable
+class EventsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->recordUrl(null)
-            ->defaultSort('startup_name', 'asc')
             ->columns([
-                ImageColumn::make('logo')
-                    ->label('Logo')
+                ImageColumn::make('poster')
+                    ->label('Poster')
                     ->disk('public')
                     ->size(50)
-                    ->rounded()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('startup_name')
+                TextColumn::make('event')
                     ->searchable()
-                    ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('founder')
+                TextColumn::make('description')
                     ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('location')
+                    ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('start_date')
+                ->dateTime('F j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('submission_date')
-                    ->date()
+                TextColumn::make('end_date')
+                    ->dateTime('F j, Y h:i A')
                     ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('status')
+                    ->searchable()
                     ->toggleable(),
                     
-
-                BadgeColumn::make('status')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'success' => 'Approved',
-                        'danger' => 'Rejected',
-                    ]),
-
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+                
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
