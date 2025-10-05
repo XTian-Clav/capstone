@@ -20,7 +20,7 @@ class StartupResource extends Resource
 {
     protected static ?string $model = Startup::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRocketLaunch;
 
     protected static ?string $recordTitleAttribute = 'startup';
 
@@ -51,7 +51,6 @@ class StartupResource extends Resource
         return [
             'index' => ListStartups::route('/'),
             'create' => CreateStartup::route('/create'),
-            'view' => ViewStartup::route('/{record}'),
             'edit' => EditStartup::route('/{record}/edit'),
         ];
     }

@@ -28,7 +28,7 @@ class SuperadminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('superadmin')
-            ->path('portal')
+            ->path('superadmin')
             ->login()
             ->brandName('PITBI Portal')
 

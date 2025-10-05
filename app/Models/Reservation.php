@@ -15,4 +15,23 @@ class Reservation extends Model
         'submission_date',
         'status',
     ];
+
+    public const STATUS = [
+        'Pending' => 'Pending',
+        'Approved' => 'Approved',
+        'Rejected' => 'Rejected',
+    ];
+
+    public const RESERVATION_TYPE = [
+        'Pending' => 'Pending',
+        'Approved' => 'Approved',
+        'Rejected' => 'Rejected',
+    ];
+
+    public const PURPOSE = [
+        'Meeting' => 'Meeting',
+        'Workshop' => 'Workshop',
+        'Classes' => 'Classes',
+        'Co-working Space' => 'Co-working Space',
+    ];
 }

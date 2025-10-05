@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Startups\Tables;
+namespace App\Filament\Resources\Reservations\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -14,29 +14,36 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 
-class StartupsTable
+class ReservationsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->recordUrl(null)
-            ->defaultSort('startup_name', 'asc')
+            ->defaultSort('submission_date', 'asc')
             ->columns([
-                ImageColumn::make('logo')
-                    ->label('Logo')
-                    ->disk('public')
-                    ->size(50)
-                    ->rounded()
-                    ->toggleable(),
-
-                TextColumn::make('startup_name')
+                TextColumn::make('reservation')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('founder')
+                TextColumn::make('reservation_type')
                     ->searchable()
                     ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('quantity')
+                    ->numeric()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('borrower')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('purpose')
+                    ->searchable()
                     ->toggleable(),
 
                 TextColumn::make('submission_date')
@@ -58,7 +65,7 @@ class StartupsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
