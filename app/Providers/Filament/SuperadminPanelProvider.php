@@ -29,8 +29,13 @@ class SuperadminPanelProvider extends PanelProvider
             ->default()
             ->id('superadmin')
             ->path('superadmin')
-            ->login()
             ->brandName('PITBI Portal')
+            
+            ->login()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->emailChangeVerification()
 
             ->profile()
             ->profile(isSimple: false)
@@ -38,6 +43,11 @@ class SuperadminPanelProvider extends PanelProvider
 
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::Light)
+            ->brandLogoHeight('2rem')
+            ->brandLogo(asset('assets/logo/light-theme-alt.png'))
+            ->darkModeBrandLogo(asset('assets/logo/dark-theme.png'))
+            ->favicon(asset('assets/favicon/favicon.ico'))
+
             ->colors([
                 'primary' => Color::Blue,
                 'secondary' => Color::Gray,
@@ -58,7 +68,6 @@ class SuperadminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

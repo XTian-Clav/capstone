@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Startup extends Model
 {
@@ -38,4 +39,6 @@ class Startup extends Model
             }
         });
     }
+
+    use SoftDeletes;
 }

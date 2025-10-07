@@ -11,6 +11,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 
 class EventForm
 {
@@ -24,20 +25,25 @@ class EventForm
                     ->required()
                     ->unique(),
 
-                    Textarea::make('description')
+                    MarkdownEditor::make('description')
                         ->required()
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->toolbarButtons([
+                            ['bold', 'italic', 'strike', 'link'],
+                            ['heading','bulletList', 'orderedList'],
+                            ['undo', 'redo'],
+                        ]),
 
                     DateTimePicker::make('start_date')
                         ->default(now())
+                        ->unique()
                         ->required()
-                        ->minutesStep(15)
                         ->Seconds(false)
                         ->native(false),
 
                     DateTimePicker::make('end_date')
                         ->required()
-                        ->minutesStep(15)
+                        ->unique()
                         ->Seconds(false)
                         ->native(false),
                     
@@ -46,7 +52,7 @@ class EventForm
 
                     Select::make('status')
                         ->options(\App\Models\Event::STATUS)
-                        ->default('Pending')
+                        ->default('Upcoming')
                         ->required()
                         ->native(false),
                 ])->columnSpan(2)->columns(2),

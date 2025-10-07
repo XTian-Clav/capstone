@@ -18,9 +18,10 @@ class Event extends Model
     ];
 
     public const STATUS = [
-        'Pending' => 'Pending',
-        'Approved' => 'Approved',
-        'Rejected' => 'Rejected',
+        'Upcoming' => 'Upcoming',
+        'Ongoing' => 'Ongoing',
+        'Completed' => 'Completed',
+        'Cancelled' => 'Cancelled',
     ];
 
     protected $casts = [

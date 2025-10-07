@@ -16,6 +16,10 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+
 class StartupResource extends Resource
 {
     protected static ?string $model = Startup::class;
@@ -51,7 +55,17 @@ class StartupResource extends Resource
         return [
             'index' => ListStartups::route('/'),
             'create' => CreateStartup::route('/create'),
+            'view' => ViewStartup::route('/{record}'),
             'edit' => EditStartup::route('/{record}/edit'),
         ];
     }
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+
 }

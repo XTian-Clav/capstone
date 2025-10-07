@@ -13,6 +13,14 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\Action;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StartupsTable
 {
@@ -20,18 +28,19 @@ class StartupsTable
     {
         return $table
             ->recordUrl(null)
+            ->defaultGroup('status')
             ->defaultSort('startup_name', 'asc')
             ->columns([
                 ImageColumn::make('logo')
                     ->label('Logo')
                     ->disk('public')
                     ->size(50)
-                    ->rounded()
                     ->toggleable(),
 
                 TextColumn::make('startup_name')
                     ->searchable()
                     ->sortable()
+                    ->wrap()
                     ->toggleable(),
 
                 TextColumn::make('founder')
@@ -40,14 +49,13 @@ class StartupsTable
                     ->toggleable(),
 
                 TextColumn::make('submission_date')
-                    ->dateTime('F j, Y h:i A')
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
                     
 
                 BadgeColumn::make('status')
                     ->searchable()
-                    ->sortable()
                     ->toggleable()
                     ->colors([
                         'warning' => 'Pending',
@@ -71,17 +79,21 @@ class StartupsTable
                     'pending' => 'Pending',
                     'approved' => 'Approved',
                     'rejected' => 'Rejected',
-                ])
-                ->label('Status'),
+                ]),
+                TrashedFilter::make('Archive'),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                RestoreAction::make(),
                 DeleteAction::make(),
+                ForceDeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    RestoreBulkAction::make(),
                     DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
                 ]),
             ]);
     }

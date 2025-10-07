@@ -13,44 +13,54 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Filters\TrashedFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultGroup('status')
+            ->defaultSort('event', 'asc')
             ->columns([
-                ImageColumn::make('poster')
-                    ->label('Poster')
-                    ->disk('public')
-                    ->size(50)
-                    ->toggleable(isToggledHiddenByDefault: true),
-
                 TextColumn::make('event')
                     ->searchable()
-                    ->toggleable(),
-
-                TextColumn::make('description')
-                    ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->sortable()
+                    ->limit(40)
+                    ->tooltip(fn ($record) => $record->event),
 
                 TextColumn::make('location')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->sortable(),
 
                 TextColumn::make('start_date')
-                ->dateTime('F j, Y h:i A')
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('end_date')
-                    ->dateTime('F j, Y h:i A')
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('status')
+                BadgeColumn::make('status')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->colors([
+                        'warning' => 'Upcoming',
+                        'info' => 'Ongoing',
+                        'success' => 'Completed',
+                        'danger' => 'Cancelled',
+                    ]),
                     
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -65,9 +75,10 @@ class EventsTable
             ->filters([
                 SelectFilter::make('status')
                 ->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
+                    'Upcoming' => 'Upcoming',
+                    'Ongoing' => 'Ongoing',
+                    'Completed' => 'Completed',
+                    'Cancelled' => 'Cancelled',
                 ])
                 ->label('Status'),
             ])
@@ -75,9 +86,13 @@ class EventsTable
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
+                RestoreAction::make(),
+                ForceDeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                     DeleteBulkAction::make(),
                 ]),
             ]);

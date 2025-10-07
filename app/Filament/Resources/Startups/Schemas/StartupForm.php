@@ -30,7 +30,6 @@ class StartupForm
                 DateTimePicker::make('submission_date')
                     ->default(now())
                     ->required()
-                    ->minutesStep(15)
                     ->seconds(false)
                     ->native(false),
 
