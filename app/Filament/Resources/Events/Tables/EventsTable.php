@@ -73,14 +73,13 @@ class EventsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('status')
+                SelectFilter::make('status')->native(false)
                 ->options([
                     'Upcoming' => 'Upcoming',
                     'Ongoing' => 'Ongoing',
                     'Completed' => 'Completed',
                     'Cancelled' => 'Cancelled',
-                ])
-                ->label('Status'),
+                ]),
             ])
             ->recordActions([
                 ViewAction::make(),

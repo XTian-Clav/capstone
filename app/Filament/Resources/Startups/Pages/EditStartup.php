@@ -6,6 +6,7 @@ use App\Filament\Resources\Startups\StartupResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Actions;
 
 class EditStartup extends EditRecord
 {
@@ -16,6 +17,8 @@ class EditStartup extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make(),
+            Actions\RestoreAction::make()->color('success'),
+            Actions\ForceDeleteAction::make(),
         ];
     }
 }
