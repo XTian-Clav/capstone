@@ -19,20 +19,21 @@ class EventInfolist
                     ImageEntry::make('poster')
                         ->disk('public')
                         ->visibility('public')
-                        ->alignCenter()
                         ->imageHeight(200)
                         ->columnSpanFull(),
 
                     TextEntry::make('description')
                         ->markdown()
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->extraAttributes([
+                            'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                        ]),
                 ])->columnSpan(2)->columns(2),
 
                 Section::make('Details')
                 ->schema([
                     TextEntry::make('location')
-                        ->weight('bold')
-                        ->size('lg'),
+                        ->weight('bold'),
 
                     TextEntry::make('status')
                         ->badge()
@@ -45,23 +46,14 @@ class EventInfolist
 
                     TextEntry::make('start_date')
                         ->badge()
-                        ->dateTime('F j, Y h:i A')
+                        ->dateTime('M j, Y h:i A')
                         ->color('success'),
 
                     TextEntry::make('end_date')
                         ->badge()
-                        ->dateTime('F j, Y h:i A')
+                        ->dateTime('M j, Y h:i A')
                         ->color('danger'),
-
-                    TextEntry::make('created_at')
-                        ->dateTime('F j, Y h:i A')
-                        ->placeholder('-'),
-
-                    TextEntry::make('updated_at')
-                        ->dateTime('F j, Y h:i A')
-                        ->placeholder('-'),
-
-                    ])->columnSpan(1)->columns(1),
+                    ])->columnSpan(1)->columns(2),
             ])->columns(3);
     }
 }

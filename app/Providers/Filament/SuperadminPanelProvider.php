@@ -36,10 +36,10 @@ class SuperadminPanelProvider extends PanelProvider
             ->passwordReset()
             ->emailVerification()
             ->emailChangeVerification()
+            ->authGuard('web')
 
             ->profile()
             ->profile(isSimple: false)
-            ->authGuard('web')
 
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::Light)

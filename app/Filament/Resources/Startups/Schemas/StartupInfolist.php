@@ -14,23 +14,34 @@ class StartupInfolist
     {
         return $schema
             ->components([
-                Section::make((fn ($record) => $record->startup_name))
+                Section::make('Startup Details')
                 ->schema([
                     ImageEntry::make('logo')
                         ->label('Startup Logo')
                         ->disk('public')
                         ->visibility('public')
-                        ->imageHeight(200)
-                        ->columnSpanFull(),
-
+                        ->imageHeight(200),
+                    TextEntry::make('description')
+                        ->markdown()
+                        ->extraAttributes([
+                            'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                        ])
+                        ->columnSpan(3),
+                ])->columns(4)->columnSpan(3),
+                
+                Section::make()
+                ->schema([
                     TextEntry::make('startup_name')
-                        ->weight('bold')
-                        ->size('lg'),
-
+                        ->weight('bold'),
+                    
                     TextEntry::make('founder')
+                        ->weight('bold'),
+
+                    TextEntry::make('mentors.fullname')
+                        ->label('Mentors')
                         ->weight('bold')
-                        ->size('lg'),
-                        
+                        ->listWithLineBreaks(),
+                    
                     TextEntry::make('submission_date')
                         ->dateTime('F j, Y h:i A')
                         ->badge()
@@ -43,15 +54,7 @@ class StartupInfolist
                             'success' => 'Approved',
                             'danger' => 'Rejected',
                         ]),
-
-                    TextEntry::make('created_at')
-                        ->dateTime('F j, Y h:i A')
-                        ->placeholder('-'),
-                        
-                    TextEntry::make('updated_at')
-                        ->dateTime('F j, Y h:i A')
-                        ->placeholder('-'),
-                    ])->columnSpan(2)->columns(2),
-            ]);
+                    ])->columnSpan(3)->columns(3),
+            ])->columns(3);
     }
 }

@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Startup extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'logo',
         'startup_name',
         'founder',
+        'description',
         'submission_date',
         'status',
     ];
@@ -40,5 +43,8 @@ class Startup extends Model
         });
     }
 
-    use SoftDeletes;
+    public function mentors()
+    {
+        return $this->belongsToMany(Mentor::class, 'mentor_startup');
+    }
 }

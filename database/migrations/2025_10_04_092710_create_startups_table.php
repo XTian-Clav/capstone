@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('startup_name');
             $table->string('founder');
+            $table->text('description');
             $table->dateTime('submission_date');
             $table->string('status');
             $table->softDeletes();

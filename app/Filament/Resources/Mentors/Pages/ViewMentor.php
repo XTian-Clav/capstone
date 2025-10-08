@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Startups\Pages;
+namespace App\Filament\Resources\Mentors\Pages;
 
-use App\Filament\Resources\Startups\StartupResource;
+use App\Filament\Resources\Mentors\MentorResource;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewStartup extends ViewRecord
+class ViewMentor extends ViewRecord
 {
-    protected static string $resource = StartupResource::class;
+    protected static string $resource = MentorResource::class;
 
     protected function getHeaderActions(): array
     {

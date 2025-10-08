@@ -27,14 +27,14 @@ class EventsTable
     {
         return $table
             ->recordUrl(null)
-            ->defaultGroup('status')
-            ->defaultSort('event', 'asc')
+            ->defaultSort('status', 'asc')
             ->columns([
                 TextColumn::make('event')
                     ->searchable()
                     ->toggleable()
                     ->sortable()
                     ->limit(40)
+                    ->weight('bold')
                     ->tooltip(fn ($record) => $record->event),
 
                 TextColumn::make('location')

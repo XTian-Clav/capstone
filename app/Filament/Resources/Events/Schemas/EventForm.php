@@ -23,7 +23,9 @@ class EventForm
                 ->schema([
                     TextInput::make('event')->columnSpanFull()
                     ->required()
-                    ->unique(),
+                    ->unique()
+                    ->minLength(2)
+                    ->maxLength(255),
 
                     MarkdownEditor::make('description')
                         ->required()
@@ -48,7 +50,9 @@ class EventForm
                         ->native(false),
                     
                     TextInput::make('location')
-                        ->required(),
+                        ->required()
+                        ->minLength(2)
+                        ->maxLength(255),
 
                     Select::make('status')
                         ->options(\App\Models\Event::STATUS)

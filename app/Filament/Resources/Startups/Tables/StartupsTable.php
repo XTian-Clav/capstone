@@ -28,8 +28,7 @@ class StartupsTable
     {
         return $table
             ->recordUrl(null)
-            ->defaultGroup('status')
-            ->defaultSort('startup_name', 'asc')
+            ->defaultSort('submission_date', 'asc')
             ->columns([
                 ImageColumn::make('logo')
                     ->label('Logo')
@@ -40,7 +39,7 @@ class StartupsTable
                 TextColumn::make('startup_name')
                     ->searchable()
                     ->sortable()
-                    ->wrap()
+                    ->weight('bold')
                     ->toggleable(),
 
                 TextColumn::make('founder')
@@ -52,7 +51,13 @@ class StartupsTable
                     ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(),
-                    
+                
+                BadgeColumn::make('mentors.fullname')
+                    ->label('Mentors')
+                    ->separator(', ')
+                    ->toggleable()
+                    ->default('None')
+                    ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
 
                 BadgeColumn::make('status')
                     ->searchable()

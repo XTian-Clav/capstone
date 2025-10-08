@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\MarkdownEditor;
 
 class StartupForm
 {
@@ -17,15 +18,18 @@ class StartupForm
     {
         return $schema
             ->components([
-                Section::make('Startup Details')
-                ->description('Fill up the form and make sure all details are correct.')
+                Section::make('Startup Form')
                 ->schema([
-                    TextInput::make('startup_name')->columnSpanFull()
+                    TextInput::make('startup_name')
                     ->required()
-                    ->unique(),
+                    ->unique()
+                    ->minLength(2)
+                    ->maxLength(255),
 
-                TextInput::make('founder')->columnSpanFull()
-                    ->required(),
+                TextInput::make('founder')
+                    ->required()
+                    ->minLength(2)
+                    ->maxLength(255),
 
                 DateTimePicker::make('submission_date')
                     ->default(now())
@@ -38,6 +42,15 @@ class StartupForm
                     ->default('Pending')
                     ->required()
                     ->native(false),
+                
+                MarkdownEditor::make('description')
+                    ->required()
+                    ->columnSpanFull()
+                    ->toolbarButtons([
+                        ['bold', 'italic', 'strike', 'link'],
+                        ['heading','bulletList', 'orderedList'],
+                        ['undo', 'redo'],
+                    ]),
                 ])->columnSpan(2)->columns(2),
 
                 Section::make('Logo Upload')
