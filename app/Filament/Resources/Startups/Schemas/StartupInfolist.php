@@ -32,20 +32,23 @@ class StartupInfolist
                 Section::make()
                 ->schema([
                     TextEntry::make('startup_name')
-                        ->weight('bold'),
+                        ->color('primary')
+                        ->weight('semibold'),
                     
                     TextEntry::make('founder')
-                        ->weight('bold'),
+                        ->color('primary')
+                        ->weight('semibold'),
 
                     TextEntry::make('mentors.fullname')
                         ->label('Mentors')
-                        ->weight('bold')
+                        ->color('primary')
+                        ->weight('semibold')
                         ->listWithLineBreaks(),
                     
                     TextEntry::make('submission_date')
                         ->dateTime('F j, Y h:i A')
                         ->badge()
-                        ->color('info'),
+                        ->color('secondary'),
 
                     TextEntry::make('status')
                         ->badge()

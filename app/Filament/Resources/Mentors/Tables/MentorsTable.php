@@ -39,22 +39,22 @@ class MentorsTable
 
                 TextColumn::make('fullname')
                     ->label('Name')
-                    ->weight('bold')
+                    ->weight('semibold')
                     ->getStateUsing(fn ($record) => "{$record->firstname} {$record->lastname}")
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-
-                TextColumn::make('expertise')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
-
+                
                 TextColumn::make('contact')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('email')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                
+                TextColumn::make('expertise')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -69,7 +69,8 @@ class MentorsTable
                 TextColumn::make('created_at')
                     ->dateTime('M j, Y h:i A')
                     ->label('Added On')
-                    ->toggleable(),
+                    ->toggleable()
+                    ->sortable(),
             ])
             ->filters([
                 TrashedFilter::make('Archive')->native(false),

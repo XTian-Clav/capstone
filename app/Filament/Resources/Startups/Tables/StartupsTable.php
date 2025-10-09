@@ -39,7 +39,7 @@ class StartupsTable
                 TextColumn::make('startup_name')
                     ->searchable()
                     ->sortable()
-                    ->weight('bold')
+                    ->weight('semibold')
                     ->toggleable(),
 
                 TextColumn::make('founder')

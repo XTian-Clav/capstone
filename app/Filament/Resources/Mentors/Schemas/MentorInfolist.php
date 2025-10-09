@@ -8,6 +8,7 @@ use Filament\Schemas\Schema;
 
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Schemas\Components\Section;
+use Illuminate\Support\HtmlString;
 
 class MentorInfolist
 {
@@ -33,15 +34,14 @@ class MentorInfolist
 
                 Section::make()
                 ->schema([
-                    TextEntry::make('firstname')->weight('bold'),
-                    TextEntry::make('lastname')->weight('bold'),
-                    TextEntry::make('contact')->weight('bold'),
-                    TextEntry::make('email')->weight('bold'),
-                    TextEntry::make('expertise')->weight('bold')->color('info'),
+                    TextEntry::make('firstname')->weight('semibold')->color('primary'),
+                    TextEntry::make('lastname')->weight('semibold')->color('primary'),
+                    TextEntry::make('contact')->weight('semibold'),
+                    TextEntry::make('email')->weight('semibold'),
+                    TextEntry::make('expertise')->weight('semibold'),
                     TextEntry::make('created_at')
                         ->dateTime('F j, Y h:i A')
-                        ->weight('bold')
-                        ->color('info')
+                        ->weight('semibold')
                         ->label('Profile Creation'),
                 ])->columnSpan(3)->columns(2),
             ])->columns(3);

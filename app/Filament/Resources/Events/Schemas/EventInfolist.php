@@ -32,28 +32,46 @@ class EventInfolist
 
                 Section::make('Details')
                 ->schema([
-                    TextEntry::make('location')
-                        ->weight('bold'),
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('location')
+                            ->weight('semibold')
+                            ->columnSpanFull(),
+
+                        TextEntry::make('start_date')
+                            ->dateTime('M j, Y h:i A')
+                            ->badge()
+                            ->color('success'),
+                        
+                        TextEntry::make('end_date')
+                            ->dateTime('M j, Y h:i A')
+                            ->badge()
+                            ->color('danger'),
+
+                        ])->columnSpan(3)->columns(2),
 
                     TextEntry::make('status')
                         ->badge()
                         ->colors([
                             'warning' => 'Upcoming',
-                            'success' => 'Completed',
                             'info' => 'Ongoing',
+                            'success' => 'Completed',
                             'danger' => 'Cancelled',
                         ]),
-
-                    TextEntry::make('start_date')
+                    
+                    TextEntry::make('created_at')
                         ->badge()
-                        ->dateTime('M j, Y h:i A')
-                        ->color('success'),
-
-                    TextEntry::make('end_date')
+                        ->color('secondary')
+                        ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
+                        ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
+                    
+                    TextEntry::make('updated_at')
                         ->badge()
-                        ->dateTime('M j, Y h:i A')
-                        ->color('danger'),
-                    ])->columnSpan(1)->columns(2),
+                        ->color('secondary')
+                        ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
+                        ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
+                ])->columnSpan(1)->columns(3),
+
             ])->columns(3);
     }
 }
