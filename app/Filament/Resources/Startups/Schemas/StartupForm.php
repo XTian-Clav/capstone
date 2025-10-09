@@ -30,18 +30,19 @@ class StartupForm
                     ->required()
                     ->minLength(2)
                     ->maxLength(255),
-
-                DateTimePicker::make('submission_date')
-                    ->default(now())
+                
+                TextInput::make('contact')
                     ->required()
-                    ->seconds(false)
-                    ->native(false),
-
-                Select::make('status')
-                    ->options(\App\Models\Startup::STATUS)
-                    ->default('Pending')
+                    ->unique()
+                    ->tel()
+                    ->minLength(11)
+                    ->helperText('Enter a valid phone number (11 digits).'),
+                
+                TextInput::make('email')
+                    ->email()
                     ->required()
-                    ->native(false),
+                    ->maxLength(100)
+                    ->unique(ignoreRecord: true),
                 
                 MarkdownEditor::make('description')
                     ->required()
@@ -51,28 +52,40 @@ class StartupForm
                         ['heading','bulletList', 'orderedList'],
                         ['undo', 'redo'],
                     ]),
-                ])->columnSpan(2)->columns(2),
+                ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Logo Upload')
                 ->schema([
                     FileUpload::make('logo') ->label('Startup Logo')
-                    ->label('Startup Logo')
-                    ->default(null)
-                    ->image()
-                    ->imageEditor()
+                        ->label('Startup Logo')
+                        ->default(null)
+                        ->image()
+                        ->imageEditor()
 
-                    //IMG DIRECTORY
-                    ->disk('public')
-                    ->directory('startups/logos')
-                    ->visibility('public')
+                        //IMG DIRECTORY
+                        ->disk('public')
+                        ->directory('startups/logos')
+                        ->visibility('public')
 
-                     //IMAGE CROP (1:1)
-                    ->imageCropAspectRatio('1:1')
-                    ->imageResizeMode('cover')
+                        //IMAGE CROP (1:1)
+                        ->imageCropAspectRatio('1:1')
+                        ->imageResizeMode('cover')
 
-                    //FILE SIZE LIMIT
-                    ->maxSize(5120),
-                ]),
+                        //FILE SIZE LIMIT
+                        ->maxSize(5120),
+
+                    DateTimePicker::make('submission_date')
+                        ->default(now())
+                        ->required()
+                        ->seconds(false)
+                        ->native(false),
+                    
+                    Select::make('status')
+                        ->options(\App\Models\Startup::STATUS)
+                        ->default('Pending')
+                        ->required()
+                        ->native(false),
+                ])->compact(),
             ])->columns(3);
     }
 }

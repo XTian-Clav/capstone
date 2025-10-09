@@ -15,10 +15,11 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
+use Filament\Actions\Action;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -37,10 +38,8 @@ class MentorsTable
                     ->circular()
                     ->toggleable(),
 
-                TextColumn::make('fullname')
-                    ->label('Name')
+                TextColumn::make('name')
                     ->weight('semibold')
-                    ->getStateUsing(fn ($record) => "{$record->firstname} {$record->lastname}")
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -52,7 +51,8 @@ class MentorsTable
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->icon(Heroicon::Envelope),
                 
                 TextColumn::make('expertise')
                     ->searchable()

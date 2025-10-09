@@ -34,7 +34,7 @@ class EventsTable
                     ->toggleable()
                     ->sortable()
                     ->limit(40)
-                    ->weight('bold')
+                    ->weight('semibold')
                     ->tooltip(fn ($record) => $record->event),
 
                 TextColumn::make('location')

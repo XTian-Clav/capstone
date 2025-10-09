@@ -46,6 +46,11 @@ class StartupsTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                
+                TextColumn::make('email')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('submission_date')
                     ->dateTime('M j, Y h:i A')
@@ -69,12 +74,12 @@ class StartupsTable
                     ]),
 
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                     
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

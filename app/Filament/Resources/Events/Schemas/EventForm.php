@@ -35,19 +35,6 @@ class EventForm
                             ['heading','bulletList', 'orderedList'],
                             ['undo', 'redo'],
                         ]),
-
-                    DateTimePicker::make('start_date')
-                        ->default(now())
-                        ->unique()
-                        ->required()
-                        ->Seconds(false)
-                        ->native(false),
-
-                    DateTimePicker::make('end_date')
-                        ->required()
-                        ->unique()
-                        ->Seconds(false)
-                        ->native(false),
                     
                     TextInput::make('location')
                         ->required()
@@ -59,7 +46,7 @@ class EventForm
                         ->default('Upcoming')
                         ->required()
                         ->native(false),
-                ])->columnSpan(2)->columns(2),
+                ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Upload Event Poster')
                 ->schema([
@@ -76,7 +63,20 @@ class EventForm
 
                     //FILE SIZE LIMIT
                     ->maxSize(8000),
-                ]),
+
+                    DateTimePicker::make('start_date')
+                        ->default(now())
+                        ->unique()
+                        ->required()
+                        ->Seconds(false)
+                        ->native(false),
+
+                    DateTimePicker::make('end_date')
+                        ->required()
+                        ->unique()
+                        ->Seconds(false)
+                        ->native(false),
+                ])->compact(),
             ])->columns(3);
     }
 }

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Hidden;
 
 class MentorForm
 {
@@ -33,17 +34,12 @@ class MentorForm
                 Section::make('Mentor Details')
                 ->description('Fill up the form and make sure all details are correct.')
                 ->schema([
-                    TextInput::make('firstname')
-                        ->required()
+                    TextInput::make('name')
                         ->unique()
-                        ->minLength(2)
-                        ->maxLength(255),
-
-                    TextInput::make('lastname')
                         ->required()
-                        ->unique()
                         ->minLength(2)
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->columnSpanFull(),
 
                     TextInput::make('contact')
                         ->required()
@@ -58,19 +54,6 @@ class MentorForm
                         ->maxLength(100)
                         ->unique(ignoreRecord: true),
 
-                    Select::make('expertise')
-                        ->options(\App\Models\Mentor::EXPERTISE)
-                        ->required()
-                        ->nullable()
-                        ->native(false),
-                    
-                    Select::make('startups')
-                        ->label('Assigned Startups')
-                        ->multiple() // since many-to-many
-                        ->relationship('startups', 'startup_name')
-                        ->preload()
-                        ->searchable(),
-
                     MarkdownEditor::make('personal_info')
                         ->required()
                         ->columnSpanFull()
@@ -79,7 +62,7 @@ class MentorForm
                             ['heading','bulletList', 'orderedList'],
                             ['undo', 'redo',],
                     ]),
-                ])->columnSpan(2)->columns(2),
+                ])->columnSpan(2)->columns(2)->compact(),
                 
                 Section::make('Photo Upload')
                 ->schema([
@@ -99,7 +82,19 @@ class MentorForm
 
                         //FILE SIZE LIMIT
                         ->maxSize(5120),
-                ]),
+
+                    Select::make('expertise')
+                        ->options(\App\Models\Mentor::EXPERTISE)
+                        ->required()
+                        ->native(false),
+                    
+                    Select::make('startups')
+                        ->label('Assigned Startups')
+                        ->multiple() // since many-to-many
+                        ->relationship('startups', 'startup_name')
+                        ->preload()
+                        ->searchable(),
+                ])->compact(),
             ])->columns(3);
     }
 }

@@ -14,6 +14,8 @@ class Startup extends Model
         'logo',
         'startup_name',
         'founder',
+        'contact',
+        'email',
         'description',
         'submission_date',
         'status',

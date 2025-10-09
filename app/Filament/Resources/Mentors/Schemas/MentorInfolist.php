@@ -30,12 +30,11 @@ class MentorInfolist
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
                         ->columnSpan(3),
-                ])->columns(4)->columnSpan(3),
+                ])->columns(4)->columnSpan(3)->compact(),
 
                 Section::make()
                 ->schema([
-                    TextEntry::make('firstname')->weight('semibold')->color('primary'),
-                    TextEntry::make('lastname')->weight('semibold')->color('primary'),
+                    TextEntry::make('name')->weight('semibold')->color('primary'),
                     TextEntry::make('contact')->weight('semibold'),
                     TextEntry::make('email')->weight('semibold'),
                     TextEntry::make('expertise')->weight('semibold'),
@@ -43,7 +42,7 @@ class MentorInfolist
                         ->dateTime('F j, Y h:i A')
                         ->weight('semibold')
                         ->label('Profile Creation'),
-                ])->columnSpan(3)->columns(2),
+                ])->columnSpan(3)->columns(2)->compact(),
             ])->columns(3);
     }
 }

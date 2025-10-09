@@ -28,7 +28,7 @@ class EventInfolist
                         ->extraAttributes([
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ]),
-                ])->columnSpan(2)->columns(2),
+                ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Details')
                 ->schema([
@@ -48,7 +48,7 @@ class EventInfolist
                             ->badge()
                             ->color('danger'),
 
-                        ])->columnSpan(3)->columns(2),
+                        ])->columnSpan(3)->columns(2)->secondary()->compact(),
 
                     TextEntry::make('status')
                         ->badge()
@@ -70,7 +70,7 @@ class EventInfolist
                         ->color('secondary')
                         ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
                         ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
-                ])->columnSpan(1)->columns(3),
+                ])->columnSpan(1)->columns(3)->compact(),
 
             ])->columns(3);
     }

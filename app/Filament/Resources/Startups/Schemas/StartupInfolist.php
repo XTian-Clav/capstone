@@ -27,7 +27,7 @@ class StartupInfolist
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
                         ->columnSpan(3),
-                ])->columns(4)->columnSpan(3),
+                ])->columns(4)->columnSpan(3)->compact(),
                 
                 Section::make()
                 ->schema([
@@ -45,10 +45,8 @@ class StartupInfolist
                         ->weight('semibold')
                         ->listWithLineBreaks(),
                     
-                    TextEntry::make('submission_date')
-                        ->dateTime('F j, Y h:i A')
-                        ->badge()
-                        ->color('secondary'),
+                    TextEntry::make('contact')->weight('semibold'),
+                    TextEntry::make('email')->weight('semibold'),
 
                     TextEntry::make('status')
                         ->badge()
@@ -57,7 +55,7 @@ class StartupInfolist
                             'success' => 'Approved',
                             'danger' => 'Rejected',
                         ]),
-                    ])->columnSpan(3)->columns(3),
+                    ])->columnSpan(3)->columns(3)->compact(),
             ])->columns(3);
     }
 }
