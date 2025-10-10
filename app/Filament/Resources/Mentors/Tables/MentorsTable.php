@@ -62,13 +62,14 @@ class MentorsTable
                 BadgeColumn::make('startups.startup_name')
                     ->label('Assigned To')
                     ->separator(', ')
-                    ->color('info')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->default('None')
+                    ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
                 
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->label('Added On')
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->toggleable()
                     ->sortable(),
             ])

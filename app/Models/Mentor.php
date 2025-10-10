@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mentor extends Model
@@ -19,7 +20,7 @@ class Mentor extends Model
         'startup_id',
     ];
 
-    public const EXPERTISE = [
+    const EXPERTISE = [
         'Technology' => 'Technology',
         'Agriculture' => 'Agriculture',
         'Food Service' => 'Food Service',
@@ -30,8 +31,20 @@ class Mentor extends Model
         return $this->belongsToMany(Startup::class, 'mentor_startup');
     }
 
-    public function getFullNameAttribute()
+    protected static function booted()
     {
-        return "{$this->firstname} {$this->lastname}";
+        // Delete avatar when record is permanently deleted
+        static::forceDeleted(function ($mentors) {
+            if ($mentors->avatar) {
+                Storage::disk('public')->delete($mentors->avatar);
+            }
+        });
+
+        // Delete old avatar when avatar field is replaced
+        static::updating(function ($mentors) {
+            if ($mentors->isDirty('avatar') && $mentors->getOriginal('avatar')) {
+                Storage::disk('public')->delete($mentors->getOriginal('avatar'));
+            }
+        });
     }
 }

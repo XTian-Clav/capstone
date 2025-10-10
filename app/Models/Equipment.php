@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Equipment extends Model
 {
@@ -16,4 +18,21 @@ class Equipment extends Model
         'location',
         'remarks',
     ];
+
+    protected static function booted()
+    {
+        // Delete picture when record is permanently deleted
+        static::forceDeleted(function ($equipment) {
+            if ($equipment->picture) {
+                Storage::disk('public')->delete($equipment->picture);
+            }
+        });
+
+        // Delete old picture when picture field is replaced
+        static::updating(function ($equipment) {
+            if ($equipment->isDirty('picture') && $equipment->getOriginal('picture')) {
+                Storage::disk('public')->delete($equipment->getOriginal('picture'));
+            }
+        });
+    }
 }

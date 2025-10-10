@@ -53,11 +53,12 @@ class StartupsTable
                     ->toggleable(),
 
                 TextColumn::make('submission_date')
-                    ->dateTime('M j, Y h:i A')
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->submission_date->format('F j, Y g:i A'))
                     ->sortable()
                     ->toggleable(),
                 
-                BadgeColumn::make('mentors.fullname')
+                BadgeColumn::make('mentors.name')
                     ->label('Mentors')
                     ->separator(', ')
                     ->toggleable()

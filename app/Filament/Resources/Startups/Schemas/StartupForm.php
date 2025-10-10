@@ -10,7 +10,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 
 class StartupForm
 {
@@ -44,13 +44,20 @@ class StartupForm
                     ->maxLength(100)
                     ->unique(ignoreRecord: true),
                 
-                MarkdownEditor::make('description')
-                    ->required()
+                RichEditor::make('description')
+                    ->label('Description')
+                    ->default(null)
                     ->columnSpanFull()
                     ->toolbarButtons([
-                        ['bold', 'italic', 'strike', 'link'],
-                        ['heading','bulletList', 'orderedList'],
-                        ['undo', 'redo'],
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strike',
+                        'bulletList',
+                        'orderedList',
+                        'link',
+                        'undo',
+                        'redo',
                     ]),
                 ])->columnSpan(2)->columns(2)->compact(),
 

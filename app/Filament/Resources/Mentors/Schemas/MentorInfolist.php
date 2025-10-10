@@ -22,10 +22,11 @@ class MentorInfolist
                         ->label('Profile Picture')
                         ->disk('public')
                         ->visibility('public')
-                        ->imageHeight(200),
+                        ->size(200)
+                        ->square(),
 
                     TextEntry::make('personal_info')
-                        ->markdown()
+                        ->html()
                         ->extraAttributes([
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
@@ -42,7 +43,7 @@ class MentorInfolist
                         ->dateTime('F j, Y h:i A')
                         ->weight('semibold')
                         ->label('Profile Creation'),
-                ])->columnSpan(3)->columns(2)->compact(),
+                ])->columnSpan(3)->columns(3)->compact(),
             ])->columns(3);
     }
 }

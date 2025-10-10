@@ -11,7 +11,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 
 class EventForm
 {
@@ -27,13 +27,20 @@ class EventForm
                     ->minLength(2)
                     ->maxLength(255),
 
-                    MarkdownEditor::make('description')
-                        ->required()
+                    RichEditor::make('description')
+                        ->label('Description')
+                        ->default(null)
                         ->columnSpanFull()
                         ->toolbarButtons([
-                            ['bold', 'italic', 'strike', 'link'],
-                            ['heading','bulletList', 'orderedList'],
-                            ['undo', 'redo'],
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strike',
+                            'bulletList',
+                            'orderedList',
+                            'link',
+                            'undo',
+                            'redo',
                         ]),
                     
                     TextInput::make('location')

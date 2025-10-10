@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('inclusions')->nullable();
             $table->boolean('is_available')->default(true);
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

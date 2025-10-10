@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'poster',
         'event',
@@ -17,7 +20,7 @@ class Event extends Model
         'status',
     ];
 
-    public const STATUS = [
+    const STATUS = [
         'Upcoming' => 'Upcoming',
         'Ongoing' => 'Ongoing',
         'Completed' => 'Completed',

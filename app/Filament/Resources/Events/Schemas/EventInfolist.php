@@ -7,6 +7,7 @@ use Filament\Schemas\Schema;
 
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Schemas\Components\Section;
+use Illuminate\Support\HtmlString;
 
 class EventInfolist
 {
@@ -23,7 +24,7 @@ class EventInfolist
                         ->columnSpanFull(),
 
                     TextEntry::make('description')
-                        ->markdown()
+                        ->html()
                         ->columnSpanFull()
                         ->extraAttributes([
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',

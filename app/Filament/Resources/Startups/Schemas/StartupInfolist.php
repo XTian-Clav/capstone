@@ -7,6 +7,7 @@ use Filament\Schemas\Schema;
 
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Schemas\Components\Section;
+use Illuminate\Support\HtmlString;
 
 class StartupInfolist
 {
@@ -22,7 +23,7 @@ class StartupInfolist
                         ->visibility('public')
                         ->imageHeight(200),
                     TextEntry::make('description')
-                        ->markdown()
+                        ->html()
                         ->extraAttributes([
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
