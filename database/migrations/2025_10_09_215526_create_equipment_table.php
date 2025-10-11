@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('equipment_name');
             $table->integer('quantity')->default(0);
-            $table->integer('reorder_level')->default(5); // alert when stock is low
+            $table->integer('minimum_stock')->default(5); // alert when stock is low
             $table->string('property_no');
             $table->string('location');
             $table->string('remarks');

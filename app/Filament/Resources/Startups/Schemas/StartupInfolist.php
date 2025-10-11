@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\Startups\Schemas;
 
-use Filament\Infolists\Components\TextEntry;
+use App\Models\Startup;
 use Filament\Schemas\Schema;
-
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Section;
 use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 
 class StartupInfolist
 {
@@ -18,7 +19,7 @@ class StartupInfolist
                 Section::make('Startup Details')
                 ->schema([
                     ImageEntry::make('logo')
-                        ->label('Startup Logo')
+                        ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
                         ->imageHeight(200),
@@ -56,6 +57,12 @@ class StartupInfolist
                             'success' => 'Approved',
                             'danger' => 'Rejected',
                         ]),
+                        
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->weight('semibold')
+                        ->color('danger')
+                        ->visible(fn (Startup $record): bool => $record->trashed()),
                     ])->columnSpan(3)->columns(3)->compact(),
             ])->columns(3);
     }

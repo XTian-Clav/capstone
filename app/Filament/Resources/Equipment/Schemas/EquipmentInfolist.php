@@ -3,8 +3,12 @@
 namespace App\Filament\Resources\Equipment\Schemas;
 
 use App\Models\Equipment;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 
 class EquipmentInfolist
 {
@@ -12,25 +16,37 @@ class EquipmentInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('picture')
-                    ->placeholder('-'),
-                TextEntry::make('equipment_name'),
-                TextEntry::make('quantity')
-                    ->numeric(),
-                TextEntry::make('reorder_level')
-                    ->numeric(),
-                TextEntry::make('property_no'),
-                TextEntry::make('location'),
-                TextEntry::make('remarks'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (Equipment $record): bool => $record->trashed()),
-            ]);
+                Section::make((fn ($record) => $record->equipment_name))
+                ->schema([
+                    ImageEntry::make('picture')
+                        ->hiddenLabel()
+                        ->disk('public')
+                        ->visibility('public')
+                        ->width(400)
+                        ->height(160)
+                ])->columnSpan(1)->compact(),
+
+                Section::make('Equipment Details')
+                ->schema([
+                    TextEntry::make('equipment_name')->weight('semibold'),
+
+                    TextEntry::make('quantity')
+                        ->weight('semibold')
+                        ->state(fn ($record) => 
+                            $record->quantity === 0 ? 'Out of Stock':
+                            $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
+                        ),
+
+                    TextEntry::make('property_no')->weight('semibold'),
+                    TextEntry::make('location')->weight('semibold'),
+                    TextEntry::make('remarks')->weight('semibold'),
+                    
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->weight('semibold')
+                        ->color('danger')
+                        ->visible(fn (Equipment $record): bool => $record->trashed()),
+                ])->columns(3)->columnSpan(2)->compact(),
+            ])->columns(3);
     }
 }

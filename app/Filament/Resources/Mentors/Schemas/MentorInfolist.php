@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\Mentors\Schemas;
 
 use App\Models\Mentor;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
-
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Section;
 use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 
 class MentorInfolist
 {
@@ -19,7 +19,7 @@ class MentorInfolist
                 Section::make('Mentor Details')
                 ->schema([
                     ImageEntry::make('avatar')
-                        ->label('Profile Picture')
+                        ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
                         ->size(200)
@@ -43,6 +43,12 @@ class MentorInfolist
                         ->dateTime('F j, Y h:i A')
                         ->weight('semibold')
                         ->label('Profile Creation'),
+                    
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->weight('semibold')
+                        ->color('danger')
+                        ->visible(fn (Mentor $record): bool => $record->trashed()),
                 ])->columnSpan(3)->columns(3)->compact(),
             ])->columns(3);
     }

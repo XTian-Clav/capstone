@@ -32,17 +32,16 @@ class Event extends Model
         // or 'start_date' / 'created_at' etc.
     ];
 
-    // Register model events properly
     protected static function booted()
     {
-        // Delete logo file when record is deleted
-        static::deleting(function ($events) {
+        // Delete poster when record is permanently deleted
+        static::forceDeleted(function ($events) {
             if ($events->poster) {
                 Storage::disk('public')->delete($events->poster);
             }
         });
 
-        // Delete old logo file when logo field is replaced
+        // Delete old poster when poster field is replaced
         static::updating(function ($events) {
             if ($events->isDirty('poster') && $events->getOriginal('poster')) {
                 Storage::disk('public')->delete($events->getOriginal('poster'));

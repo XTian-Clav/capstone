@@ -30,12 +30,6 @@ class StartupsTable
             ->recordUrl(null)
             ->defaultSort('submission_date', 'asc')
             ->columns([
-                ImageColumn::make('logo')
-                    ->label('Logo')
-                    ->disk('public')
-                    ->size(50)
-                    ->toggleable(),
-
                 TextColumn::make('startup_name')
                     ->searchable()
                     ->sortable()
@@ -78,11 +72,16 @@ class StartupsTable
                     ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                    
+
                 TextColumn::make('updated_at')
                     ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('deleted_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
                 SelectFilter::make('status')->native(false)

@@ -3,13 +3,12 @@
 namespace App\Filament\Resources\Rooms\Schemas;
 
 use App\Models\Room;
+use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Schemas\Schema;
-
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Section;
-use Illuminate\Support\HtmlString;
 
 class RoomInfolist
 {
@@ -20,7 +19,7 @@ class RoomInfolist
                 Section::make((fn ($record) => $record->room_name))
                 ->schema([
                     ImageEntry::make('picture')
-                        ->label('Room Photo')
+                        ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
                         ->width(400)
@@ -58,6 +57,7 @@ class RoomInfolist
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')
                         ->weight('semibold')
+                        ->color('danger')
                         ->visible(fn (Room $record): bool => $record->trashed()),
                 ])->columns(3)->columnSpan(2)->compact(),
             ])->columns(3);

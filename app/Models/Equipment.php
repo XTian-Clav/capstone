@@ -14,7 +14,7 @@ class Equipment extends Model
         'picture',
         'equipment_name',
         'quantity',
-        'property_no.',
+        'property_no',
         'location',
         'remarks',
     ];

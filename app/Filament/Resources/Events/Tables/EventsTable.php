@@ -63,14 +63,19 @@ class EventsTable
                     ]),
                     
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('deleted_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
                 SelectFilter::make('status')->native(false)
@@ -80,12 +85,14 @@ class EventsTable
                     'Completed' => 'Completed',
                     'Cancelled' => 'Cancelled',
                 ]),
+
+                TrashedFilter::make('Archive')->native(false),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
-                RestoreAction::make(),
+                RestoreAction::make()->color('success'),
                 ForceDeleteAction::make(),
             ])
             ->toolbarActions([

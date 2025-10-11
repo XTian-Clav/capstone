@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources\Events\Schemas;
 
-use Filament\Infolists\Components\TextEntry;
+use App\Models\event;
 use Filament\Schemas\Schema;
-
-use Filament\Infolists\Components\ImageEntry;
-use Filament\Schemas\Components\Section;
 use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 
 class EventInfolist
 {
@@ -20,6 +21,7 @@ class EventInfolist
                     ImageEntry::make('poster')
                         ->disk('public')
                         ->visibility('public')
+                        ->hiddenLabel()
                         ->imageHeight(200)
                         ->columnSpanFull(),
 
@@ -71,6 +73,12 @@ class EventInfolist
                         ->color('secondary')
                         ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
                         ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
+                    
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->weight('semibold')
+                        ->color('danger')
+                        ->visible(fn (Event $record): bool => $record->trashed()),
                 ])->columnSpan(1)->columns(3)->compact(),
 
             ])->columns(3);

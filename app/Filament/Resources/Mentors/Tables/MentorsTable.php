@@ -46,7 +46,7 @@ class MentorsTable
                 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
 
                 TextColumn::make('email')
                     ->searchable()
@@ -70,8 +70,18 @@ class MentorsTable
                 TextColumn::make('created_at')
                     ->dateTime('m-d-y g:i A')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
+
+                TextColumn::make('updated_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('deleted_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
                 TrashedFilter::make('Archive')->native(false),

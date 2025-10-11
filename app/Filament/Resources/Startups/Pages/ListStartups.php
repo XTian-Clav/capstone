@@ -3,9 +3,8 @@
 namespace App\Filament\Resources\Startups\Pages;
 
 use App\Filament\Resources\Startups\StartupResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
 
 class ListStartups extends ListRecords
 {
@@ -14,7 +13,7 @@ class ListStartups extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

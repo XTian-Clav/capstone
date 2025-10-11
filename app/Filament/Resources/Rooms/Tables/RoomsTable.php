@@ -37,10 +37,10 @@ class RoomsTable
                     ->weight('semibold')
                     ->tooltip(fn ($record) => $record->room_name),
 
-                BadgeColumn::make('room_type')
+                TextColumn::make('room_type')
                     ->searchable()
                     ->toggleable()
-                    ->color('info'),
+                    ->sortable(),
 
                 TextColumn::make('location')
                     ->searchable()
@@ -67,6 +67,21 @@ class RoomsTable
                     ->formatStateUsing(fn ($state) => $state ? 'Room Available' : 'Room Unavailable')
                     ->sortable()
                     ->toggleable(),
+                
+                TextColumn::make('created_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('updated_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('deleted_at')
+                    ->dateTime('M j, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
                 TrashedFilter::make('Archive')->native(false),
