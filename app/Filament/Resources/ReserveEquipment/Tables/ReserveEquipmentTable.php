@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Startups\Tables;
+namespace App\Filament\Resources\ReserveEquipment\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
@@ -22,60 +22,32 @@ use Filament\Tables\Filters\TrashedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class StartupsTable
+class ReserveEquipmentTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->recordUrl(null)
-            ->defaultSort('created_at', 'asc')
             ->columns([
-                TextColumn::make('startup_name')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('semibold')
-                    ->toggleable(),
-
-                TextColumn::make('founder')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
-                
-                TextColumn::make('email')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
-                
-                BadgeColumn::make('mentors.name')
-                    ->label('Mentors')
-                    ->separator(', ')
-                    ->toggleable()
-                    ->default('None')
-                    ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
-
-                BadgeColumn::make('status')
-                    ->searchable()
-                    ->toggleable()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'success' => 'Approved',
-                        'danger' => 'Rejected',
-                    ]),
-
+                TextColumn::make('reserved_by')
+                    ->searchable(),
+                TextColumn::make('start_date')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('end_date')
+                    ->dateTime()
+                    ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
+                    ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
+                TextColumn::make('updated_at')
+                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), 
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make()->native(false),

@@ -17,7 +17,6 @@ class Startup extends Model
         'contact',
         'email',
         'description',
-        'submission_date',
         'status',
     ];
 
@@ -25,10 +24,6 @@ class Startup extends Model
         'Pending' => 'Pending',
         'Approved' => 'Approved',
         'Rejected' => 'Rejected',
-    ];
-
-    protected $casts = [
-        'submission_date' => 'datetime',
     ];
 
     public function mentors()

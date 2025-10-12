@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('startups', function (Blueprint $table) {
+        Schema::create('reserve_equipment', function (Blueprint $table) {
             $table->id();
-            $table->string('logo')->nullable();
-            $table->string('startup_name');
-            $table->string('founder');
-            $table->string('contact');
-            $table->string('email');
-            $table->text('description');
+            $table->string('reserved_by');
+            $table->foreignId('equipment_id')->constrained('equipment')->cascadeOnDelete();
+            $table->unsignedInteger('quantity')->default(1);
             $table->string('status');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('startups');
+        Schema::dropIfExists('reserve_equipment');
     }
 };

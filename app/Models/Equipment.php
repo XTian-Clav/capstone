@@ -19,6 +19,11 @@ class Equipment extends Model
         'remarks',
     ];
 
+    public function reservations()
+    {
+        return $this->hasMany(ReserveEquipment::class);
+    }
+
     protected static function booted()
     {
         // Delete picture when record is permanently deleted

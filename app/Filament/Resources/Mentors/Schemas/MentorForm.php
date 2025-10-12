@@ -90,7 +90,7 @@ class MentorForm
                         ->maxSize(5120),
 
                     Select::make('expertise')
-                        ->options(\App\Models\Mentor::EXPERTISE)
+                        ->options(Mentor::EXPERTISE)
                         ->required()
                         ->native(false),
                     

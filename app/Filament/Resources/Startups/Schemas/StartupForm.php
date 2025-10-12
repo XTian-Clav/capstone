@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\Startups\Schemas;
 
+use App\Models\Startup;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Storage;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
 
@@ -80,15 +80,9 @@ class StartupForm
 
                         //FILE SIZE LIMIT
                         ->maxSize(5120),
-
-                    DateTimePicker::make('submission_date')
-                        ->default(now())
-                        ->required()
-                        ->seconds(false)
-                        ->native(false),
                     
                     Select::make('status')
-                        ->options(\App\Models\Startup::STATUS)
+                        ->options(Startup::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false),
