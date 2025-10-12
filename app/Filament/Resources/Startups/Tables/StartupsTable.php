@@ -84,13 +84,7 @@ class StartupsTable
                     ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
-                SelectFilter::make('status')->native(false)
-                ->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
-                ]),
-                TrashedFilter::make('Archive')->native(false),
+                TrashedFilter::make()->native(false),
             ])
             ->recordActions([
                 ViewAction::make(),
