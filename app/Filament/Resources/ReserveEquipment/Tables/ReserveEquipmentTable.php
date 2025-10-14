@@ -27,6 +27,8 @@ class ReserveEquipmentTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('equipment.equipment_name')
                     ->label('Equipment')
@@ -59,13 +61,22 @@ class ReserveEquipmentTable
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
+
+                BadgeColumn::make('status')
+                    ->searchable()
+                    ->toggleable()
+                    ->colors([
+                        'warning' => 'Pending',
+                        'success' => 'Approved',
+                        'danger' => 'Rejected',
+                    ]),
                     
                 TextColumn::make('created_at')
                     ->label('Submitted At')
                     ->dateTime('m-d-y g:i A')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
 
                 TextColumn::make('updated_at')

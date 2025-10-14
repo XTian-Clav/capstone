@@ -28,6 +28,8 @@ class SuppliesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('item_name')
                     ->searchable()

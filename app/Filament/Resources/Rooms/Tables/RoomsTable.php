@@ -28,6 +28,8 @@ class RoomsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('room_name')
                     ->searchable()

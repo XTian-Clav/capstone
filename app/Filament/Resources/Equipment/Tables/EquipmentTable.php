@@ -27,6 +27,8 @@ class EquipmentTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('equipment_name')
                     ->searchable()
