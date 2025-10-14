@@ -89,23 +89,25 @@ class ReserveEquipmentForm
                                 };
                             })
                             ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0)),
-                        Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 5:00 PM.')->columnSpanFull(),
+                        Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 6:00 PM.')->columnSpanFull(),
                     ])->columnSpan(2)->columns(2)->compact(),
                     
                     Section::make()
+                    ->collapsed()->description('Terms and Conditions')
                     ->schema([
+                        Text::make(new HtmlString('
+                            <div style="text-align: justify; font-size: 0.85rem; line-height: 1.5; font-family: monospace;">
+                                1. I agree to promptly return the equipment borrowed.<br><br>
+                                2. I agree to pay for any damage or loss of the equipment during the time when the equipment is in my possession.<br><br>
+                                3. I pledge that the equipment I borrowed from PITBI/PSU will be used solely for the official purpose stated above and not for personal purposes.
+                            </div>
+                        ')),
+
                         Checkbox::make('accept_terms')
                         ->label('I agree to the Terms and Conditions')
                         ->required()
+                        ->rules(['accepted'])
                         ->columnSpan('full'),
-
-                        Text::make(new HtmlString(
-                            '<div text-align: justify;">' .
-                            '1. I agree to promptly return the equipment borrowed.<br>' .
-                            '2. I agree to pay for any damage or loss of the equipment during the time when the equipment is in my possession.<br>' .
-                            '3. I pledge that the equipment I borrowed from PITBI/PSU will be used solely for the official purpose stated above and not for personal purposes.' .
-                            '</div>'
-                        ))
                     ])->columnSpanFull()->compact(),
 
                 ])->columnSpan(2)->columns(2)->compact(),
