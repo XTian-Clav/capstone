@@ -64,7 +64,7 @@ class SupplyResource extends Resource
         return [
             'index' => ListSupplies::route('/'),
             'create' => CreateSupply::route('/create'),
-            'view' => ViewSupply::route('/{record}'),
+            //'view' => ViewSupply::route('/{record}'),
             'edit' => EditSupply::route('/{record}/edit'),
         ];
     }

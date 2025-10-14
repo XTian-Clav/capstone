@@ -22,6 +22,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Enums\FiltersLayout;
 
 class MentorsTable
 {
@@ -85,7 +86,7 @@ class MentorsTable
             ])
             ->filters([
                 TrashedFilter::make('Archive')->native(false),
-            ])
+            ], layout: FiltersLayout::Modal)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

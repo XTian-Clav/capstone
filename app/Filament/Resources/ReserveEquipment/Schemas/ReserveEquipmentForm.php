@@ -11,6 +11,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Placeholder;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\Checkbox;
+use Filament\Schemas\Components\Text;
+use Illuminate\Support\HtmlString;
 use Carbon\Carbon;
 
 class ReserveEquipmentForm
@@ -19,60 +22,92 @@ class ReserveEquipmentForm
     {
         return $schema
             ->components([
-                Section::make('Reservation Details')
-                ->description('Fill out the reservation details below.')
+                Section::make('Reservation Form')
                 ->schema([
-                    TextInput::make('reserved_by')
-                        ->label('Reserved By')
-                        ->default(fn () => auth()->user()?->name)
-                        ->required(),
-                    
-                    Select::make('status')
-                        ->options(ReserveEquipment::STATUS)
-                        ->default('Pending')
-                        ->required()
-                        ->native(false),
+                    Section::make()
+                    ->schema([
+                        TextInput::make('reserved_by')
+                            ->label('Reserved By')
+                            ->default(fn () => auth()->user()?->name)
+                            ->required(),
 
-                    DateTimePicker::make('start_date')
-                        ->label('Start Date & Time')
-                        ->displayFormat('F j, Y — h:i A')
-                        ->required()
-                        ->native(false)
-                        ->seconds(false)
-                        ->rule(function () {
-                            return function (string $attribute, $value, $fail) {
-                                $time = Carbon::parse($value); // ✅ convert to Carbon
-                                $hour = $time->format('H');
-                    
-                                if ($hour < 8 || $hour >= 18) {
-                                    $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                                }
-                            };
-                        }),
+                        TextInput::make('office')
+                            ->label('Office')
+                            ->required(),
+                        
+                        TextInput::make('contact')
+                            ->label('Contact')
+                            ->required(),
+                        
+                        TextInput::make('email')
+                            ->label('Email')
+                            ->default(fn () => auth()->user()?->email)
+                            ->required(),
+                    ])->columnSpan(2)->columns(2)->compact(),
 
-                    DateTimePicker::make('end_date')
-                        ->label('End Date & Time')
-                        ->displayFormat('F j, Y — h:i A')
-                        ->required()
-                        ->native(false)
-                        ->seconds(false)
-                        ->rule(function ($get) {
-                            return function (string $attribute, $value, $fail) use ($get) {
-                                $end = Carbon::parse($value); // convert to Carbon
-                                $hour = $end->format('H');
-
-                                if ($hour < 8 || $hour > 18) {
-                                    $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                                }
-                    
-                                if ($get('start_date')) {
-                                    $start = Carbon::parse($get('start_date'));
-                                    if ($end->lessThanOrEqualTo($start)) {
-                                        $fail('[Invalid] End time is earlier than the start time.');
+                    Section::make()
+                    ->schema([
+                        DateTimePicker::make('start_date')
+                            ->label('Date Borrowed')
+                            ->displayFormat('F j, Y — h:i A')
+                            ->required()
+                            ->native(false)
+                            ->seconds(false)
+                            ->rule(function () {
+                                return function (string $attribute, $value, $fail) {
+                                    $time = Carbon::parse($value); // ✅ convert to Carbon
+                                    $hour = $time->format('H');
+                        
+                                    if ($hour < 8 || $hour >= 18) {
+                                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
                                     }
-                                }
-                            };
-                        }),
+                                };
+                            })
+                            ->default(fn () => Carbon::now()->setHour(8)->setMinute(0)->setSecond(0)),
+
+                        DateTimePicker::make('end_date')
+                            ->label('Date of Return')
+                            ->displayFormat('F j, Y — h:i A')
+                            ->required()
+                            ->native(false)
+                            ->seconds(false)
+                            ->rule(function ($get) {
+                                return function (string $attribute, $value, $fail) use ($get) {
+                                    $end = Carbon::parse($value); // convert to Carbon
+                                    $hour = $end->format('H');
+
+                                    if ($hour < 8 || $hour > 18) {
+                                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
+                                    }
+                        
+                                    if ($get('start_date')) {
+                                        $start = Carbon::parse($get('start_date'));
+                                        if ($end->lessThanOrEqualTo($start)) {
+                                            $fail('[Invalid] End time is earlier than the start time.');
+                                        }
+                                    }
+                                };
+                            })
+                            ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0)),
+                        Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 5:00 PM.')->columnSpanFull(),
+                    ])->columnSpan(2)->columns(2)->compact(),
+                    
+                    Section::make()
+                    ->schema([
+                        Checkbox::make('accept_terms')
+                        ->label('I agree to the Terms and Conditions')
+                        ->required()
+                        ->columnSpan('full'),
+
+                        Text::make(new HtmlString(
+                            '<div text-align: justify;">' .
+                            '1. I agree to promptly return the equipment borrowed.<br>' .
+                            '2. I agree to pay for any damage or loss of the equipment during the time when the equipment is in my possession.<br>' .
+                            '3. I pledge that the equipment I borrowed from PITBI/PSU will be used solely for the official purpose stated above and not for personal purposes.' .
+                            '</div>'
+                        ))
+                    ])->columnSpanFull()->compact(),
+
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Select Equipment')
@@ -110,6 +145,11 @@ class ReserveEquipmentForm
                             return function (string $attribute, $value, $fail) use ($get, $record) {
                                 $equipment = Equipment::find($get('equipment_id'));
                                 if (! $equipment) return;
+
+                                if ($equipment->quantity <= 0) {
+                                    $fail("{$equipment->equipment_name} is currently out of stock.");
+                                    return;
+                                }
                     
                                 // Get overlapping APPROVED reservations only
                                 $reservedQty = ReserveEquipment::query()
@@ -142,7 +182,13 @@ class ReserveEquipmentForm
                                     $fail("Only {$available} pcs are available for the selected period.");
                                 }
                             };
-                        }),                    
+                        }),
+
+                    Select::make('status')
+                        ->options(ReserveEquipment::STATUS)
+                        ->default('Pending')
+                        ->required()
+                        ->native(false),                  
                 ])->compact(),
             ])->columns(3);
     }

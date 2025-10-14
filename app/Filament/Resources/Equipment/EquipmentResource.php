@@ -64,7 +64,7 @@ class EquipmentResource extends Resource
         return [
             'index' => ListEquipment::route('/'),
             'create' => CreateEquipment::route('/create'),
-            'view' => ViewEquipment::route('/{record}'),
+            //'view' => ViewEquipment::route('/{record}'),
             'edit' => EditEquipment::route('/{record}/edit'),
         ];
     }

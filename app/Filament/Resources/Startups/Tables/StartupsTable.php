@@ -21,6 +21,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Enums\FiltersLayout;
 
 class StartupsTable
 {
@@ -79,7 +80,7 @@ class StartupsTable
             ])
             ->filters([
                 TrashedFilter::make()->native(false),
-            ])
+            ], layout: FiltersLayout::Modal)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

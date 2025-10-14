@@ -21,6 +21,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Enums\FiltersLayout;
 
 class ReserveEquipmentTable
 {
@@ -91,7 +92,7 @@ class ReserveEquipmentTable
             ])
             ->filters([
                 TrashedFilter::make('Archive')->native(false),
-            ])
+            ], layout: FiltersLayout::Modal)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

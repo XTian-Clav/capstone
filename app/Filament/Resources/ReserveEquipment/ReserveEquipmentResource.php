@@ -53,7 +53,7 @@ class ReserveEquipmentResource extends Resource
         return [
             'index' => ListReserveEquipment::route('/'),
             'create' => CreateReserveEquipment::route('/create'),
-            'view' => ViewReserveEquipment::route('/{record}'),
+            //'view' => ViewReserveEquipment::route('/{record}'),
             'edit' => EditReserveEquipment::route('/{record}/edit'),
         ];
     }

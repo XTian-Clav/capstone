@@ -12,16 +12,21 @@ class ReserveEquipment extends Model
 
     protected $fillable = [
         'reserved_by',
-        'status',
         'equipment_id',
         'quantity',
+        'status',
+        'office',
+        'contact',
+        'email',
         'start_date',
         'end_date',
+        'accept_terms',
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'accept_terms' => 'boolean',
     ];
 
     const STATUS = [

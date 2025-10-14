@@ -64,7 +64,7 @@ class RoomResource extends Resource
         return [
             'index' => ListRooms::route('/'),
             'create' => CreateRoom::route('/create'),
-            'view' => ViewRoom::route('/{record}'),
+            //'view' => ViewRoom::route('/{record}'),
             'edit' => EditRoom::route('/{record}/edit'),
         ];
     }
