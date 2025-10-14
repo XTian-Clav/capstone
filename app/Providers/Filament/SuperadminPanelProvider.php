@@ -32,7 +32,7 @@ class SuperadminPanelProvider extends PanelProvider
             ->brandName('PITBI Portal')
             ->topbar(false)
             ->globalSearch(false)
-            //->breadcrumbs(false)
+            ->breadcrumbs(false)
             
             ->login()
             ->registration()

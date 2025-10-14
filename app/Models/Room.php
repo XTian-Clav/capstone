@@ -27,6 +27,11 @@ class Room extends Model
         'Co-Working Space' => 'Co-Working Space',
     ];
 
+    public function reservations()
+    {
+        return $this->hasMany(ReserveRoom::class);
+    }
+
     protected static function booted()
     {
         // Delete picture when record is permanently deleted

@@ -18,11 +18,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use UnitEnum;
+
 class ReserveEquipmentResource extends Resource
 {
     protected static ?string $model = ReserveEquipment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?int $navigationSort = 2;
+
+    protected static string | UnitEnum | null $navigationGroup = 'Reservation';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Cog6Tooth;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     protected static ?string $recordTitleAttribute = 'reserved_by';
 
