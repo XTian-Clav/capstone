@@ -39,21 +39,15 @@ class EquipmentForm
                         ->default(0)
                         ->suffix('pcs'),
                     
-                    TextInput::make('minimum_stock')
-                        ->required()
-                        ->numeric()
-                        ->default(5)
-                        ->helperText('Shows alerts when stock drops below this number.'),
-                    
                     TextInput::make('property_no')
-                        ->required(),
-
-                    TextInput::make('location')
                         ->required(),
                     
                     TextInput::make('remarks')
                         ->required()
                         ->default(null),
+
+                    TextInput::make('location')
+                        ->required(),
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Photo Upload')

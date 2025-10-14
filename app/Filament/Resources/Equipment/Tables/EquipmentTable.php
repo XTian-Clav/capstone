@@ -21,7 +21,6 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Columns\IconColumn;
 
 class EquipmentTable
 {
@@ -44,7 +43,7 @@ class EquipmentTable
                         $record->quantity === 0 ? 'Out of Stock':
                         $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
                     ),
-
+                    
                 TextColumn::make('property_no')
                     ->searchable()
                     ->toggleable()

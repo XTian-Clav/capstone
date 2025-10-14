@@ -31,8 +31,11 @@ class SupplyInfolist
                     TextEntry::make('item_name')->weight('semibold'),
                     
                     TextEntry::make('quantity')
-                        ->numeric()
-                        ->weight('semibold'),
+                        ->weight('semibold')
+                        ->state(fn ($record) => 
+                            $record->quantity === 0 ? 'Out of Stock':
+                            $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
+                        ),
                     
                     TextEntry::make('location')->weight('semibold'),
                     TextEntry::make('remarks')->weight('semibold'),

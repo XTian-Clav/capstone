@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('item_name');
             $table->integer('quantity')->default(0);
-            $table->integer('minimum_stock')->default(10); // alert when stock is low
             $table->string('location');
             $table->string('remarks');
             $table->timestamps();

@@ -3,22 +3,22 @@
 namespace App\Filament\Resources\ReserveEquipment\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-use Filament\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\Action;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Tables\Filters\TrashedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -28,29 +28,58 @@ class ReserveEquipmentTable
     {
         return $table
             ->columns([
+                TextColumn::make('equipment.equipment_name')
+                    ->label('Equipment')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable()
+                    ->weight('semibold'),
+
                 TextColumn::make('reserved_by')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable(),
+
+                TextColumn::make('quantity')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
+
                 TextColumn::make('start_date')
-                    ->dateTime()
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
+
                 TextColumn::make('end_date')
-                    ->dateTime()
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
+                    
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Submitted At')
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable(),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('F j, Y g:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('deleted_at')
-                    ->dateTime()
+                    ->dateTime('F j, Y g:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make()->native(false),
+                TrashedFilter::make('Archive')->native(false),
             ])
             ->recordActions([
                 ViewAction::make(),

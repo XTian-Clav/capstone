@@ -31,24 +31,19 @@ class SupplyForm
                 ->schema([
                 TextInput::make('item_name')
                     ->label('Item Name')
-                    ->required()
-                    ->columnSpanFull(),
-
-                TextInput::make('location')
                     ->required(),
                 
                 TextInput::make('quantity')
+                    ->required()
                     ->numeric()
                     ->default(0)
-                    ->required(),
-
-                TextInput::make('minimum_stock')
-                    ->label('Minimum Stock')
-                    ->numeric()
-                    ->default(5)
-                    ->helperText('Shows alerts when stock drops below this number.'),
+                    ->suffix('pcs'),
 
                 TextInput::make('remarks')
+                    ->required()
+                    ->default(null),
+
+                TextInput::make('location')
                     ->required(),
                 ])->columnSpan(2)->columns(2)->compact(),
 

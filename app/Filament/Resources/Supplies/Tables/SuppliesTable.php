@@ -39,7 +39,11 @@ class SuppliesTable
                     ->numeric()
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->state(fn ($record) => 
+                        $record->quantity === 0 ? 'Out of Stock':
+                        $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
+                    ),
 
                 TextColumn::make('location')
                     ->searchable()
