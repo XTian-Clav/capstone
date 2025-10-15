@@ -126,14 +126,14 @@ class ReserveSupplyForm
                     // Photo preview
                     Placeholder::make('supply_preview')
                         ->hiddenLabel()
-                        ->content(fn ($get) =>
-                            ($supply = Supply::find($get('supply_id'))) && $supply->picture
-                                ? '<div style="max-width:400px;aspect-ratio:16/9">
-                                    <img src="' . Storage::url($supply->picture) . '" 
-                                            class="w-full h-full object-cover rounded-lg border">
-                                    </div>'
-                                : ''
-                        )
+                        ->content(function ($get) {
+                            $supply = Supply::find($get('supply_id'));
+                            if (! $supply?->picture) return '';
+                            $url = Storage::url($supply->picture);
+                            return "<div style='max-width:400px;aspect-ratio:16/9'>
+                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg border'>
+                                    </div>";
+                        })
                         ->reactive()
                         ->html(),
 
@@ -155,7 +155,7 @@ class ReserveSupplyForm
                     
                                 // Get overlapping APPROVED reservations only
                                 $reservedQty = ReserveSupply::query()
-                                    ->whereHas('supply', fn ($q) => $q->where('supply_id', $supply->id))
+                                    ->where('supply_id', $supply->id)
                                     ->where('status', 'Approved')
                                     ->where(function ($q) use ($get, $record) {
                                         $start = $get('start_date');
@@ -190,7 +190,7 @@ class ReserveSupplyForm
                         ->options(ReserveSupply::STATUS)
                         ->default('Pending')
                         ->required()
-                        ->native(false),                  
+                        ->native(false),
                 ])->compact(),
             ])->columns(3);
     }

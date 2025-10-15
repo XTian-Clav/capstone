@@ -126,14 +126,14 @@ class ReserveEquipmentForm
                     // Photo preview
                     Placeholder::make('equipment_preview')
                         ->hiddenLabel()
-                        ->content(fn ($get) =>
-                            ($equipment = Equipment::find($get('equipment_id'))) && $equipment->picture
-                                ? '<div style="max-width:400px;aspect-ratio:16/9">
-                                    <img src="' . Storage::url($equipment->picture) . '" 
-                                            class="w-full h-full object-cover rounded-lg border">
-                                    </div>'
-                                : ''
-                        )
+                        ->content(function ($get) {
+                            $equipment = Equipment::find($get('equipment_id'));
+                            if (! $equipment?->picture) return '';
+                            $url = Storage::url($equipment->picture);
+                            return "<div style='max-width:400px;aspect-ratio:16/9'>
+                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg border'>
+                                    </div>";
+                        })
                         ->reactive()
                         ->html(),
 
@@ -155,7 +155,7 @@ class ReserveEquipmentForm
                     
                                 // Get overlapping APPROVED reservations only
                                 $reservedQty = ReserveEquipment::query()
-                                    ->whereHas('equipment', fn ($q) => $q->where('equipment_id', $equipment->id))
+                                    ->where('equipment_id', $equipment->id)
                                     ->where('status', 'Approved')
                                     ->where(function ($q) use ($get, $record) {
                                         $start = $get('start_date');

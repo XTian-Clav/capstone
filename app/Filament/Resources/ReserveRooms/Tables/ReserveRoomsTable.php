@@ -5,67 +5,105 @@ namespace App\Filament\Resources\ReserveRooms\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\IconColumn;
+use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Actions\Action;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Enums\FiltersLayout;
 
 class ReserveRoomsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
+                TextColumn::make('room.room_name')
+                    ->label('Room')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable()
+                    ->weight('semibold'),
+
                 TextColumn::make('reserved_by')
-                    ->searchable(),
-                TextColumn::make('room_id')
-                    ->numeric()
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
-                TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('office')
-                    ->searchable(),
-                TextColumn::make('contact')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
+
+                TextColumn::make('room.capacity')
+                    ->searchable()
+                    ->toggleable()
+                    ->sortable(),
+
                 TextColumn::make('start_date')
-                    ->dateTime()
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
+
                 TextColumn::make('end_date')
-                    ->dateTime()
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
-                IconColumn::make('accept_terms')
-                    ->boolean(),
+
+                BadgeColumn::make('status')
+                    ->searchable()
+                    ->toggleable()
+                    ->colors([
+                        'warning' => 'Pending',
+                        'success' => 'Approved',
+                        'danger' => 'Rejected',
+                    ]),
+                    
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Submitted At')
+                    ->dateTime('m-d-y g:i A')
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('F j, Y g:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('deleted_at')
-                    ->dateTime()
+                    ->dateTime('F j, Y g:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
-            ])
+                TrashedFilter::make('Archive')->native(false),
+            ], layout: FiltersLayout::Modal)
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                RestoreAction::make()->color('success'),
+                DeleteAction::make(),
+                ForceDeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    RestoreBulkAction::make(),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
                 ]),
             ]);
     }
