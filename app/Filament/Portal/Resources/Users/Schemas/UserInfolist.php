@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Filament\Portal\Resources\Users\Schemas;
+
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Schema;
+
+class UserInfolist
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextEntry::make('name'),
+                TextEntry::make('email')
+                    ->label('Email address'),
+                TextEntry::make('contact'),
+                TextEntry::make('address'),
+                TextEntry::make('birthdate'),
+                TextEntry::make('birthplace'),
+                TextEntry::make('email_verified_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('created_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+            ]);
+    }
+}
