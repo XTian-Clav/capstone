@@ -2,16 +2,16 @@
 
 namespace App\Filament\Portal\Resources\Events\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use App\Models\Event;
 use Filament\Schemas\Schema;
-
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\DateTimePicker;
 
 class EventForm
 {
@@ -49,7 +49,7 @@ class EventForm
                         ->maxLength(255),
 
                     Select::make('status')
-                        ->options(\App\Models\Event::STATUS)
+                        ->options(Event::STATUS)
                         ->default('Upcoming')
                         ->required()
                         ->native(false),

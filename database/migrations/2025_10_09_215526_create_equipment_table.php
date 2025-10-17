@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('equipment', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('equipment_name');
+            $table->string('equipment_name')->unique();
             $table->integer('quantity')->default(0);
-            $table->string('property_no');
+            $table->string('property_no')->unique();
             $table->string('location');
             $table->string('remarks');
             $table->timestamps();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('item_name');
+            $table->string('item_name')->unique();
             $table->integer('quantity')->default(0);
             $table->string('location');
             $table->string('remarks');

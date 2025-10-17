@@ -23,7 +23,9 @@ class MentorInfolist
                         ->disk('public')
                         ->visibility('public')
                         ->size(200)
-                        ->square(),
+                        ->square()
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/user.png')),
 
                     TextEntry::make('personal_info')
                         ->html()

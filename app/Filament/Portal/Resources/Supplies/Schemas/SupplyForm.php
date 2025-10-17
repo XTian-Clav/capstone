@@ -31,7 +31,8 @@ class SupplyForm
                 ->schema([
                 TextInput::make('item_name')
                     ->label('Item Name')
-                    ->required(),
+                    ->required()
+                    ->unique(),
                 
                 TextInput::make('quantity')
                     ->required()

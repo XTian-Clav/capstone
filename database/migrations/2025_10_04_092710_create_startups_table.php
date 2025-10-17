@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('startups', function (Blueprint $table) {
             $table->id();
             $table->string('logo')->nullable();
-            $table->string('startup_name');
+            $table->string('startup_name')->unique();
             $table->string('founder');
-            $table->string('contact');
-            $table->string('email');
+            $table->string('contact')->unique();
+            $table->string('email')->unique();
             $table->text('description');
             $table->string('status');
             $table->timestamps();

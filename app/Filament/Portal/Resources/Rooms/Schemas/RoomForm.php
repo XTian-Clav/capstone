@@ -2,25 +2,25 @@
 
 namespace App\Filament\Portal\Resources\Rooms\Schemas;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
-
 use Filament\Forms;
+use App\Models\Room;
 use Filament\Tables;
-use Filament\Resources\Resource;
-use Filament\Tables\Table;
 use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\BadgeColumn;
-use Illuminate\Support\Facades\Storage;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\DateTimePicker;
 
 class RoomForm
 {
@@ -38,7 +38,7 @@ class RoomForm
                         ->maxLength(255),
                     
                     Select::make('room_type')
-                        ->options(\App\Models\Room::ROOM_TYPE)
+                        ->options(Room::ROOM_TYPE)
                         ->required()
                         ->native(false),
                     

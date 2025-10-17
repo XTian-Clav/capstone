@@ -23,7 +23,9 @@ class EventInfolist
                         ->visibility('public')
                         ->hiddenLabel()
                         ->imageHeight(200)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/no-image.png')),
 
                     TextEntry::make('description')
                         ->html()

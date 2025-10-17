@@ -37,7 +37,8 @@ class MentorsTable
                     ->disk('public')
                     ->size(50)
                     ->circular()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->defaultImageUrl(url('storage/default/user.png')),
 
                 TextColumn::make('name')
                     ->weight('semibold')

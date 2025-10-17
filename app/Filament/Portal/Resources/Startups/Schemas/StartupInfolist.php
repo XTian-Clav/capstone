@@ -22,7 +22,9 @@ class StartupInfolist
                         ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
-                        ->imageHeight(200),
+                        ->imageHeight(200)
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/no-image.png')),
                     TextEntry::make('description')
                         ->html()
                         ->extraAttributes([

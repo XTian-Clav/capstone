@@ -24,6 +24,8 @@ class SupplyInfolist
                         ->visibility('public')
                         ->width(400)
                         ->height(160)
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/no-image.png')),
                 ])->columnSpan(1)->compact(),
 
                 Section::make('Item Details')

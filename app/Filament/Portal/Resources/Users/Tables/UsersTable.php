@@ -31,21 +31,28 @@ class UsersTable
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
+
                 TextColumn::make('email')
                     ->label('Email address')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('contact')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('roles.name')
                     ->searchable()
                     ->badge()
                     ->color('info'),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

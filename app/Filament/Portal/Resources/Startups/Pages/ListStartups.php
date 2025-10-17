@@ -2,12 +2,12 @@
 
 namespace App\Filament\Portal\Resources\Startups\Pages;
 
-use App\Filament\Portal\Resources\Startups\StartupResource;
 use App\Models\Startup;
 use Filament\Actions\CreateAction;
+use Illuminate\Support\Collection;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
-use Illuminate\Support\Collection;
+use App\Filament\Portal\Resources\Startups\StartupResource;
 
 class ListStartups extends ListRecords
 {

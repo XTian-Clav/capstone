@@ -26,7 +26,9 @@ class ReserveRoomInfolist
                         ->hiddenLabel()
                         ->width(400)
                         ->height(160)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/no-image.png')),
 
                     Section::make()
                     ->schema([

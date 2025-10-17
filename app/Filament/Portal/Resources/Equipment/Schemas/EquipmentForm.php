@@ -31,7 +31,8 @@ class EquipmentForm
                 ->schema([
                     TextInput::make('equipment_name')
                         ->label('Equipment Name')
-                        ->required(),
+                        ->required()
+                        ->unique(),
                     
                     TextInput::make('quantity')
                         ->required()
@@ -40,7 +41,8 @@ class EquipmentForm
                         ->suffix('pcs'),
                     
                     TextInput::make('property_no')
-                        ->required(),
+                        ->required()
+                        ->unique(),
                     
                     TextInput::make('remarks')
                         ->required()

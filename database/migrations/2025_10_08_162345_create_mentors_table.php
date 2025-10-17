@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('mentors', function (Blueprint $table) {
             $table->id();
             $table->string('avatar')->nullable();
-            $table->string('name');
-            $table->string('contact');
-            $table->string('email');
+            $table->string('name')->unique();
+            $table->string('contact')->unique();
+            $table->string('email')->unique();
             $table->string('expertise');
             $table->text('personal_info');
             $table->softDeletes();

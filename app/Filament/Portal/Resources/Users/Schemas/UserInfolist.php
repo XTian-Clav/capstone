@@ -2,8 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Users\Schemas;
 
-use Filament\Infolists\Components\TextEntry;
+use App\Models\User;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 
 class UserInfolist
 {
@@ -11,22 +14,35 @@ class UserInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('email')
-                    ->label('Email address'),
-                TextEntry::make('contact'),
-                TextEntry::make('address'),
-                TextEntry::make('birthdate'),
-                TextEntry::make('birthplace'),
-                TextEntry::make('email_verified_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-            ]);
+                Section::make()
+                ->schema([
+                    ImageEntry::make('avatar_url')
+                        ->hiddenLabel()
+                        ->disk('public')
+                        ->visibility('public')
+                        ->Height(220)
+                        ->square()
+                        ->alignCenter()
+                        ->defaultImageUrl(url('storage/default/user.png')),
+                ])->columnSpan(1)->compact(),
+
+                Section::make('Personal Details')
+                ->schema([
+                    TextEntry::make('name')->weight('semibold'), 
+                    TextEntry::make('email')->label('Email address')->weight('semibold'),
+                    TextEntry::make('contact')->weight('semibold')->placeholder('N/A'),
+                    TextEntry::make('address')->weight('semibold')->placeholder('N/A'),
+                    TextEntry::make('birthdate')->weight('semibold')->placeholder('N/A'),
+                    TextEntry::make('email_verified_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->placeholder('Unverified'),
+
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->weight('semibold')
+                        ->color('danger')
+                        ->visible(fn (User $record): bool => $record->trashed()),
+                ])->columns(2)->columnSpan(2)->compact(),
+            ])->columns(3);
     }
 }

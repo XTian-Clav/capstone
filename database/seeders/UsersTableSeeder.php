@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'contact' => '09933685061',
             'address' => 'Puerto Princesa, Palawan',
             'birthdate' => '12-16-1999',
-            'birthplace' => 'Davao City, Philippines',
             'password' => Hash::make('password'),
         ]);
     }
