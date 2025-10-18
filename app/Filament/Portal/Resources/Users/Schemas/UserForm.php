@@ -50,6 +50,7 @@ class UserForm
                         ->schema([
                             CheckboxList::make('roles')
                                 ->relationship('roles', 'name')
+                                ->required()
                                 ->columns(2),
                         ])->columnSpanFull(),
                         DateTimePicker::make('email_verified_at')

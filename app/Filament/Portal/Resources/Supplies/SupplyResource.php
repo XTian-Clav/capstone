@@ -28,8 +28,6 @@ class SupplyResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Inventory';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

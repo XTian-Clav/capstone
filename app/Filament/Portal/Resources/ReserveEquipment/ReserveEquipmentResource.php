@@ -28,8 +28,6 @@ class ReserveEquipmentResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Reservation';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Cog6Tooth;
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

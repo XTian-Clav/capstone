@@ -28,8 +28,6 @@ class EquipmentResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Inventory';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

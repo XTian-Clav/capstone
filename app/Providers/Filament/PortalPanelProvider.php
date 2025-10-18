@@ -8,10 +8,14 @@ use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
+use Filament\Navigation\NavigationGroup;
 use Filament\Widgets\FilamentInfoWidget;
+use App\Filament\Pages\HealthCheckResults;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Portal\Pages\Auth\EditProfile;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Muazzam\SlickScrollbar\SlickScrollbarPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -20,7 +24,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use App\Filament\Portal\Pages\Auth\EditProfile;
+use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class PortalPanelProvider extends PanelProvider
 {
@@ -60,6 +64,21 @@ class PortalPanelProvider extends PanelProvider
                 'warning' => Color::Yellow,
                 'info' => Color::Indigo,
             ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Learning Materials')
+                    ->icon('heroicon-o-academic-cap')
+                    ->collapsed(),
+                
+                NavigationGroup::make()
+                    ->label('Reservation')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->collapsed(),
+
+                NavigationGroup::make()
+                    ->label('Inventory')
+                    ->icon('heroicon-o-archive-box'),
+            ])
 
             ->resourceCreatePageRedirect('index')
             ->resourceEditPageRedirect('index')
@@ -92,6 +111,17 @@ class PortalPanelProvider extends PanelProvider
                     ->navigationLabel('Roles And Permission')
                     ->navigationGroup('Superadmin Settings')
                     ->navigationSort(2),
+
+                FilamentSpatieLaravelHealthPlugin::make()
+                    ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
+                    ->navigationLabel('Website Health Check')
+                    ->navigationGroup('Superadmin Settings')
+                    ->navigationSort(3),
+
+                SlickScrollbarPlugin::make()
+                    ->size('6px')
+                    ->palette('primary')
+                    ->hoverColor(Color::Amber, 700),
             ]);
     }
 }

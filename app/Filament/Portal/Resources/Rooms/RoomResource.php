@@ -28,8 +28,6 @@ class RoomResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Inventory';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHomeModern;
-
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
