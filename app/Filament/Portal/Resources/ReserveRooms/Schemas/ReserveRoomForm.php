@@ -156,52 +156,33 @@ class ReserveRoomForm
                 ->schema([
                     Select::make('room_type')
                         ->label('Room Type')
-                        ->options([
-                            'Small Meeting Room' => 'Small Meeting Room',
-                            'Training Room' => 'Training Room',
-                            'Co-Working Space' => 'Co-Working Space',
-                        ])
-                        ->afterStateUpdated(function ($state, callable $set) {
-                            $set('room_id', null);
-                            $set('start_date', Carbon::now()->setHour(8)->setMinute(0)->setSecond(0));
-                            $set('end_date', Carbon::now()->setHour(18)->setMinute(0)->setSecond(0));
-                            $set('status', 'Pending');
-                        })
-                        ->reactive()
+                        ->options(Room::ROOM_TYPE)
+                        ->live()
                         ->required()
-                        ->native(false),
+                        ->native(false)
+                        ->afterStateUpdated(fn ($state, $set) => $set('room_id', null)),
 
                     Select::make('room_id')
-                        ->label('Room Name')
-                        ->options(fn ($get) => 
-                            $get('room_type')
-                                ? Room::where('is_available', true)
-                                    ->where('room_type', $get('room_type'))
-                                    ->pluck('room_name', 'id')
-                                : []
+                        ->label('Select Room')
+                        ->relationship('room', 'room_name', fn ($query, $get) =>
+                            $query->where('room_type', $get('room_type'))
+                                ->where('is_available', true)
                         )
-                        ->reactive()
+                        ->preload()
+                        ->searchable()
                         ->required()
+                        ->reactive()
                         ->native(false),
                     
                     Placeholder::make('room_preview')
                         ->hiddenLabel()
-                        ->content(function ($get) {
-                            $room = Room::find($get('room_id'));
-                            if (!$room || !$room->picture) {
-                                return '';
-                            }
-            
-                            // Add timestamp to force refresh when selecting another room
-                            $url = Storage::url($room->picture) . '?t=' . now()->timestamp;
-            
-                            return <<<HTML
-                                <div style="max-width:400px;aspect-ratio:16/9">
-                                    <img src="{$url}" 
-                                        class="w-full h-full object-cover rounded-lg border border-gray-300 shadow-sm">
-                                </div>
-                            HTML;
-                        })
+                        ->content(fn ($get) => 
+                            ($room = Room::find($get('room_id'))) && $room->picture
+                                ? '<div style="max-width:400px;aspect-ratio:16/9">
+                                    <img src="' . Storage::url($room->picture) . '?t=' . now()->timestamp . '"
+                                </div>'
+                                : null
+                        )
                         ->reactive()
                         ->html(),
 

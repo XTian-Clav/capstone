@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reserved_by');
             $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete();
+            $table->string('room_type');
             $table->string('status');
             $table->string('office');
             $table->string('contact');

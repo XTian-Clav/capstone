@@ -53,9 +53,9 @@ class PortalPanelProvider extends PanelProvider
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Amber,
                 'secondary' => Color::Gray,
-                'success' => Color::Green,
+                'success' => Color::Emerald,
                 'danger' => Color::Red,
                 'warning' => Color::Yellow,
                 'info' => Color::Indigo,
@@ -71,8 +71,7 @@ class PortalPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Portal/Widgets'), for: 'App\\Filament\\Portal\\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                //AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
