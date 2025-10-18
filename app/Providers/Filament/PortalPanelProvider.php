@@ -4,10 +4,12 @@ namespace App\Providers\Filament;
 
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
+use Filament\Enums\UserMenuPosition;
 use Filament\Navigation\NavigationGroup;
 use Filament\Widgets\FilamentInfoWidget;
 use App\Filament\Pages\HealthCheckResults;
@@ -64,6 +66,12 @@ class PortalPanelProvider extends PanelProvider
                 'warning' => Color::Yellow,
                 'info' => Color::Indigo,
             ])
+            
+            ->userMenuItems([
+                'profile' => fn (Action $action) => $action->label('Edit profile'),
+                'logout' => fn (Action $action) => $action->label('Log out'),
+            ])
+
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Learning Materials')
@@ -77,7 +85,13 @@ class PortalPanelProvider extends PanelProvider
 
                 NavigationGroup::make()
                     ->label('Inventory')
-                    ->icon('heroicon-o-archive-box'),
+                    ->icon('heroicon-o-archive-box')
+                    ->collapsed(),
+                
+                NavigationGroup::make()
+                    ->label('Superadmin Settings')
+                    ->icon('heroicon-o-archive-box')
+                    ->collapsed(),
             ])
 
             ->resourceCreatePageRedirect('index')
@@ -109,14 +123,12 @@ class PortalPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make()
                     ->navigationLabel('Roles And Permission')
-                    ->navigationGroup('Superadmin Settings')
-                    ->navigationSort(2),
+                    ->navigationGroup('Superadmin Settings'),
 
                 FilamentSpatieLaravelHealthPlugin::make()
                     ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
                     ->navigationLabel('Website Health Check')
-                    ->navigationGroup('Superadmin Settings')
-                    ->navigationSort(3),
+                    ->navigationGroup('Superadmin Settings'),
 
                 SlickScrollbarPlugin::make()
                     ->size('6px')

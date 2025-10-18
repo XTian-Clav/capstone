@@ -24,13 +24,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?int $navigationSort = 1;
-
     protected static ?string $navigationLabel = 'Manage Users';
 
     protected static string | UnitEnum | null $navigationGroup = 'Superadmin Settings';
-
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
     public static function getNavigationBadge(): ?string
     {
