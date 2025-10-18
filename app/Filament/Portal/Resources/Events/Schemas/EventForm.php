@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Events\Schemas;
 
+use Carbon\Carbon;
 use App\Models\Event;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
@@ -72,17 +73,31 @@ class EventForm
                     ->maxSize(8000),
 
                     DateTimePicker::make('start_date')
+                        ->displayFormat('F j, Y — h:i A')
                         ->default(now())
-                        ->unique()
                         ->required()
                         ->Seconds(false)
                         ->native(false),
 
                     DateTimePicker::make('end_date')
+                        ->displayFormat('F j, Y — h:i A')
                         ->required()
-                        ->unique()
                         ->Seconds(false)
-                        ->native(false),
+                        ->native(false)
+                        ->rule(function ($get) {
+                            return function (string $attribute, $value, $fail) use ($get) {
+                                $end = Carbon::parse($value);
+                                $hour = $end->format('H');
+                    
+                                // Ensure end > start
+                                if ($get('start_date')) {
+                                    $start = Carbon::parse($get('start_date'));
+                                    if ($end->lessThanOrEqualTo($start)) {
+                                        $fail('[Invalid] End time is earlier than the start time.');
+                                    }
+                                }
+                            };
+                        }),
                 ])->compact(),
             ])->columns(3);
     }

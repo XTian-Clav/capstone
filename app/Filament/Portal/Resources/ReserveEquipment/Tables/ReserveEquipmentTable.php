@@ -2,26 +2,26 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Filament\Tables\Table;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\Action;
 use Filament\Actions\RestoreAction;
-use Filament\Actions\RestoreBulkAction;
-use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\ForceDeleteBulkAction;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReserveEquipmentTable
 {
@@ -91,6 +91,16 @@ class ReserveEquipmentTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Filter::make('today')
+                    ->toggle()
+                    ->label('Created Today')
+                    ->query(fn ($query, $state) => 
+                        $state
+                            ? $query->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+                                    ->reorder('created_at', 'asc')
+                            : null
+                    )
+                    ->default(),
                 TrashedFilter::make('Archive')->native(false),
             ], layout: FiltersLayout::Modal)
             ->recordActions([

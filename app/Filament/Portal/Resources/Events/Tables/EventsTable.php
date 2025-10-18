@@ -2,25 +2,26 @@
 
 namespace App\Filament\Portal\Resources\Events\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
+use Carbon\Carbon;
+use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
+use Filament\Tables\Filters\Filter;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Tables\Filters\TrashedFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
+use Filament\Actions\ForceDeleteBulkAction;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventsTable
 {
@@ -28,7 +29,7 @@ class EventsTable
     {
         return $table
             ->recordUrl(null)
-            ->defaultSort('status', 'asc')
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('event')
                     ->searchable()
@@ -79,14 +80,15 @@ class EventsTable
                     ->toggleable(isToggledHiddenByDefault: true), 
             ])
             ->filters([
-                SelectFilter::make('status')->native(false)
-                ->options([
-                    'Upcoming' => 'Upcoming',
-                    'Ongoing' => 'Ongoing',
-                    'Completed' => 'Completed',
-                    'Cancelled' => 'Cancelled',
-                ]),
-
+                Filter::make('today')
+                    ->toggle()
+                    ->label('Created Today')
+                    ->query(fn ($query, $state) => 
+                        $state
+                            ? $query->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+                                    ->reorder('created_at', 'asc')
+                            : null
+                    ),
                 TrashedFilter::make('Archive')->native(false),
             ], layout: FiltersLayout::Modal)
             ->recordActions([
