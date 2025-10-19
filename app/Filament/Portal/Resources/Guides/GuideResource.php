@@ -62,7 +62,7 @@ class GuideResource extends Resource
         return [
             'index' => ListGuides::route('/'),
             'create' => CreateGuide::route('/create'),
-            'view' => ViewGuide::route('/{record}'),
+            //'view' => ViewGuide::route('/{record}'),
             'edit' => EditGuide::route('/{record}/edit'),
         ];
     }

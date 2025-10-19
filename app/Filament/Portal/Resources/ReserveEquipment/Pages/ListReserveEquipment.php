@@ -27,6 +27,7 @@ class ListReserveEquipment extends ListRecords
             'pending' => ReserveEquipment::where('status', 'pending')->count(),
             'approved' => ReserveEquipment::where('status', 'approved')->count(),
             'rejected' => ReserveEquipment::where('status', 'rejected')->count(),
+            'archived' => ReserveEquipment::onlyTrashed()->count(),
         ]);
 
         return [
@@ -44,6 +45,10 @@ class ListReserveEquipment extends ListRecords
             'rejected' => Tab::make('Rejected')
                 ->badge($counts['rejected'])
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => ReserveEquipment::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

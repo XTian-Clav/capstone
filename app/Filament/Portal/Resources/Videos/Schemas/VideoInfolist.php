@@ -6,7 +6,6 @@ use App\Models\Video;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Hugomyb\FilamentMediaAction\Actions\MediaAction;
 
 class VideoInfolist
 {
@@ -16,24 +15,44 @@ class VideoInfolist
             ->components([
                 Section::make("")
                 ->Schema([
-                    MediaAction::make('video')
-                        ->label(fn ($record) => $record->title)
-                        ->media(fn ($record) => $record->url)
-                        ->icon('heroicon-o-play')
-                        ->iconButton(),
-                    TextEntry::make('title'),
-                    TextEntry::make('description'),
-                    TextEntry::make('url'),
-                    TextEntry::make('created_at')
-                        ->dateTime()
-                        ->placeholder('-'),
-                    TextEntry::make('updated_at')
-                        ->dateTime()
-                        ->placeholder('-'),
-                    TextEntry::make('deleted_at')
-                        ->dateTime()
-                        ->visible(fn (Video $record): bool => $record->trashed()),
-                ])->columnSpanFull(),
+                    Section::make()
+                    ->Schema([
+                        TextEntry::make('title')->weight('semibold')->columnSpan(2),
+                        
+                        TextEntry::make('created_at')
+                            ->dateTime('M j, Y h:i A')
+                            ->weight('semibold')
+                            ->color('secondary')
+                            ->badge(),
+                        
+                        TextEntry::make('updated_at')
+                            ->dateTime('M j, Y h:i A')
+                            ->weight('semibold')
+                            ->color('secondary')
+                            ->badge(),
+                    ])->columns(4)->columnSpanFull(),
+                    Section::make()
+                    ->Schema([
+                        TextEntry::make('description')
+                            ->columnSpanFull()
+                            ->html()
+                            ->extraAttributes([
+                                'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                            ]),
+                        
+                        TextEntry::make('url')
+                            ->label('Video Link')
+                            ->color('info')
+                            ->url(fn (Video $record) => $record->url)
+                            ->openUrlInNewTab(),
+                        
+                        TextEntry::make('deleted_at')
+                            ->dateTime('M j, Y h:i A')
+                            ->weight('semibold')
+                            ->color('danger')
+                            ->visible(fn (Video $record): bool => $record->trashed()),
+                    ])->columns(2)->columnSpanFull(),
+                ])->columns(2)->columnSpanFull(),
             ]);
     }
 }

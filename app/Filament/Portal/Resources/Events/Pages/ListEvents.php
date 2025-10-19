@@ -28,6 +28,7 @@ class ListEvents extends ListRecords
             'Ongoing' => Event::where('status', 'Ongoing')->count(),
             'Completed' => Event::where('status', 'Completed')->count(),
             'Cancelled' => Event::where('status', 'Cancelled')->count(),
+            'archived' => Event::onlyTrashed()->count(),
         ]);
 
         return [
@@ -49,6 +50,10 @@ class ListEvents extends ListRecords
             'Cancelled' => Tab::make('Cancelled')
                 ->badge($counts['Cancelled'])
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'Cancelled')),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => Event::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

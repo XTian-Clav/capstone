@@ -64,7 +64,7 @@ class PortalPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'danger' => Color::Red,
                 'warning' => Color::Yellow,
-                'info' => Color::Indigo,
+                'info' => Color::Blue,
             ])
             
             ->userMenuItems([
@@ -90,7 +90,7 @@ class PortalPanelProvider extends PanelProvider
                 
                 NavigationGroup::make()
                     ->label('Superadmin Settings')
-                    ->icon('heroicon-o-archive-box')
+                    ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(),
             ])
 

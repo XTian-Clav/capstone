@@ -27,6 +27,7 @@ class ListReserveRooms extends ListRecords
             'pending' => ReserveRoom::where('status', 'pending')->count(),
             'approved' => ReserveRoom::where('status', 'approved')->count(),
             'rejected' => ReserveRoom::where('status', 'rejected')->count(),
+            'archived' => ReserveRoom::onlyTrashed()->count(),
         ]);
 
         return [
@@ -44,6 +45,10 @@ class ListReserveRooms extends ListRecords
             'rejected' => Tab::make('Rejected')
                 ->badge($counts['rejected'])
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => ReserveRoom::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

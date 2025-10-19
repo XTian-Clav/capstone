@@ -6,6 +6,8 @@ use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Enums\Size;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
@@ -99,23 +101,48 @@ class ReserveEquipmentTable
                             ? $query->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
                                     ->reorder('created_at', 'asc')
                             : null
-                    )
-                    ->default(),
-                TrashedFilter::make('Archive')->native(false),
+                    ),
+                //TrashedFilter::make('Archive')->native(false),
             ], layout: FiltersLayout::Modal)
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                RestoreAction::make()->color('success'),
-                DeleteAction::make(),
-                ForceDeleteAction::make(),
+                ActionGroup::make([
+                    ViewAction::make()->color('secondary'),
+                    EditAction::make()->color('secondary')
+                        ->visible(fn ($record) => ! $record->trashed())
+                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    RestoreAction::make()
+                        ->color('success')
+                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
+                    DeleteAction::make()->color('danger')
+                        ->icon('heroicon-s-archive-box-arrow-down')
+                        ->label('Archive')
+                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    ForceDeleteAction::make()->color('danger')
+                        ->icon('heroicon-s-archive-box-x-mark')
+                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
+                ])
+                ->label('Actions')
+                ->icon('heroicon-o-bars-arrow-down')
+                ->color('secondary')
+                ->size(Size::ExtraSmall)
+                ->button(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make(),
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                ]),
+                    RestoreBulkAction::make()->color('success'),
+                    DeleteBulkAction::make()
+                        ->label('Archive')
+                        ->color('secondary')
+                        ->icon('heroicon-s-archive-box-arrow-down'),
+                    ForceDeleteBulkAction::make()
+                        ->icon('heroicon-s-archive-box-x-mark')
+                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
+                ])
+                ->label('Bulk Actions')
+                ->icon('heroicon-s-cog-6-tooth')
+                ->color('info')
+                ->size(Size::Small)
+                ->button(),
             ]);
     }
 }

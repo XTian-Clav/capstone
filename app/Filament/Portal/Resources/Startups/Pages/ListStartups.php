@@ -29,6 +29,7 @@ class ListStartups extends ListRecords
             'pending' => Startup::where('status', 'pending')->count(),
             'approved' => Startup::where('status', 'approved')->count(),
             'rejected' => Startup::where('status', 'rejected')->count(),
+            'archived' => Startup::onlyTrashed()->count(),
         ]);
 
         return [
@@ -46,6 +47,10 @@ class ListStartups extends ListRecords
             'rejected' => Tab::make('Rejected')
                 ->badge($counts['rejected'])
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+                
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => Startup::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }
