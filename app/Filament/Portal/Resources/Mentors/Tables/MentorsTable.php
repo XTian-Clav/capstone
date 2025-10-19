@@ -50,7 +50,8 @@ class MentorsTable
                 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->icon(Heroicon::Phone),
 
                 TextColumn::make('email')
                     ->searchable()
@@ -63,11 +64,15 @@ class MentorsTable
                     ->sortable()
                     ->toggleable(),
 
-                BadgeColumn::make('startups.startup_name')
+                TextColumn::make('startups.startup_name')
                     ->label('Assigned To')
-                    ->separator(', ')
-                    ->sortable()
-                    ->toggleable()
+                    ->getStateUsing(fn ($record) =>
+                        $record->startups->isNotEmpty()
+                            ? $record->startups->implode('startup_name', '<br>')
+                            : 'None'
+                    )
+                    ->html()
+                    ->weight('semibold')
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
                 

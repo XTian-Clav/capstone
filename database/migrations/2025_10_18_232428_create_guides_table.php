@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('guides', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->string('description');
             $table->string('url');
             $table->timestamps();
             $table->softDeletes();

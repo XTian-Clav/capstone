@@ -24,6 +24,8 @@ class VideosTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
+            ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
                 TextColumn::make('description')->searchable()->html(),

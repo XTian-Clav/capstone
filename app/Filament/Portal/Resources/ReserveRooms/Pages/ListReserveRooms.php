@@ -4,7 +4,6 @@ namespace App\Filament\Portal\Resources\ReserveRooms\Pages;
 
 use App\Models\ReserveRoom;
 use Filament\Actions\CreateAction;
-use Illuminate\Support\Collection;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Portal\Resources\ReserveRooms\ReserveRoomResource;
@@ -22,28 +21,20 @@ class ListReserveRooms extends ListRecords
 
     public function getTabs(): array
     {
-        $counts = $this->cachedCounts ??= collect([
-            'all' => ReserveRoom::count(),
-            'pending' => ReserveRoom::where('status', 'pending')->count(),
-            'approved' => ReserveRoom::where('status', 'approved')->count(),
-            'rejected' => ReserveRoom::where('status', 'rejected')->count(),
-            'archived' => ReserveRoom::onlyTrashed()->count(),
-        ]);
-
         return [
             'all' => Tab::make('All')
-                ->badge($counts['all']),
+                ->badge(fn () => ReserveRoom::count()),
 
             'pending' => Tab::make('Pending')
-                ->badge($counts['pending'])
+                ->badge(fn () => ReserveRoom::where('status', 'pending')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
-                ->badge($counts['approved'])
+                ->badge(fn () => ReserveRoom::where('status', 'approved')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
-                ->badge($counts['rejected'])
+                ->badge(fn () => ReserveRoom::where('status', 'rejected')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
 
             'archived' => Tab::make('Archive')

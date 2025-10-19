@@ -20,33 +20,28 @@ class AnalyticsStats extends StatsOverviewWidget
         return [
             Stat::make('Total Icubatees', User::whereHas('roles', fn ($q) => $q->where('name', 'incubatee'))->count())
                 ->description('Total Incubatees registered to Pitbi')
-                ->descriptionIcon('heroicon-m-user-group', IconPosition::Before)
-                ->chart([1,5,9])
-                ->color('success'),
+                ->descriptionIcon('heroicon-s-user-group', IconPosition::Before)
+                ->color('primary'),
             
             Stat::make('Total Investors', User::whereHas('roles', fn ($q) => $q->where('name', 'investor'))->count())
                 ->description('Total Investor registered to Pitbi')
-                ->descriptionIcon('heroicon-m-user-group', IconPosition::Before)
-                ->chart([1,5,9])
-                ->color('success'),
+                ->descriptionIcon('heroicon-s-banknotes', IconPosition::Before)
+                ->color('info'),
             
             Stat::make('Total Mentors', Mentor::count())
                 ->description('Total Mentors registered to Pitbi')
-                ->descriptionIcon('heroicon-m-user-group', IconPosition::Before)
-                ->chart([1,5,9])
-                ->color('success'),
+                ->descriptionIcon('heroicon-s-academic-cap', IconPosition::Before)
+                ->color('indigo'),
 
             Stat::make('Total Startups', Startup::count())
-                ->description('Total Startups registered to Pitbi')
-                ->descriptionIcon('heroicon-m-user-group', IconPosition::Before)
-                ->chart([1,5,9])
+                ->description('Total Startups submission by Incubatees')
+                ->descriptionIcon('heroicon-s-briefcase', IconPosition::Before)
                 ->color('success'),
 
             Stat::make('Total Events', Event::count())
                 ->description('Total Events held by Pitbi')
-                ->descriptionIcon('heroicon-m-user-group', IconPosition::Before)
-                ->chart([1,5,9])
-                ->color('success'),
+                ->descriptionIcon('heroicon-s-calendar-days', IconPosition::Before)
+                ->color('danger'),
 
             Stat::make(
                 'Total Reservations',
@@ -57,10 +52,9 @@ class AnalyticsStats extends StatsOverviewWidget
                     ReserveSupply::count(),
                 ])->sum()
             )
-                ->description('Total pending reservations')
-                ->descriptionIcon('heroicon-m-clock', IconPosition::Before)
-                ->chart([1, 5, 9])
-                ->color('success'),
+                ->description('Total reservations requests')
+                ->descriptionIcon('heroicon-s-clock', IconPosition::Before)
+                ->color('primary'),
     ];
     }
 }

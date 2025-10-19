@@ -29,7 +29,7 @@ class Event extends Model
 
     protected $casts = [
         'start_date' => 'datetime',
-        // or 'start_date' / 'created_at' etc.
+        'end_date' => 'datetime',
     ];
 
     protected static function booted()

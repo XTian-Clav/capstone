@@ -11,6 +11,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Support\Icons\Heroicon;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ForceDeleteAction;
@@ -36,8 +37,7 @@ class StartupsTable
                 TextColumn::make('startup_name')
                     ->searchable()
                     ->sortable()
-                    ->weight('semibold')
-                    ->toggleable(),
+                    ->weight('semibold'),
 
                 TextColumn::make('founder')
                     ->searchable()
@@ -47,12 +47,16 @@ class StartupsTable
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
-                
-                BadgeColumn::make('mentors.name')
-                    ->label('Mentors')
-                    ->separator(', ')
                     ->toggleable()
+                    ->icon(Heroicon::Envelope),
+                
+                TextColumn::make('mentors.name')
+                    ->label('Mentors')
+                    ->getStateUsing(fn ($record) =>
+                        $record->mentors->pluck('name')->implode('<br>')
+                    )
+                    ->html()
+                    ->weight('semibold')
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
 

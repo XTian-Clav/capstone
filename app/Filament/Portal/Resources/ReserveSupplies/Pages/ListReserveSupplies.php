@@ -4,7 +4,6 @@ namespace App\Filament\Portal\Resources\ReserveSupplies\Pages;
 
 use App\Models\ReserveSupply;
 use Filament\Actions\CreateAction;
-use Illuminate\Support\Collection;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Portal\Resources\ReserveSupplies\ReserveSupplyResource;
@@ -22,30 +21,22 @@ class ListReserveSupplies extends ListRecords
 
     public function getTabs(): array
     {
-        $counts = $this->cachedCounts ??= collect([
-            'all' => ReserveSupply::count(),
-            'pending' => ReserveSupply::where('status', 'pending')->count(),
-            'approved' => ReserveSupply::where('status', 'approved')->count(),
-            'rejected' => ReserveSupply::where('status', 'rejected')->count(),
-            'archived' => ReserveSupply::onlyTrashed()->count(),
-        ]);
-
         return [
             'all' => Tab::make('All')
-                ->badge($counts['all']),
+                ->badge(fn () => ReserveSupply::count()),
 
             'pending' => Tab::make('Pending')
-                ->badge($counts['pending'])
+                ->badge(fn () => ReserveSupply::where('status', 'pending')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
-                ->badge($counts['approved'])
+                ->badge(fn () => ReserveSupply::where('status', 'approved')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
-                ->badge($counts['rejected'])
+                ->badge(fn () => ReserveSupply::where('status', 'rejected')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
-            
+
             'archived' => Tab::make('Archive')
                 ->badge(fn () => ReserveSupply::onlyTrashed()->count())
                 ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),

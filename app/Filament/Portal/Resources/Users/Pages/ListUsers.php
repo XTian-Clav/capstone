@@ -2,9 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Users\Pages;
 
-use App\Filament\Portal\Resources\Users\UserResource;
+use App\Models\User;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Filament\Portal\Resources\Users\UserResource;
 
 class ListUsers extends ListRecords
 {
@@ -14,6 +16,18 @@ class ListUsers extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All')
+                ->badge(fn () => User::count()),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => User::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

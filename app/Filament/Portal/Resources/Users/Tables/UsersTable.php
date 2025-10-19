@@ -11,6 +11,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Support\Icons\Heroicon;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ForceDeleteAction;
@@ -37,11 +38,13 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->icon(Heroicon::Envelope),
 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->icon(Heroicon::Phone),
 
                 TextColumn::make('roles.name')
                     ->searchable()

@@ -2,9 +2,12 @@
 
 namespace App\Filament\Portal\Resources\Videos\Pages;
 
-use App\Filament\Portal\Resources\Videos\VideoResource;
+
+use App\Models\Video;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Filament\Portal\Resources\Videos\VideoResource;
 
 class ListVideos extends ListRecords
 {
@@ -14,6 +17,18 @@ class ListVideos extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All')
+                ->badge(fn () => Video::count()),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => Video::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Mentors\Pages;
 
-use App\Filament\Portal\Resources\Mentors\MentorResource;
+use App\Models\Mentor;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Filament\Portal\Resources\Mentors\MentorResource;
 
 class ListMentors extends ListRecords
 {
@@ -14,6 +16,18 @@ class ListMentors extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All')
+                ->badge(fn () => Mentor::count()),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => Mentor::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

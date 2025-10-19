@@ -2,9 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Rooms\Pages;
 
-use App\Filament\Portal\Resources\Rooms\RoomResource;
+use App\Models\Room;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
+use App\Filament\Portal\Resources\Rooms\RoomResource;
 
 class ListRooms extends ListRecords
 {
@@ -14,6 +16,18 @@ class ListRooms extends ListRecords
     {
         return [
             CreateAction::make(),
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make('All')
+                ->badge(fn () => Room::count()),
+
+            'archived' => Tab::make('Archive')
+                ->badge(fn () => Room::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
     }
 }

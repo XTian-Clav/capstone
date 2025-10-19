@@ -65,6 +65,7 @@ class PortalPanelProvider extends PanelProvider
                 'danger' => Color::Red,
                 'warning' => Color::Yellow,
                 'info' => Color::Blue,
+                'indigo' => Color::Indigo,
             ])
             
             ->userMenuItems([
@@ -75,23 +76,19 @@ class PortalPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Learning Materials')
-                    ->icon('heroicon-o-academic-cap')
-                    ->collapsed(),
+                    ->icon('heroicon-o-academic-cap'),
                 
                 NavigationGroup::make()
                     ->label('Reservation')
-                    ->icon('heroicon-o-clipboard-document-check')
-                    ->collapsed(),
+                    ->icon('heroicon-o-clipboard-document-check'),
 
                 NavigationGroup::make()
                     ->label('Inventory')
-                    ->icon('heroicon-o-archive-box')
-                    ->collapsed(),
+                    ->icon('heroicon-o-archive-box'),
                 
                 NavigationGroup::make()
                     ->label('Superadmin Settings')
-                    ->icon('heroicon-o-cog-6-tooth')
-                    ->collapsed(),
+                    ->icon('heroicon-o-cog-6-tooth'),
             ])
 
             ->resourceCreatePageRedirect('index')
