@@ -14,16 +14,19 @@ use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Actions\ArchiveAction;
+use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
+use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
+use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -33,6 +36,7 @@ class ReserveRoomsTable
     {
         return $table
             ->recordUrl(null)
+            ->deferFilters(false)
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('room.room_name')
@@ -94,17 +98,10 @@ class ReserveRoomsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Filter::make('today')
-                    ->toggle()
-                    ->label('Created Today')
-                    ->query(fn ($query, $state) => 
-                        $state
-                            ? $query->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
-                                    ->reorder('created_at', 'asc')
-                            : null
-                    ),
-                //TrashedFilter::make()->native(false),
-            ], layout: FiltersLayout::Modal)
+                CreatedDateFilter::make('created_at')->columnSpan(2),
+                StartDateFilter::make(),
+                EndDateFilter::make(),
+            ], layout: FiltersLayout::AboveContent)
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

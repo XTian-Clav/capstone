@@ -14,11 +14,15 @@ use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Actions\ArchiveAction;
+use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
+use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 
 class VideosTable
@@ -27,6 +31,7 @@ class VideosTable
     {
         return $table
             ->recordUrl(null)
+            ->deferFilters(false)
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
@@ -57,17 +62,10 @@ class VideosTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Filter::make('today')
-                    ->toggle()
-                    ->label('Created Today')
-                    ->query(fn ($query, $state) => 
-                        $state
-                            ? $query->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
-                                    ->reorder('created_at', 'asc')
-                            : null
-                    ),
-                //TrashedFilter::make(),
-            ])
+                CreatedDateFilter::make('created_at')->columnSpan(2),
+                StartDateFilter::make(),
+                EndDateFilter::make(),
+            ], layout: FiltersLayout::AboveContent)
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

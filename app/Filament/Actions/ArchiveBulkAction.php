@@ -18,7 +18,6 @@ class ArchiveBulkAction extends BulkAction
             ->modalDescription('Once archived, only Superadmin can restore it.')
             ->modalSubmitActionLabel('Archive')
             ->successNotificationTitle('Archived successfully!')
-            ->action(fn ($records) => $records->each->delete())
-            ->hidden(fn ($records) => $records->every(fn ($record) => $record->trashed()));
+            ->action(fn ($records) => $records->each->delete());
     }
 }
