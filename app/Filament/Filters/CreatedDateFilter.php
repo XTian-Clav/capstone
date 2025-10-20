@@ -14,7 +14,7 @@ class CreatedDateFilter
             ->label($label)
             ->schema([
                 Radio::make('preset')
-                    ->label('Quick Filters')
+                    ->label('Quick Filter')
                     ->options([
                         'today' => 'Today',
                         'last_week' => 'Last Week',

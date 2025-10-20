@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Filament\Tables\Table;
 use Spatie\Health\Facades\Health;
 use Illuminate\Support\ServiceProvider;
+use Filament\Tables\Enums\FiltersLayout;
 use BezhanSalleh\FilamentShield\Commands;
 use Spatie\Health\Checks\Checks\CacheCheck;
 use Spatie\Health\Checks\Checks\QueueCheck;
@@ -44,5 +46,14 @@ class AppServiceProvider extends ServiceProvider
             ScheduleCheck::new(),
             UsedDiskSpaceCheck::new()->warnWhenUsedSpaceIsAbovePercentage(80),
         ]);
+
+        //Global Table Settings
+        Table::configureUsing(function (Table $table): void {
+            $table
+                ->hiddenFilterIndicators()
+                ->filtersLayout(FiltersLayout::AboveContentCollapsible)
+                ->paginationPageOptions([10, 25, 50, 100])
+                ->striped();
+        });
     }
 }

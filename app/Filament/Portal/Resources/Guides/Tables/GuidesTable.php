@@ -46,24 +46,17 @@ class GuidesTable
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
-                    ->dateTime('M j, Y h:i A')
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable()
                     ->sortable(),
-                
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

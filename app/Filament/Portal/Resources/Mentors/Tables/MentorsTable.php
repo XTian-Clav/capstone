@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Mentors\Tables;
 
+use App\Models\Mentor;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -23,6 +24,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -51,24 +53,16 @@ class MentorsTable
                 TextColumn::make('name')
                     ->weight('semibold')
                     ->searchable()
-                    ->sortable()
-                    ->toggleable(),
+                    ->sortable(),
                 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->toggleable()
                     ->icon(Heroicon::Phone),
 
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable()
-                    ->toggleable()
                     ->icon(Heroicon::Envelope),
-                
-                TextColumn::make('expertise')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
 
                 TextColumn::make('startups.startup_name')
                     ->label('Assigned To')
@@ -81,28 +75,27 @@ class MentorsTable
                     ->weight('semibold')
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
+
+                SelectColumn::make('expertise')
+                    ->options(Mentor::EXPERTISE)
+                    ->default('Pending')
+                    ->searchable()
+                    ->toggleable()
+                    ->native(false),
                 
                 TextColumn::make('created_at')
-                    ->dateTime('m-d-y g:i A')
+                    ->label('Created At')
+                    ->since()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), 
+                    ->sortable(), 
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

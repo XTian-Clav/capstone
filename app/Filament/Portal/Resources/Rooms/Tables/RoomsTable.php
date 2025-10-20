@@ -22,6 +22,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -41,7 +42,6 @@ class RoomsTable
             ->columns([
                 TextColumn::make('room_name')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->limit(40)
                     ->weight('semibold')
@@ -49,15 +49,13 @@ class RoomsTable
 
                 TextColumn::make('room_type')
                     ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-
-                TextColumn::make('location')
-                    ->searchable()
-                    ->toggleable()
                     ->sortable(),
 
                 TextColumn::make('capacity')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
@@ -71,33 +69,24 @@ class RoomsTable
                             : 'None'
                     ),
 
-                BadgeColumn::make('is_available')
-                    ->label('Availability')
-                    ->color(fn ($state) => $state ? 'success' : 'danger')
-                    ->formatStateUsing(fn ($state) => $state ? 'Room Available' : 'Room Unavailable')
-                    ->sortable()
-                    ->toggleable(),
+                ToggleColumn::make('is_available')
+                    ->label('Available')
+                    ->onColor('success')
+                    ->offColor('danger'),
                 
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), 
+                    ->label('Created At')
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(), 
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

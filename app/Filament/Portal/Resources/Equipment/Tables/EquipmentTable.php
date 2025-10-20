@@ -43,14 +43,12 @@ class EquipmentTable
             ->columns([
                 TextColumn::make('equipment_name')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->weight('semibold'),
 
                 TextColumn::make('quantity')
                     ->numeric()
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->state(fn ($record) => 
                         $record->quantity === 0 ? 'Out of Stock':
@@ -59,7 +57,6 @@ class EquipmentTable
                     
                 TextColumn::make('property_no')
                     ->searchable()
-                    ->toggleable()
                     ->sortable(),
 
                 TextColumn::make('location')
@@ -74,25 +71,18 @@ class EquipmentTable
                     ->weight('semibold'),
                 
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), 
+                    ->label('Created At')
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(), 
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

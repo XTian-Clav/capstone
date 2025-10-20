@@ -46,12 +46,10 @@ class UsersTable
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
-                    ->toggleable()
                     ->icon(Heroicon::Envelope),
 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->toggleable()
                     ->icon(Heroicon::Phone),
 
                 TextColumn::make('roles.name')
@@ -60,20 +58,18 @@ class UsersTable
                     ->color('info'),
 
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Created At')
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 //Admin have limited access to Users Table
                 ActionGroup::make([

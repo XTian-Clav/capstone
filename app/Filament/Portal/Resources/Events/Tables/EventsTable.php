@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Resources\Events\Tables;
 
 use Carbon\Carbon;
+use App\Models\Event;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -22,6 +23,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -62,36 +64,26 @@ class EventsTable
                     ->sortable()
                     ->toggleable(),
 
-                BadgeColumn::make('status')
+                SelectColumn::make('status')
+                    ->options(Event::STATUS)
+                    ->default('Pending')
                     ->searchable()
                     ->toggleable()
-                    ->colors([
-                        'warning' => 'Upcoming',
-                        'info' => 'Ongoing',
-                        'success' => 'Completed',
-                        'danger' => 'Cancelled',
-                    ]),
+                    ->native(false),
                     
                 TextColumn::make('created_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true), 
+                    ->label('Created At')
+                    ->since()
+                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),

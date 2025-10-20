@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\ReserveSupplies\Tables;
 
 use Filament\Tables\Table;
 use Filament\Actions\Action;
+use App\Models\ReserveSupply;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
@@ -22,6 +23,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
@@ -42,18 +44,15 @@ class ReserveSuppliesTable
                 TextColumn::make('supply.item_name')
                     ->label('Supply')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->weight('semibold'),
 
                 TextColumn::make('reserved_by')
                     ->searchable()
-                    ->toggleable()
                     ->sortable(),
 
                 TextColumn::make('quantity')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->formatStateUsing(fn ($state) => $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
 
@@ -71,38 +70,26 @@ class ReserveSuppliesTable
                     ->toggleable()
                     ->sortable(),
 
-                BadgeColumn::make('status')
+                SelectColumn::make('status')
+                    ->options(ReserveSupply::STATUS)
+                    ->default('Pending')
                     ->searchable()
                     ->toggleable()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'success' => 'Approved',
-                        'danger' => 'Rejected',
-                    ]),
+                    ->native(false),
                     
                 TextColumn::make('created_at')
-                    ->label('Submitted At')
-                    ->dateTime('m-d-y g:i A')
+                    ->label('Created At')
+                    ->since()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
-
-                TextColumn::make('updated_at')
-                    ->dateTime('F j, Y g:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('deleted_at')
-                    ->dateTime('F j, Y g:i A')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
-            ], layout: FiltersLayout::AboveContent)
+            ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()->color('secondary'),
