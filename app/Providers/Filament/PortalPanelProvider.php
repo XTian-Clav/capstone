@@ -7,6 +7,7 @@ use Filament\PanelProvider;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
+use App\Filament\Pages\Backups;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Enums\UserMenuPosition;
@@ -14,6 +15,7 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Widgets\FilamentInfoWidget;
 use App\Filament\Pages\HealthCheckResults;
 use Filament\Http\Middleware\Authenticate;
+use Asmit\ResizedColumn\ResizedColumnPlugin;
 use App\Filament\Portal\Pages\Auth\EditProfile;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -26,6 +28,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class PortalPanelProvider extends PanelProvider
@@ -38,7 +41,7 @@ class PortalPanelProvider extends PanelProvider
             ->path('portal')
             
             ->brandName('PITBI Portal')
-            ->topbar(false)
+            //->topbar(false)
             ->globalSearch(false)
             ->breadcrumbs(false)
             
@@ -87,7 +90,7 @@ class PortalPanelProvider extends PanelProvider
                     ->icon('heroicon-o-archive-box'),
                 
                 NavigationGroup::make()
-                    ->label('Superadmin Settings')
+                    ->label('System Settings')
                     ->icon('heroicon-o-cog-6-tooth'),
             ])
 
@@ -120,12 +123,19 @@ class PortalPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make()
                     ->navigationLabel('Roles And Permission')
-                    ->navigationGroup('Superadmin Settings'),
+                    ->navigationGroup('System Settings'),
 
                 FilamentSpatieLaravelHealthPlugin::make()
                     ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
                     ->navigationLabel('Website Health Check')
-                    ->navigationGroup('Superadmin Settings'),
+                    ->navigationGroup('System Settings'),
+
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
+                    ->usingPage(Backups::class),
+
+                ResizedColumnPlugin::make()
+                    ->preserveOnDB(),
 
                 SlickScrollbarPlugin::make()
                     ->size('6px')

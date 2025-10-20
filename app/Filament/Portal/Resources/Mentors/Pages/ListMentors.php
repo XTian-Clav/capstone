@@ -6,10 +6,13 @@ use App\Models\Mentor;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Mentors\MentorResource;
 
 class ListMentors extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = MentorResource::class;
 
     protected function getHeaderActions(): array

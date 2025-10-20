@@ -6,10 +6,13 @@ use App\Models\Startup;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Startups\StartupResource;
 
 class ListStartups extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = StartupResource::class;
 
     protected ?Collection $cachedCounts = null;

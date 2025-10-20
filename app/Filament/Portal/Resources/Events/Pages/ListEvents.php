@@ -6,10 +6,13 @@ use App\Models\Event;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Events\EventResource;
 
 class ListEvents extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = EventResource::class;
 
     protected function getHeaderActions(): array

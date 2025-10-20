@@ -6,10 +6,13 @@ use App\Models\Guide;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Guides\GuideResource;
 
 class ListGuides extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = GuideResource::class;
 
     protected function getHeaderActions(): array

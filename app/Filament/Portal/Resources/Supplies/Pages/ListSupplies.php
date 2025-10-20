@@ -6,10 +6,13 @@ use App\Models\Supply;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Supplies\SupplyResource;
 
 class ListSupplies extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = SupplyResource::class;
 
     protected function getHeaderActions(): array

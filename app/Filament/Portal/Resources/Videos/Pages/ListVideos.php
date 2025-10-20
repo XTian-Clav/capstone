@@ -7,10 +7,13 @@ use App\Models\Video;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\Videos\VideoResource;
 
 class ListVideos extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = VideoResource::class;
 
     protected function getHeaderActions(): array

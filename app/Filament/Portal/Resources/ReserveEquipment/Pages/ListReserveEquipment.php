@@ -6,10 +6,13 @@ use App\Models\ReserveEquipment;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
+use Asmit\ResizedColumn\HasResizableColumn;
 use App\Filament\Portal\Resources\ReserveEquipment\ReserveEquipmentResource;
 
 class ListReserveEquipment extends ListRecords
 {
+    use HasResizableColumn;
+    
     protected static string $resource = ReserveEquipmentResource::class;
 
     protected function getHeaderActions(): array

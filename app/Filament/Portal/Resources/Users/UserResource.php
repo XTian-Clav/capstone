@@ -26,7 +26,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationLabel = 'Manage Users';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Superadmin Settings';
+    protected static string | UnitEnum | null $navigationGroup = 'System Settings';
 
     public static function getNavigationBadge(): ?string
     {
