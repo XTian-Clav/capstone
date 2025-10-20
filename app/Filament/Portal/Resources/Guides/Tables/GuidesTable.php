@@ -12,6 +12,7 @@ use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use App\Filament\Actions\ArchiveAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
@@ -74,9 +75,7 @@ class GuidesTable
                     RestoreAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    DeleteAction::make()->color('danger')
-                        ->icon('heroicon-s-archive-box-arrow-down')
-                        ->label('Archive')
+                    ArchiveAction::make()
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     ForceDeleteAction::make()->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -90,7 +89,9 @@ class GuidesTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()->color('success'),
+                    RestoreBulkAction::make()
+                        ->color('success')
+                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                     DeleteBulkAction::make()
                         ->label('Archive')
                         ->color('secondary')

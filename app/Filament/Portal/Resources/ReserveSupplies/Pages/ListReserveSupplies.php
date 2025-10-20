@@ -21,7 +21,9 @@ class ListReserveSupplies extends ListRecords
 
     public function getTabs(): array
     {
-        return [
+        $user = auth()->user();
+        
+        $tabs = [
             'all' => Tab::make('All')
                 ->badge(fn () => ReserveSupply::count()),
 
@@ -36,10 +38,14 @@ class ListReserveSupplies extends ListRecords
             'rejected' => Tab::make('Rejected')
                 ->badge(fn () => ReserveSupply::where('status', 'rejected')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
-
-            'archived' => Tab::make('Archive')
-                ->badge(fn () => ReserveSupply::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
+        // Add archive tab only for SuperAdmin
+        if ($user->hasRole('super_admin')) {
+            $tabs['archived'] = Tab::make('Archive')
+                ->badge(fn () => ReserveSupply::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());
+        }
+
+        return $tabs;
     }
 }

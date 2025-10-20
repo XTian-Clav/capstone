@@ -21,7 +21,9 @@ class ListEvents extends ListRecords
 
     public function getTabs(): array
     {
-        return [
+        $user = auth()->user();
+        
+        $tabs = [
             'all' => Tab::make('All')
                 ->badge(fn () => Event::count()),
 
@@ -40,10 +42,14 @@ class ListEvents extends ListRecords
             'Cancelled' => Tab::make('Cancelled')
                 ->badge(fn () => Event::where('status', 'Cancelled')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'Cancelled')),
-
-            'archived' => Tab::make('Archive')
-                ->badge(fn () => Event::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
         ];
+        // Add archive tab only for SuperAdmin
+        if ($user->hasRole('super_admin')) {
+            $tabs['archived'] = Tab::make('Archive')
+                ->badge(fn () => Event::onlyTrashed()->count())
+                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());
+        }
+
+        return $tabs;
     }
 }

@@ -13,6 +13,7 @@ use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use App\Filament\Actions\ArchiveAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
@@ -22,6 +23,7 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
+use App\Filament\Actions\ArchiveBulkAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -112,9 +114,7 @@ class ReserveRoomsTable
                     RestoreAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    DeleteAction::make()->color('danger')
-                        ->icon('heroicon-s-archive-box-arrow-down')
-                        ->label('Archive')
+                    ArchiveAction::make()
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     ForceDeleteAction::make()->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -128,11 +128,10 @@ class ReserveRoomsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    RestoreBulkAction::make()->color('success'),
-                    DeleteBulkAction::make()
-                        ->label('Archive')
-                        ->color('secondary')
-                        ->icon('heroicon-s-archive-box-arrow-down'),
+                    RestoreBulkAction::make()
+                        ->color('success')
+                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
+                    ArchiveBulkAction::make(),
                     ForceDeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

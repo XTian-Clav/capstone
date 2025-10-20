@@ -21,6 +21,13 @@ class ListGuides extends ListRecords
 
     public function getTabs(): array
     {
+        $user = auth()->user();
+
+        // Hide all tabs for non-superadmin users
+        if (! $user->hasRole('super_admin')) {
+            return [];
+        }
+        
         return [
             'all' => Tab::make('All')
                 ->badge(fn () => Guide::count()),
