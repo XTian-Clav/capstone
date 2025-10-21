@@ -59,8 +59,8 @@ class GuidesTable
             ])
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()->color('secondary'),
-                    EditAction::make()->color('secondary')
+                    ViewAction::make()->color('gray'),
+                    EditAction::make()->color('gray')
                         ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreAction::make()

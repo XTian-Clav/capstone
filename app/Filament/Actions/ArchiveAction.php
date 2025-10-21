@@ -11,7 +11,7 @@ class ArchiveAction extends Action
         return parent::make($name ?? 'archive')
             ->label('Archive')
             ->icon('heroicon-s-archive-box-arrow-down')
-            ->color('danger')
+            ->color('secondary')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Archive ' . $action->getRecordTitle())
             ->modalDescription('Once archived, only Superadmin can restore it.')

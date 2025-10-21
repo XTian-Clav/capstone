@@ -32,7 +32,7 @@ class UserForm
 
                             //IMG DIRECTORY
                             ->disk('public')
-                            ->directory('user/avatar')
+                            ->directory('avatars')
                             ->visibility('public')
 
                             //IMAGE CROP (1:1)

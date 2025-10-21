@@ -91,8 +91,8 @@ class RoomsTable
             ])
             ->recordActions([
                 ActionGroup::make([
-                    ViewAction::make()->color('secondary'),
-                    EditAction::make()->color('secondary')
+                    ViewAction::make()->color('gray'),
+                    EditAction::make()->color('gray')
                         ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreAction::make()
@@ -117,7 +117,7 @@ class RoomsTable
                         ->exports([
                             ExcelExport::make()->fromTable()->except(['is_available']),
                         ])
-                        ->color('success')
+                        ->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')

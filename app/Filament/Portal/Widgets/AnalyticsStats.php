@@ -19,29 +19,29 @@ class AnalyticsStats extends StatsOverviewWidget
     {
         return [
             Stat::make('Total Icubatees', User::whereHas('roles', fn ($q) => $q->where('name', 'incubatee'))->count())
-                ->description('Total Incubatees registered to Pitbi')
+                ->description('Total Incubatees registered')
                 ->descriptionIcon('heroicon-s-user-group', IconPosition::Before)
                 ->color('primary'),
             
             Stat::make('Total Investors', User::whereHas('roles', fn ($q) => $q->where('name', 'investor'))->count())
-                ->description('Total Investor registered to Pitbi')
+                ->description('Total Investor registered')
                 ->descriptionIcon('heroicon-s-banknotes', IconPosition::Before)
-                ->color('info'),
+                ->color('secondary'),
             
             Stat::make('Total Mentors', Mentor::count())
-                ->description('Total Mentors registered to Pitbi')
+                ->description('Total Mentors registered')
                 ->descriptionIcon('heroicon-s-academic-cap', IconPosition::Before)
-                ->color('indigo'),
+                ->color('success'),
 
             Stat::make('Total Startups', Startup::count())
-                ->description('Total Startups submission by Incubatees')
+                ->description('Total Startups submission')
                 ->descriptionIcon('heroicon-s-briefcase', IconPosition::Before)
-                ->color('success'),
+                ->color('danger'),
 
             Stat::make('Total Events', Event::count())
                 ->description('Total Events held by Pitbi')
                 ->descriptionIcon('heroicon-s-calendar-days', IconPosition::Before)
-                ->color('danger'),
+                ->color('primary'),
 
             Stat::make(
                 'Total Reservations',
@@ -54,7 +54,7 @@ class AnalyticsStats extends StatsOverviewWidget
             )
                 ->description('Total reservations requests')
                 ->descriptionIcon('heroicon-s-clock', IconPosition::Before)
-                ->color('primary'),
+                ->color('secondary'),
     ];
     }
 }
