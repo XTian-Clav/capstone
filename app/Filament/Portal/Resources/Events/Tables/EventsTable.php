@@ -69,7 +69,15 @@ class EventsTable
                     ->default('Pending')
                     ->searchable()
                     ->toggleable()
-                    ->native(false),
+                    ->native(false)
+                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
+                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+
+                TextColumn::make('display_status')
+                    ->label('Display Status')
+                    ->getStateUsing(fn ($record) => $record->status)
+                    ->badge()
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
                     
                 TextColumn::make('created_at')
                     ->label('Created At')

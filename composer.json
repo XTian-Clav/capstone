@@ -7,7 +7,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "andreia/filament-nord-theme": "^2.0",
         "asmit/resized-column": "^1.1",
         "bezhansalleh/filament-shield": "^4.0",
         "filament/filament": "^4.0",
@@ -15,9 +14,8 @@
         "jeffgreco13/filament-breezy": "^3.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "muazzam/slick-scrollbar": "^1.0",
+        "leandrocfe/filament-apex-charts": "^4.0",
         "pxlrbt/filament-excel": "3.0",
-        "shuvroroy/filament-spatie-laravel-backup": "^3.1",
         "shuvroroy/filament-spatie-laravel-health": "^3.1"
     },
     "require-dev": {

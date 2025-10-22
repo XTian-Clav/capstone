@@ -31,7 +31,7 @@ class StartupInfolist
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
                         ->columnSpan(3),
-                ])->columns(4)->columnSpan(3)->compact(),
+                ])->columns(4)->columnSpan(3)->compact()->secondary(),
                 
                 Section::make()
                 ->schema([
@@ -65,7 +65,7 @@ class StartupInfolist
                         ->weight('semibold')
                         ->color('danger')
                         ->visible(fn (Startup $record): bool => $record->trashed()),
-                    ])->columnSpan(3)->columns(3)->compact(),
+                    ])->columnSpan(3)->columns(3)->compact()->secondary(),
             ])->columns(3);
     }
 }

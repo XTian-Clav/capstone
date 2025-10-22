@@ -20,6 +20,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 
@@ -83,10 +84,7 @@ class GuidesTable
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    DeleteBulkAction::make()
-                        ->label('Archive')
-                        ->color('secondary')
-                        ->icon('heroicon-s-archive-box-arrow-down'),
+                    ArchiveBulkAction::make(),
                     ForceDeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

@@ -24,7 +24,7 @@ class UserInfolist
                         ->square()
                         ->alignCenter()
                         ->defaultImageUrl(url('storage/default/user.png')),
-                ])->columnSpan(1)->compact(),
+                ])->columnSpan(1)->compact()->secondary(),
 
                 Section::make('Personal Details')
                 ->schema([
@@ -42,7 +42,7 @@ class UserInfolist
                         ->weight('semibold')
                         ->color('danger')
                         ->visible(fn (User $record): bool => $record->trashed()),
-                ])->columns(2)->columnSpan(2)->compact(),
+                ])->columns(2)->columnSpan(2)->compact()->secondary(),
             ])->columns(3);
     }
 }

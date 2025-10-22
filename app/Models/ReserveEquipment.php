@@ -15,6 +15,7 @@ class ReserveEquipment extends Model
         'equipment_id',
         'quantity',
         'status',
+        'display_status',
         'office',
         'contact',
         'email',

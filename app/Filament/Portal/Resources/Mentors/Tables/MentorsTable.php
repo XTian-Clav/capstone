@@ -76,12 +76,9 @@ class MentorsTable
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
 
-                SelectColumn::make('expertise')
-                    ->options(Mentor::EXPERTISE)
-                    ->default('Pending')
+                TextColumn::make('expertise')
                     ->searchable()
-                    ->toggleable()
-                    ->native(false),
+                    ->toggleable(),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')

@@ -17,20 +17,17 @@ use App\Filament\Pages\HealthCheckResults;
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Asmit\ResizedColumn\ResizedColumnPlugin;
-use App\Filament\Plugins\CustomNordThemePlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Muazzam\SlickScrollbar\SlickScrollbarPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
-use Andreia\FilamentNordTheme\FilamentNordThemePlugin;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class PortalPanelProvider extends PanelProvider
@@ -43,9 +40,9 @@ class PortalPanelProvider extends PanelProvider
             ->path('portal')
             
             ->brandName('PITBI Portal')
-            ->topbar(false)
-            ->globalSearch(false)
-            ->breadcrumbs(false)
+            ->userMenu(position: UserMenuPosition::Sidebar)
+            ->globalSearch(true)
+            ->breadcrumbs(true)
             
             ->login()
             ->registration()
@@ -57,21 +54,60 @@ class PortalPanelProvider extends PanelProvider
             ->profile()
 
             ->font('Poppins')
-            ->defaultThemeMode(ThemeMode::Light)
+            //->defaultThemeMode(ThemeMode::Light)
             ->brandLogoHeight('2rem')
             ->brandLogo(asset('assets/logo/light-theme-alt.png'))
             ->darkModeBrandLogo(asset('assets/logo/dark-theme.png'))
             ->favicon(asset('assets/favicon/favicon.ico'))
 
-            /*->colors([
-                'primary' => Color::Amber,
-                'secondary' => Color::Gray,
-                'success' => Color::Emerald,
-                'danger' => Color::Red,
-                'warning' => Color::Yellow,
-                'info' => Color::Blue,
+            ->colors([
+                //Nord Theme Colors
+                'danger' => Color::hex('#bf616a'), // nord11
+                'gray' => [
+                    50 => '#eceff4',  // nord6 - snow storm
+                    100 => '#e5e9f0', // nord5 - snow storm
+                    200 => '#d8dee9', // nord4 - snow storm
+                    300 => '#a7b1c5',
+                    400 => '#8c9ab3',
+                    500 => '#71829b',
+                    600 => '#4c566a', // nord3 - polar night
+                    700 => '#434c5e', // nord2 - polar night
+                    800 => '#3b4252', // nord1 - polar night
+                    900 => '#2e3440', // nord0 - polar night
+                    950 => '#232831',
+                ],
+                'info' => Color::hex('#81a1c1'), // nord9
+                'primary' => Color::hex('#013267'), // pitbi orange
+                'secondary' => Color::hex('#fe800d'), // pitbi blue
+                'success' => Color::hex('#a3be8c'), // nord14
+                'warning' => Color::hex('#ebcb8b'), // nord13
+                'polarnight' => Color::hex('#3b4353'), // nord1
+
+                //Neutral Colors
+                'gray' => Color::Gray,
+                'zinc' => Color::Zinc,
+                'neutral' => Color::Neutral,
+                'slate' => Color::Slate,
+                'stone' => Color::Stone,
+
+                //Tailwind Colors
+                'red' => Color::Red,
+                'rose' => Color::Rose,
+                'orange' => Color::Orange,
+                'amber' => Color::Amber,
+                'yellow' => Color::Yellow,
+                'green' => Color::Green,
+                'emerald' => Color::Emerald,
+                'teal' => Color::Teal,
+                'cyan' => Color::Cyan,
+                'sky' => Color::Sky,
+                'blue' => Color::Blue,
                 'indigo' => Color::Indigo,
-            ])*/
+                'violet' => Color::Violet,
+                'purple' => Color::Purple,
+                'fuchsia' => Color::Fuchsia,
+                'pink' => Color::Pink,
+            ])
 
             ->viteTheme('resources/css/filament/portal/theme.css')
             
@@ -133,14 +169,10 @@ class PortalPanelProvider extends PanelProvider
                     ->navigationLabel('Website Health Check')
                     ->navigationGroup('System Settings'),
 
-                FilamentSpatieLaravelBackupPlugin::make()
-                    ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
-                    ->usingPage(Backups::class),
-
-                CustomNordThemePlugin::make(),
-
                 ResizedColumnPlugin::make()
-                    ->preserveOnDB(true),
+                    ->preserveOnDB(false),
+
+                FilamentApexChartsPlugin::make(),
 
                 BreezyCore::make()
                     ->avatarUploadComponent(fn($fileUpload) => $fileUpload->disableLabel())
@@ -154,13 +186,6 @@ class PortalPanelProvider extends PanelProvider
                         slug: 'my-profile', // Sets the slug for the profile page (default = 'my-profile')
                         //force: false, // force the user to enable 2FA before they can use the application (default = false)
                     ),
-
-                /*
-                SlickScrollbarPlugin::make()
-                    ->size('6px')
-                    ->palette('primary')
-                    ->hoverColor(Color::Amber, 700),
-                */
             ]);
     }
 }

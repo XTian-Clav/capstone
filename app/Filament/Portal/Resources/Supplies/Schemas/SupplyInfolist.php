@@ -26,7 +26,7 @@ class SupplyInfolist
                         ->height(160)
                         ->alignCenter()
                         ->defaultImageUrl(url('storage/default/no-image.png')),
-                ])->columnSpan(1)->compact(),
+                ])->columnSpan(1)->compact()->secondary(),
 
                 Section::make('Item Details')
                 ->schema([
@@ -47,7 +47,7 @@ class SupplyInfolist
                         ->weight('semibold')
                         ->color('danger')
                         ->visible(fn (Supply $record): bool => $record->trashed()),
-                ])->columns(3)->columnSpan(2)->compact(),
+                ])->columns(3)->columnSpan(2)->compact()->secondary(),
             ])->columns(3);
     }
 }

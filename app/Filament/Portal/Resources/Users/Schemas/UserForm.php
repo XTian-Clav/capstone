@@ -42,7 +42,7 @@ class UserForm
                             //FILE SIZE LIMIT
                             ->maxSize(5120)
                             ->imagePreviewHeight('185'),
-                    ])->columnSpan(1)->compact(),
+                    ])->columnSpan(1)->compact()->secondary(),
 
                     Section::make()
                     ->schema([
@@ -50,6 +50,7 @@ class UserForm
                         ->schema([
                             CheckboxList::make('roles')
                                 ->relationship('roles', 'name')
+                                ->maxItems(1)
                                 ->required()
                                 ->columns(2),
                         ])->columnSpanFull(),
@@ -65,7 +66,7 @@ class UserForm
                             ->required(fn (string $operation): bool => $operation === 'create')
                             ->maxLength(100)
                             ->revealable(),
-                    ])->columnSpan(2)->columns(2)->compact(),
+                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
 
                 
                     Grid::make()

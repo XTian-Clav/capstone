@@ -15,6 +15,7 @@ class ReserveRoom extends Model
         'room_id',
         'room_type',
         'status',
+        'display_status',
         'office',
         'contact',
         'email',

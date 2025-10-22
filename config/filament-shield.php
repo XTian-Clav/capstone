@@ -256,6 +256,7 @@ return [
     |
     */
 
+    'display_permission_in_resource' => true,
     'register_role_policy' => true,
 
 ];

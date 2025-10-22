@@ -17,12 +17,13 @@ return new class extends Migration
             $table->foreignId('equipment_id')->constrained('equipment')->cascadeOnDelete();
             $table->unsignedInteger('quantity')->default(1);
             $table->string('status');
+            $table->string('display_status')->nullable();
             $table->string('office');
             $table->string('contact');
             $table->string('email');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->boolean('accept_terms')->default(false);
+            $table->boolean('accept_terms')->default(false)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -50,10 +50,10 @@ class AppServiceProvider extends ServiceProvider
         //Global Table Settings
         Table::configureUsing(function (Table $table): void {
             $table
+                //->striped()
                 ->hiddenFilterIndicators()
                 ->filtersLayout(FiltersLayout::AboveContentCollapsible)
-                ->paginationPageOptions([10, 25, 50, 100])
-                ->striped();
+                ->paginationPageOptions([10, 25, 50, 100]);
         });
     }
 }

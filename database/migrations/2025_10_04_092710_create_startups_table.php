@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->text('description');
             $table->string('status');
+            $table->string('display_status')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

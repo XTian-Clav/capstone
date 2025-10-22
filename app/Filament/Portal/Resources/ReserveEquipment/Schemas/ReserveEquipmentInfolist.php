@@ -47,7 +47,7 @@ class ReserveEquipmentInfolist
                                 'danger' => 'Rejected',
                             ]),
                     ])->columnSpanFull()->columns(2)->compact(),
-                ])->columnSpan(1)->columns(2)->compact(),
+                ])->columnSpan(1)->columns(2)->compact()->secondary(),
                 
                     Section::make('Reservation Details')
                     ->schema([
@@ -80,7 +80,7 @@ class ReserveEquipmentInfolist
                                 ->color('danger')
                                 ->visible(fn (ReserveEquipment $record): bool => $record->trashed()),
                         ])->columnSpanFull()->columns(2)->compact(),
-                ])->columns(3)->columnSpan(2)->compact(),
+                ])->columns(3)->columnSpan(2)->compact()->secondary(),
             ])->columns(3);
     }
 }

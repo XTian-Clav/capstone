@@ -15,6 +15,7 @@ class ReserveSupply extends Model
         'supply_id',
         'quantity',
         'status',
+        'display_status',
         'office',
         'contact',
         'email',

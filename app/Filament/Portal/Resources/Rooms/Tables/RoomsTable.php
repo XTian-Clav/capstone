@@ -74,7 +74,16 @@ class RoomsTable
                 ToggleColumn::make('is_available')
                     ->label('Available')
                     ->onColor('success')
-                    ->offColor('danger'),
+                    ->offColor('danger')
+                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
+                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+
+                TextColumn::make('availability_text')
+                    ->label('Room Status')
+                    ->weight('semibold')
+                    ->getStateUsing(fn ($record) => $record->is_available ? 'Room available' : 'Room not available')
+                    ->color(fn ($record) => $record->is_available ? 'success' : 'danger')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')

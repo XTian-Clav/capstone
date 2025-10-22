@@ -43,7 +43,7 @@ class ReserveSupplyForm
                             ->label('Email')
                             ->default(fn () => auth()->user()?->email)
                             ->required(),
-                    ])->columnSpan(2)->columns(2)->compact(),
+                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
 
                     Section::make()
                     ->schema([
@@ -90,7 +90,7 @@ class ReserveSupplyForm
                             })
                             ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0)),
                         Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 6:00 PM.')->columnSpanFull(),
-                    ])->columnSpan(2)->columns(2)->compact(),
+                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
                     
                     Section::make()
                     ->collapsed()->description('Terms and Conditions')
@@ -108,7 +108,7 @@ class ReserveSupplyForm
                         ->required()
                         ->rules(['accepted'])
                         ->columnSpan('full'),
-                    ])->columnSpanFull()->compact(),
+                    ])->columnSpanFull()->compact()->secondary(),
 
                 ])->columnSpan(2)->columns(2)->compact(),
 

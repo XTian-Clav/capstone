@@ -3,3 +3,30 @@
 @source '../../../../app/Filament/Portal/**/*';
 @source '../../../../resources/views/filament/portal/**/*';
 @source '../../../../vendor/jeffgreco13/filament-breezy/resources/**/*';
+
+/* Primary-colored table headers */
+.fi-ta-table thead tr th {
+    @apply bg-primary-100;
+}
+
+/* Universal transparent scrollbar (Firefox + Chromium browsers) */
+html,
+body,
+.fi-sidebar,
+.fi-modal-window,
+.fi-table,
+.fi-section-content {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+/* Chromium browsers (Chrome, Edge, Brave, Safari) */
+.fi-layout::-webkit-scrollbar {
+    width: 6px;
+}
+
+.fi-layout::-webkit-scrollbar-track,
+.fi-layout::-webkit-scrollbar-thumb,
+.fi-layout::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}

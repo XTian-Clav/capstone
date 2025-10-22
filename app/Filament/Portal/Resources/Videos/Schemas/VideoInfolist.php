@@ -52,7 +52,7 @@ class VideoInfolist
                             ->color('danger')
                             ->visible(fn (Video $record): bool => $record->trashed()),
                     ])->columns(2)->columnSpanFull(),
-                ])->columns(2)->columnSpanFull(),
+                ])->columns(2)->columnSpanFull()->secondary(),
             ]);
     }
 }

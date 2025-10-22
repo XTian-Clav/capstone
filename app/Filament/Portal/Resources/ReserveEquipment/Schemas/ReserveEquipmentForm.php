@@ -43,7 +43,7 @@ class ReserveEquipmentForm
                             ->label('Email')
                             ->default(fn () => auth()->user()?->email)
                             ->required(),
-                    ])->columnSpan(2)->columns(2)->compact(),
+                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
 
                     Section::make()
                     ->schema([
@@ -90,7 +90,7 @@ class ReserveEquipmentForm
                             })
                             ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0)),
                         Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 6:00 PM.')->columnSpanFull(),
-                    ])->columnSpan(2)->columns(2)->compact(),
+                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
                     
                     Section::make()
                     ->collapsed()->description('Terms and Conditions')
@@ -108,7 +108,7 @@ class ReserveEquipmentForm
                         ->required()
                         ->rules(['accepted'])
                         ->columnSpan('full'),
-                    ])->columnSpanFull()->compact(),
+                    ])->columnSpanFull()->compact()->secondary(),
 
                 ])->columnSpan(2)->columns(2)->compact(),
 
@@ -190,7 +190,7 @@ class ReserveEquipmentForm
                         ->options(ReserveEquipment::STATUS)
                         ->default('Pending')
                         ->required()
-                        ->native(false),                  
+                        ->native(false),       
                 ])->compact(),
             ])->columns(3);
     }

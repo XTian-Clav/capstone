@@ -22,7 +22,7 @@ class MentorInfolist
                         ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
-                        ->size(200)
+                        ->size(150)
                         ->square()
                         ->alignCenter()
                         ->defaultImageUrl(url('storage/default/user.png')),
@@ -33,7 +33,7 @@ class MentorInfolist
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
                         ->columnSpan(3),
-                ])->columns(4)->columnSpan(3)->compact(),
+                ])->columns(4)->columnSpan(3)->compact()->secondary(),
 
                 Section::make()
                 ->schema([
@@ -51,7 +51,7 @@ class MentorInfolist
                         ->weight('semibold')
                         ->color('danger')
                         ->visible(fn (Mentor $record): bool => $record->trashed()),
-                ])->columnSpan(3)->columns(3)->compact(),
+                ])->columnSpan(3)->columns(3)->compact()->secondary(),
             ])->columns(3);
     }
 }

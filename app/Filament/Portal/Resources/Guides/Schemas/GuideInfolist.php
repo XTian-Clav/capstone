@@ -52,7 +52,7 @@ class GuideInfolist
                             ->color('danger')
                             ->visible(fn (Guide $record): bool => $record->trashed()),
                     ])->columns(2)->columnSpanFull(),
-                ])->columns(2)->columnSpanFull(),
+                ])->columns(2)->columnSpanFull()->secondary(),
             ]);
     }
 }

@@ -53,7 +53,7 @@ class EventInfolist
                             ->badge()
                             ->color('danger'),
 
-                        ])->columnSpan(3)->columns(2)->secondary()->compact(),
+                        ])->columnSpan(3)->columns(2)->compact()->secondary(),
 
                     TextEntry::make('status')
                         ->badge()
