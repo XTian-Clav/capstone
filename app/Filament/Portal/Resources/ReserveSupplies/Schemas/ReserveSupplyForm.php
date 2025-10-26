@@ -29,22 +29,22 @@ class ReserveSupplyForm
                     ->schema([
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
-                            ->default(fn () => auth()->user()?->name)
+                            ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Company')
-                            ->default(fn () => auth()->user()?->company)
+                            ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
                         TextInput::make('contact')
                             ->label('Contact')
-                            ->default(fn () => auth()->user()?->contact)
+                            ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
-                            ->default(fn () => auth()->user()?->email)
+                            ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
 
@@ -106,7 +106,8 @@ class ReserveSupplyForm
                         ->options(ReserveSupply::STATUS)
                         ->default('Pending')
                         ->required()
-                        ->native(false),
+                        ->native(false)
+                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                 ])->compact(),
             ])->columns(3);
     }

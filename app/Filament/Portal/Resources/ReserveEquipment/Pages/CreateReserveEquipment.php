@@ -8,4 +8,15 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateReserveEquipment extends CreateRecord
 {
     protected static string $resource = ReserveEquipmentResource::class;
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $user = auth()->user();
+
+        if (! $user->hasAnyRole(['admin', 'super_admin'])) {
+            $data['status'] = 'Pending';
+        }
+
+        return $data;
+    }
 }

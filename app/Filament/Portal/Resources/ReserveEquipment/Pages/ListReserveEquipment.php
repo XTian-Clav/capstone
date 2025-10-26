@@ -25,21 +25,28 @@ class ListReserveEquipment extends ListRecords
     public function getTabs(): array
     {
         $user = auth()->user();
-        
+        $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
+
         $tabs = [
             'all' => Tab::make('All')
-                ->badge(fn () => ReserveEquipment::count()),
+                ->badge(fn () => $isAdmin ? ReserveEquipment::count() : ReserveEquipment::where('reserved_by', $user->name)->count()),
 
             'pending' => Tab::make('Pending')
-                ->badge(fn () => ReserveEquipment::where('status', 'pending')->count())
+                ->badge(fn () => $isAdmin 
+                    ? ReserveEquipment::where('status', 'pending')->count() 
+                    : ReserveEquipment::where('status', 'pending')->where('reserved_by', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
-                ->badge(fn () => ReserveEquipment::where('status', 'approved')->count())
+                ->badge(fn () => $isAdmin 
+                    ? ReserveEquipment::where('status', 'approved')->count()
+                    : ReserveEquipment::where('status', 'approved')->where('reserved_by', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
-                ->badge(fn () => ReserveEquipment::where('status', 'rejected')->count())
+                ->badge(fn () => $isAdmin 
+                    ? ReserveEquipment::where('status', 'rejected')->count()
+                    : ReserveEquipment::where('status', 'rejected')->where('reserved_by', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
         ];
         // Add archive tab only for SuperAdmin

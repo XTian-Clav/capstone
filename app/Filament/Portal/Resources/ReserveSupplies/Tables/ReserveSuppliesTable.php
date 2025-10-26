@@ -58,14 +58,14 @@ class ReserveSuppliesTable
 
                 TextColumn::make('start_date')
                     ->dateTime('m-d-y g:i A')
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->tooltip(fn ($record) => $record->start_date->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
 
                 TextColumn::make('end_date')
                     ->dateTime('m-d-y g:i A')
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->tooltip(fn ($record) => $record->end_date->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),

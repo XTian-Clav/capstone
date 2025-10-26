@@ -19,7 +19,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return $this->avatar_url
             ? asset('storage/' . $this->avatar_url)
-            : null;
+            : asset('storage/default/user.png');
     }
 
     /** @use HasFactory<\Database\Factories\UserFactory> */

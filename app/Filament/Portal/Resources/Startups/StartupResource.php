@@ -29,10 +29,10 @@ class StartupResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getEloquentQuery()->count();
     }
 
-    protected static ?string $recordTitleAttribute = 'startup';
+    protected static ?string $recordTitleAttribute = 'startup_name';
 
     public static function form(Schema $schema): Schema
     {
@@ -72,5 +72,18 @@ class StartupResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        // Only non-admin/super_admin users are filtered
+        if (! $user->hasAnyRole(['admin', 'super_admin'])) {
+            $query->where('founder', $user->name);
+        }
+
+        return $query;
     }
 }

@@ -20,21 +20,18 @@ class ReservationValidation
             ->required()
             ->native(false)
             ->seconds(false)
+            ->default(fn () => Carbon::now()->setTime(8, 0))
             ->rule(function ($get) use ($foreignKey, $reserveModel) {
-                return function (string $attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
-                    $time = Carbon::parse($value);
-                    $hour = $time->format('H');
+                return function ($attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
+                    $start = Carbon::parse($value);
+                    $end = $get('end_date') ? Carbon::parse($get('end_date')) : null;
 
-                    // business hours rule
-                    if ($hour < 8 || $hour >= 18) {
-                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                    }
+                    // Business hours: 8AM–6PM
+                    if ($start->hour < 8 || $start->hour >= 18)
+                        return $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
 
-                    // overlap validation (optional, only if model supports it)
-                    if ($get('end_date') && $get($foreignKey)) {
-                        $start = Carbon::parse($value);
-                        $end = Carbon::parse($get('end_date'));
-
+                    // Overlap check
+                    if ($end && $get($foreignKey)) {
                         $overlap = $reserveModel::query()
                             ->where('status', 'Approved')
                             ->where($foreignKey, $get($foreignKey))
@@ -45,13 +42,11 @@ class ReservationValidation
                             })
                             ->exists();
 
-                        if ($overlap) {
+                        if ($overlap)
                             $fail('The selected item is already reserved in this time range.');
-                        }
                     }
                 };
-            })
-            ->default(fn () => Carbon::now()->setHour(8)->setMinute(0)->setSecond(0));
+            });
     }
 
     public static function endDate(string $foreignKey, string $reserveModel): DateTimePicker
@@ -62,25 +57,22 @@ class ReservationValidation
             ->required()
             ->native(false)
             ->seconds(false)
+            ->default(fn () => Carbon::now()->setTime(18, 0))
             ->rule(function ($get) use ($foreignKey, $reserveModel) {
-                return function (string $attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
+                return function ($attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
                     $end = Carbon::parse($value);
-                    $hour = $end->format('H');
+                    $start = $get('start_date') ? Carbon::parse($get('start_date')) : null;
 
-                    if ($hour < 8 || $hour > 18) {
-                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                    }
+                    // Business hours
+                    if ($end->hour < 8 || $end->hour > 18)
+                        return $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
 
-                    if ($get('start_date')) {
-                        $start = Carbon::parse($get('start_date'));
-                        if ($end->lessThanOrEqualTo($start)) {
-                            $fail('[Invalid] End time is earlier than the start time.');
-                        }
-                    }
+                    // End before start
+                    if ($start && $end->lessThanOrEqualTo($start))
+                        return $fail('[Invalid] End time is earlier than the start time.');
 
-                    // overlap validation
-                    if ($get('start_date') && $get($foreignKey)) {
-                        $start = Carbon::parse($get('start_date'));
+                    // Overlap check
+                    if ($start && $get($foreignKey)) {
                         $overlap = $reserveModel::query()
                             ->where('status', 'Approved')
                             ->where($foreignKey, $get($foreignKey))
@@ -91,13 +83,11 @@ class ReservationValidation
                             })
                             ->exists();
 
-                        if ($overlap) {
+                        if ($overlap)
                             $fail('The selected item is already reserved in this time range.');
-                        }
                     }
                 };
-            })
-            ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0));
+            });
     }
 
     public static function supplyQuantity(): TextInput

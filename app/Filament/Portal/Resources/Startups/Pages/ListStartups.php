@@ -27,21 +27,28 @@ class ListStartups extends ListRecords
     public function getTabs(): array
     {
         $user = auth()->user();
-        
+        $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
+
         $tabs = [
             'all' => Tab::make('All')
-                ->badge(fn () => Startup::count()),
+                ->badge(fn () => $isAdmin ? Startup::count() : Startup::where('founder', $user->name)->count()),
 
             'pending' => Tab::make('Pending')
-                ->badge(fn () => Startup::where('status', 'pending')->count())
+                ->badge(fn () => $isAdmin 
+                    ? Startup::where('status', 'pending')->count() 
+                    : Startup::where('status', 'pending')->where('founder', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
-                ->badge(fn () => Startup::where('status', 'approved')->count())
+                ->badge(fn () => $isAdmin 
+                    ? Startup::where('status', 'approved')->count()
+                    : Startup::where('status', 'approved')->where('founder', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
-                ->badge(fn () => Startup::where('status', 'rejected')->count())
+                ->badge(fn () => $isAdmin 
+                    ? Startup::where('status', 'rejected')->count()
+                    : Startup::where('status', 'rejected')->where('founder', $user->name)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
         ];
         // Add archive tab only for SuperAdmin

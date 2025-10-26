@@ -33,7 +33,7 @@ class SupplyResource extends Resource
         return static::getModel()::count();
     }
 
-    protected static ?string $recordTitleAttribute = 'supply_name';
+    protected static ?string $recordTitleAttribute = 'item_name';
 
     public static function form(Schema $schema): Schema
     {

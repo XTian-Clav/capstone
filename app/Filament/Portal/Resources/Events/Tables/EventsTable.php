@@ -74,9 +74,15 @@ class EventsTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
 
                 TextColumn::make('display_status')
-                    ->label('Display Status')
+                    ->label('Status')
                     ->getStateUsing(fn ($record) => $record->status)
                     ->badge()
+                    ->colors([
+                        'indigo' => 'Upcoming',
+                        'warning' => 'Ongoing',
+                        'success' => 'Completed',
+                        'danger' => 'Cancelled',
+                    ])
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
                     
                 TextColumn::make('created_at')

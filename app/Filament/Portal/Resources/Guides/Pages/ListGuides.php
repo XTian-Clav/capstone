@@ -17,8 +17,10 @@ class ListGuides extends ListRecords
 
     protected function getHeaderActions(): array
     {
+        $user = auth()->user();
+        
         return [
-            CreateAction::make(),
+            CreateAction::make()->visible(fn () => $user->hasAnyRole(['admin', 'super_admin'])),
         ];
     }
 

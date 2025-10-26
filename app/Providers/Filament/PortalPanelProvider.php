@@ -8,6 +8,7 @@ use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use App\Filament\Pages\Backups;
+use Filament\Support\Enums\Width;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Enums\UserMenuPosition;
@@ -24,6 +25,7 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
+use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
@@ -162,7 +164,8 @@ class PortalPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make()
                     ->navigationLabel('Roles And Permission')
-                    ->navigationGroup('System Settings'),
+                    ->navigationGroup('System Settings')
+                    ->globallySearchable(false),
 
                 FilamentSpatieLaravelHealthPlugin::make()
                     ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
@@ -173,6 +176,15 @@ class PortalPanelProvider extends PanelProvider
                     ->preserveOnDB(false),
 
                 FilamentApexChartsPlugin::make(),
+
+                GlobalSearchModalPlugin::make()
+                    ->modal(
+                        autofocused: true,
+                        slideOver: true,
+                        closedByClickingAway: true,
+                    )
+                    ->highlighter(true)
+                    ->RetainRecentIfFavorite(true),
 
                 BreezyCore::make()
                     ->avatarUploadComponent(fn($fileUpload) => $fileUpload->disableLabel())

@@ -15,6 +15,12 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class AnalyticsStats extends StatsOverviewWidget
 {
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+        return $user->hasAnyRole(['admin', 'super_admin']);
+    }
+
     protected ?string $pollingInterval = '60s';
     protected static ?int $sort = 1;
     

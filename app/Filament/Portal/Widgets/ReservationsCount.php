@@ -11,6 +11,12 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ReservationsCount extends ApexChartWidget
 {
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+        return $user->hasAnyRole(['admin', 'super_admin']);
+    }
+
     protected ?string $pollingInterval = '60s';
     protected static ?int $sort = 3;
     /**

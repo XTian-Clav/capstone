@@ -30,7 +30,7 @@ class ReserveRoomResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getEloquentQuery()->count();
     }
 
     protected static ?string $recordTitleAttribute = 'reserved_by';
@@ -73,5 +73,19 @@ class ReserveRoomResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+        $query->whereNull('deleted_at');
+
+        // Only non-admin/super_admin users are filtered
+        if (! $user->hasAnyRole(['admin', 'super_admin'])) {
+            $query->where('reserved_by', $user->name);
+        }
+
+        return $query;
     }
 }

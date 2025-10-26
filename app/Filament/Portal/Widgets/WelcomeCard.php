@@ -9,8 +9,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class WelcomeCard extends StatsOverviewWidget
 {
-    // Optional: update every minute if you want the time to refresh automatically
-    protected ?string $pollingInterval = '60s';
+    protected ?string $pollingInterval = '59s';
     protected static ?int $sort = 0;
 
     protected function getStats(): array
