@@ -18,7 +18,7 @@ class EventInfolist
             ->components([
                 Section::make((fn ($record) => $record->event))
                 ->schema([
-                    ImageEntry::make('poster')
+                    ImageEntry::make('picture')
                         ->disk('public')
                         ->visibility('public')
                         ->hiddenLabel()

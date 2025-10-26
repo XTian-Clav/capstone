@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
+use App\Filament\Forms\ReservationValidation;
 use Filament\Forms\Components\DateTimePicker;
 
 class ReserveRoomForm
@@ -31,12 +32,14 @@ class ReserveRoomForm
                             ->default(fn () => auth()->user()?->name)
                             ->required(),
 
-                        TextInput::make('office')
-                            ->label('Office')
+                        TextInput::make('company')
+                            ->label('Company / Office')
+                            ->default(fn () => auth()->user()?->company)
                             ->required(),
                         
                         TextInput::make('contact')
                             ->label('Contact')
+                            ->default(fn () => auth()->user()?->contact)
                             ->required(),
                         
                         TextInput::make('email')
@@ -47,84 +50,8 @@ class ReserveRoomForm
 
                     Section::make()
                     ->schema([
-                        DateTimePicker::make('start_date')
-                            ->label('Start of Rent')
-                            ->displayFormat('F j, Y — h:i A')
-                            ->required()
-                            ->native(false)
-                            ->seconds(false)
-                            ->rule(function ($get) {
-                                return function (string $attribute, $value, $fail) use ($get) {
-                                    $time = Carbon::parse($value);
-                                    $hour = $time->format('H');
-                
-                                    if ($hour < 8 || $hour >= 18) {
-                                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                                    }
-                
-                                    // Overlap validation for approved reservations
-                                    if ($get('end_date') && $get('room_id')) {
-                                        $start = Carbon::parse($value);
-                                        $end = Carbon::parse($get('end_date'));
-                
-                                        $overlap = ReserveRoom::where('status', 'Approved')
-                                            ->where('room_id', $get('room_id'))
-                                            ->where('id', '!=', $get('id') ?? 0)
-                                            ->where(function ($q) use ($start, $end) {
-                                                $q->where('start_date', '<', $end)
-                                                  ->where('end_date', '>', $start);
-                                            })
-                                            ->exists();
-                
-                                        if ($overlap) {
-                                            $fail('The room is already reserved in the selected time range.');
-                                        }
-                                    }
-                                };
-                            })
-                            ->default(fn () => Carbon::now()->setHour(8)->setMinute(0)->setSecond(0)),
-
-                        DateTimePicker::make('end_date')
-                            ->label('End of Rent')
-                            ->displayFormat('F j, Y — h:i A')
-                            ->required()
-                            ->native(false)
-                            ->seconds(false)
-                            ->rule(function ($get) {
-                                return function (string $attribute, $value, $fail) use ($get) {
-                                    $end = Carbon::parse($value);
-                                    $hour = $end->format('H');
-                
-                                    if ($hour < 8 || $hour > 18) {
-                                        $fail('Reservations are allowed only between 8:00 AM and 6:00 PM.');
-                                    }
-                
-                                    if ($get('start_date')) {
-                                        $start = Carbon::parse($get('start_date'));
-                                        if ($end->lessThanOrEqualTo($start)) {
-                                            $fail('[Invalid] End time is earlier than the start time.');
-                                        }
-                                    }
-                
-                                    // Overlap validation for approved reservations
-                                    if ($get('start_date') && $get('room_id')) {
-                                        $start = Carbon::parse($get('start_date'));
-                                        $overlap = ReserveRoom::where('status', 'Approved')
-                                            ->where('room_id', $get('room_id'))
-                                            ->where('id', '!=', $get('id') ?? 0)
-                                            ->where(function ($q) use ($start, $end) {
-                                                $q->where('start_date', '<', $end)
-                                                  ->where('end_date', '>', $start);
-                                            })
-                                            ->exists();
-                
-                                        if ($overlap) {
-                                            $fail('The room is already reserved in the selected time range.');
-                                        }
-                                    }
-                                };
-                            })
-                            ->default(fn () => Carbon::now()->setHour(18)->setMinute(0)->setSecond(0)),
+                        ReservationValidation::startDate('room_id', ReserveRoom::class),
+                        ReservationValidation::endDate('room_id', ReserveRoom::class),
                         Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 6:00 PM.')->columnSpanFull(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
                     

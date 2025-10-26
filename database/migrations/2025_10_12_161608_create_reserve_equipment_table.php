@@ -17,8 +17,7 @@ return new class extends Migration
             $table->foreignId('equipment_id')->constrained('equipment')->cascadeOnDelete();
             $table->unsignedInteger('quantity')->default(1);
             $table->string('status');
-            $table->string('display_status')->nullable();
-            $table->string('office');
+            $table->string('company');
             $table->string('contact');
             $table->string('email');
             $table->dateTime('start_date');

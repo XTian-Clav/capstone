@@ -58,7 +58,7 @@ class EventForm
 
                 Section::make('Upload Event Poster')
                 ->schema([
-                    FileUpload::make('poster') ->label('Event Poster')
+                    FileUpload::make('picture')
                     ->label('Event Poster')
                     ->default(null)
                     ->image()
@@ -66,7 +66,7 @@ class EventForm
 
                     //IMG DIRECTORY
                     ->disk('public')
-                    ->directory('events/posters')
+                    ->directory('events/picture')
                     ->visibility('public')
 
                     //FILE SIZE LIMIT

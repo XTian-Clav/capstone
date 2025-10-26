@@ -15,8 +15,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'superadmin',
             'email' => 'superadmin@gmail.com',
             'contact' => '09933685061',
-            'address' => 'Puerto Princesa, Palawan',
-            'birthdate' => '12-16-1999',
+            'company' => 'PITBI',
             'password' => Hash::make('password'),
         ]);
     }

@@ -69,20 +69,14 @@ class ReserveRoomsTable
                     ->toggleable()
                     ->sortable(),
 
-                SelectColumn::make('status')
-                    ->options(ReserveRoom::STATUS)
-                    ->default('Pending')
-                    ->searchable()
-                    ->toggleable()
-                    ->native(false)
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
-                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-
-                TextColumn::make('display_status')
-                    ->label('Display Status')
-                    ->getStateUsing(fn ($record) => $record->status)
+                TextColumn::make('status')
+                    ->weight('semibold')
                     ->badge()
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ->colors([
+                        'warning' => 'Pending',
+                        'success' => 'Approved',
+                        'danger' => 'Rejected',
+                    ]),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
