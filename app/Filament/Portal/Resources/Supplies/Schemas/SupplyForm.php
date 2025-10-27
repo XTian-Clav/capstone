@@ -26,7 +26,7 @@ class SupplyForm
     {
         return $schema
             ->components([
-                Section::make('Item Details')
+                Section::make('Supply Details')
                 ->description('Fill up the form and make sure all details are correct.')
                 ->schema([
                 TextInput::make('item_name')

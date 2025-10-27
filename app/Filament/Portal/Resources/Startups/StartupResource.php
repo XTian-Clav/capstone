@@ -79,7 +79,7 @@ class StartupResource extends Resource
         $query = parent::getEloquentQuery();
         $user = auth()->user();
 
-        if (! $user->hasAnyRole(['admin', 'super_admin'])) {
+        if (! $user->hasAnyRole(['admin', 'super_admin', 'investor'])) {
             $query->where('user_id', $user->id);
         }
 

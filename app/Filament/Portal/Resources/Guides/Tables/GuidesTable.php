@@ -34,7 +34,7 @@ class GuidesTable
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
-                TextColumn::make('description')->searchable()->html(),
+                //TextColumn::make('description')->searchable()->html(),
                 
                 TextColumn::make('url')
                     ->label('Document Link')

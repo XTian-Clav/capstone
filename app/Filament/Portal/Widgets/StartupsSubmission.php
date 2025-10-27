@@ -53,6 +53,21 @@ class StartupsSubmission extends ApexChartWidget
         $months = collect(range(1, 12))->map(fn ($m) => Carbon::create()->month($m)->format('M'));
         $counts = collect(range(1, 12))->map(fn ($m) => $data[$m] ?? 0);
 
+        $monthColors = [
+            '#f59e0b', // Jan - amber
+            '#3b82f6', // Feb - blue
+            '#10b981', // Mar - green
+            '#ef4444', // Apr - red
+            '#8b5cf6', // May - purple
+            '#f97316', // Jun - orange
+            '#06b6d4', // Jul - teal
+            '#f43f5e', // Aug - pink
+            '#6366f1', // Sep - indigo
+            '#14b8a6', // Oct - cyan
+            '#eab308', // Nov - yellow
+            '#db2777', // Dec - rose
+        ];
+
         return [
             'chart' => [
                 'type' => 'bar',
@@ -79,7 +94,15 @@ class StartupsSubmission extends ApexChartWidget
                     ],
                 ],
             ],
-            'colors' => ['#f59e0b'],
+            'colors' => $monthColors,
+            'plotOptions' => [
+                'bar' => [
+                    'distributed' => true,
+                ],
+            ],
+            'legend' => [
+                'show' => false, // hide all legend labels
+            ],
         ];
     }
 }

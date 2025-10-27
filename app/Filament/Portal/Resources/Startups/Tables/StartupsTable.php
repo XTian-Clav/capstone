@@ -51,12 +51,6 @@ class StartupsTable
                     ->searchable()
                     ->sortable(),
                 
-                TextColumn::make('email')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable()
-                    ->icon(Heroicon::Envelope),
-                
                 TextColumn::make('mentors.name')
                     ->label('Mentors')
                     ->getStateUsing(fn ($record) =>

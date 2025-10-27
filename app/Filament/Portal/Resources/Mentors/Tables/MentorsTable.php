@@ -43,7 +43,7 @@ class MentorsTable
             ->defaultSort('created_at', 'asc')
             ->columns([
                 ImageColumn::make('avatar')
-                    ->label('Photo')
+                    ->label('')
                     ->disk('public')
                     ->size(50)
                     ->circular()

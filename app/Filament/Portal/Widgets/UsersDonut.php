@@ -46,7 +46,7 @@ class UsersDonut extends ApexChartWidget
         return [
             'chart' => [
                 'type' => 'donut',
-                'height' => 300,
+                'height' => 314,
             ],
             'series' => [$incubatees, $investors, $mentors],
             'labels' => ['Incubatees', 'Investors', 'Mentors'],

@@ -27,7 +27,7 @@ class ListStartups extends ListRecords
     public function getTabs(): array
     {
         $user = auth()->user();
-        $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
+        $isAdmin = $user->hasAnyRole(['admin', 'super_admin', 'investor']);
 
         $tabs = [
             'all' => Tab::make('All')

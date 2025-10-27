@@ -56,7 +56,7 @@ class ReserveEquipmentInfolist
                             TextEntry::make('reserved_by')->weight('semibold'),
                             TextEntry::make('email')->weight('semibold')->columnSpan(2),
                             TextEntry::make('contact')->weight('semibold'),
-                            TextEntry::make('office')->weight('semibold')->columnSpan(2),
+                            TextEntry::make('company')->weight('semibold')->columnSpan(2),
                         ])->columnSpanFull()->columns(3)->compact(),
                     
                         Section::make()
