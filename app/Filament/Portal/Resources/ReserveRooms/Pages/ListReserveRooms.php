@@ -29,24 +29,24 @@ class ListReserveRooms extends ListRecords
 
         $tabs = [
             'all' => Tab::make('All')
-                ->badge(fn () => $isAdmin ? ReserveRoom::count() : ReserveRoom::where('reserved_by', $user->name)->count()),
+                ->badge(fn () => $isAdmin ? ReserveRoom::count() : ReserveRoom::where('user_id', $user->id)->count()),
 
             'pending' => Tab::make('Pending')
                 ->badge(fn () => $isAdmin 
                     ? ReserveRoom::where('status', 'pending')->count() 
-                    : ReserveRoom::where('status', 'pending')->where('reserved_by', $user->name)->count())
+                    : ReserveRoom::where('status', 'pending')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
                 ->badge(fn () => $isAdmin 
                     ? ReserveRoom::where('status', 'approved')->count()
-                    : ReserveRoom::where('status', 'approved')->where('reserved_by', $user->name)->count())
+                    : ReserveRoom::where('status', 'approved')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
                 ->badge(fn () => $isAdmin 
                     ? ReserveRoom::where('status', 'rejected')->count()
-                    : ReserveRoom::where('status', 'rejected')->where('reserved_by', $user->name)->count())
+                    : ReserveRoom::where('status', 'rejected')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
         ];
         // Add archive tab only for SuperAdmin

@@ -24,9 +24,9 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationLabel = 'Manage Users';
+    protected static ?string $navigationLabel = 'System Users';
 
-    protected static string | UnitEnum | null $navigationGroup = 'System Settings';
+    protected static string | UnitEnum | null $navigationGroup = 'Manage Users';
 
     public static function getNavigationBadge(): ?string
     {

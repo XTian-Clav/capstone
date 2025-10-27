@@ -29,24 +29,24 @@ class ListReserveSupplies extends ListRecords
 
         $tabs = [
             'all' => Tab::make('All')
-                ->badge(fn () => $isAdmin ? ReserveSupply::count() : ReserveSupply::where('reserved_by', $user->name)->count()),
+                ->badge(fn () => $isAdmin ? ReserveSupply::count() : ReserveSupply::where('user_id', $user->id)->count()),
 
             'pending' => Tab::make('Pending')
                 ->badge(fn () => $isAdmin 
                     ? ReserveSupply::where('status', 'pending')->count() 
-                    : ReserveSupply::where('status', 'pending')->where('reserved_by', $user->name)->count())
+                    : ReserveSupply::where('status', 'pending')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'pending')),
 
             'approved' => Tab::make('Approved')
                 ->badge(fn () => $isAdmin 
                     ? ReserveSupply::where('status', 'approved')->count()
-                    : ReserveSupply::where('status', 'approved')->where('reserved_by', $user->name)->count())
+                    : ReserveSupply::where('status', 'approved')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'approved')),
 
             'rejected' => Tab::make('Rejected')
                 ->badge(fn () => $isAdmin 
                     ? ReserveSupply::where('status', 'rejected')->count()
-                    : ReserveSupply::where('status', 'rejected')->where('reserved_by', $user->name)->count())
+                    : ReserveSupply::where('status', 'rejected')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
         ];
         // Add archive tab only for SuperAdmin

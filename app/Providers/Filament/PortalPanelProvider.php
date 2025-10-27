@@ -129,6 +129,10 @@ class PortalPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('Inventory')
                     ->icon('heroicon-o-archive-box'),
+
+                NavigationGroup::make()
+                    ->label('Manage Users')
+                    ->icon('heroicon-o-cog-6-tooth'),
                 
                 NavigationGroup::make()
                     ->label('System Settings')
@@ -179,8 +183,9 @@ class PortalPanelProvider extends PanelProvider
 
                 GlobalSearchModalPlugin::make()
                     ->modal(
+                        slideOver: false,
                         autofocused: true,
-                        slideOver: true,
+                        hasCloseButton: true,
                         closedByClickingAway: true,
                     )
                     ->highlighter(true)

@@ -32,21 +32,6 @@ class StartupForm
                     ->maxLength(255)
                     ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null),
                 
-                TextInput::make('contact')
-                    ->required()
-                    ->unique()
-                    ->tel()
-                    ->minLength(11)
-                    ->helperText('Enter a valid phone number (11 digits).')
-                    ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null),
-                
-                TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(100)
-                    ->unique(ignoreRecord: true)
-                    ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null),
-                
                 RichEditor::make('description')
                     ->label('Description')
                     ->default(null)

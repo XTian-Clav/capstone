@@ -56,10 +56,10 @@ class EventForm
                         ->native(false),
                 ])->columnSpan(2)->columns(2)->compact(),
 
-                Section::make('Upload Event Poster')
+                Section::make('Upload Event Banner')
                 ->schema([
                     FileUpload::make('picture')
-                    ->label('Event Poster')
+                    ->label('Event Banner')
                     ->default(null)
                     ->image()
                     ->imageEditor()

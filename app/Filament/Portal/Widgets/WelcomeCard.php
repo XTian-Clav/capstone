@@ -29,7 +29,7 @@ class WelcomeCard extends StatsOverviewWidget
 
         return [
             // LEFT CARD — Greeting + Date
-            Stat::make("{$greeting}, {$user->name}!", $date)
+            Stat::make("{$greeting}, {$user->name}!", 'Today is ' . $date)
                 ->description('Welcome to the PITBI Portal — wishing you a productive day ahead!')
                 ->descriptionIcon('heroicon-s-sparkles')
                 ->color('primary')

@@ -11,11 +11,10 @@ class Startup extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'logo',
         'startup_name',
         'founder',
-        'contact',
-        'email',
         'description',
         'status',
     ];

@@ -74,7 +74,7 @@ class ReserveSupplyForm
                     ])->columnSpanFull()->compact()->secondary(),
 
                 ])->columnSpan(2)->columns(2)->compact(),
-
+                
                 Section::make('Select supply')
                 ->schema([
                     Select::make('supply_id')

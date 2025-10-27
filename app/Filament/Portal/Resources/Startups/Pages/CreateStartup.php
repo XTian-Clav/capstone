@@ -11,12 +11,7 @@ class CreateStartup extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $user = auth()->user();
-
-        if (! $user->hasAnyRole(['admin', 'super_admin'])) {
-            $data['status'] = 'Pending';
-        }
-
+        $data['user_id'] = auth()->id();
         return $data;
     }
 }

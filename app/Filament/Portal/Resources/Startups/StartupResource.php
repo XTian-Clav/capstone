@@ -79,9 +79,8 @@ class StartupResource extends Resource
         $query = parent::getEloquentQuery();
         $user = auth()->user();
 
-        // Only non-admin/super_admin users are filtered
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
-            $query->where('founder', $user->name);
+            $query->where('user_id', $user->id);
         }
 
         return $query;

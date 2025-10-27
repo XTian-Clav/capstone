@@ -48,9 +48,6 @@ class StartupInfolist
                         ->color('primary')
                         ->weight('semibold')
                         ->listWithLineBreaks(),
-                    
-                    TextEntry::make('contact')->weight('semibold'),
-                    TextEntry::make('email')->weight('semibold'),
 
                     TextEntry::make('status')
                         ->badge()

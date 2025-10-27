@@ -67,25 +67,14 @@ class StartupsTable
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
 
-                SelectColumn::make('status')
-                    ->options(Startup::STATUS)
-                    ->default('Pending')
-                    ->searchable()
-                    ->toggleable()
-                    ->native(false)
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
-                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-
-                TextColumn::make('display_status')
-                    ->label('Status')
-                    ->getStateUsing(fn ($record) => $record->status)
+                TextColumn::make('status')
+                    ->weight('semibold')
                     ->badge()
                     ->colors([
                         'warning' => 'Pending',
                         'success' => 'Approved',
                         'danger' => 'Rejected',
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ]),
 
                 TextColumn::make('created_at')
                     ->label('Created At')

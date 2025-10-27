@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('reserve_supplies', function (Blueprint $table) {
             $table->id();
             $table->string('reserved_by');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('supply_id')->constrained('supplies')->cascadeOnDelete();
             $table->unsignedInteger('quantity')->default(1);
-            $table->string('status');
+            $table->string('status')->default('Pending');
             $table->string('company');
             $table->string('contact');
             $table->string('email');

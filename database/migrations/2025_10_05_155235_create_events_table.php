@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('location');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->string('status');
-            $table->string('display_status')->nullable();
+            $table->string('status')->default('Upcoming');
             $table->softDeletes();
             $table->timestamps();
         });

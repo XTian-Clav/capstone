@@ -73,8 +73,7 @@ class EventsTable
                     ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
 
-                TextColumn::make('display_status')
-                    ->label('Status')
+                TextColumn::make('status')
                     ->getStateUsing(fn ($record) => $record->status)
                     ->badge()
                     ->colors([

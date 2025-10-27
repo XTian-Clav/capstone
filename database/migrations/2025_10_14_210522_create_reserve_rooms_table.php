@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('reserve_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('reserved_by');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('room_id')->constrained('rooms')->cascadeOnDelete();
             $table->string('room_type');
-            $table->string('status');
+            $table->string('status')->default('Pending');
             $table->string('company');
             $table->string('contact');
             $table->string('email');

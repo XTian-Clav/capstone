@@ -12,6 +12,7 @@ class ReserveRoom extends Model
 
     protected $fillable = [
         'reserved_by',
+        'user_id',
         'room_id',
         'room_type',
         'status',

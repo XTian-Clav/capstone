@@ -79,11 +79,9 @@ class ReserveRoomResource extends Resource
     {
         $query = parent::getEloquentQuery();
         $user = auth()->user();
-        $query->whereNull('deleted_at');
 
-        // Only non-admin/super_admin users are filtered
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
-            $query->where('reserved_by', $user->name);
+            $query->where('user_id', $user->id);
         }
 
         return $query;

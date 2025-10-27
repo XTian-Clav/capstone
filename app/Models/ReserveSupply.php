@@ -12,6 +12,7 @@ class ReserveSupply extends Model
 
     protected $fillable = [
         'reserved_by',
+        'user_id',
         'supply_id',
         'quantity',
         'status',

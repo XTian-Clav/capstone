@@ -12,6 +12,7 @@ class ReserveEquipment extends Model
 
     protected $fillable = [
         'reserved_by',
+        'user_id',
         'equipment_id',
         'quantity',
         'status',

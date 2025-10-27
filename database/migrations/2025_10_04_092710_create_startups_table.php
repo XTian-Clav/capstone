@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('startups', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('logo')->nullable();
             $table->string('startup_name')->unique();
             $table->string('founder');
-            $table->string('contact')->unique();
-            $table->string('email')->unique();
             $table->text('description');
-            $table->string('status');
-            $table->string('display_status')->nullable();
+            $table->string('status')->default('Pending');
             $table->timestamps();
             $table->softDeletes();
         });
