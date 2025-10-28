@@ -2,32 +2,35 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use Filament\Panel;
+use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
-use Filament\Panel;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasEmailAuthentication
 
 {
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return $this->avatar_url
-            ? asset('storage/' . $this->avatar_url)
-            : asset('storage/default/user.png');
-    }
-
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     public function canAccessPanel(Panel $panel): bool
     {
         return true; // <-- allow access to all panels
+    }
+
+    //Profile Avatar
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url
+            ? asset('storage/' . $this->avatar_url)
+            : asset('storage/default/user.png');
     }
 
     /**
@@ -64,6 +67,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'has_email_authentication' => 'boolean',
         ];
+    }
+
+    public function hasEmailAuthentication(): bool
+    { 
+        return $this->has_email_authentication;
+    }
+
+    public function toggleEmailAuthentication(bool $condition): void
+    {
+        $this->has_email_authentication = $condition;
+        $this->save();
     }
 }

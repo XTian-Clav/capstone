@@ -24,6 +24,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Auth\MultiFactor\Email\EmailAuthentication;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -40,6 +41,7 @@ class PortalPanelProvider extends PanelProvider
             ->default()
             ->id('portal')
             ->path('portal')
+            ->authGuard('web')
             
             ->brandName('PITBI Portal')
             ->userMenu(position: UserMenuPosition::Sidebar)
@@ -49,9 +51,12 @@ class PortalPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->passwordReset()
-            ->emailVerification()
-            ->emailChangeVerification()
-            ->authGuard('web')
+            ->emailVerification(false)
+            ->emailChangeVerification(false)
+            ->multiFactorAuthentication([
+                EmailAuthentication::make()
+                    ->codeExpiryMinutes(2),
+            ])
 
             ->profile(EditProfile::class, isSimple: false)
 
@@ -174,8 +179,9 @@ class PortalPanelProvider extends PanelProvider
 
                 FilamentSpatieLaravelHealthPlugin::make()
                     ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
-                    ->navigationLabel('Website Health Check')
-                    ->navigationGroup('System Settings'),
+                    ->navigationGroup('System Settings')
+                    ->navigationLabel('Website Health Check'),
+                    
 
                 ResizedColumnPlugin::make()
                     ->preserveOnDB(false),
