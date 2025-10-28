@@ -31,8 +31,7 @@ class UserInfolist
                     TextEntry::make('name')->weight('semibold'), 
                     TextEntry::make('email')->label('Email address')->weight('semibold'),
                     TextEntry::make('contact')->weight('semibold')->placeholder('N/A'),
-                    TextEntry::make('address')->weight('semibold')->placeholder('N/A'),
-                    TextEntry::make('birthdate')->weight('semibold')->placeholder('N/A'),
+                    TextEntry::make('company')->weight('semibold')->placeholder('N/A'),
                     TextEntry::make('email_verified_at')
                         ->dateTime('M j, Y h:i A')
                         ->placeholder('Unverified'),

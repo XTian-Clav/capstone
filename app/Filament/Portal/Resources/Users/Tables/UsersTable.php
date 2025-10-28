@@ -52,6 +52,9 @@ class UsersTable
                     ->searchable()
                     ->icon(Heroicon::Phone),
 
+                TextColumn::make('company')
+                    ->searchable(),
+
                 TextColumn::make('roles.name')
                     ->searchable()
                     ->badge()

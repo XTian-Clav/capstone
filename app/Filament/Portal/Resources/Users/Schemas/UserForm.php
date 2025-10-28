@@ -79,7 +79,7 @@ class UserForm
                             ->required(),
                         
                         TextInput::make('contact')->unique()->required(),
-                        DatePicker::make('birthdate')->default(Carbon::today())->native(false),
+                        TextInput::make('company')->required(),
                     ])->columnSpanFull()->columns(2),
             ])->columnSpanFull()->columns(3)->compact(),
         ]);
