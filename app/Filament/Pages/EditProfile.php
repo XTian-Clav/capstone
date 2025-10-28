@@ -17,7 +17,7 @@ class EditProfile extends BaseEditProfile
             ->components([
                 Section::make()
                     ->schema([
-                        Section::make('Photo Upload')
+                        Section::make('Personal Information')
                             ->aside()
                             ->description('Manage your personal information.')
                             ->schema([

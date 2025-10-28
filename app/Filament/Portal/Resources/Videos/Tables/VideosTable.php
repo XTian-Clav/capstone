@@ -33,6 +33,7 @@ class VideosTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('title')->searchable()->weight('semibold')->sortable(),

@@ -32,6 +32,7 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class MentorsTable
 {
@@ -40,6 +41,7 @@ class MentorsTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 ImageColumn::make('avatar')
@@ -116,6 +118,9 @@ class MentorsTable
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
+                    ExportBulkAction::make()
+                        ->color('gray')
+                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

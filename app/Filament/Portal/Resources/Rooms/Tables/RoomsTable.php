@@ -40,6 +40,7 @@ class RoomsTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('room_name')
@@ -77,13 +78,6 @@ class RoomsTable
                     ->offColor('danger')
                     ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-
-                TextColumn::make('availability_text')
-                    ->label('Room Status')
-                    ->weight('semibold')
-                    ->getStateUsing(fn ($record) => $record->is_available ? 'Room available' : 'Room not available')
-                    ->color(fn ($record) => $record->is_available ? 'success' : 'danger')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
@@ -125,6 +119,7 @@ class RoomsTable
                         //Exclude is_available column
                         ->exports([
                             ExcelExport::make()->fromTable()->except(['is_available']),
+                            ExcelExport::make()->fromTable()->except(['availability_text']),
                         ])
                         ->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),

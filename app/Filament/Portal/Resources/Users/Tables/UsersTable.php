@@ -38,6 +38,7 @@ class UsersTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('name')

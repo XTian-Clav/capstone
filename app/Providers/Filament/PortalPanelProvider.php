@@ -55,10 +55,11 @@ class PortalPanelProvider extends PanelProvider
             ->emailChangeVerification(false)
             ->multiFactorAuthentication([
                 EmailAuthentication::make()
-                    ->codeExpiryMinutes(2),
+                    ->codeExpiryMinutes(5),
             ])
 
             ->profile(EditProfile::class, isSimple: false)
+            ->databaseNotifications()
 
             ->font('Poppins')
             //->defaultThemeMode(ThemeMode::Light)

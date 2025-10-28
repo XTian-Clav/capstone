@@ -40,6 +40,7 @@ class EquipmentTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('equipment_name')

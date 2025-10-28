@@ -38,6 +38,7 @@ class SuppliesTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('item_name')
