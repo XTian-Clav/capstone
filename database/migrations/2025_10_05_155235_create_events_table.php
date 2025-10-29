@@ -20,8 +20,8 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('status')->default('Upcoming');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

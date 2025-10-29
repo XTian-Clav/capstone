@@ -126,6 +126,10 @@ class PortalPanelProvider extends PanelProvider
 
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Startup')
+                    ->icon('heroicon-o-rocket-launch'),
+                
+                NavigationGroup::make()
                     ->label('Learning Materials')
                     ->icon('heroicon-o-academic-cap'),
                 

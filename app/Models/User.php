@@ -4,12 +4,13 @@ namespace App\Models;
 
 
 use Filament\Panel;
+use App\Models\Startup;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
-use Illuminate\Database\Eloquent\SoftDeletes;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Filament\Auth\MultiFactor\Email\Contracts\HasEmailAuthentication;
@@ -80,5 +81,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasEmailA
     {
         $this->has_email_authentication = $condition;
         $this->save();
+    }
+
+    public function startups()
+    {
+        return $this->hasMany(Startup::class);
     }
 }

@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use UnitEnum;
 
 class StartupResource extends Resource
 {
@@ -25,7 +26,9 @@ class StartupResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRocketLaunch;
+    protected static string | UnitEnum | null $navigationGroup = 'Startup';
+
+    protected static ?string $navigationLabel = 'Startup Submissions';
 
     public static function getNavigationBadge(): ?string
     {

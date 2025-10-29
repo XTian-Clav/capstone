@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('expertise');
             $table->text('personal_info');
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         // Pivot table for mentor-startup assignments

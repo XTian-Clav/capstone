@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('room_rate', 10, 2)->nullable();
             $table->text('inclusions')->nullable();
             $table->boolean('is_available')->default(true);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
