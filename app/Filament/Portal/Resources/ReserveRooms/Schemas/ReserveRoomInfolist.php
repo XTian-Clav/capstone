@@ -18,7 +18,7 @@ class ReserveRoomInfolist
     {
         return $schema
             ->components([
-                Section::make(fn ($record) => $record->room?->room_name ?? 'Room')
+                Section::make(fn ($record) => $record->room?->room_type ?? 'Room')
                 ->schema([
                     ImageEntry::make('picture')
                         ->getStateUsing(fn ($record) => $record->room?->picture) // just the stored path

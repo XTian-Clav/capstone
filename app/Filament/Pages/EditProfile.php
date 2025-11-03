@@ -52,7 +52,7 @@ class EditProfile extends BaseEditProfile
                             ->description('Manage your contact details.')
                             ->schema([
                                 TextInput::make('contact')->unique()->required(),
-                                TextInput::make('company')->unique()->required(),
+                                TextInput::make('company')->required(),
                         ])->secondary(),
                         
                         Section::make('Change Password')

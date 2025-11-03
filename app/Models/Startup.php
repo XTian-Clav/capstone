@@ -15,8 +15,13 @@ class Startup extends Model
         'logo',
         'startup_name',
         'founder',
+        'members',
         'description',
         'status',
+    ];
+
+    protected $casts = [
+        'members' => 'array',
     ];
 
     const STATUS = [

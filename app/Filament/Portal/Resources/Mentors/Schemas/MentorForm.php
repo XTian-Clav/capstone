@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Mentors\Schemas;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Mentor;
@@ -10,7 +11,11 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use App\Filament\Forms\ScheduleForm;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +25,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\MentorResource\Pages;
 
@@ -45,14 +51,14 @@ class MentorForm
                         ->unique()
                         ->tel()
                         ->minLength(11)
-                        ->helperText('Enter a valid phone number (11 digits).'),
+                        ->placeholder('Enter a valid Philippine phone number (11 digits)'),
                     
                     TextInput::make('email')
                         ->email()
                         ->required()
                         ->maxLength(100)
                         ->unique(ignoreRecord: true),
-                    
+
                     RichEditor::make('personal_info')
                         ->label('Personal Information')
                         ->default(null)
@@ -61,13 +67,11 @@ class MentorForm
                             'bold',
                             'italic',
                             'underline',
-                            'strike',
                             'bulletList',
                             'orderedList',
                             'link',
-                            'undo',
-                            'redo',
                         ]),
+                    ScheduleForm::scheduleRepeater()->columnSpanFull()->label('Mentoring Schedules'),
                 ])->columnSpan(2)->columns(2)->compact(),
                 
                 Section::make('Photo Upload')

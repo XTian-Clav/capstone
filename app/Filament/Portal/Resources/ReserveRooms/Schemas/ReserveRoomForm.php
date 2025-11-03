@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\ReserveRoom;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Checkbox;
@@ -84,44 +85,43 @@ class ReserveRoomForm
                     Select::make('room_type')
                         ->label('Room Type')
                         ->options(Room::ROOM_TYPE)
-                        ->live()
                         ->required()
                         ->native(false)
-                        ->afterStateUpdated(fn ($state, $set) => $set('room_id', null)),
-
-                    Select::make('room_id')
-                        ->label('Select Room')
-                        ->relationship('room', 'room_name', fn ($query, $get) =>
-                            $query->where('room_type', $get('room_type'))
+                        ->live()
+                        ->afterStateUpdated(function ($state, $set) {
+                            $room = Room::query()
+                                ->where('room_type', $state)
                                 ->where('is_available', true)
-                        )
-                        ->preload()
-                        ->searchable()
-                        ->required()
-                        ->reactive()
-                        ->native(false),
-                    
-                    Placeholder::make('room_preview')
+                                ->first();
+
+                            $set('room_id', $room?->id);
+                        }),
+
+                    Hidden::make('room_id')->required(),
+
+                    Placeholder::make('room_photo')
                         ->hiddenLabel()
-                        ->content(fn ($get) => 
+                        ->content(fn ($get) =>
                             ($room = Room::find($get('room_id'))) && $room->picture
-                                ? '<div style="max-width:400px;aspect-ratio:16/9">
-                                    <img src="' . Storage::url($room->picture) . '?t=' . now()->timestamp . '"
+                                ? '<div style="max-width:400px;aspect-ratio:16/9;overflow:hidden;border-radius:8px;">
+                                        <img src="' . Storage::url($room->picture) . '?t=' . now()->timestamp . '" 
+                                            style="width:100%;height:100%;object-fit:cover;">
                                 </div>'
                                 : null
                         )
-                        ->reactive()
-                        ->html(),
+                        ->html()
+                        ->reactive(),
 
                     Placeholder::make('room_capacity')
+                        ->hiddenLabel()
                         ->content(fn ($get) => 
                             ($room = Room::find($get('room_id')))
-                                ? 'Capacity: ' . $room->capacity: ''
+                                ? 'Capacity: ' . $room->capacity
+                                : null
                         )
                         ->weight('semibold')
                         ->color('success')
-                        ->reactive()
-                        ->hiddenLabel(),
+                        ->reactive(),
 
                     Select::make('status')
                         ->options(ReserveRoom::STATUS)

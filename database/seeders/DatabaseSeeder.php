@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'quantity' => $faker->numberBetween(1, 20),
                 'property_no' => strtoupper($faker->bothify('PROPERTY-###??')),
                 'location' => $faker->city(),
-                'remarks' => $faker->sentence(),
+                'remarks' => $faker->randomElement(['Checked', 'Missing', 'No reference no.']),
             ]);
         }
 
@@ -72,22 +72,27 @@ class DatabaseSeeder extends Seeder
                 'item_name' => $uniqueWord('Item'),
                 'quantity' => $faker->numberBetween(1, 50),
                 'location' => $faker->city(),
-                'remarks' => $faker->sentence(),
+                'remarks' => $faker->randomElement(['New', 'Used']),
             ]);
         }
 
         // --- Room ---
-        for ($i = 0; $i < 25; $i++) {
+        $roomCapacities = [
+            'Small Meeting Room' => '6–10 pax',
+            'Training Room' => '40–50 pax',
+            'Co-Working Space' => '40–50 pax',
+        ];
+        
+        foreach ($roomCapacities as $roomType => $capacity) {
             Room::create([
-                'room_name' => $uniqueWord('Room'),
-                'room_type' => $faker->randomElement(array_values(Room::ROOM_TYPE)),
+                'room_type' => $roomType,
                 'location' => $faker->city(),
-                'capacity' => $faker->numberBetween(5, 50),
-                'room_rate' => $faker->numberBetween(500, 1000),
+                'capacity' => $capacity,
+                'room_rate' => 0,
                 'inclusions' => $faker->sentence(),
                 'is_available' => $faker->boolean(),
             ]);
-        }
+        }        
 
         // --- Startup ---
         for ($i = 0; $i < 25; $i++) {

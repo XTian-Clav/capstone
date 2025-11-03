@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('item_name')->unique();
             $table->integer('quantity')->default(0);
             $table->string('location');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

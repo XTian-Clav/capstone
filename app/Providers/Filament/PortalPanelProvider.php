@@ -49,7 +49,6 @@ class PortalPanelProvider extends PanelProvider
             ->breadcrumbs(false)
             
             ->login()
-            ->registration()
             ->passwordReset()
             ->emailVerification(false)
             ->emailChangeVerification(false)

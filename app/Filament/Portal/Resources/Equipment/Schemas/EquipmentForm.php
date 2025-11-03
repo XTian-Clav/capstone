@@ -45,7 +45,6 @@ class EquipmentForm
                         ->unique(),
                     
                     TextInput::make('remarks')
-                        ->required()
                         ->default(null),
 
                     TextInput::make('location')

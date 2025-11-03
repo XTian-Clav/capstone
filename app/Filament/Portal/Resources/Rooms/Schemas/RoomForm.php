@@ -31,12 +31,6 @@ class RoomForm
                 Section::make('Room Details')
                 ->description('Fill up the form and make sure all details are correct.')
                 ->schema([
-                    TextInput::make('room_name')
-                        ->unique()
-                        ->required()
-                        ->minLength(2)
-                        ->maxLength(255),
-                    
                     Select::make('room_type')
                         ->options(Room::ROOM_TYPE)
                         ->required()

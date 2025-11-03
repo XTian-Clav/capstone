@@ -64,7 +64,7 @@ class StartupResource extends Resource
         return [
             'index' => ListStartups::route('/'),
             'create' => CreateStartup::route('/create'),
-            //'view' => ViewStartup::route('/{record}'),
+            'view' => ViewStartup::route('/{record}'),
             'edit' => EditStartup::route('/{record}/edit'),
         ];
     }

@@ -16,7 +16,7 @@ class RoomInfolist
     {
         return $schema
             ->components([
-                Section::make((fn ($record) => $record->room_name))
+                Section::make((fn ($record) => $record->room_type))
                 ->schema([
                     ImageEntry::make('picture')
                         ->hiddenLabel()

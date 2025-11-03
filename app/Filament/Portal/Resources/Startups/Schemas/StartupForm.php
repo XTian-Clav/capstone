@@ -3,13 +3,15 @@
 namespace App\Filament\Portal\Resources\Startups\Schemas;
 
 use App\Models\Startup;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-
 use Filament\Forms\Components\Select;
+use Filament\Support\Enums\Alignment;
+
+use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 
 class StartupForm
@@ -47,6 +49,23 @@ class StartupForm
                         'undo',
                         'redo',
                     ]),
+
+                    Repeater::make('members')
+                        ->label('Team Members')
+                        ->helperText('Exclude the founder in the members list. Max 4 members.')
+                        ->schema([
+                            TextInput::make('name')
+                                ->label('Member Name')
+                                ->required()
+                                ->placeholder('Enter member name'),
+                        ])
+                        ->grid(2)
+                        ->minItems(0)
+                        ->maxItems(4)
+                        ->disableItemMovement()
+                        ->createItemButtonLabel('Add Another Member')
+                        ->addActionAlignment(Alignment::Start)
+                        ->columnSpanFull(),
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Logo Upload')

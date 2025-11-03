@@ -52,6 +52,17 @@ class StartupsTable
                 TextColumn::make('founder')
                     ->searchable()
                     ->sortable(),
+
+                TextColumn::make('members')
+                    ->badge()
+                    ->color('secondary')
+                    ->width('1%')  
+                    ->label('Total Members')
+                    ->getStateUsing(fn ($record) => count($record->members ?? []) + 1) // +1 for founder
+                    ->tooltip(fn ($record) => collect($record->members ?? [])
+                        ->pluck('name')
+                        ->prepend($record->founder)
+                        ->join(', ')),                
                 
                 TextColumn::make('mentors.name')
                     ->label('Mentors')

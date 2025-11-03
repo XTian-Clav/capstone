@@ -33,7 +33,7 @@ class RoomResource extends Resource
         return static::getModel()::count();
     }
 
-    protected static ?string $recordTitleAttribute = 'room_name';
+    protected static ?string $recordTitleAttribute = 'room_type';
 
     public static function form(Schema $schema): Schema
     {

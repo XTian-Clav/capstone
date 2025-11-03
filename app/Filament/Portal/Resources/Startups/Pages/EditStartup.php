@@ -40,12 +40,12 @@ class EditStartup extends EditRecord
 
         Notification::make()
             ->title('Startup Proposal Update')
-            ->body('The reservation for ' . $data['startup_name'] . ' has been ' . $status . '.')
+            ->body('The startup proposal for ' . $data['startup_name'] . ' has been ' . $status . '.')
             ->sendToDatabase($owner);
 
         Notification::make()
             ->title('Startup Proposal Update Sent')
-            ->body('You have ' . $status . ' the reservation for ' . $roomName . '.')
+            ->body('You have ' . $status . ' the startup proposal for ' . $data['startup_name'] . '.')
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);

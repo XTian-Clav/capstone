@@ -43,16 +43,12 @@ class RoomsTable
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
-                TextColumn::make('room_name')
+                TextColumn::make('room_type')
                     ->searchable()
                     ->sortable()
                     ->limit(40)
                     ->weight('semibold')
-                    ->tooltip(fn ($record) => $record->room_name),
-
-                TextColumn::make('room_type')
-                    ->searchable()
-                    ->sortable(),
+                    ->tooltip(fn ($record) => $record->room_type),
 
                 TextColumn::make('capacity')
                     ->searchable()

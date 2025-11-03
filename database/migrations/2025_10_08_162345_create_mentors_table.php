@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('contact')->unique();
             $table->string('email')->unique();
             $table->string('expertise');
-            $table->text('personal_info');
+            $table->json('schedules')->nullable();
+            $table->text('personal_info')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,9 +16,15 @@ class Mentor extends Model
         'contact',
         'email',
         'expertise',
+        'schedules',
         'personal_info',
         'startup_id',
     ];
+
+    protected $casts = [
+        'schedules' => 'array',
+    ];
+    
 
     const EXPERTISE = [
         'Technology' => 'Technology',

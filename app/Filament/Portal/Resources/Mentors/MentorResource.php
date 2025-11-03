@@ -60,7 +60,7 @@ class MentorResource extends Resource
         return [
             'index' => ListMentors::route('/'),
             'create' => CreateMentor::route('/create'),
-            //'view' => ViewMentor::route('/{record}'),
+            'view' => ViewMentor::route('/{record}'),
             'edit' => EditMentor::route('/{record}/edit'),
         ];
     }

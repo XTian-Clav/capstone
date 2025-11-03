@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('startup_name')->unique();
             $table->string('founder');
+            $table->json('members')->nullable();
             $table->text('description');
             $table->string('status')->default('Pending');
             $table->timestamps();

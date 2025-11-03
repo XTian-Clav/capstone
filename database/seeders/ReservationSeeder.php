@@ -26,7 +26,7 @@ class ReservationSeeder extends Seeder
         // Get existing user IDs
         $userIds = User::pluck('id')->toArray();
 
-        //Equipment
+        // --- Equipment ---
         for ($i = 0; $i < 25; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
@@ -48,14 +48,14 @@ class ReservationSeeder extends Seeder
             ]);
         }
 
-        //Room
+        // --- Room ---
         for ($i = 0; $i < 25; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
             $endDate = (clone $startDate)->modify('+' . rand(1, 7) . ' days');
-
-            $room = Room::find($faker->randomElement($roomIds));
-
+        
+            $room = Room::inRandomOrder()->first();
+        
             ReserveRoom::create([
                 'reserved_by' => $faker->name(),
                 'user_id' => $faker->randomElement($userIds),
@@ -73,7 +73,7 @@ class ReservationSeeder extends Seeder
             ]);
         }
 
-        //Supply
+        // --- Supply ---
         for ($i = 0; $i < 25; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');

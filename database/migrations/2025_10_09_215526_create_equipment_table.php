@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->string('property_no')->unique();
             $table->string('location');
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

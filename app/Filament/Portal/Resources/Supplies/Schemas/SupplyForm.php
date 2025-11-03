@@ -41,7 +41,6 @@ class SupplyForm
                     ->suffix('pcs'),
 
                 TextInput::make('remarks')
-                    ->required()
                     ->default(null),
 
                 TextInput::make('location')

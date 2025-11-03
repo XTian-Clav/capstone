@@ -78,9 +78,20 @@ class MentorsTable
                     ->default('None')
                     ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
 
-                TextColumn::make('expertise')
+                TextColumn::make('schedules')
+                    ->label('Schedules')
+                    ->getStateUsing(function ($record) {
+                        if (blank($record->schedules)) {
+                            return '—';
+                        }
+                
+                        return collect($record->schedules)
+                            ->map(fn ($item) => substr($item['day'], 0, 3) . " {$item['hour']}{$item['meridiem']}")
+                            ->implode(', ');
+                    })
+                    ->toggleable()
                     ->searchable()
-                    ->toggleable(),
+                    ->weight('semibold'),                
                 
                 TextColumn::make('created_at')
                     ->label('Created At')

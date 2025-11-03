@@ -43,7 +43,7 @@ class ReserveRoomsTable
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
-                TextColumn::make('room.room_name')
+                TextColumn::make('room.room_type')
                     ->label('Room')
                     ->searchable()
                     ->sortable()

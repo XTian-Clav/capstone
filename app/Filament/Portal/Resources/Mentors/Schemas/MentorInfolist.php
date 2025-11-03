@@ -9,6 +9,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 
 class MentorInfolist
 {
@@ -33,14 +34,15 @@ class MentorInfolist
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
                         ])
                         ->columnSpan(3),
-                ])->columns(4)->columnSpan(3)->compact()->secondary(),
+                ])->columns(4)->columnSpan(3)->compact(),
 
                 Section::make()
                 ->schema([
                     TextEntry::make('name')->weight('semibold')->color('primary'),
                     TextEntry::make('contact')->weight('semibold'),
                     TextEntry::make('email')->weight('semibold'),
-                    TextEntry::make('expertise')->weight('semibold'),
+                    TextEntry::make('expertise')->weight('semibold'),  
+                    
                     TextEntry::make('created_at')
                         ->dateTime('F j, Y h:i A')
                         ->weight('semibold')
@@ -51,7 +53,17 @@ class MentorInfolist
                         ->weight('semibold')
                         ->color('danger')
                         ->visible(fn (Mentor $record): bool => $record->trashed()),
-                ])->columnSpan(3)->columns(3)->compact()->secondary(),
+                ])->columnSpan(3)->columns(3)->compact(),
+
+                Section::make()
+                ->schema([
+                    RepeatableEntry::make('schedules')
+                    ->schema([
+                        TextEntry::make('day')->hiddenLabel()->weight('semibold')->columnSpan(2),
+                        TextEntry::make('hour')->hiddenLabel(),
+                        TextEntry::make('meridiem')->hiddenLabel(),
+                    ])->grid(4)->columns(4),
+                ])->columnSpanFull(),
             ])->columns(3);
     }
 }
