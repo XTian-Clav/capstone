@@ -21,49 +21,75 @@ class MentorInfolist
                 ->schema([
                     ImageEntry::make('avatar')
                         ->hiddenLabel()
-                        ->disk('public')
-                        ->visibility('public')
-                        ->size(150)
-                        ->square()
                         ->alignCenter()
-                        ->defaultImageUrl(url('storage/default/user.png')),
-
-                    TextEntry::make('personal_info')
-                        ->html()
-                        ->extraAttributes([
-                            'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
-                        ])
-                        ->columnSpan(3),
-                ])->columns(4)->columnSpan(3)->compact(),
-
-                Section::make()
-                ->schema([
-                    TextEntry::make('name')->weight('semibold')->color('primary'),
-                    TextEntry::make('contact')->weight('semibold'),
-                    TextEntry::make('email')->weight('semibold'),
-                    TextEntry::make('expertise')->weight('semibold'),  
-                    
-                    TextEntry::make('created_at')
-                        ->dateTime('F j, Y h:i A')
-                        ->weight('semibold')
-                        ->label('Profile Creation'),
-                    
-                    TextEntry::make('deleted_at')
-                        ->dateTime('M j, Y h:i A')
-                        ->weight('semibold')
-                        ->color('danger')
-                        ->visible(fn (Mentor $record): bool => $record->trashed()),
-                ])->columnSpan(3)->columns(3)->compact(),
-
-                Section::make()
-                ->schema([
-                    RepeatableEntry::make('schedules')
+                        ->columnSpan(1)
+                        ->disk('public')
+                        ->imageHeight(200)
+                        ->visibility('public')
+                        ->defaultImageUrl(url('storage/default/user.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ]),
+                    Section::make()
                     ->schema([
-                        TextEntry::make('day')->hiddenLabel()->weight('semibold')->columnSpan(2),
-                        TextEntry::make('hour')->hiddenLabel(),
-                        TextEntry::make('meridiem')->hiddenLabel(),
-                    ])->grid(4)->columns(4),
-                ])->columnSpanFull(),
-            ])->columns(3);
+                        TextEntry::make('name')->weight('semibold'),
+                        TextEntry::make('email')->weight('semibold'),
+                        TextEntry::make('contact')->weight('semibold'),
+                        TextEntry::make('expertise')->weight('semibold'), 
+                        Section::make()
+                        ->schema([
+                            TextEntry::make('personal_info')
+                                ->html()
+                                ->extraAttributes([
+                                    'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                                ])
+                                ->columnSpan(3),
+                        ])->columnSpanFull()->compact(),
+                    ])->columns(4)->columnSpan(4)->compact(),
+                    
+                    Section::make()
+                    ->schema([
+                        RepeatableEntry::make('startups')
+                        ->label('Assigned Startups')
+                        ->schema([
+                            TextEntry::make('startup_name')
+                                ->hiddenLabel()
+                                ->columnSpanFull()
+                                ->weight('semibold'),
+                        ])->grid(4)->columns(4),
+                    ])->columnSpanFull()->compact(),
+
+                    Section::make()
+                    ->schema([
+                        RepeatableEntry::make('schedules')
+                        ->schema([
+                            TextEntry::make('day')->hiddenLabel()->weight('semibold')->columnSpan(2),
+                            TextEntry::make('hour')->hiddenLabel(),
+                            TextEntry::make('meridiem')->hiddenLabel(),
+                        ])->grid(4)->columns(4),
+                    ])->columnSpanFull()->compact(),
+
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('created_at')
+                            ->dateTime('F j, Y h:i A')
+                            ->weight('semibold')
+                            ->label('Profile Creation'),
+
+                        TextEntry::make('updated_at')
+                            ->dateTime('F j, Y h:i A')
+                            ->weight('semibold')
+                            ->label('Updated At'),
+                        
+                        TextEntry::make('deleted_at')
+                            ->dateTime('M j, Y h:i A')
+                            ->weight('semibold')
+                            ->color('danger')
+                            ->visible(fn (Mentor $record): bool => $record->trashed()),
+                    ])->columnSpanFull()->columns(3)->compact(),
+                ])->columns(5)->columnSpanFull()->compact(),
+            ]);
     }
 }

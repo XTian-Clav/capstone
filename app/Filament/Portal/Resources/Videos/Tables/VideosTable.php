@@ -19,8 +19,11 @@ use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
@@ -35,26 +38,51 @@ class VideosTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+            ->contentGrid(['xl' => 3])
             ->columns([
-                TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
-                //TextColumn::make('description')->searchable()->html(),
+                Stack::make([
+                    ImageColumn::make('picture')
+                        ->label('')
+                        ->grow(false)
+                        ->disk('public')
+                        ->imageHeight(200)
+                        ->imageWidth(300)
+                        ->defaultImageUrl(url('storage/default/video.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ]),
+                    
+                    TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
+                    TextColumn::make('description')
+                        ->html()
+                        ->limit(50)
+                        ->extraAttributes([
+                            'class' => 'text-justify leading-snug',
+                            'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.25rem;',
+                        ]),
 
-                TextColumn::make('url')
-                    ->label('Video Link')
-                    ->url(fn ($record) => $record->url)
-                    ->openUrlInNewTab()
-                    ->formatStateUsing(fn ($state) => $state ? 'Open Video' : 'No Link Available')
-                    ->icon('heroicon-m-arrow-top-right-on-square')
-                    ->weight('semibold')
-                    ->color('info'),
-                
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
+                    Split::make([
+                        TextColumn::make('url')
+                        ->label('Video Link')
+                        ->url(fn ($record) => $record->url)
+                        ->openUrlInNewTab()
+                        ->formatStateUsing(fn ($state) => $state ? 'Open Video' : 'No Link Available')
+                        ->icon('heroicon-m-arrow-top-right-on-square')
+                        ->weight('semibold')
+                        ->color('info'),
+                    
+                        TextColumn::make('created_at')
+                            ->label('Created At')
+                            ->since()
+                            ->badge()
+                            ->sortable()
+                            ->searchable()
+                            ->toggleable()
+                            ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                    ])
+                ])->space(1)
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

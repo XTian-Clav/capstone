@@ -24,6 +24,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,60 +45,57 @@ class StartupsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+            ->contentGrid(['xl' => 2])
             ->columns([
-                TextColumn::make('startup_name')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('semibold'),
+                Split::make([
+                    ImageColumn::make('logo')
+                        ->label('')
+                        ->square()
+                        ->size(220)
+                        ->grow(false)
+                        ->disk('public')
+                        ->defaultImageUrl(url('storage/default/no-image.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ])
+                        ->visibleFrom('md'),
 
-                TextColumn::make('founder')
-                    ->searchable()
-                    ->sortable(),
+                    Stack::make([
+                    TextColumn::make('startup_name')
+                        ->searchable()
+                        ->sortable()
+                        ->weight('semibold'),
+    
+                    TextColumn::make('founder')
+                        ->color('primary')
+                        ->searchable()
+                        ->sortable(),
+                    
+                    TextColumn::make('status')
+                        ->weight('semibold')
+                        ->sortable()
+                        ->badge()
+                        ->colors([
+                            'warning' => 'Pending',
+                            'success' => 'Approved',
+                            'danger' => 'Rejected',
+                        ])
+                        ->extraAttributes([
+                            'class' => 'mb-2',
+                        ]),
 
-                TextColumn::make('members')
-                    ->badge()
-                    ->color('secondary')
-                    ->width('1%')  
-                    ->label('Total Members')
-                    ->getStateUsing(fn ($record) => count($record->members ?? []) + 1) // +1 for founder
-                    ->tooltip(fn ($record) => collect($record->members ?? [])
-                        ->pluck('name')
-                        ->prepend($record->founder)
-                        ->join(', ')),                
-                
-                TextColumn::make('mentors.name')
-                    ->label('Mentors')
-                    ->getStateUsing(fn ($record) =>
-                        $record->mentors->pluck('name')->implode('<br>')
-                    )
-                    ->html()
-                    ->weight('semibold')
-                    ->default('None')
-                    ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
-
-                TextColumn::make('status')
-                    ->weight('semibold')
-                    ->badge()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'success' => 'Approved',
-                        'danger' => 'Rejected',
-                    ]),
-
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(), 
+                    TextColumn::make('description')
+                        ->html()
+                        ->limit(50)
+                        ->extraAttributes([
+                            'class' => 'text-justify leading-snug',
+                            'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.75rem;',
+                        ]),
+                    ])
+                ])
             ])
-            ->recordClasses(fn (Startup $record) => match ($record->status) {
-                'Pending'  => 'warning',
-                'Approved' => 'success',
-                'Rejected' => 'danger',
-                default    => null,
-            })
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),

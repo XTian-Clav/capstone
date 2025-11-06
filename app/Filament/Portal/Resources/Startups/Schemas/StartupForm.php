@@ -52,7 +52,7 @@ class StartupForm
 
                     Repeater::make('members')
                         ->label('Team Members')
-                        ->helperText('Exclude the founder in the members list. Max 4 members.')
+                        ->helperText('Exclude the founder in the members list. Maximum of 4 members.')
                         ->schema([
                             TextInput::make('name')
                                 ->label('Member Name')
@@ -62,10 +62,10 @@ class StartupForm
                         ->grid(2)
                         ->minItems(0)
                         ->maxItems(4)
+                        ->columnSpanFull()
                         ->disableItemMovement()
-                        ->createItemButtonLabel('Add Another Member')
                         ->addActionAlignment(Alignment::Start)
-                        ->columnSpanFull(),
+                        ->createItemButtonLabel('Add Another Member'),
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Logo Upload')

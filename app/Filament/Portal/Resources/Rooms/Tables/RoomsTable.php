@@ -81,7 +81,7 @@ class RoomsTable
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(), 
+                    ->sortable(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

@@ -2,12 +2,15 @@
 
 namespace App\Filament\Portal\Resources\Milestones\Pages;
 
-use App\Filament\Portal\Resources\Milestones\MilestoneResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Asmit\ResizedColumn\HasResizableColumn;
+use App\Filament\Portal\Resources\Milestones\MilestoneResource;
 
 class ListMilestones extends ListRecords
 {
+    use HasResizableColumn;
+
     protected static string $resource = MilestoneResource::class;
 
     protected function getHeaderActions(): array

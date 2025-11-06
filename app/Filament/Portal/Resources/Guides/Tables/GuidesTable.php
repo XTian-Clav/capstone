@@ -10,6 +10,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Support\Icons\Heroicon;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Actions\ArchiveAction;
@@ -34,8 +35,13 @@ class GuidesTable
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
-                TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
-                //TextColumn::make('description')->searchable()->html(),
+                TextColumn::make('title')
+                    ->sortable() 
+                    ->searchable()
+                    ->weight('semibold')
+                    ->iconColor('secondary')
+                    
+                    ->icon(Heroicon::DocumentText),      
                 
                 TextColumn::make('url')
                     ->label('Document Link')
@@ -43,8 +49,9 @@ class GuidesTable
                     ->openUrlInNewTab()
                     ->formatStateUsing(fn ($state) => $state ? 'Open Document' : 'No Link Available')
                     ->icon('heroicon-m-arrow-top-right-on-square')
+                    ->iconColor('primary')
                     ->weight('semibold')
-                    ->color('info'),
+                    ->color('primary'),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')

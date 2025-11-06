@@ -66,15 +66,6 @@ class EventsTable
                     ->sortable()
                     ->toggleable(),
 
-                SelectColumn::make('status')
-                    ->options(Event::STATUS)
-                    ->default('Pending')
-                    ->searchable()
-                    ->toggleable()
-                    ->native(false)
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
-                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-
                 TextColumn::make('status')
                     ->getStateUsing(fn ($record) => $record->status)
                     ->badge()
@@ -83,8 +74,7 @@ class EventsTable
                         'warning' => 'Ongoing',
                         'success' => 'Completed',
                         'danger' => 'Cancelled',
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ]),
                     
                 TextColumn::make('created_at')
                     ->label('Created At')

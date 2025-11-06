@@ -15,8 +15,6 @@ class ListStartups extends ListRecords
     
     protected static string $resource = StartupResource::class;
 
-    protected ?Collection $cachedCounts = null;
-
     protected function getHeaderActions(): array
     {
         return [

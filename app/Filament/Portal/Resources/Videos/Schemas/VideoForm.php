@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 
 class VideoForm
@@ -28,8 +29,8 @@ class VideoForm
                     
                     RichEditor::make('description')
                         ->label('Description')
-                        ->default('<p><em>No Description.</em></p>')
                         ->columnSpanFull()
+                        ->default('<p><em>No Description.</em></p>')
                         ->toolbarButtons([
                             'bold',
                             'italic',
@@ -38,12 +39,27 @@ class VideoForm
                             'bulletList',
                             'orderedList',
                             'link',
-                            'undo',
-                            'redo',
                         ])
                         ->nullable()
                         ->required(),
-                ])->columns(2)->columnSpanFull(),
-            ]);
+                ])->columns(2)->columnSpan(2),
+                Section::make('Thumbnail')
+                ->schema([
+                    FileUpload::make('picture')
+                        ->image()
+                        ->imageEditor()
+                        ->hiddenLabel()
+                        ->default(null)
+                        ->helpertext('Note: Thumbnails are optional. You can leave it blank.')
+
+                        //IMG DIRECTORY
+                        ->disk('public')
+                        ->directory('videos/picture')
+                        ->visibility('public')
+
+                        //FILE SIZE LIMIT
+                        ->maxSize(5000),
+                ])->columnSpan(1),
+            ])->columns(3);
     }
 }
