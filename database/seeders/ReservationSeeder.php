@@ -27,7 +27,7 @@ class ReservationSeeder extends Seeder
         $userIds = User::pluck('id')->toArray();
 
         // --- Equipment ---
-        for ($i = 0; $i < 25; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
             $endDate = (clone $startDate)->modify('+' . rand(1, 7) . ' days');
@@ -49,7 +49,7 @@ class ReservationSeeder extends Seeder
         }
 
         // --- Room ---
-        for ($i = 0; $i < 25; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
             $endDate = (clone $startDate)->modify('+' . rand(1, 7) . ' days');
@@ -74,7 +74,7 @@ class ReservationSeeder extends Seeder
         }
 
         // --- Supply ---
-        for ($i = 0; $i < 25; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
             $endDate = (clone $startDate)->modify('+' . rand(1, 7) . ' days');
