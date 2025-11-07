@@ -31,20 +31,23 @@ class RoomForm
                 Section::make('Room Details')
                 ->description('Fill up the form and make sure all details are correct.')
                 ->schema([
-                    Select::make('room_type')
-                        ->options(Room::ROOM_TYPE)
+                    TextInput::make('room_type')
                         ->required()
-                        ->native(false),
+                        ->minLength(2)
+                        ->maxLength(255)
+                        ->placeholder('Enter room name'),
                     
                     TextInput::make('location')
                         ->required()
                         ->minLength(2)
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->placeholder('Enter location details'),
 
                     TextInput::make('capacity')
                         ->required()
                         ->minLength(2)
-                        ->maxLength(100),
+                        ->maxLength(100)
+                        ->placeholder('Enter capacity'),
                     
                     RichEditor::make('inclusions')
                         ->label('Inclusions')

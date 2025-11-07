@@ -19,18 +19,20 @@ class VideoForm
                 ->Schema([
                     TextInput::make('title')
                         ->required()
-                        ->unique(),
+                        ->unique()
+                        ->placeholder('Enter title here'),
 
                     TextInput::make('url')
                         ->url()
                         ->required()
                         ->prefix('Link')
-                        ->suffixIcon('heroicon-m-link'),
+                        ->suffixIcon('heroicon-m-link')
+                        ->placeholder('Enter drive link here'),
                     
                     RichEditor::make('description')
                         ->label('Description')
                         ->columnSpanFull()
-                        ->default('<p><em>No Description.</em></p>')
+                        ->default('<p><em>Enter description here.</em></p>')
                         ->toolbarButtons([
                             'bold',
                             'italic',

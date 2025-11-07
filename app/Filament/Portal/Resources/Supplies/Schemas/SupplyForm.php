@@ -31,6 +31,7 @@ class SupplyForm
                 ->schema([
                 TextInput::make('item_name')
                     ->label('Item Name')
+                    ->placeholder('Enter item name')
                     ->required()
                     ->unique(),
                 
@@ -41,10 +42,12 @@ class SupplyForm
                     ->suffix('pcs'),
 
                 TextInput::make('remarks')
-                    ->default(null),
+                    ->default(null)
+                    ->placeholder('Enter remarks (Optional)'),
 
                 TextInput::make('location')
-                    ->required(),
+                    ->required()
+                    ->placeholder('Enter location details'),
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Photo Upload')

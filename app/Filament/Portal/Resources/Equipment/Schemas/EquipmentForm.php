@@ -31,6 +31,7 @@ class EquipmentForm
                 ->schema([
                     TextInput::make('equipment_name')
                         ->label('Equipment Name')
+                        ->placeholder('Enter equipment name')
                         ->required()
                         ->unique(),
                     
@@ -42,13 +43,16 @@ class EquipmentForm
                     
                     TextInput::make('property_no')
                         ->required()
+                        ->placeholder('Enter property number')
                         ->unique(),
                     
                     TextInput::make('remarks')
-                        ->default(null),
+                        ->default(null)
+                        ->placeholder('Enter remarks (Optional)'),
 
                     TextInput::make('location')
-                        ->required(),
+                        ->required()
+                        ->placeholder('Enter  location details'),
                 ])->columnSpan(2)->columns(2)->compact(),
 
                 Section::make('Photo Upload')

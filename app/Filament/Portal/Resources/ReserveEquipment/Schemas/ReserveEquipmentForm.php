@@ -29,21 +29,26 @@ class ReserveEquipmentForm
                     ->schema([
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
+                            ->placeholder('Enter reserver name')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Office')
+                            ->placeholder('enter office or company name')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
                         TextInput::make('contact')
                             ->label('Contact')
+                            ->mask('0999-999-9999')
+                            ->placeholder('09XX-XXX-XXXX')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
+                            ->placeholder('enter reserver email')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
@@ -79,6 +84,7 @@ class ReserveEquipmentForm
                 ->schema([
                     Select::make('equipment_id')
                         ->hiddenLabel()
+                        ->placeholder('Select equipment')
                         ->options(Equipment::where('quantity', '>', 0)
                                 ->pluck('equipment_name', 'id')
                         )

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('logo')->nullable();
+            $table->string('document')->nullable();
+            $table->string('url')->nullable();
             $table->string('startup_name')->unique();
             $table->string('founder');
             $table->json('members')->nullable();

@@ -27,19 +27,22 @@ class MilestoneForm
                             ->label('Task')
                             ->maxLength(255)
                             ->columnSpanFull()
+                            ->placeholder('Enter title')
                             ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                        
                         Select::make('startup_id')
                             ->label('Startup Name')
                             ->options(Startup::pluck('startup_name', 'id'))
                             ->searchable()
                             ->required()
                             ->columnSpanFull()
+                            ->placeholder('Choose startup to assign')
                             ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     ])->columnSpan(1),
 
                     RichEditor::make('description')
                         ->label('Description')
-                        ->default('<p><em>No Description.</em></p>')
+                        ->default('<p><em>Enter description here.</em></p>')
                         ->columnSpan(2)
                         ->toolbarButtons([
                             'bold',
@@ -64,10 +67,12 @@ class MilestoneForm
                     ->prefix('Link')
                     ->label('Upload Link')
                     ->suffixIcon('heroicon-m-link')
+                    ->placeholder('Enter Google Drive link here')
                     ->disabled(fn () => ! auth()->user()->hasRole('incubatee')),
 
                     RichEditor::make('summary')
                         ->label('Summarize your submission report')
+                        ->default('<p><em>Enter summary here.</em></p>')
                         ->toolbarButtons([
                             'bold',
                             'italic',
@@ -87,6 +92,7 @@ class MilestoneForm
                 ->Schema([
                     RichEditor::make('admin_comment')
                         ->label('Admin Comment')
+                        ->default('<p><em>Enter comment here.</em></p>')
                         ->toolbarButtons([
                             'bold',
                             'italic',

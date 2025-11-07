@@ -29,9 +29,23 @@ class UserInfolist
                 Section::make('Personal Details')
                 ->schema([
                     TextEntry::make('name')->weight('semibold'), 
-                    TextEntry::make('email')->label('Email address')->weight('semibold'),
-                    TextEntry::make('contact')->weight('semibold')->placeholder('N/A'),
+                    
+                    TextEntry::make('email')
+                        ->label('Email address')
+                        ->weight('semibold')
+                        ->copyable()
+                        ->copyMessage('Copied!')
+                        ->copyMessageDuration(1500),
+
+                    TextEntry::make('contact')
+                        ->weight('semibold')
+                        ->placeholder('N/A')
+                        ->copyable()
+                        ->copyMessage('Copied!')
+                        ->copyMessageDuration(1500),
+
                     TextEntry::make('company')->weight('semibold')->placeholder('N/A'),
+                    
                     TextEntry::make('email_verified_at')
                         ->dateTime('M j, Y h:i A')
                         ->placeholder('Unverified'),

@@ -30,21 +30,26 @@ class ReserveRoomForm
                     ->schema([
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
+                            ->placeholder('Enter reserver name')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Company / Office')
+                            ->placeholder('Enter office or company name')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
                         TextInput::make('contact')
                             ->label('Contact')
+                            ->mask('0999-999-9999')
+                            ->placeholder('09XX-XXX-XXXX')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
+                            ->placeholder('Enter reserver email')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
@@ -83,7 +88,8 @@ class ReserveRoomForm
                 Section::make('Select Room')
                 ->schema([
                     Select::make('room_type')
-                        ->label('Room Type')
+                        ->label('Room')
+                        ->placeholder('Select room')
                         ->options(Room::ROOM_TYPE)
                         ->required()
                         ->native(false)

@@ -5,8 +5,9 @@ namespace App\Filament\Portal\Resources\Startups\Schemas;
 use App\Models\Startup;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
-use Filament\Support\Enums\Alignment;
+use Filament\Schemas\Components\Grid;
 
+use Filament\Support\Enums\Alignment;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
@@ -26,18 +27,21 @@ class StartupForm
                     ->required()
                     ->unique()
                     ->minLength(2)
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->autocapitalize('words')
+                    ->placeholder('Enter startup name'),
 
                 TextInput::make('founder')
                     ->required()
                     ->minLength(2)
                     ->maxLength(255)
+                    ->autocapitalize('words')
+                    ->placeholder('Enter the name of the founder')
                     ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null),
-                
+
                 RichEditor::make('description')
                     ->label('Description')
-                    ->default(null)
-                    ->columnSpanFull()
+                    ->default('<p><em>Enter short description here.</em></p>')
                     ->toolbarButtons([
                         'bold',
                         'italic',
@@ -46,13 +50,21 @@ class StartupForm
                         'bulletList',
                         'orderedList',
                         'link',
-                        'undo',
-                        'redo',
                     ]),
 
+                Select::make('status')
+                    ->options(Startup::STATUS)
+                    ->default('Pending')
+                    ->required()
+                    ->native(false)
+                    ->helpertext('Status are pending by default. Only Administrators can edit the startup status.')
+                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+
+                Section::make()
+                ->footer('Maximum of 4 members excluding founder.')
+                ->schema([
                     Repeater::make('members')
                         ->label('Team Members')
-                        ->helperText('Exclude the founder in the members list. Maximum of 4 members.')
                         ->schema([
                             TextInput::make('name')
                                 ->label('Member Name')
@@ -66,35 +78,69 @@ class StartupForm
                         ->disableItemMovement()
                         ->addActionAlignment(Alignment::Start)
                         ->createItemButtonLabel('Add Another Member'),
+                    ])->columnSpanFull()->compact(),
                 ])->columnSpan(2)->columns(2)->compact(),
-
-                Section::make('Logo Upload')
+                
+                Grid::make()
                 ->schema([
-                    FileUpload::make('logo') ->label('Startup Logo')
-                        ->label('Startup Logo')
-                        ->default(null)
-                        ->image()
-                        ->imageEditor()
+                    Section::make('Logo Upload')
+                    ->schema([
+                        FileUpload::make('logo')
+                            ->label('Startup Logo')
+                            ->default(null)
+                            
+                            //UPLOAD SETTINGS
+                            ->image()
+                            ->imageEditor()
+                            
 
-                        //IMG DIRECTORY
-                        ->disk('public')
-                        ->directory('startups/logos')
-                        ->visibility('public')
+                            //IMG DIRECTORY
+                            ->disk('public')
+                            ->directory('startups/logos')
+                            ->visibility('public')
 
-                        //IMAGE CROP (1:1)
-                        ->imageCropAspectRatio('1:1')
-                        ->imageResizeMode('cover')
+                            //IMAGE CROP (1:1)
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeMode('cover')
 
-                        //FILE SIZE LIMIT
-                        ->maxSize(5120),
-                    
-                    Select::make('status')
-                        ->options(Startup::STATUS)
-                        ->default('Pending')
-                        ->required()
-                        ->native(false)
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                ])->compact(),
+                            //FILE SIZE LIMIT
+                            ->maxSize(5120)
+                            ->helperText('Photo file size limit is 5mb. '),
+                    ])->columnSpanFull()->compact(),
+
+                    Section::make('Startup Proposal Upload')
+                    ->schema([
+                        FileUpload::make('document')
+                            ->label('PDF Upload')
+                            ->default(null)
+                            
+                            //UPLOAD SETTINGS
+                            ->openable()
+                            ->multiple()
+                            ->appendFiles()
+                            ->downloadable()
+                            ->panelLayout('grid')
+                            ->maxParallelUploads(5)
+                            ->acceptedFileTypes(['application/pdf'])
+
+                            //DIRECTORY
+                            ->disk('public')
+                            ->directory('startups/documents')
+                            ->visibility('public')
+
+                            //FILE SIZE LIMIT
+                            ->maxSize(10000)
+                            ->helperText('Multiple PDF uploads are allowed (limit 10mb).'),
+
+                        TextInput::make('url')
+                            ->url()
+                            ->required()
+                            ->prefix('Link')
+                            ->label('Drive Link Upload')
+                            ->suffixIcon('heroicon-m-link')
+                            ->Helpertext('Upload your videos and powerpoint presentaion here.'),
+                    ])->columnSpanFull()->compact(),
+                ])->columnSpan(1)
             ])->columns(3);
     }
 }

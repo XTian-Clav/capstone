@@ -22,13 +22,17 @@ class UserForm
             ->components([
                 Section::make('Personal Information')
                 ->schema([
-                    Section::make('Photo Upload')
+                    Section::make()
                     ->schema([
                         FileUpload::make('avatar_url')
                             ->hiddenLabel()
                             ->default(null)
+                            
+                            //IMG EDITOR
                             ->image()
                             ->imageEditor()
+                            ->panelAspectRatio('2:1')
+                            ->panelLayout('integrated')
 
                             //IMG DIRECTORY
                             ->disk('public')
@@ -40,12 +44,7 @@ class UserForm
                             ->imageResizeMode('cover')
 
                             //FILE SIZE LIMIT
-                            ->maxSize(5120)
-                            ->imagePreviewHeight('185'),
-                    ])->columnSpan(1)->compact()->secondary(),
-
-                    Section::make()
-                    ->schema([
+                            ->maxSize(5120),
                         Section::make() 
                         ->schema([
                             CheckboxList::make('roles')
@@ -53,33 +52,43 @@ class UserForm
                                 ->maxItems(1)
                                 ->required()
                                 ->columns(2),
-                        ])->columnSpanFull(),
-                        DateTimePicker::make('email_verified_at')
-                            ->native(false)
-                            ->label('Email Status')
-                            ->placeholder('Unverified'),
+                        ])->columnSpan(2),
+                    ])->columnSpanFull()->columns(3)->compact()->secondary(),
+
+                
+                    Grid::make()
+                    ->schema([
+                        TextInput::make('name')->unique()->required()->placeholder('Enter fullname'),
                         
+                        TextInput::make('email')
+                            ->label('Email address')
+                            ->email()
+                            ->unique()
+                            ->required()
+                            ->placeholder('Enter email'),
+                        
+                        TextInput::make('contact')
+                            ->unique()
+                            ->required()
+                            ->mask('0999-999-9999')
+                            ->placeholder('09XX-XXX-XXXX'),
+                        
+                        TextInput::make('company')->required()->placeholder('Enter company'),
+
                         TextInput::make('password')
                             ->password()
+                            ->placeholder('Enter password')
                             ->dehydrateStateUsing(fn (?string $state): ?string => $state ? Hash::make($state) : null)
                             ->dehydrated(fn (?string $state): bool => filled($state))
                             ->required(fn (string $operation): bool => $operation === 'create')
                             ->maxLength(100)
                             ->revealable(),
-                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
-
-                
-                    Grid::make()
-                    ->schema([
-                        TextInput::make('name')->unique()->required(),
-                        TextInput::make('email')
-                            ->label('Email address')
-                            ->email()
-                            ->unique()
-                            ->required(),
                         
-                        TextInput::make('contact')->unique()->required(),
-                        TextInput::make('company')->required(),
+                        DateTimePicker::make('email_verified_at')
+                            ->native(false)
+                            ->disabled()
+                            ->label('Email Status')
+                            ->placeholder('Unverified'),
                     ])->columnSpanFull()->columns(2),
             ])->columnSpanFull()->columns(3)->compact(),
         ]);

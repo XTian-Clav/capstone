@@ -13,6 +13,8 @@ class Startup extends Model
     protected $fillable = [
         'user_id',
         'logo',
+        'document',
+        'url',
         'startup_name',
         'founder',
         'members',

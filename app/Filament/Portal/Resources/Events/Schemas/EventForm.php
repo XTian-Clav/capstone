@@ -26,11 +26,12 @@ class EventForm
                     ->required()
                     ->unique()
                     ->minLength(2)
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->placeholder('Enter event name '),
 
                     RichEditor::make('description')
                         ->label('Description')
-                        ->default(null)
+                        ->default('<p><em>Enter description here.</em></p>')
                         ->columnSpanFull()
                         ->toolbarButtons([
                             'bold',
@@ -47,7 +48,8 @@ class EventForm
                     TextInput::make('location')
                         ->required()
                         ->minLength(2)
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->placeholder('Enter location'),
 
                     Select::make('status')
                         ->options(Event::STATUS)
@@ -81,9 +83,10 @@ class EventForm
 
                     DateTimePicker::make('end_date')
                         ->displayFormat('F j, Y — h:i A')
-                        ->required()
+                        ->placeholder('Choose end date')
                         ->Seconds(false)
                         ->native(false)
+                        ->required()
                         ->rule(function ($get) {
                             return function (string $attribute, $value, $fail) use ($get) {
                                 $end = Carbon::parse($value);

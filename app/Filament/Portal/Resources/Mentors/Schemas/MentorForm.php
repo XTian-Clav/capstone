@@ -44,24 +44,25 @@ class MentorForm
                         ->required()
                         ->minLength(2)
                         ->maxLength(255)
-                        ->columnSpanFull(),
+                        ->columnSpanFull()
+                        ->placeholder('Enter fullname'),
 
                     TextInput::make('contact')
-                        ->required()
                         ->unique()
-                        ->tel()
-                        ->minLength(11)
-                        ->placeholder('Enter a valid Philippine phone number (11 digits)'),
+                        ->required()
+                        ->mask('0999-999-9999') // 11 digits
+                        ->placeholder('09XX-XXX-XXXX'),
                     
                     TextInput::make('email')
                         ->email()
                         ->required()
                         ->maxLength(100)
-                        ->unique(ignoreRecord: true),
+                        ->unique(ignoreRecord: true)
+                        ->placeholder('Enter email'),
 
                     RichEditor::make('personal_info')
                         ->label('Personal Information')
-                        ->default(null)
+                        ->default('<p><em>Enter your personal info here.</em></p>')
                         ->columnSpanFull()
                         ->toolbarButtons([
                             'bold',
