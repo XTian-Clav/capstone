@@ -37,6 +37,8 @@ class VideosTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
+            ->paginated([12, 24, 36, 50])
+            ->defaultPaginationPageOption(12)
             ->defaultSort('created_at', 'asc')
             ->contentGrid(['xl' => 3])
             ->columns([
@@ -52,7 +54,10 @@ class VideosTable
                             'alt' => 'Logo',
                             'loading' => 'lazy',
                             'class' => 'rounded-xl object-cover',
-                        ]),
+                        ])
+                        ->url(fn ($record) => $record->url)
+                        ->openUrlInNewTab()
+                        ->tooltip('Open Video'),
                     
                     TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
                     TextColumn::make('description')
@@ -63,26 +68,15 @@ class VideosTable
                             'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.25rem;',
                         ]),
 
-                    Split::make([
-                        TextColumn::make('url')
-                        ->label('Video Link')
-                        ->url(fn ($record) => $record->url)
-                        ->openUrlInNewTab()
-                        ->formatStateUsing(fn ($state) => $state ? 'Open Video' : 'No Link Available')
-                        ->icon('heroicon-m-arrow-top-right-on-square')
-                        ->weight('semibold')
-                        ->color('info'),
-                    
-                        TextColumn::make('created_at')
-                            ->label('Created At')
-                            ->since()
-                            ->badge()
-                            ->sortable()
-                            ->searchable()
-                            ->toggleable()
-                            ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
-                    ])
-                ])->space(1)
+                    TextColumn::make('created_at')
+                        ->label('Created At')
+                        ->since()
+                        ->badge()
+                        ->sortable()
+                        ->searchable()
+                        ->toggleable()
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                ])->space(2)
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
