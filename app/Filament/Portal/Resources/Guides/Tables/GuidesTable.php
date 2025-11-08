@@ -40,7 +40,6 @@ class GuidesTable
                     ->searchable()
                     ->weight('semibold')
                     ->iconColor('secondary')
-                    
                     ->icon(Heroicon::DocumentText),      
                 
                 TextColumn::make('url')

@@ -92,7 +92,6 @@ class StartupForm
                             //UPLOAD SETTINGS
                             ->image()
                             ->imageEditor()
-                            
 
                             //IMG DIRECTORY
                             ->disk('public')
@@ -116,11 +115,8 @@ class StartupForm
                             
                             //UPLOAD SETTINGS
                             ->openable()
-                            ->multiple()
                             ->appendFiles()
                             ->downloadable()
-                            ->panelLayout('grid')
-                            ->maxParallelUploads(5)
                             ->acceptedFileTypes(['application/pdf'])
 
                             //DIRECTORY
@@ -129,12 +125,12 @@ class StartupForm
                             ->visibility('public')
 
                             //FILE SIZE LIMIT
-                            ->maxSize(10000)
-                            ->helperText('Multiple PDF uploads are allowed (limit 10mb).'),
+                            ->maxSize(16000)
+                            ->helperText('Only one PDF upload is allowed (limit 15mb).'),
 
                         TextInput::make('url')
                             ->url()
-                            ->required()
+                            ->nullable()
                             ->prefix('Link')
                             ->label('Drive Link Upload')
                             ->suffixIcon('heroicon-m-link')
