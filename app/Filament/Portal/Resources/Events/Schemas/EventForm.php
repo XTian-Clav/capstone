@@ -140,7 +140,8 @@ class EventForm
                                 ->values()
                                 ->all();
                             $set('attendance', $unique);
-                        }),
+                        })
+                        ->disabled(fn($record) => in_array($record->status, ['Completed', 'Cancelled'])),
                 ])->columnSpanFull()
                 ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])->columns(3);

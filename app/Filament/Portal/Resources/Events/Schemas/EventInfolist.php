@@ -9,6 +9,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 
 class EventInfolist
 {
@@ -89,6 +91,26 @@ class EventInfolist
                         ->visible(fn (Event $record): bool => $record->trashed()),
                 ])->columnSpan(1)->columns(3)->compact(),
 
+                Section::make('Attendance List')
+                ->schema([
+                    RepeatableEntry::make('attendance')
+                        ->hiddenLabel()
+                        ->table([
+                            TableColumn::make('Name'),
+                            TableColumn::make('Going to Event'),
+                        ])
+                        ->schema([
+                            TextEntry::make('user')
+                                ->weight('semibold'),
+
+                            TextEntry::make('status')
+                                ->badge()
+                                ->color('success'),
+                        ])
+                        ->columns(2),
+                ])
+                ->columnSpanFull()
+                ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }
