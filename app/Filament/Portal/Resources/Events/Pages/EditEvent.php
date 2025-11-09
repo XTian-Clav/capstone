@@ -18,4 +18,9 @@ class EditEvent extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return $this->getRecord()->event;
+    }
 }

@@ -3,9 +3,12 @@
 namespace App\Filament\Portal\Resources\Events\Schemas;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Event;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
@@ -20,7 +23,7 @@ class EventForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('Create Event')
                 ->schema([
                     TextInput::make('event')->columnSpanFull()
                     ->required()
@@ -56,7 +59,9 @@ class EventForm
                         ->default('Upcoming')
                         ->required()
                         ->native(false),
-                ])->columnSpan(2)->columns(2)->compact(),
+                ])->columnSpan(2)->columns(2)->compact()
+                ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
+                ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
 
                 Section::make('Upload Event Banner')
                 ->schema([
@@ -101,7 +106,43 @@ class EventForm
                                 }
                             };
                         }),
-                ])->compact(),
+                ])->compact()
+                ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
+                ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                
+                Section::make('Attendance')
+                ->description('Press the Attend Event button to automatically register your attendance. Once submitted, you cannot edit or submit again.')
+                ->schema([
+                    Repeater::make('attendance')
+                        ->hiddenLabel()
+                        ->compact()
+                        ->schema([
+                            TextInput::make('user')
+                                ->default(fn () => auth()->user()?->name)
+                                ->label('Name')
+                                ->readonly()
+                                ->required(),
+
+                            TextInput::make('status')
+                                ->label('I will go to the event.')
+                                ->default('yes')
+                                ->readonly(),
+                        ])
+                        ->columns(2)
+                        ->itemNumbers()
+                        ->defaultItems(1)
+                        ->deletable(false)
+                        ->reorderable(false)
+                        ->createItemButtonLabel('Attend Event')
+                        ->afterStateUpdated(function ($state, $set) {
+                            $unique = collect($state ?? [])
+                                ->unique('user')
+                                ->values()
+                                ->all();
+                            $set('attendance', $unique);
+                        }),
+                ])->columnSpanFull()
+                ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])->columns(3);
     }
 }

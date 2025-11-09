@@ -103,6 +103,13 @@ class EventsTable
                             ->toggleable()
                             ->badge()
                             ->color('gray'),
+
+                        TextColumn::make('attendance')
+                            ->badge()
+                            ->getStateUsing(fn($record) => 'Going: ' . collect($record->attendance ?? [])
+                                ->where('status', 'yes')
+                                ->count()
+                            ),
                     ])->space(2)
                 ])
             ])
@@ -130,7 +137,20 @@ class EventsTable
                 ->icon('heroicon-o-bars-arrow-down')
                 ->color('secondary')
                 ->size(Size::ExtraSmall)
-                ->button(),
+                ->button()
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                
+                EditAction::make('attendance')
+                    ->button()
+                    ->color('secondary')
+                    ->label('Attendance')
+                    ->icon('heroicon-s-clipboard-document-check')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

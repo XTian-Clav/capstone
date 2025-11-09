@@ -19,7 +19,11 @@ class ViewEvent extends ViewRecord
                 ->color('gray')
                 ->url(static::getResource()::getUrl('index')),
             
-            EditAction::make(),
+            EditAction::make()
+                ->color('secondary')
+                ->label('Submit Attendance')
+                ->icon('heroicon-s-clipboard-document-check')
+                ->visible(fn () => auth()->user()?->hasAnyRole(['incubatee', 'investor'])),
         ];
     }
 }

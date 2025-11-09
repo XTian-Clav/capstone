@@ -31,6 +31,7 @@ class Event extends Model
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'attendance' => 'array',
     ];
 
     protected static function booted()
