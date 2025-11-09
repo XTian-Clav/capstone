@@ -10,7 +10,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 class WelcomeCard extends StatsOverviewWidget
 {
     protected ?string $pollingInterval = '59s';
-    protected static ?int $sort = 0;
+    protected static ?int $sort = 1;
 
     protected function getStats(): array
     {

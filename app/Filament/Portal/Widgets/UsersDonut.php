@@ -15,7 +15,7 @@ class UsersDonut extends ApexChartWidget
     }
 
     protected ?string $pollingInterval = '60s';
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 5;
     /**
      * Chart Id
      *

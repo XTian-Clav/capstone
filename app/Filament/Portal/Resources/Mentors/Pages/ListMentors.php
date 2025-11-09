@@ -7,6 +7,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Asmit\ResizedColumn\HasResizableColumn;
+use App\Filament\Portal\Widgets\MentorWidget;
 use App\Filament\Portal\Resources\Mentors\MentorResource;
 
 class ListMentors extends ListRecords

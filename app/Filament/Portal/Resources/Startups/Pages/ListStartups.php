@@ -7,6 +7,7 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Schemas\Components\Tabs\Tab;
 use Asmit\ResizedColumn\HasResizableColumn;
+use App\Filament\Portal\Widgets\StartupWidget;
 use App\Filament\Portal\Resources\Startups\StartupResource;
 
 class ListStartups extends ListRecords

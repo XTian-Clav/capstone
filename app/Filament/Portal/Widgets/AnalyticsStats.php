@@ -2,9 +2,7 @@
 
 namespace App\Filament\Portal\Widgets;
 
-use App\Models\User;
 use App\Models\Event;
-use App\Models\Mentor;
 use App\Models\Startup;
 use App\Models\ReserveRoom;
 use App\Models\ReserveSupply;
@@ -22,7 +20,7 @@ class AnalyticsStats extends StatsOverviewWidget
     }
 
     protected ?string $pollingInterval = '60s';
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 6;
     
     protected function getStats(): array
     {
@@ -30,17 +28,16 @@ class AnalyticsStats extends StatsOverviewWidget
             Stat::make('Total Startups', Startup::count())
                 ->description('Total Startups submission')
                 ->descriptionIcon('heroicon-s-briefcase', IconPosition::Before)
-                ->color('violet'),
+                ->color('secondary'),
 
             Stat::make('Total Events', Event::count())
                 ->description('Total Events held by Pitbi')
                 ->descriptionIcon('heroicon-s-calendar-days', IconPosition::Before)
-                ->color('violet'),
+                ->color('secondary'),
 
             Stat::make(
                 'Total Reservations',
                 collect([
-                    //ReserveEquipment::where('status', 'pending')->count(),
                     ReserveEquipment::count(),
                     ReserveRoom::count(),
                     ReserveSupply::count(),
@@ -48,7 +45,7 @@ class AnalyticsStats extends StatsOverviewWidget
             )
                 ->description('Total reservations requests')
                 ->descriptionIcon('heroicon-s-clipboard-document-list', IconPosition::Before)
-                ->color('violet'),
+                ->color('secondary'),
     ];
     }
 }

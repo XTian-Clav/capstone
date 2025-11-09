@@ -22,13 +22,19 @@ class EventInfolist
                         ->disk('public')
                         ->visibility('public')
                         ->hiddenLabel()
+                        ->imageWidth(400)
                         ->imageHeight(200)
                         ->columnSpanFull()
-                        ->alignCenter()
-                        ->defaultImageUrl(url('storage/default/no-image.png')),
+                        ->defaultImageUrl(url('storage/default/no-image.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ]),
 
                     TextEntry::make('description')
                         ->html()
+                        ->hiddenLabel()
                         ->columnSpanFull()
                         ->extraAttributes([
                             'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',

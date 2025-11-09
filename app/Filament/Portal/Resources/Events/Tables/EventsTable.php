@@ -12,6 +12,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Support\Enums\TextSize;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Actions\ArchiveAction;
@@ -23,6 +24,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,47 +45,66 @@ class EventsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+            ->contentGrid(['xl' => 2])
             ->columns([
-                TextColumn::make('event')
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable()
-                    ->limit(40)
-                    ->weight('semibold')
-                    ->tooltip(fn ($record) => $record->event),
+                Split::make([
+                    ImageColumn::make('picture')
+                        ->label('')
+                        ->imageHeight(150)
+                        ->imageWidth(250)
+                        ->grow(false)
+                        ->disk('public')
+                        ->defaultImageUrl(url('storage/default/no-image.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ])
+                        ->visibleFrom('md'),
+                    Stack::make([
+                        Split::make([
+                            TextColumn::make('event')
+                                ->searchable()
+                                ->toggleable()
+                                ->sortable()
+                                ->limit(40)
+                                ->color('primary')
+                                ->weight('semibold')
+                                ->size(TextSize::Large)
+                                ->tooltip(fn ($record) => $record->event),
+    
+                            TextColumn::make('status')
+                                ->getStateUsing(fn ($record) => $record->status)
+                                ->badge()
+                                ->colors([
+                                    'indigo' => 'Upcoming',
+                                    'warning' => 'Ongoing',
+                                    'success' => 'Completed',
+                                    'danger' => 'Cancelled',
+                                ]),
+                        ]),
+                        
+                        TextColumn::make('location')
+                            ->searchable()
+                            ->toggleable()
+                            ->sortable()
+                            ->weight('semibold'),
+                        
+                        TextColumn::make('start_date')
+                            ->dateTime('M j, Y h:i A')
+                            ->badge()
+                            ->sortable()
+                            ->toggleable()
+                            ->color('gray'),
 
-                TextColumn::make('location')
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-
-                TextColumn::make('start_date')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('end_date')
-                    ->dateTime('M j, Y h:i A')
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('status')
-                    ->getStateUsing(fn ($record) => $record->status)
-                    ->badge()
-                    ->colors([
-                        'indigo' => 'Upcoming',
-                        'warning' => 'Ongoing',
-                        'success' => 'Completed',
-                        'danger' => 'Cancelled',
-                    ]),
-                    
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
+                        TextColumn::make('end_date')
+                            ->dateTime('M j, Y h:i A')
+                            ->sortable()
+                            ->toggleable()
+                            ->badge()
+                            ->color('gray'),
+                    ])->space(2)
+                ])
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

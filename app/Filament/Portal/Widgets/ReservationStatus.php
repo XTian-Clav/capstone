@@ -17,7 +17,7 @@ class ReservationStatus extends ApexChartWidget
     }
 
     protected ?string $pollingInterval = '60s';
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 3;
     /**
      * Chart Id
      *

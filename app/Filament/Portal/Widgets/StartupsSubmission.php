@@ -16,7 +16,7 @@ class StartupsSubmission extends ApexChartWidget
     }
 
     protected ?string $pollingInterval = '60s';
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 4;
     /**
      * Chart Id
      *
@@ -53,24 +53,9 @@ class StartupsSubmission extends ApexChartWidget
         $months = collect(range(1, 12))->map(fn ($m) => Carbon::create()->month($m)->format('M'));
         $counts = collect(range(1, 12))->map(fn ($m) => $data[$m] ?? 0);
 
-        $monthColors = [
-            '#f59e0b', // Jan - amber
-            '#3b82f6', // Feb - blue
-            '#10b981', // Mar - green
-            '#ef4444', // Apr - red
-            '#8b5cf6', // May - purple
-            '#f97316', // Jun - orange
-            '#06b6d4', // Jul - teal
-            '#f43f5e', // Aug - pink
-            '#6366f1', // Sep - indigo
-            '#14b8a6', // Oct - cyan
-            '#eab308', // Nov - yellow
-            '#db2777', // Dec - rose
-        ];
-
         return [
             'chart' => [
-                'type' => 'bar',
+                'type' => 'line',
                 'height' => 300,
             ],
             'series' => [
@@ -80,28 +65,34 @@ class StartupsSubmission extends ApexChartWidget
                 ],
             ],
             'xaxis' => [
-                'categories' =>  $months->toArray(),
+                'categories' => $months->toArray(),
                 'labels' => [
-                    'style' => [
-                        'fontFamily' => 'inherit',
-                    ],
+                    'style' => ['fontFamily' => 'inherit'],
                 ],
             ],
             'yaxis' => [
                 'labels' => [
-                    'style' => [
-                        'fontFamily' => 'inherit',
-                    ],
+                    'style' => ['fontFamily' => 'inherit'],
                 ],
             ],
-            'colors' => $monthColors,
-            'plotOptions' => [
-                'bar' => [
-                    'distributed' => true,
+            'markers' => [
+                'size' => 5,
+                'strokeWidth' => 3,
+                'strokeColors' => '#fff',
+                'hover' => [
+                    'size' => 7,
                 ],
+            ],
+            'stroke' => [
+                'curve' => 'straight',
+                'width' => 5,
             ],
             'legend' => [
-                'show' => false, // hide all legend labels
+                'show' => true,
+                'position' => 'top',
+            ],
+            'dataLabels' => [
+                'enabled' => false,
             ],
         ];
     }

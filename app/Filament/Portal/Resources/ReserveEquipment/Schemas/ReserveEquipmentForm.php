@@ -100,7 +100,7 @@ class ReserveEquipmentForm
                             if (! $equipment?->picture) return '';
                             $url = Storage::url($equipment->picture);
                             return "<div style='max-width:400px;aspect-ratio:16/9'>
-                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg border'>
+                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg'>
                                     </div>";
                         })
                         ->reactive()

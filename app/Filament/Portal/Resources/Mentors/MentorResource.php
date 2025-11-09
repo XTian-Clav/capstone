@@ -2,21 +2,22 @@
 
 namespace App\Filament\Portal\Resources\Mentors;
 
-use App\Filament\Portal\Resources\Mentors\Pages\CreateMentor;
-use App\Filament\Portal\Resources\Mentors\Pages\EditMentor;
-use App\Filament\Portal\Resources\Mentors\Pages\ListMentors;
-use App\Filament\Portal\Resources\Mentors\Pages\ViewMentor;
-use App\Filament\Portal\Resources\Mentors\Schemas\MentorForm;
-use App\Filament\Portal\Resources\Mentors\Schemas\MentorInfolist;
-use App\Filament\Portal\Resources\Mentors\Tables\MentorsTable;
-use App\Models\Mentor;
 use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use App\Models\Mentor;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Portal\Resources\Mentors\Pages\EditMentor;
+use App\Filament\Portal\Resources\Mentors\Pages\ViewMentor;
+use App\Filament\Portal\Resources\Mentors\Pages\ListMentors;
+use App\Filament\Portal\Resources\Mentors\Pages\CreateMentor;
+use App\Filament\Portal\Resources\Mentors\Schemas\MentorForm;
+use App\Filament\Portal\Resources\Mentors\Tables\MentorsTable;
+use App\Filament\Portal\Resources\Mentors\Widgets\MentorWidget;
+use App\Filament\Portal\Resources\Mentors\Schemas\MentorInfolist;
 
 class MentorResource extends Resource
 {

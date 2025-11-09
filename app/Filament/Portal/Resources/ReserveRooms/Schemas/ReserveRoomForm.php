@@ -87,47 +87,35 @@ class ReserveRoomForm
 
                 Section::make('Select Room')
                 ->schema([
-                    Select::make('room_type')
-                        ->label('Room')
-                        ->placeholder('Select room')
-                        ->options(Room::ROOM_TYPE)
-                        ->required()
-                        ->native(false)
-                        ->live()
-                        ->afterStateUpdated(function ($state, $set) {
-                            $room = Room::query()
-                                ->where('room_type', $state)
-                                ->where('is_available', true)
-                                ->first();
-
-                            $set('room_id', $room?->id);
-                        }),
-
-                    Hidden::make('room_id')->required(),
-
-                    Placeholder::make('room_photo')
+                    Select::make('room_id')
                         ->hiddenLabel()
-                        ->content(fn ($get) =>
-                            ($room = Room::find($get('room_id'))) && $room->picture
-                                ? '<div style="max-width:400px;aspect-ratio:16/9;overflow:hidden;border-radius:8px;">
-                                        <img src="' . Storage::url($room->picture) . '?t=' . now()->timestamp . '" 
-                                            style="width:100%;height:100%;object-fit:cover;">
-                                </div>'
-                                : null
-                        )
-                        ->html()
+                        ->placeholder('Select room')
+                        ->options(fn() => Room::where('is_available', true)
+                                ->pluck('room_type', 'id'))
+                        ->searchable()
+                        ->required()
                         ->reactive(),
+
+                    // Photo preview
+                    Placeholder::make('room_preview')
+                        ->hiddenLabel()
+                        ->content(function ($get) {
+                            $room = Room::find($get('room_id'));
+                            if (! $room?->picture) return '';
+                            $url = Storage::url($room->picture);
+                            return "<div style='max-width:400px;aspect-ratio:16/9'>
+                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg'>
+                                    </div>";
+                        })
+                        ->reactive()
+                        ->html(),
 
                     Placeholder::make('room_capacity')
                         ->hiddenLabel()
-                        ->content(fn ($get) => 
-                            ($room = Room::find($get('room_id')))
-                                ? 'Capacity: ' . $room->capacity
-                                : null
-                        )
+                        ->content(fn($get) => ($room = Room::find($get('room_id'))) ? "Capacity: {$room->capacity}" : '')
+                        ->reactive()
                         ->weight('semibold')
-                        ->color('success')
-                        ->reactive(),
+                        ->color('success'),
 
                     Select::make('status')
                         ->options(ReserveRoom::STATUS)

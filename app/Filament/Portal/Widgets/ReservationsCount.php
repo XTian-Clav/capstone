@@ -18,7 +18,7 @@ class ReservationsCount extends ApexChartWidget
     }
 
     protected ?string $pollingInterval = '60s';
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 2;
     /**
      * Chart Id
      *
@@ -51,7 +51,7 @@ class ReservationsCount extends ApexChartWidget
 
         return [
             'chart' => [
-                'type' => 'area', // You can change to 'line' or 'column' if you prefer
+                'type' => 'bar',
                 'height' => 300,
             ],
             'series' => [
@@ -85,12 +85,8 @@ class ReservationsCount extends ApexChartWidget
                 'width' => 3,
             ],
             'fill' => [
-                'type' => 'gradient',
-                'gradient' => [
-                    'shadeIntensity' => 0.3,
-                    'opacityFrom' => 0.4,
-                    'opacityTo' => 0.1,
-                ],
+                'type' => 'solid',
+                'opacity' => 1,
             ],
             'dataLabels' => [
                 'enabled' => false,
