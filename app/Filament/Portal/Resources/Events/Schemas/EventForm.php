@@ -126,7 +126,7 @@ class EventForm
                             TextInput::make('status')
                                 ->label('I will go to the event.')
                                 ->default('yes')
-                                ->readonly(),
+                                ->readOnly(),
                         ])
                         ->columns(2)
                         ->itemNumbers()

@@ -86,7 +86,7 @@ class UserForm
                         
                         DateTimePicker::make('email_verified_at')
                             ->native(false)
-                            ->disabled()
+                            ->readOnly()
                             ->label('Email Status')
                             ->placeholder('Unverified'),
                     ])->columnSpanFull()->columns(2),
