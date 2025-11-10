@@ -14,7 +14,6 @@ class ReserveRoom extends Model
         'reserved_by',
         'user_id',
         'room_id',
-        'room_type',
         'status',
         'company',
         'contact',

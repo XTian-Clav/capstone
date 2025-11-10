@@ -110,7 +110,7 @@ class ReserveEquipmentForm
 
                     Select::make('status')
                         ->options(ReserveEquipment::STATUS)
-                        ->default('Pending') 
+                        ->default('Pending')
                         ->required()
                         ->native(false)
                         ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),    

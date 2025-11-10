@@ -39,18 +39,18 @@ class EditReserveRoom extends EditRecord
         }
 
         $room = $record->room ?? Room::find($data['room_id'] ?? null);
-        $roomName = $room->room_name ?? ($data['room_name'] ?? 'a room');
+        $roomType = $room->room_type ?? ($data['room_type'] ?? 'a room');
 
         $status = strtolower($data['status'] ?? 'updated');
 
         Notification::make()
             ->title('Reservation Update')
-            ->body('The reservation for ' . $roomName . ' has been ' . $status . '.')
+            ->body('The reservation for ' . $roomType . ' has been ' . $status . '.')
             ->sendToDatabase($owner);
 
         Notification::make()
             ->title('Reservation Update Sent')
-            ->body('You have ' . $status . ' the reservation for ' . $roomName . '.')
+            ->body('You have ' . $status . ' the reservation for ' . $roomType . '.')
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);

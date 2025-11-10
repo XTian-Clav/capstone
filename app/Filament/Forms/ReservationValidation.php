@@ -32,18 +32,21 @@ class ReservationValidation
 
                     // Overlap check
                     if ($end && $get($foreignKey)) {
-                        $overlap = $reserveModel::query()
-                            ->where('status', 'Approved')
-                            ->where($foreignKey, $get($foreignKey))
-                            ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
-                            ->where(function ($q) use ($start, $end) {
-                                $q->where('start_date', '<', $end)
-                                  ->where('end_date', '>', $start);
-                            })
-                            ->exists();
+                        // Only validate overlap if not rejecting
+                        if ($get('status') !== 'Rejected') {
+                            $overlap = $reserveModel::query()
+                                ->where('status', 'Approved')
+                                ->where($foreignKey, $get($foreignKey))
+                                ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
+                                ->where(function ($q) use ($start, $end) {
+                                    $q->where('start_date', '<', $end)
+                                    ->where('end_date', '>', $start);
+                                })
+                                ->exists();
 
-                        if ($overlap)
-                            $fail('The selected item is already reserved in this time range.');
+                            if ($overlap)
+                                $fail('Someone already reserved in this schedule. Please select another time.');
+                        }
                     }
                 };
             });
@@ -72,19 +75,22 @@ class ReservationValidation
                         return $fail('[Invalid] End time is earlier than the start time.');
 
                     // Overlap check
-                    if ($start && $get($foreignKey)) {
-                        $overlap = $reserveModel::query()
-                            ->where('status', 'Approved')
-                            ->where($foreignKey, $get($foreignKey))
-                            ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
-                            ->where(function ($q) use ($start, $end) {
-                                $q->where('start_date', '<', $end)
-                                  ->where('end_date', '>', $start);
-                            })
-                            ->exists();
+                    if ($end && $get($foreignKey)) {
+                        // Only validate overlap if not rejecting
+                        if ($get('status') !== 'Rejected') {
+                            $overlap = $reserveModel::query()
+                                ->where('status', 'Approved')
+                                ->where($foreignKey, $get($foreignKey))
+                                ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
+                                ->where(function ($q) use ($start, $end) {
+                                    $q->where('start_date', '<', $end)
+                                    ->where('end_date', '>', $start);
+                                })
+                                ->exists();
 
-                        if ($overlap)
-                            $fail('The selected item is already reserved in this time range.');
+                            if ($overlap)
+                                $fail('Someone already reserved in this schedule. Please select another time.');
+                        }
                     }
                 };
             });
@@ -104,13 +110,15 @@ class ReservationValidation
                     $start = $get('start_date');
                     $end = $get('end_date');
 
-                    if (! $supply || ! $start || ! $end) return;
+                    if (! $supply || ! $start || ! $end) {
+                        return;
+                    }
 
                     $start = Carbon::parse($start);
                     $end = Carbon::parse($end);
 
                     if ($supply->quantity <= 0) {
-                        $fail("{$supply->supply_name} is currently out of stock.");
+                        $fail("{$supply->item_name} is currently out of stock.");
                         return;
                     }
 
@@ -127,7 +135,7 @@ class ReservationValidation
                     $available = $supply->quantity - $reservedQty;
 
                     if ($available <= 0)
-                        $fail("{$supply->supply_name} is fully reserved for this date.");
+                        $fail("{$supply->supply_name} is out of stock.");
                     elseif ($value > $available)
                         $fail("Only {$available} pcs are available for the selected date.");
                 };
@@ -148,7 +156,9 @@ class ReservationValidation
                     $start = $get('start_date');
                     $end = $get('end_date');
 
-                    if (! $equipment || ! $start || ! $end) return;
+                    if (! $equipment || ! $start || ! $end) {
+                        return;
+                    }
 
                     $start = Carbon::parse($start);
                     $end = Carbon::parse($end);
@@ -171,7 +181,7 @@ class ReservationValidation
                     $available = $equipment->quantity - $reservedQty;
 
                     if ($available <= 0)
-                        $fail("{$equipment->equipment_name} is fully reserved for this date.");
+                        $fail("{$equipment->equipment_name} is out of stock.");
                     elseif ($value > $available)
                         $fail("Only {$available} pcs are available for the selected date.");
                 };

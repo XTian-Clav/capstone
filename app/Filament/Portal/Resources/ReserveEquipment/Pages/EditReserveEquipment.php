@@ -49,7 +49,7 @@ class EditReserveEquipment extends EditRecord
 
         Notification::make()
             ->title('Reservation Update Sent')
-            ->body('You have ' . $status . ' the reservation for ' . $roomName . '.')
+            ->body('You have ' . $status . ' the reservation for ' . $equipmentName . '.')
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);
