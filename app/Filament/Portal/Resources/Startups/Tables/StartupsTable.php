@@ -51,7 +51,7 @@ class StartupsTable
                     ImageColumn::make('logo')
                         ->label('')
                         ->square()
-                        ->size(220)
+                        ->imageSize(180)
                         ->grow(false)
                         ->disk('public')
                         ->defaultImageUrl(url('storage/default/no-image.png'))
@@ -88,7 +88,7 @@ class StartupsTable
 
                     TextColumn::make('description')
                         ->html()
-                        ->limit(50)
+                        ->lineClamp(3)
                         ->extraAttributes([
                             'class' => 'text-justify leading-snug',
                             'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.75rem;',

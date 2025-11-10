@@ -45,10 +45,11 @@ class VideosTable
                 Stack::make([
                     ImageColumn::make('picture')
                         ->label('')
+                        ->wrap()
                         ->grow(false)
                         ->disk('public')
-                        ->imageHeight(200)
-                        ->imageWidth(300)
+                        ->imageHeight(160)
+                        ->imageWidth(230)
                         ->defaultImageUrl(url('storage/default/video.png'))
                         ->extraImgAttributes([
                             'alt' => 'Logo',
@@ -62,7 +63,7 @@ class VideosTable
                     TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
                     TextColumn::make('description')
                         ->html()
-                        ->limit(50)
+                        ->lineClamp(3)
                         ->extraAttributes([
                             'class' => 'text-justify leading-snug',
                             'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.25rem;',

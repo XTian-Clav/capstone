@@ -5,11 +5,14 @@ namespace App\Filament\Portal\Resources\Startups\Pages;
 use App\Models\User;
 use Filament\Actions;
 use App\Models\Startup;
+use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Portal\Resources\Startups\StartupResource;
+use App\Filament\Portal\Resources\Startups\Pages\EditStartup;
+use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
 class EditStartup extends EditRecord
 {
@@ -40,12 +43,34 @@ class EditStartup extends EditRecord
 
         Notification::make()
             ->title('Startup Proposal Update')
-            ->body('The startup proposal for ' . $data['startup_name'] . ' has been ' . $status . '.')
+            ->body('Your startup proposal titled ' . $data['startup_name'] . ' has been ' . $status . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('secondary')
+                    ->url(ViewStartup::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($owner);
 
         Notification::make()
             ->title('Startup Proposal Update Sent')
             ->body('You have ' . $status . ' the startup proposal for ' . $data['startup_name'] . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('gray')
+                    ->url(ViewStartup::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+                Action::make('edit')
+                    ->button()
+                    ->color('secondary')
+                    ->url(EditStartup::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);

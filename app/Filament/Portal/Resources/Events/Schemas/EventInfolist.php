@@ -97,7 +97,7 @@ class EventInfolist
                         ->hiddenLabel()
                         ->table([
                             TableColumn::make('Name'),
-                            TableColumn::make('Going to Event'),
+                            TableColumn::make('Attending to Event'),
                         ])
                         ->schema([
                             TextEntry::make('user')

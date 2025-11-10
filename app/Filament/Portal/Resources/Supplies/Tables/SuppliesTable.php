@@ -88,7 +88,7 @@ class SuppliesTable
                     RestoreAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveAction::make()->color('danger')
+                    ArchiveAction::make()
                         ->icon('heroicon-s-archive-box-arrow-down')
                         ->label('Archive')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),

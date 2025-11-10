@@ -106,6 +106,7 @@ class EventsTable
 
                         TextColumn::make('attendance')
                             ->badge()
+                            ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->getStateUsing(fn($record) => 'Going: ' . collect($record->attendance ?? [])
                                 ->where('status', 'yes')
                                 ->count()
