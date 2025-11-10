@@ -118,7 +118,13 @@ class VideosTable
                 ->icon('heroicon-s-cog-6-tooth')
                 ->color('info')
                 ->size(Size::Small)
-                ->button(),
+                ->button()
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ]);
     }
 }

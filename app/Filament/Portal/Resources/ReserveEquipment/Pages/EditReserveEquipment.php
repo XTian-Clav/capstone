@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\ReserveEquipment\Pages;
 
 use App\Models\User;
 use App\Models\Equipment;
+use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
@@ -11,6 +12,8 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Portal\Resources\ReserveEquipment\ReserveEquipmentResource;
+use App\Filament\Portal\Resources\ReserveEquipment\Pages\EditReserveEquipment;
+use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
 class EditReserveEquipment extends EditRecord
 {
@@ -44,12 +47,34 @@ class EditReserveEquipment extends EditRecord
 
         Notification::make()
             ->title('Reservation Update')
-            ->body('The reservation for ' . $equipmentName . ' has been ' . $status . '.')
+            ->body('Your reservation for ' . $equipmentName . ' has been ' . $status . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('secondary')
+                    ->url(ViewReserveEquipment::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($owner);
 
         Notification::make()
             ->title('Reservation Update Sent')
-            ->body('You have ' . $status . ' the reservation for ' . $equipmentName . '.')
+            ->body('You have ' . $status . ' the reservation for ' . $equipmentName . ' for ' . $owner->name . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('gray')
+                    ->url(ViewReserveEquipment::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+                Action::make('edit')
+                    ->button()
+                    ->color('secondary')
+                    ->url(EditReserveEquipment::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);

@@ -12,6 +12,8 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Portal\Resources\ReserveRooms\ReserveRoomResource;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\EditReserveRoom;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
 class EditReserveRoom extends EditRecord
 {
@@ -45,12 +47,34 @@ class EditReserveRoom extends EditRecord
 
         Notification::make()
             ->title('Reservation Update')
-            ->body('The reservation for ' . $roomType . ' has been ' . $status . '.')
+            ->body('Your reservation for ' . $roomType . ' has been ' . $status . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('secondary')
+                    ->url(ViewReserveRoom::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($owner);
 
         Notification::make()
             ->title('Reservation Update Sent')
-            ->body('You have ' . $status . ' the reservation for ' . $roomType . '.')
+            ->body('You have ' . $status . ' the reservation for ' . $roomType . ' for ' . $owner->name . '.')
+            ->actions([
+                Action::make('view')
+                    ->button()
+                    ->color('gray')
+                    ->url(ViewReserveRoom::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+                Action::make('edit')
+                    ->button()
+                    ->color('secondary')
+                    ->url(EditReserveRoom::getUrl([
+                        'record' => $record->getRouteKey(),
+                    ]), shouldOpenInNewTab: true),
+            ])
             ->sendToDatabase($admin);
 
         return parent::mutateFormDataBeforeSave($data);

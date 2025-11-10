@@ -62,7 +62,7 @@ class ReserveSupplyResource extends Resource
         return [
             'index' => ListReserveSupplies::route('/'),
             'create' => CreateReserveSupply::route('/create'),
-            //'view' => ViewReserveSupply::route('/{record}'),
+            'view' => ViewReserveSupply::route('/{record}'),
             'edit' => EditReserveSupply::route('/{record}/edit'),
         ];
     }

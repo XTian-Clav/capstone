@@ -120,7 +120,13 @@ class StartupsTable
                 ->icon('heroicon-o-bars-arrow-down')
                 ->color('secondary')
                 ->size(Size::ExtraSmall)
-                ->button(),
+                ->button()
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

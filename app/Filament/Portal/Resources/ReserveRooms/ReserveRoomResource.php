@@ -62,7 +62,7 @@ class ReserveRoomResource extends Resource
         return [
             'index' => ListReserveRooms::route('/'),
             'create' => CreateReserveRoom::route('/create'),
-            //'view' => ViewReserveRoom::route('/{record}'),
+            'view' => ViewReserveRoom::route('/{record}'),
             'edit' => EditReserveRoom::route('/{record}/edit'),
         ];
     }

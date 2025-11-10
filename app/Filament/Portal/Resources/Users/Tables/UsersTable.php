@@ -94,7 +94,13 @@ class UsersTable
                 ->icon('heroicon-o-bars-arrow-down')
                 ->color('secondary')
                 ->size(Size::ExtraSmall)
-                ->button(),
+                ->button()
+                ->visible(fn () => auth()->user()->hasRole('super_admin')),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['admin' ,'incubatee', 'investor'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
