@@ -75,7 +75,6 @@ class UsersTable
                 EndDateFilter::make(),
             ])
             ->recordActions([
-                //Admin have limited access to Users Table
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
@@ -100,7 +99,7 @@ class UsersTable
                 ViewAction::make('alt_view')
                     ->button()
                     ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['admin' ,'incubatee', 'investor'])),
+                    ->visible(fn () => auth()->user()->hasRole('admin')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

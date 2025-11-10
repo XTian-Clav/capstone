@@ -102,7 +102,13 @@ class VideosTable
                 ->icon('heroicon-o-bars-arrow-down')
                 ->color('secondary')
                 ->size(Size::ExtraSmall)
-                ->button(),
+                ->button()
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -118,13 +124,7 @@ class VideosTable
                 ->icon('heroicon-s-cog-6-tooth')
                 ->color('info')
                 ->size(Size::Small)
-                ->button()
-                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-
-                ViewAction::make('alt_view')
-                    ->button()
-                    ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                ->button(),
             ]);
     }
 }
