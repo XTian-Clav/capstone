@@ -134,10 +134,13 @@ class ReservationValidation
 
                     $available = $supply->quantity - $reservedQty;
 
-                    if ($available <= 0)
-                        $fail("{$supply->supply_name} is out of stock.");
-                    elseif ($value > $available)
-                        $fail("Only {$available} pcs are available for the selected date.");
+                    if ($get('status') !== 'Rejected') {
+                        if ($available <= 0) {
+                            $fail("{$supply->supply_name} is out of stock.");
+                        } elseif ($value > $available) {
+                            $fail("Only {$available} pcs are available for the selected date.");
+                        }
+                    }
                 };
             });
     }
@@ -180,10 +183,13 @@ class ReservationValidation
 
                     $available = $equipment->quantity - $reservedQty;
 
-                    if ($available <= 0)
-                        $fail("{$equipment->equipment_name} is out of stock.");
-                    elseif ($value > $available)
-                        $fail("Only {$available} pcs are available for the selected date.");
+                    if ($get('status') !== 'Rejected') {
+                        if ($available <= 0) {
+                            $fail("{$equipment->equipment_name} is out of stock.");
+                        } elseif ($value > $available) {
+                            $fail("Only {$available} pcs are available for the selected date.");
+                        }
+                    }
                 };
             });
     }
