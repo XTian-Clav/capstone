@@ -40,7 +40,9 @@ class GuidesTable
                     ->searchable()
                     ->weight('semibold')
                     ->iconColor('secondary')
-                    ->icon(Heroicon::DocumentText),      
+                    ->icon(Heroicon::DocumentText)
+                    ->wrap()
+                    ->width('70%'),      
                 
                 TextColumn::make('url')
                     ->label('Document Link')
@@ -50,7 +52,8 @@ class GuidesTable
                     ->icon('heroicon-m-arrow-top-right-on-square')
                     ->iconColor('primary')
                     ->weight('semibold')
-                    ->color('primary'),
+                    ->color('primary')
+                    ->width('15%'),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
@@ -58,7 +61,8 @@ class GuidesTable
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->width('15%'),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

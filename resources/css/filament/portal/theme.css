@@ -9,6 +9,10 @@
     @apply bg-primary-100;
 }
 
+.dark .fi-ta-table thead tr th {
+    @apply bg-transparent;
+}
+
 /* Universal transparent scrollbar (Firefox + Chromium browsers) */
 html,
 body,

@@ -16,6 +16,7 @@ use App\Filament\Filters\EndDateFilter;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\CreatedDateFilter;
@@ -29,29 +30,33 @@ class MilestonesTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+            ->contentGrid(['xl' => 2])
             ->columns([
-                TextColumn::make('startup.startup_name')
+                Stack::make([
+                    TextColumn::make('startup.startup_name')
                     ->label('Startup')
                     ->sortable()
                     ->searchable()
                     ->weight('semibold'),
-                TextColumn::make('title')
-                    ->label('Task')
-                    ->searchable(),
-                TextColumn::make('description')
-                    ->html(),
-                ToggleColumn::make('is_done')
-                    ->label('Task Status')
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
+                    TextColumn::make('title')
+                        ->label('Task')
+                        ->searchable(),
+                    TextColumn::make('description')
+                        ->html()
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
+                    TextColumn::make('is_done')
+                        ->badge()
+                        ->label('Task Status')
+                        ->formatStateUsing(fn (bool $state) => $state ? 'Complete' : 'Incomplete')
+                        ->color(fn (bool $state) => $state ? 'success' : 'danger'),
+                    TextColumn::make('created_at')
+                        ->label('Created At')
+                        ->since()
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                        ->searchable()
+                        ->toggleable()
+                        ->sortable(),
+                ])->space(1)
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

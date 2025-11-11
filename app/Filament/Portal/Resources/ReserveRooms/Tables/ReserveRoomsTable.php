@@ -41,61 +41,44 @@ class ReserveRoomsTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->defaultGroup('startup.startup_name')
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
-            ->contentGrid(['xl' => 2])
+            ->contentGrid(['xl' => 3])
             ->columns([
                 Stack::make([
-                    TextColumn::make('room.room_type')
-                        ->label('Name - Room')
-                        ->searchable()
+                    TextColumn::make('startup.startup_name')
+                    ->label('Startup')
+                    ->sortable()
+                    ->searchable()
+                    ->weight('semibold'),
+                    TextColumn::make('title')
+                        ->label('Task')
                         ->sortable()
+                        ->searchable()
+                        ->color('primary')
                         ->weight('semibold'),
-    
-                    TextColumn::make('quantity')
-                            ->badge()
-                            ->sortable()
-                            ->searchable()
-                            ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
                         
-                    TextColumn::make('status')
-                        ->weight('semibold')
+                    TextColumn::make('is_done')
                         ->badge()
-                        ->colors([
-                            'warning' => 'Pending',
-                            'success' => 'Approved',
-                            'danger' => 'Rejected',
-                        ]),
-
-                    TextColumn::make('start_date')
-                        ->formatStateUsing(fn ($record) => 'Start: ' . ($record->start_date?->format('F j g:i A') ?? '—'))
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                        ->searchable()
-                        ->toggleable()
-                        ->sortable(),
-
-                    TextColumn::make('end_date')
-                        ->formatStateUsing(fn ($record) => 'End: ' . ($record->end_date?->format('F j g:i A') ?? '—'))
-                        ->searchable()
-                        ->toggleable()
-                        ->sortable(),
-                        
-                    TextColumn::make('reserved_by')
                         ->sortable()
-                        ->searchable()
-                        ->weight('semibold')
-                        ->label('Name - Reserver')
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                        ->formatStateUsing(fn ($state) => 'Reserved by: ' . ($state ?? '—')),
-                    
+                        ->label('Task Status')
+                        ->formatStateUsing(fn (bool $state) => $state ? 'Complete' : 'Incomplete')
+                        ->color(fn (bool $state) => $state ? 'success' : 'danger'),
+                    TextColumn::make('description')
+                        ->html()
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
                     TextColumn::make('created_at')
-                        ->badge()
+                        ->label('Created At')
                         ->since()
+                        ->badge()
                         ->sortable()
-                        ->searchable()
                         ->color('gray')
-                        ->label('Submission Date')
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans())
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                        ->searchable()
+                        ->toggleable(),
                 ])->space(1)
             ])
             ->filters([

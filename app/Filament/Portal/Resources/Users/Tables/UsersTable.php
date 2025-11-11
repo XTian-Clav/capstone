@@ -42,32 +42,39 @@ class UsersTable
             ->defaultSort('created_at', 'asc')
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap()
+                    ->width('30%'),
 
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable()
-                    ->icon(Heroicon::Envelope),
+                    ->icon(Heroicon::Envelope)
+                    ->width('10%'),
 
                 TextColumn::make('contact')
                     ->searchable()
-                    ->icon(Heroicon::Phone),
+                    ->icon(Heroicon::Phone)
+                    ->width('10%'),
 
                 TextColumn::make('company')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap()
+                    ->width('30%'),
 
                 TextColumn::make('roles.name')
                     ->searchable()
                     ->badge()
-                    ->color('info'),
+                    ->color('info')
+                    ->width('10%'),
 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
+                    ->sortable()
+                    ->width('10%'),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

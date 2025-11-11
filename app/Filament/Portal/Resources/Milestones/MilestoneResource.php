@@ -69,14 +69,14 @@ class MilestoneResource extends Resource
     {
         $query = parent::getEloquentQuery();
         $user = auth()->user();
-
+    
+        // Only restrict non-admins to their own startups
         if (! $user->hasAnyRole(['admin', 'super_admin', 'investor'])) {
-            $query
-                ->join('startups', 'milestones.startup_id', '=', 'startups.id')
-                ->where('startups.user_id', $user->id)
-                ->select('milestones.*');
+            $query->whereHas('startup', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
         }
-
+    
         return $query;
     }
 }
