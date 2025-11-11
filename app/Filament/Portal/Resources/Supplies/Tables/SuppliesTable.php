@@ -44,12 +44,15 @@ class SuppliesTable
                 TextColumn::make('item_name')
                     ->searchable()
                     ->sortable()
+                    ->wrap()
+                    ->width('40%')
                     ->weight('semibold'),
 
                 TextColumn::make('quantity')
                     ->numeric()
                     ->searchable()
                     ->sortable()
+                    ->width('10%')
                     ->state(fn ($record) => 
                         $record->quantity === 0 ? 'Out of Stock':
                         $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
@@ -58,21 +61,25 @@ class SuppliesTable
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap()
+                    ->width('30%'),
 
                 TextColumn::make('remarks')
                     ->searchable()
                     ->toggleable()
                     ->sortable()
-                    ->weight('semibold'),
+                    ->weight('semibold')
+                    ->wrap()
+                    ->width('10%'),
 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
+                    ->width('10%')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(), 
+                    ->sortable(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

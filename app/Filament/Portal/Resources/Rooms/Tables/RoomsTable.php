@@ -46,18 +46,21 @@ class RoomsTable
                 TextColumn::make('room_type')
                     ->searchable()
                     ->sortable()
-                    ->limit(40)
+                    ->wrap()
+                    ->width('30%')
                     ->weight('semibold')
                     ->tooltip(fn ($record) => $record->room_type),
 
                 TextColumn::make('capacity')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->width('10%'),
 
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->width('30%'),
 
                 TextColumn::make('room_rate')
                     ->sortable()
@@ -66,9 +69,11 @@ class RoomsTable
                         ($state && $state > 0)
                             ? '₱' . number_format($state)
                             : 'None'
-                    ),
+                    )
+                    ->width('10%'),
 
                 ToggleColumn::make('is_available')
+                    ->width('10%')
                     ->label('Available')
                     ->onColor('success')
                     ->offColor('danger')
@@ -77,10 +82,10 @@ class RoomsTable
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
+                    ->width('10%')
                     ->since()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
             ])
             ->filters([

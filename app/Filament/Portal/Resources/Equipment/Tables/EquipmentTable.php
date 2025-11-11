@@ -45,13 +45,16 @@ class EquipmentTable
             ->columns([
                 TextColumn::make('equipment_name')
                     ->searchable()
+                    ->width('25%')
                     ->sortable()
+                    ->wrap()
                     ->weight('semibold'),
 
                 TextColumn::make('quantity')
                     ->numeric()
-                    ->searchable()
                     ->sortable()
+                    ->width('5%')
+                    ->searchable()
                     ->state(fn ($record) => 
                         $record->quantity === 0 ? 'Out of Stock':
                         $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
@@ -59,26 +62,32 @@ class EquipmentTable
                     
                 TextColumn::make('property_no')
                     ->searchable()
-                    ->sortable(),
+                    ->width('20%')
+                    ->sortable()
+                    ->wrap(),
 
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
-                    ->sortable(),
+                    ->width('25%')
+                    ->sortable()
+                    ->wrap(),
 
                 TextColumn::make('remarks')
+                    ->wrap()
+                    ->sortable()
                     ->searchable()
                     ->toggleable()
-                    ->sortable()
+                    ->width('20%')
                     ->weight('semibold'),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
+                    ->width('5%')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(), 
+                    ->sortable(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

@@ -56,9 +56,9 @@ class ReserveRoomForm
 
                     Section::make()
                     ->schema([
-                        ReservationValidation::startDate('room_id', ReserveRoom::class),
-                        ReservationValidation::endDate('room_id', ReserveRoom::class),
-                        Text::make('Please adjust the time if needed. Reservations are generally from 8:00 AM to 6:00 PM.')->columnSpanFull(),
+                        ReservationValidation::roomStartDate('room_id', ReserveRoom::class),
+                        ReservationValidation::roomEndDate('room_id', ReserveRoom::class),
+                        Text::make('Overnight schedules are allowed for Room reservations.')->columnSpanFull(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
                     
                 Section::make()

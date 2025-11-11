@@ -52,6 +52,83 @@ class ReservationValidation
             });
     }
 
+    public static function roomStartDate(string $foreignKey, string $reserveModel): DateTimePicker
+    {
+        return DateTimePicker::make('start_date')
+            ->label('Start Date')
+            ->displayFormat('F j, Y — h:i A')
+            ->required()
+            ->native(false)
+            ->seconds(false)
+            ->default(fn () => Carbon::now()->setTime(6, 0)) // default 6 AM
+            ->rule(function ($get) use ($foreignKey, $reserveModel) {
+                return function ($attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
+                    $start = Carbon::parse($value);
+                    $end = $get('end_date') ? Carbon::parse($get('end_date')) : null;
+    
+                    // Only check if end exists
+                    if ($end && $start->greaterThanOrEqualTo($end)) {
+                        return $fail('[Invalid] End time is earlier than the start time.');
+                    }
+    
+                    // Optional overlap check
+                    if ($get($foreignKey) && $get('status') !== 'Rejected') {
+                        $overlap = $reserveModel::query()
+                            ->where('status', 'Approved')
+                            ->where($foreignKey, $get($foreignKey))
+                            ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
+                            ->where(function ($q) use ($start, $end) {
+                                $q->where('start_date', '<', $end)
+                                  ->where('end_date', '>', $start);
+                            })
+                            ->exists();
+    
+                        if ($overlap) {
+                            $fail('Someone already reserved in this schedule. Please select another time.');
+                        }
+                    }
+                };
+            });
+    }
+    
+    public static function roomEndDate(string $foreignKey, string $reserveModel): DateTimePicker
+    {
+        return DateTimePicker::make('end_date')
+            ->label('End Date')
+            ->displayFormat('F j, Y — h:i A')
+            ->required()
+            ->native(false)
+            ->seconds(false)
+            ->default(fn () => Carbon::now()->setTime(11, 59)) // default 11:59 PM
+            ->rule(function ($get) use ($foreignKey, $reserveModel) {
+                return function ($attribute, $value, $fail) use ($get, $foreignKey, $reserveModel) {
+                    $end = Carbon::parse($value);
+                    $start = $get('start_date') ? Carbon::parse($get('start_date')) : null;
+    
+                    if ($start && $end->lessThanOrEqualTo($start)) {
+                        return $fail('[Invalid] End time is earlier than the start time.');
+                    }
+    
+                    // Optional overlap check
+                    if ($get($foreignKey) && $get('status') !== 'Rejected') {
+                        $overlap = $reserveModel::query()
+                            ->where('status', 'Approved')
+                            ->where($foreignKey, $get($foreignKey))
+                            ->when($get('id'), fn ($q) => $q->where('id', '!=', $get('id')))
+                            ->where(function ($q) use ($start, $end) {
+                                $q->where('start_date', '<', $end)
+                                  ->where('end_date', '>', $start);
+                            })
+                            ->exists();
+    
+                        if ($overlap) {
+                            $fail('Someone already reserved in this schedule. Please select another time.');
+                        }
+                    }
+                };
+            });
+    }
+
     public static function endDate(string $foreignKey, string $reserveModel): DateTimePicker
     {
         return DateTimePicker::make('end_date')

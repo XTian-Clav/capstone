@@ -23,6 +23,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -42,53 +43,61 @@ class ReserveRoomsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+            ->contentGrid(['xl' => 2])
             ->columns([
-                TextColumn::make('room.room_type')
-                    ->label('Room')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('semibold'),
+                Stack::make([
+                    TextColumn::make('room.room_type')
+                        ->label('Name - Room')
+                        ->searchable()
+                        ->sortable()
+                        ->weight('semibold'),
+    
+                    TextColumn::make('quantity')
+                            ->badge()
+                            ->sortable()
+                            ->searchable()
+                            ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
+                        
+                    TextColumn::make('status')
+                        ->weight('semibold')
+                        ->badge()
+                        ->colors([
+                            'warning' => 'Pending',
+                            'success' => 'Approved',
+                            'danger' => 'Rejected',
+                        ]),
 
-                TextColumn::make('reserved_by')
-                    ->searchable()
-                    ->sortable(),
+                    TextColumn::make('start_date')
+                        ->formatStateUsing(fn ($record) => 'Start: ' . ($record->start_date?->format('F j g:i A') ?? '—'))
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->searchable()
+                        ->toggleable()
+                        ->sortable(),
 
-                TextColumn::make('room.capacity')
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('start_date')
-                    ->dateTime('m-d-y g:i A')
-                    ->tooltip(fn ($record) => $record->start_date->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-
-                TextColumn::make('end_date')
-                    ->dateTime('m-d-y g:i A')
-                    ->tooltip(fn ($record) => $record->end_date->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable(),
-
-                TextColumn::make('status')
-                    ->weight('semibold')
-                    ->badge()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'success' => 'Approved',
-                        'danger' => 'Rejected',
-                    ]),
-                
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
+                    TextColumn::make('end_date')
+                        ->formatStateUsing(fn ($record) => 'End: ' . ($record->end_date?->format('F j g:i A') ?? '—'))
+                        ->searchable()
+                        ->toggleable()
+                        ->sortable(),
+                        
+                    TextColumn::make('reserved_by')
+                        ->sortable()
+                        ->searchable()
+                        ->weight('semibold')
+                        ->label('Name - Reserver')
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->formatStateUsing(fn ($state) => 'Reserved by: ' . ($state ?? '—')),
+                    
+                    TextColumn::make('created_at')
+                        ->badge()
+                        ->since()
+                        ->sortable()
+                        ->searchable()
+                        ->color('gray')
+                        ->label('Submission Date')
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                ])->space(1)
             ])
-            
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),

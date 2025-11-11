@@ -48,10 +48,10 @@ class ReserveEquipmentTable
             ->columns([
                 Stack::make([
                     TextColumn::make('equipment.equipment_name')
-                    ->label('Name - Equipment')
-                    ->searchable()
-                    ->sortable()
-                    ->weight('semibold'),
+                        ->label('Name - Equipment')
+                        ->searchable()
+                        ->sortable()
+                        ->weight('semibold'),
 
                     TextColumn::make('quantity')
                         ->badge()

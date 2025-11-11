@@ -60,7 +60,6 @@ class ReservationSeeder extends Seeder
                 'reserved_by' => $faker->name(),
                 'user_id' => $faker->randomElement($userIds),
                 'room_id' => $room->id,
-                'room_type' => $room->room_type,
                 'status' => $faker->randomElement(['Pending', 'Approved', 'Rejected']),
                 'company' => $faker->company(),
                 'contact' => $faker->phoneNumber(),
