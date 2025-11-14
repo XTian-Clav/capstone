@@ -28,9 +28,10 @@ class MilestonesTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
+            ->defaultGroup('startup.startup_name')
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
-            ->contentGrid(['xl' => 2])
+            ->defaultSort('created_at', 'desc')
+            ->contentGrid(['xl' => 3])
             ->columns([
                 Stack::make([
                     TextColumn::make('startup.startup_name')
@@ -40,22 +41,31 @@ class MilestonesTable
                     ->weight('semibold'),
                     TextColumn::make('title')
                         ->label('Task')
-                        ->searchable(),
-                    TextColumn::make('description')
-                        ->html()
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
+                        ->sortable()
+                        ->searchable()
+                        ->color('primary')
+                        ->weight('semibold'),
+                        
                     TextColumn::make('is_done')
                         ->badge()
+                        ->sortable()
                         ->label('Task Status')
                         ->formatStateUsing(fn (bool $state) => $state ? 'Complete' : 'Incomplete')
                         ->color(fn (bool $state) => $state ? 'success' : 'danger'),
+                    TextColumn::make('description')
+                        ->html()
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
                     TextColumn::make('created_at')
                         ->label('Created At')
                         ->since()
+                        ->badge()
+                        ->sortable()
+                        ->color('gray')
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans())
                         ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                         ->searchable()
-                        ->toggleable()
-                        ->sortable(),
+                        ->toggleable(),
                 ])->space(1)
             ])
             ->filters([

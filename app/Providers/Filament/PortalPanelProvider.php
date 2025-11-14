@@ -10,12 +10,15 @@ use Filament\Pages\Dashboard;
 use App\Filament\Pages\Backups;
 use Filament\Support\Enums\Width;
 use Filament\Support\Colors\Color;
+use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
 use Filament\Widgets\AccountWidget;
 use Filament\Enums\UserMenuPosition;
+use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
 use Filament\Widgets\FilamentInfoWidget;
 use App\Filament\Pages\HealthCheckResults;
+use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Asmit\ResizedColumn\ResizedColumnPlugin;
 use Illuminate\Session\Middleware\StartSession;
@@ -84,8 +87,8 @@ class PortalPanelProvider extends PanelProvider
                     950 => '#232831',
                 ],
                 'info' => Color::hex('#81a1c1'), // nord9
-                'primary' => Color::hex('#013267'), // pitbi orange
-                'secondary' => Color::hex('#fe800d'), // pitbi blue
+                'primary' => Color::hex('#013267'), // pitbi blue          
+                'secondary' => Color::hex('#fe800d'), // pitbi orange
                 'success' => Color::hex('#a3be8c'), // nord14
                 'warning' => Color::hex('#ebcb8b'), // nord13
                 'polarnight' => Color::hex('#3b4353'), // nord1
@@ -186,7 +189,15 @@ class PortalPanelProvider extends PanelProvider
                     ->navigationGroup('System Settings')
                     ->navigationLabel('Website Health Check'),
                     
-
+                LightSwitchPlugin::make()
+                    ->position(Alignment::BottomRight)
+                    ->enabledOn([
+                        'auth.email',
+                        'auth.login',
+                        'auth.password',
+                        'auth.register',
+                    ]),
+                
                 ResizedColumnPlugin::make()
                     ->preserveOnDB(false),
 

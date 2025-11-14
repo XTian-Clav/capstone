@@ -3,15 +3,7 @@
 @source '../../../../app/Filament/Portal/**/*';
 @source '../../../../resources/views/filament/portal/**/*';
 @source '../../../../vendor/jeffgreco13/filament-breezy/resources/**/*';
-
-/* Primary-colored table headers */
-.fi-ta-table thead tr th {
-    @apply bg-primary-100;
-}
-
-.dark .fi-ta-table thead tr th {
-    @apply bg-transparent;
-}
+@source '../../../../vendor/awcodes/light-switch/resources/**/*.blade.php';
 
 /* Universal transparent scrollbar (Firefox + Chromium browsers) */
 html,
@@ -20,7 +12,7 @@ body,
 .fi-modal-window,
 .fi-table,
 .fi-section-content {
-    scrollbar-width: thin;
+    scrollbar-width: none;
     scrollbar-color: transparent transparent;
 }
 

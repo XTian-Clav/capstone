@@ -20,6 +20,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
@@ -35,7 +36,8 @@ class GuidesTable
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
             ->columns([
-                TextColumn::make('title')
+                Split::make([
+                    TextColumn::make('title')
                     ->sortable() 
                     ->searchable()
                     ->weight('semibold')
@@ -44,25 +46,26 @@ class GuidesTable
                     ->wrap()
                     ->width('70%'),      
                 
-                TextColumn::make('url')
-                    ->label('Document Link')
-                    ->url(fn ($record) => $record->url)
-                    ->openUrlInNewTab()
-                    ->formatStateUsing(fn ($state) => $state ? 'Open Document' : 'No Link Available')
-                    ->icon('heroicon-m-arrow-top-right-on-square')
-                    ->iconColor('primary')
-                    ->weight('semibold')
-                    ->color('primary')
-                    ->width('15%'),
-                
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable()
-                    ->width('15%'),
+                    TextColumn::make('url')
+                        ->label('Document Link')
+                        ->url(fn ($record) => $record->url)
+                        ->openUrlInNewTab()
+                        ->formatStateUsing(fn ($state) => $state ? 'Open Document' : 'No Link Available')
+                        ->icon('heroicon-m-arrow-top-right-on-square')
+                        ->iconColor('primary')
+                        ->weight('semibold')
+                        ->color('primary')
+                        ->width('15%'),
+                    
+                    TextColumn::make('created_at')
+                        ->label('Created At')
+                        ->since()
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                        ->searchable()
+                        ->toggleable()
+                        ->sortable()
+                        ->width('15%'),
+                ])
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

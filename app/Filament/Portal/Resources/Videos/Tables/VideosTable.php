@@ -37,19 +37,17 @@ class VideosTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->paginated([12, 24, 36, 50])
-            ->defaultPaginationPageOption(12)
             ->defaultSort('created_at', 'asc')
-            ->contentGrid(['xl' => 3])
+            ->contentGrid(['xl' => 2])
             ->columns([
-                Stack::make([
+                Split::make([
                     ImageColumn::make('picture')
                         ->label('')
                         ->wrap()
                         ->grow(false)
                         ->disk('public')
-                        ->imageHeight(160)
-                        ->imageWidth(230)
+                        ->imageHeight(180)
+                        ->imageWidth(240)
                         ->defaultImageUrl(url('storage/default/video.png'))
                         ->extraImgAttributes([
                             'alt' => 'Logo',
@@ -58,26 +56,30 @@ class VideosTable
                         ])
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()
-                        ->tooltip('Open Video'),
+                        ->tooltip('Open Video')
+                        ->alignCenter(),
                     
-                    TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
-                    TextColumn::make('description')
-                        ->html()
-                        ->lineClamp(3)
-                        ->extraAttributes([
-                            'class' => 'text-justify leading-snug',
-                            'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.25rem;',
-                        ]),
+                    Stack::make([
+                        TextColumn::make('title')->searchable()->weight('semibold')->sortable(),
+                        TextColumn::make('description')
+                            ->html() 
+                            ->lineClamp(3)
+                            ->extraAttributes([
+                                'class' => 'text-justify leading-snug',
+                                'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.75rem;',
+                            ]),
 
-                    TextColumn::make('created_at')
-                        ->label('Created At')
-                        ->since()
-                        ->badge()
-                        ->sortable()
-                        ->searchable()
-                        ->toggleable()
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
-                ])->space(2)
+                        TextColumn::make('created_at')
+                            ->label('Created At')
+                            ->since()
+                            ->badge()
+                            ->sortable()
+                            ->searchable()
+                            ->toggleable()
+                            ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                            ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                        ]),
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

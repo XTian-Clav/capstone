@@ -41,44 +41,61 @@ class ReserveRoomsTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
-            ->defaultGroup('startup.startup_name')
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
-            ->contentGrid(['xl' => 3])
+            ->contentGrid(['xl' => 2])
             ->columns([
                 Stack::make([
-                    TextColumn::make('startup.startup_name')
-                    ->label('Startup')
-                    ->sortable()
-                    ->searchable()
-                    ->weight('semibold'),
-                    TextColumn::make('title')
-                        ->label('Task')
-                        ->sortable()
+                    TextColumn::make('room.room_type')
+                        ->label('Name - Room')
                         ->searchable()
-                        ->color('primary')
+                        ->sortable()
                         ->weight('semibold'),
+    
+                    TextColumn::make('quantity')
+                            ->badge()
+                            ->sortable()
+                            ->searchable()
+                            ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
                         
-                    TextColumn::make('is_done')
+                    TextColumn::make('status')
+                        ->weight('semibold')
                         ->badge()
-                        ->sortable()
-                        ->label('Task Status')
-                        ->formatStateUsing(fn (bool $state) => $state ? 'Complete' : 'Incomplete')
-                        ->color(fn (bool $state) => $state ? 'success' : 'danger'),
-                    TextColumn::make('description')
-                        ->html()
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
-                    TextColumn::make('created_at')
-                        ->label('Created At')
-                        ->since()
-                        ->badge()
-                        ->sortable()
-                        ->color('gray')
+                        ->colors([
+                            'warning' => 'Pending',
+                            'success' => 'Approved',
+                            'danger' => 'Rejected',
+                        ]),
+
+                    TextColumn::make('start_date')
+                        ->formatStateUsing(fn ($record) => 'Start: ' . ($record->start_date?->format('F j g:i A') ?? '—'))
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                        ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans())
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                         ->searchable()
-                        ->toggleable(),
+                        ->toggleable()
+                        ->sortable(),
+
+                    TextColumn::make('end_date')
+                        ->formatStateUsing(fn ($record) => 'End: ' . ($record->end_date?->format('F j g:i A') ?? '—'))
+                        ->searchable()
+                        ->toggleable()
+                        ->sortable(),
+                        
+                    TextColumn::make('reserved_by')
+                        ->sortable()
+                        ->searchable()
+                        ->weight('semibold')
+                        ->label('Name - Reserver')
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->formatStateUsing(fn ($state) => 'Reserved by: ' . ($state ?? '—')),
+                    
+                    TextColumn::make('created_at')
+                        ->badge()
+                        ->since()
+                        ->sortable()
+                        ->searchable()
+                        ->color('gray')
+                        ->label('Submission Date')
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
                 ])->space(1)
             ])
             ->filters([

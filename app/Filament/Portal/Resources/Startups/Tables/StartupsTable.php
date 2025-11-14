@@ -60,7 +60,7 @@ class StartupsTable
                             'loading' => 'lazy',
                             'class' => 'rounded-xl object-cover',
                         ])
-                        ->visibleFrom('md'),
+                        ->alignCenter(),
 
                     Stack::make([
                     TextColumn::make('startup_name')
@@ -94,7 +94,7 @@ class StartupsTable
                             'style' => 'text-align: justify; text-justify: inter-word; margin-top: 0.75rem;',
                         ]),
                     ])
-                ])
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

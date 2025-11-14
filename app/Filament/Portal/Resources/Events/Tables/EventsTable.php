@@ -59,8 +59,7 @@ class EventsTable
                             'alt' => 'Logo',
                             'loading' => 'lazy',
                             'class' => 'rounded-xl object-cover',
-                        ])
-                        ->visibleFrom('md'),
+                        ]),
                     Stack::make([
                         Split::make([
                             TextColumn::make('event')
@@ -112,7 +111,7 @@ class EventsTable
                                 ->count()
                             ),
                     ])->space(2)
-                ])
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
