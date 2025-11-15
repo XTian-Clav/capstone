@@ -1,16 +1,59 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
---primary-color: #fe800d;
---secondary-color: #013267;
---yellow-color: #fcf10b;
---secondary-color-dark: #01224a;
---primary-color-dark: #db6f35;
---text-dark: #333333;
---text-light: #767268;
---white: #ffffff;
---max-width: 1300px;
---header-font: "Bebas Neue", sans-serif;
+    --base-color: #ffffff;
+    --primary-color: #fe800d;
+    --primary-color-dark: #db6f35;
+    --secondary-color: #013267;
+    --text-dark: #333333;
+    --text-light: #767268;
+    --text-white: #ffffff;
+    --white-bg: #ffffff;
+    --text-color: #333333;
+    --text-color-header-btn: #ffffff;
+    --text-copyright: #767268;
+    --max-width: 1300px;
+    --header-font: "Bebas Neue", sans-serif;
+}
+
+.darkmode {
+    --base-color: #333333;
+    --primary-color: #fe800d;
+    --primary-color-dark: #db6f35;
+    --secondary-color: #ffffff;
+    --text-color: #ffffff;
+    --text-color-header-btn: #333333;
+    --text-copyright: #767268;
+    --max-width: 1300px;
+    --header-font: "Bebas Neue", sans-serif;
+}
+
+#theme-switch {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    display: flex;
+    margin-right: 1rem;
+    border-color: transparent;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+}
+
+#theme-switch svg {
+    fill: var(--primary-color);
+}
+
+#theme-switch svg:last-child {
+    display: none;
+}
+
+.darkmode #theme-switch svg:first-child {
+    display: none;
+}
+
+.darkmode #theme-switch svg:last-child {
+    display: block;
 }
 
 * {
@@ -32,6 +75,7 @@ a {
 body {
     font-family: "Poppins", sans-serif;
     scrollbar-color: transparent transparent;
+    background-color: var(--base-color);
 }
 
 nav {
@@ -54,12 +98,19 @@ nav {
     font-size: 1.75rem;
     font-weight: 400;
     font-family: var(--header-font);
-    color: var(--white);
+    color: var(--white-text);
 }
 
 .nav__logo img {
     height: 35px;
     width: auto;
+    content: url('/assets/logo/light-theme-alt.png');
+}
+
+.darkmode .nav__logo img {
+    height: 35px;
+    width: auto;
+    content: url('/assets/logo/dark-theme.png');
 }
 
 .nav__menu__btn {
@@ -93,10 +144,6 @@ nav {
 .nav__links a {
     font-weight: 500;
     color: var(--white);
-}
-
-.nav__links a:hover {
-    color: var(--text-dark);
 }
 
 .nav__btns {
@@ -150,7 +197,7 @@ nav {
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-dark);
-    background-color: var(--white);
+    background-color: var(--white-bg);
     white-space: nowrap;
     border-radius: 5px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
@@ -198,7 +245,7 @@ nav {
     font-size: 4.8rem;
     font-weight: 400;
     font-family: var(--header-font);
-    color: var(--text-dark);
+    color: var(--text-color);
     line-height: 5.5rem;
     text-align: center;
 }
@@ -214,6 +261,8 @@ nav {
 .header__content p {
     margin-bottom: 2rem;
     columns: var(--text-light);
+    color: var(--text-color);
+    font-weight: 500;
     line-height: 1.75rem;
     text-align: justify;
 }
@@ -264,7 +313,7 @@ nav {
 
 .header__content input::placeholder {
     font-weight: 600;
-    color: var(--text-dark);
+    color: var(--text-color);
 }
 
 .header__content .input__group span {
@@ -290,13 +339,13 @@ nav {
 
 .header__content button:hover {
     background-color: var(--secondary-color);
-    color: var(--white);
+    color: var(--text-color-header-btn);
     border-color: var(--secondary-color);
 }
 
 .header__content .bar {
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text-copyright);
     text-align: center;
 }
 
@@ -345,7 +394,7 @@ nav {
 
     .nav__links a {
         padding-block: 5px;
-        color: var(--text-dark);
+        color: var(--text-color);
         border-bottom: 4px solid transparent;
     }
 
@@ -370,7 +419,7 @@ nav {
     }
 
     .sign__up {
-        color: var(--text-dark);
+        color: var(--text-color);
         background-color: transparent;
     }
 
@@ -379,7 +428,7 @@ nav {
     }
 
     .sign__in {
-        color: var(--white);
+        color: var(--text-white);
         background-color: var(--primary-color);
     }
 
@@ -410,7 +459,7 @@ nav {
     .header__content h1 {
         font-size: 2.5rem;
         line-height: 4rem;
-        text-align: justify;
+        text-align: left;
         padding-inline: 1.5rem;
     }
 
@@ -418,6 +467,9 @@ nav {
         font-size: 1rem;
         line-height: 1.5rem;
         text-align: justify;
+        text-align-last: left;
+        word-break: break-word;
+        hyphens: auto;
         padding-inline: 1.5rem;
     }
 
@@ -425,18 +477,17 @@ nav {
         display: none !important;
     }
 
+    .nav__logo img {
+        content: url("/assets/logo/dark-theme-alt.png");
+    }
+
     .nav__links.open .sign__in {
-        display: block;
         width: 100%;
         text-align: center;
-        padding: 0.75rem 1.5rem;
-        background-color: var(--secondary-color);
-        color: var(--white);
-        border-radius: 10px;
+        padding: 0.8rem 4rem;
         font-weight: 500;
         text-decoration: none;
-        border: none;
-        box-sizing: border-box;
+        border-top: 2px solid var(--text-color);
     }
 
     .header__image::before {

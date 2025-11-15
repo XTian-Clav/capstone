@@ -9,3 +9,16 @@ Route::get('/', function () {
     }
     return view('landing');
 });
+
+Route::get('startups', function () {
+    return view('startups');
+});
+
+Route::get('our-mission', function () {
+    return view('our-mission');
+});
+
+Route::get('faqs', function () {
+    return view('faqs');
+});
+
