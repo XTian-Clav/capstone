@@ -104,13 +104,13 @@ nav {
 .nav__logo img {
     height: 35px;
     width: auto;
-    content: url('/assets/logo/light-theme-alt.png');
+    content: url('/assets/logo/logo-dark.png');
 }
 
 .darkmode .nav__logo img {
     height: 35px;
     width: auto;
-    content: url('/assets/logo/dark-theme.png');
+    content: url('/assets/logo/logo-white.png');
 }
 
 .nav__menu__btn {
