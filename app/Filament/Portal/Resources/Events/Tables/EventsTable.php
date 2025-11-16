@@ -44,7 +44,7 @@ class EventsTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->contentGrid(['xl' => 2])
             ->columns([
                 Split::make([
@@ -68,7 +68,6 @@ class EventsTable
                                 ->limit(40)
                                 ->color('primary')
                                 ->weight('semibold')
-                                ->size(TextSize::Large)
                                 ->tooltip(fn ($record) => $record->event),
     
                             TextColumn::make('status')

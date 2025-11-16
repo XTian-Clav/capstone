@@ -144,7 +144,7 @@ class PortalPanelProvider extends PanelProvider
 
                 NavigationGroup::make()
                     ->label('Manage Users')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                    ->icon('heroicon-o-user'),
                 
                 NavigationGroup::make()
                     ->label('System Settings')

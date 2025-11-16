@@ -29,9 +29,6 @@ class ListEvents extends ListRecords
         $user = auth()->user();
         
         $tabs = [
-            'all' => Tab::make('All')
-                ->badge(fn () => Event::count()),
-
             'Upcoming' => Tab::make('Upcoming')
                 ->badge(fn () => Event::where('status', 'Upcoming')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'Upcoming')),

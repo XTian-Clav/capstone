@@ -13,7 +13,8 @@ class AnnouncementWidget extends StatsOverviewWidget
 
     public static function canView(): bool
     {
-        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+        $user = auth()->user();
+        return ! $user->hasAnyRole(['admin', 'super_admin']);
     }
 
     protected function getStats(): array
@@ -22,18 +23,29 @@ class AnnouncementWidget extends StatsOverviewWidget
 
         if (! $latest) {
             return [
-                Stat::make('No announcements', '—')
+                Stat::make('No announcements', '')
                     ->description('There are currently no announcements.')
                     ->descriptionIcon('heroicon-o-megaphone',  IconPosition::Before)
-                    ->columnSpanFull(),
+                    ->columnSpan(2),
+
+                Stat::make('Published at:', '')
+                    ->description('No announcement yet')
+                    ->descriptionIcon('heroicon-o-calendar',  IconPosition::Before)
+                    ->columnSpan(1),
             ];
         }
 
         return [
-            Stat::make("Announcement: {$latest->title}", '')
+            Stat::make($latest->title, '')
                 ->description($latest->content)
                 ->descriptionIcon('heroicon-o-megaphone',  IconPosition::Before)
-                ->columnSpanFull()
+                ->columnSpan(2)
+                ->color('success'),
+
+            Stat::make("Published at:", '')
+                ->description($latest->created_at->format('M d, Y g:i A'))
+                ->descriptionIcon('heroicon-o-calendar',  IconPosition::Before)
+                ->columnSpan(1)
                 ->color('success'),
         ];
     }
