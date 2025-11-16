@@ -62,7 +62,6 @@ class GuidesTable
                         ->since()
                         ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                         ->searchable()
-                        ->toggleable()
                         ->sortable()
                         ->width('15%'),
                 ])

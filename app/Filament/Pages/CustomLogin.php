@@ -3,11 +3,12 @@
 namespace App\Filament\Pages;
 
 use Filament\Schemas\Schema;
+use Filament\Auth\Pages\Login;
 use Filament\Forms\Components\ViewField;
 use Filament\Auth\Pages\Login as BaseLogin;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 
-class CustomLogin extends BaseLogin
+class CustomLogin extends Login
 {
     public function form(Schema $schema): Schema
     {

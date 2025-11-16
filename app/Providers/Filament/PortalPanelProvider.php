@@ -12,11 +12,10 @@ use Filament\Support\Enums\Width;
 use Filament\Support\Colors\Color;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
-use Filament\Widgets\AccountWidget;
 use Filament\Enums\UserMenuPosition;
+use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
-use Filament\Widgets\FilamentInfoWidget;
 use App\Filament\Pages\HealthCheckResults;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -162,7 +161,7 @@ class PortalPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Portal/Widgets'), for: 'App\\Filament\\Portal\\Widgets')
             ->widgets([
-                //AccountWidget::class,
+                
             ])
             ->middleware([
                 EncryptCookies::class,

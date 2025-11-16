@@ -16,44 +16,8 @@
     --header-font: "Bebas Neue", sans-serif;
 }
 
-.darkmode {
-    --base-color: #333333;
-    --primary-color: #fe800d;
-    --primary-color-dark: #db6f35;
-    --secondary-color: #ffffff;
-    --text-color: #ffffff;
-    --text-color-header-btn: #333333;
-    --text-copyright: #767268;
-    --max-width: 1300px;
-    --header-font: "Bebas Neue", sans-serif;
-}
-
-#theme-switch {
-    height: 50px;
-    width: 50px;
-    padding: 0;
-    display: flex;
-    margin-right: 1rem;
-    border-color: transparent;
-    background-color: transparent;
-    justify-content: center;
-    align-items: center;
-}
-
-#theme-switch svg {
-    fill: var(--primary-color);
-}
-
-#theme-switch svg:last-child {
+::-webkit-scrollbar {
     display: none;
-}
-
-.darkmode #theme-switch svg:first-child {
-    display: none;
-}
-
-.darkmode #theme-switch svg:last-child {
-    display: block;
 }
 
 * {
@@ -76,6 +40,8 @@ body {
     font-family: "Poppins", sans-serif;
     scrollbar-color: transparent transparent;
     background-color: var(--base-color);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 nav {
@@ -105,12 +71,6 @@ nav {
     height: 35px;
     width: auto;
     content: url('/assets/logo/logo-dark.png');
-}
-
-.darkmode .nav__logo img {
-    height: 35px;
-    width: auto;
-    content: url('/assets/logo/logo-white.png');
 }
 
 .nav__menu__btn {
@@ -478,7 +438,7 @@ nav {
     }
 
     .nav__logo img {
-        content: url("/assets/logo/dark-theme-alt.png");
+        content: url("/assets/logo/logo-white.png");
     }
 
     .nav__links.open .sign__in {

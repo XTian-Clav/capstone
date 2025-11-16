@@ -7,12 +7,12 @@
     $mentorCount = DB::table('mentors')->count();
 
     // Check if the roles exist first
-    $investorRole = Role::where('name', 'investors')->first();
-    $incubateeRole = Role::where('name', 'incubatees')->first();
+    $investorRole = Role::where('name', 'investor')->first();
+    $incubateeRole = Role::where('name', 'incubatee')->first();
 
     // Count users safely
-    $investorCount = $investorRole ? User::role('investors')->count() : 0;
-    $incubateeCount = $incubateeRole ? User::role('incubatees')->count() : 0;
+    $investorCount = $investorRole ? User::role('investor')->count() : 0;
+    $incubateeCount = $incubateeRole ? User::role('incubatee')->count() : 0;
 @endphp
 
 <!DOCTYPE html>
@@ -23,6 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="icon" href="{{ asset('assets/favicon/favicon.ico') }}" type="image/x-icon">
     <script type="text/javascript" src="darkmode.js" defer></script>
     <title>Pitbi Portal | Tech Incubator</title>
 </head>
@@ -65,11 +66,11 @@
                 Events: <span>{{ $eventCount }}</span>
             </div>
             <div class="header__image__card header__image__card-4">
-                <span><i class="ri-calendar-event-line"></i></span>
+                <span><i class="ri-team-line"></i></span>
                 Incubatees: <span>{{ $incubateeCount }}</span>
             </div>
             <div class="header__image__card header__image__card-5">
-                <span><i class="ri-calendar-event-line"></i></span>
+                <span><i class="ri-shake-hands-line"></i></span>
                 Investors: <span>{{ $investorCount }}</span>
             </div>
             <img class="mobile-hide" src="{{ asset('assets/landing/header.png') }}" alt="header">

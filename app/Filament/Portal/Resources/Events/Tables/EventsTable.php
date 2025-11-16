@@ -64,7 +64,6 @@ class EventsTable
                         Split::make([
                             TextColumn::make('event')
                                 ->searchable()
-                                ->toggleable()
                                 ->sortable()
                                 ->limit(40)
                                 ->color('primary')
@@ -85,7 +84,6 @@ class EventsTable
                         
                         TextColumn::make('location')
                             ->searchable()
-                            ->toggleable()
                             ->sortable()
                             ->weight('semibold'),
                         
@@ -93,13 +91,11 @@ class EventsTable
                             ->dateTime('M j, Y h:i A')
                             ->badge()
                             ->sortable()
-                            ->toggleable()
                             ->color('gray'),
 
                         TextColumn::make('end_date')
                             ->dateTime('M j, Y h:i A')
                             ->sortable()
-                            ->toggleable()
                             ->badge()
                             ->color('gray'),
 

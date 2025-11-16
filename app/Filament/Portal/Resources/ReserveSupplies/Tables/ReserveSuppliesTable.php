@@ -71,13 +71,11 @@ class ReserveSuppliesTable
                         ->formatStateUsing(fn ($record) => 'Start: ' . ($record->start_date?->format('F j g:i A') ?? '—'))
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->searchable()
-                        ->toggleable()
                         ->sortable(),
 
                     TextColumn::make('end_date')
                         ->formatStateUsing(fn ($record) => 'End: ' . ($record->end_date?->format('F j g:i A') ?? '—'))
                         ->searchable()
-                        ->toggleable()
                         ->sortable(),
                         
                     TextColumn::make('reserved_by')

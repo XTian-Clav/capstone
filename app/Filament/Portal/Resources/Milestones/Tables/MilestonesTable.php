@@ -64,8 +64,7 @@ class MilestonesTable
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans())
                         ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                        ->searchable()
-                        ->toggleable(),
+                        ->searchable(),
                 ])->space(1)
             ])
             ->filters([
