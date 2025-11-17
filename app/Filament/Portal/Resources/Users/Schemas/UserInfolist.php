@@ -20,10 +20,14 @@ class UserInfolist
                         ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
-                        ->Height(230)
+                        ->Height(185)
                         ->square()
                         ->alignCenter()
                         ->defaultImageUrl(url('storage/default/user.png')),
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('roles.name')->color('primary')->weight('semibold')->label('Role:')->inlineLabel(),
+                    ])->compact(),
                 ])->columnSpan(1)->compact()->secondary(),
 
                 Section::make('Personal Details')
