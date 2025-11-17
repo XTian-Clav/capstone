@@ -50,33 +50,28 @@ class MentorsTable
                     ->size(50)
                     ->circular()
                     ->toggleable()
+                    ->width('5%')
                     ->defaultImageUrl(url('storage/default/user.png')),
 
                 TextColumn::make('name')
                     ->weight('semibold')
+                    ->width('35%')
                     ->searchable()
-                    ->sortable(),
-                
-                TextColumn::make('contact')
-                    ->searchable()
-                    ->icon(Heroicon::Phone),
+                    ->sortable()
+                    ->wrap(),
 
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable()
+                    ->badge()
+                    ->width('30%')
+                    ->color('success')
                     ->icon(Heroicon::Envelope),
-
-                TextColumn::make('startups.startup_name')
-                    ->label('Assigned To')
-                    ->getStateUsing(fn ($record) =>
-                        $record->startups->isNotEmpty()
-                            ? $record->startups->implode('startup_name', '<br>')
-                            : 'None'
-                    )
-                    ->html()
-                    ->weight('semibold')
-                    ->default('None')
-                    ->color(fn ($state) => $state === 'None' ? 'gray' : 'info'),
+                
+                TextColumn::make('contact')
+                    ->searchable()
+                    ->width('10%')
+                    ->icon(Heroicon::Phone),
 
                 TextColumn::make('schedules')
                     ->label('Schedules')
@@ -89,13 +84,16 @@ class MentorsTable
                             ->map(fn ($item) => substr($item['day'], 0, 3) . " {$item['hour']}{$item['meridiem']}")
                             ->implode(', ');
                     })
+                    ->wrap()
                     ->toggleable()
                     ->searchable()
-                    ->weight('semibold'),                
+                    ->width('10%')
+                    ->weight('semibold'),               
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
+                    ->width('10%')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true)

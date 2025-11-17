@@ -22,6 +22,7 @@ return new class extends Migration
             $table->json('members')->nullable();
             $table->text('description');
             $table->string('status')->default('Pending');
+            $table->text('admin_comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

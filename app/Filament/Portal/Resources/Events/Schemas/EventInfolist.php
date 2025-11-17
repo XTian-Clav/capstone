@@ -39,7 +39,7 @@ class EventInfolist
                         ->hiddenLabel()
                         ->columnSpanFull()
                         ->extraAttributes([
-                            'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                            'style' => 'text-align: justify; word-break: break-word;',
                         ]),
                 ])->columnSpan(2)->columns(2)->compact(),
 
@@ -70,26 +70,28 @@ class EventInfolist
                             'info' => 'Ongoing',
                             'success' => 'Completed',
                             'danger' => 'Cancelled',
-                        ]),
+                        ])
+                        ->columnSpanFull()
+                        ->inlineLabel()
+                        ->label('Status:'),
                     
                     TextEntry::make('created_at')
                         ->badge()
-                        ->color('secondary')
-                        ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
-                        ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
-                    
-                    TextEntry::make('updated_at')
-                        ->badge()
-                        ->color('secondary')
+                        ->inlineLabel()
+                        ->columnSpanFull()
+                        ->color('primary')
+                        ->label('Create At:')
                         ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
                         ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
                     
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')
                         ->weight('semibold')
+                        ->inlineLabel()
                         ->color('danger')
+                        ->label('Deleted At:')
                         ->visible(fn (Event $record): bool => $record->trashed()),
-                ])->columnSpan(1)->columns(3)->compact(),
+                ])->columnSpan(1)->compact(),
 
                 Section::make('Attendance List')
                 ->schema([

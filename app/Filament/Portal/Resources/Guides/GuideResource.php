@@ -40,11 +40,6 @@ class GuideResource extends Resource
         return GuideForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return GuideInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return GuidesTable::configure($table);

@@ -22,6 +22,7 @@ class ReserveSupply extends Model
         'start_date',
         'end_date',
         'accept_terms',
+        'admin_comment',
     ];
 
     protected $casts = [

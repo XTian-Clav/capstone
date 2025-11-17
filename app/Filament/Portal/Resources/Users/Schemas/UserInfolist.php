@@ -14,13 +14,13 @@ class UserInfolist
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('Profile Picture')
                 ->schema([
                     ImageEntry::make('avatar_url')
                         ->hiddenLabel()
                         ->disk('public')
                         ->visibility('public')
-                        ->Height(220)
+                        ->Height(230)
                         ->square()
                         ->alignCenter()
                         ->defaultImageUrl(url('storage/default/user.png')),
@@ -28,34 +28,48 @@ class UserInfolist
 
                 Section::make('Personal Details')
                 ->schema([
-                    TextEntry::make('name')->weight('semibold'), 
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('name')->weight('semibold')->label('Name:')->inlineLabel(), 
                     
-                    TextEntry::make('email')
-                        ->label('Email address')
-                        ->weight('semibold')
-                        ->copyable()
-                        ->copyMessage('Copied!')
-                        ->copyMessageDuration(1500),
+                        TextEntry::make('email')
+                            ->label('Email address')
+                            ->weight('semibold')
+                            ->copyable()
+                            ->copyMessage('Copied!')
+                            ->copyMessageDuration(1500)
+                            ->label('Email:')
+                            ->inlineLabel(),
 
-                    TextEntry::make('contact')
-                        ->weight('semibold')
-                        ->placeholder('N/A')
-                        ->copyable()
-                        ->copyMessage('Copied!')
-                        ->copyMessageDuration(1500),
+                        TextEntry::make('contact')
+                            ->weight('semibold')
+                            ->placeholder('N/A')
+                            ->copyable()
+                            ->copyMessage('Copied!')
+                            ->copyMessageDuration(1500)
+                            ->label('Contact:')
+                            ->inlineLabel(),
 
-                    TextEntry::make('company')->weight('semibold')->placeholder('N/A'),
+                        TextEntry::make('company')->weight('semibold')->label('Company:')->placeholder('N/A')->inlineLabel(),
+                    ])->compact(),
                     
-                    TextEntry::make('email_verified_at')
-                        ->dateTime('M j, Y h:i A')
-                        ->placeholder('Unverified'),
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('email_verified_at')
+                            ->dateTime('M j, Y h:i A')
+                            ->placeholder('Unverified')
+                            ->label('Email Status:')
+                            ->inlineLabel(),
+                    ])->compact(),
 
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')
                         ->weight('semibold')
                         ->color('danger')
+                        ->label('Deleted At:')
+                        ->inlineLabel()
                         ->visible(fn (User $record): bool => $record->trashed()),
-                ])->columns(2)->columnSpan(2)->compact()->secondary(),
+                ])->columnSpan(2)->compact()->secondary(),
             ])->columns(3);
     }
 }

@@ -84,6 +84,7 @@ class EquipmentTable
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
+                    ->badge()
                     ->width('5%')
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()

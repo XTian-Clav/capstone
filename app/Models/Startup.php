@@ -20,6 +20,7 @@ class Startup extends Model
         'members',
         'description',
         'status',
+        'admin_comment',
     ];
 
     protected $casts = [

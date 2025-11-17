@@ -43,37 +43,15 @@ class StartupInfolist
                         
                         TextEntry::make('founder')
                             ->weight('semibold'),
-
-                        TextEntry::make('status')
-                            ->badge()
-                            ->colors([
-                                'warning' => 'Pending',
-                                'success' => 'Approved',
-                                'danger' => 'Rejected',
-                            ]),
-
-                        TextEntry::make('created_at')
-                            ->label('Created At')
-                            ->since()
-                            ->badge()
-                            ->color('success')
-                            ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
-
-                        TextEntry::make('deleted_at')
-                            ->dateTime('M j, Y h:i A')
-                            ->badge()
-                            ->color('danger')
-                            ->visible(fn (Startup $record): bool => $record->trashed()),
-
                         Section::make()
                         ->schema([
                             TextEntry::make('description')
                                 ->html()
                                 ->extraAttributes([
-                                    'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
+                                    'style' => 'text-align: justify; word-break: break-word;',
                                 ])
                                 ->columnSpan(3),
-                            ])->columnSpanFull()->compact(),
+                        ])->columnSpanFull()->compact(),
                     ])->columns(5)->columnSpan(4)->compact(),
 
                     Section::make()
@@ -123,6 +101,33 @@ class StartupInfolist
                         ])->grid(2)->columns(2),
                     ])->columnSpan(2)->compact(),
                 ])->columns(5)->columnSpanFull()->compact(),
+                Section::make('Admin Review')
+                ->schema([
+                    TextEntry::make('status')
+                        ->label('Startup Status')
+                        ->badge()
+                        ->colors([
+                            'warning' => 'Pending',
+                            'success' => 'Approved',
+                            'danger' => 'Rejected',
+                        ]),
+                    TextEntry::make('created_at')
+                        ->label('Submission Date')
+                        ->since()
+                        ->badge()
+                        ->color('primary')
+                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+
+                    TextEntry::make('deleted_at')
+                        ->dateTime('M j, Y h:i A')
+                        ->badge()
+                        ->color('danger')
+                        ->visible(fn (Startup $record): bool => $record->trashed()),
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('admin_comment'),
+                    ])->columnSpanFull()->compact(),
+                ])->columnSpan(3)->columns(4)->compact(),
             ])->columns(5);
     }
 }

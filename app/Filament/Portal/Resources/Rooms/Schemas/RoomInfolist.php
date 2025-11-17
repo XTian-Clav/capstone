@@ -25,20 +25,23 @@ class RoomInfolist
                         ->width(400)
                         ->height(160)
                         ->alignCenter()
-                        ->defaultImageUrl(url('storage/default/no-image.png')),
-                ])->columnSpan(1)->compact()->secondary(),
+                        ->defaultImageUrl(url('storage/default/no-image.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ]),
+                    Section::make()
+                    ->schema([
+                        TextEntry::make('inclusions'),
+                    ])->compact()->secondary(),
+                ])->columnSpan(1)->compact(),
 
                 Section::make('Room Details')
                 ->schema([
-                    TextEntry::make('inclusions')
-                        ->html()
-                        ->extraAttributes([
-                            'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
-                        ]),
-                    
-                    TextEntry::make('room_type')->weight('semibold'),
-                    TextEntry::make('capacity')->weight('semibold'),
-                    TextEntry::make('location')->weight('semibold'),
+                    TextEntry::make('room_type')->weight('semibold')->label('Room Type:')->inlineLabel(),
+                    TextEntry::make('capacity')->weight('semibold')->label('Capacity:')->inlineLabel(),
+                    TextEntry::make('location')->weight('semibold')->label('Location:')->inlineLabel(),
 
                     TextEntry::make('room_rate')
                         ->numeric()
@@ -48,20 +51,25 @@ class RoomInfolist
                                 ? '₱' . number_format($record->room_rate)
                                 : 'None'
                         )
-                        ->weight('semibold'),
+                        ->weight('semibold')
+                        ->label('Room Details:')
+                        ->inlineLabel(),
                     
                     TextEntry::make('is_available')
-                        ->label('Availability')
+                        ->label('Availability:')
                         ->state(fn ($record) => $record->is_available ? 'Room Available' : 'Room Unavailable')
                         ->color(fn ($record) => $record->is_available ? 'success' : 'danger')
-                        ->weight('semibold'),
+                        ->weight('semibold')
+                        ->inlineLabel(),
                     
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')
                         ->weight('semibold')
                         ->color('danger')
+                        ->label('Deleted At:')
+                        ->inlineLabel()
                         ->visible(fn (Room $record): bool => $record->trashed()),
-                ])->columns(3)->columnSpan(2)->compact()->secondary(),
+                ])->columnSpan(2)->compact(),
             ])->columns(3);
     }
 }

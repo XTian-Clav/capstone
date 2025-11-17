@@ -50,7 +50,9 @@ class UsersTable
                     ->label('Email address')
                     ->searchable()
                     ->icon(Heroicon::Envelope)
-                    ->width('10%'),
+                    ->color('success')
+                    ->width('10%')
+                    ->badge(),
 
                 TextColumn::make('contact')
                     ->searchable()
@@ -65,12 +67,13 @@ class UsersTable
                 TextColumn::make('roles.name')
                     ->searchable()
                     ->badge()
-                    ->color('info')
+                    ->color('danger')
                     ->width('10%'),
 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
+                    ->badge()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->sortable()

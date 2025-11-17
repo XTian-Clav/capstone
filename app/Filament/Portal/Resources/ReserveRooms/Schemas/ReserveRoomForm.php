@@ -11,6 +11,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -95,35 +96,50 @@ class ReserveRoomForm
                         ->searchable()
                         ->required()
                         ->reactive(),
-
-                    // Photo preview
-                    Placeholder::make('room_preview')
+                    
+                    Placeholder::make('room_details')
                         ->hiddenLabel()
                         ->content(function ($get) {
                             $room = Room::find($get('room_id'));
-                            if (! $room?->picture) return '';
-                            $url = Storage::url($room->picture);
-                            return "<div style='max-width:400px;aspect-ratio:16/9'>
-                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg'>
+                            if (! $room) return '';
+                            $html = '';
+
+                            // Room preview image
+                            if ($room->picture) {
+                                $url = Storage::url($room->picture);
+                                $html .= "<div style='max-width:400px;aspect-ratio:16/9;margin-bottom:0.5rem;'>
+                                            <img src='{$url}' style='width:100%;height:100%;object-fit:cover;border-radius:0.5rem;'>
+                                        </div>";
+                            }
+                            // Room capacity
+                            $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.20rem 0.5rem;border-radius:0.5rem;'>
+                                        Capacity: {$room->capacity}
                                     </div>";
+
+                            // Room inclusions
+                            if ($room->inclusions) {
+                                $html .= "<div style='margin-top:0.5rem;'>Inclusions: {$room->inclusions}</div>";
+                            }
+
+                            return $html;
                         })
                         ->reactive()
                         ->html(),
-
-                    Placeholder::make('room_capacity')
-                        ->hiddenLabel()
-                        ->content(fn($get) => ($room = Room::find($get('room_id'))) ? "Capacity: {$room->capacity}" : '')
-                        ->reactive()
-                        ->weight('semibold')
-                        ->color('success'),
-
+                ])->compact(),
+                
+                Section::make('Admin Review')
+                ->schema([
                     Select::make('status')
                         ->options(ReserveRoom::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false)
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),                  
-                ])->compact(),
+                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])), 
+                    Textarea::make('admin_comment')
+                        ->columnSpanFull()
+                        ->nullable()
+                        ->rows(4),
+                ])->columnSpan(2)->columns(2)->compact(),
             ])->columns(3);
     }
 }

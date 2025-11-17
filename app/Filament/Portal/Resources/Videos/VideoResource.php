@@ -40,11 +40,6 @@ class VideoResource extends Resource
         return VideoForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return VideoInfolist::configure($schema);
-    }
-
     public static function table(Table $table): Table
     {
         return VideosTable::configure($table);

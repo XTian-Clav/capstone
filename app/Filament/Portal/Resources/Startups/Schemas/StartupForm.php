@@ -9,6 +9,7 @@ use Filament\Schemas\Components\Grid;
 
 use Filament\Support\Enums\Alignment;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -41,6 +42,7 @@ class StartupForm
 
                 RichEditor::make('description')
                     ->label('Description')
+                    ->columnSpanFull()
                     ->default('<p><em>Enter short description here.</em></p>')
                     ->toolbarButtons([
                         'bold',
@@ -51,15 +53,6 @@ class StartupForm
                         'orderedList',
                         'link',
                     ]),
-
-                Select::make('status')
-                    ->options(Startup::STATUS)
-                    ->default('Pending')
-                    ->required()
-                    ->native(false)
-                    ->helpertext('Status are pending by default. Only Administrators can edit the startup status.')
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-
                 Section::make()
                 ->footer('Maximum of 4 members excluding founder.')
                 ->schema([
@@ -68,7 +61,6 @@ class StartupForm
                         ->schema([
                             TextInput::make('name')
                                 ->label('Member Name')
-                                ->required()
                                 ->placeholder('Enter member name'),
                         ])
                         ->grid(2)
@@ -136,7 +128,21 @@ class StartupForm
                             ->suffixIcon('heroicon-m-link')
                             ->Helpertext('Upload your videos and powerpoint presentaion here.'),
                     ])->columnSpanFull()->compact(),
-                ])->columnSpan(1)
+                ])->columnSpan(1),
+
+                Section::make('Admin Review')
+                ->schema([
+                    Select::make('status')
+                        ->options(Startup::STATUS)
+                        ->default('Pending')
+                        ->required()
+                        ->native(false)
+                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    Textarea::make('admin_comment')
+                        ->columnSpanFull()
+                        ->nullable()
+                        ->rows(4),
+                ])->columnSpan(2)->columns(2)->compact(),
             ])->columns(3);
     }
 }

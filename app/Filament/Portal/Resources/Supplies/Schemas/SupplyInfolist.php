@@ -25,29 +25,38 @@ class SupplyInfolist
                         ->width(400)
                         ->height(160)
                         ->alignCenter()
-                        ->defaultImageUrl(url('storage/default/no-image.png')),
-                ])->columnSpan(1)->compact()->secondary(),
+                        ->defaultImageUrl(url('storage/default/no-image.png'))
+                        ->extraImgAttributes([
+                            'alt' => 'Logo',
+                            'loading' => 'lazy',
+                            'class' => 'rounded-xl object-cover',
+                        ]),
+                ])->columnSpan(1)->compact(),
 
                 Section::make('Item Details')
                 ->schema([
-                    TextEntry::make('item_name')->weight('semibold'),
+                    TextEntry::make('item_name')->weight('semibold')->label('Item Name:')->inlineLabel(),
                     
                     TextEntry::make('quantity')
                         ->weight('semibold')
                         ->state(fn ($record) => 
                             $record->quantity === 0 ? 'Out of Stock':
                             $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
-                        ),
+                        )
+                        ->inlineLabel()
+                        ->label('Quantity:'),
                     
-                    TextEntry::make('location')->weight('semibold'),
-                    TextEntry::make('remarks')->weight('semibold'),
+                    TextEntry::make('location')->weight('semibold')->label('Location:')->inlineLabel(),
+                    TextEntry::make('remarks')->weight('semibold')->label('Remarks:')->inlineLabel(),
                     
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')
                         ->weight('semibold')
                         ->color('danger')
+                        ->label('Deleted At:')
+                        ->inlineLabel()
                         ->visible(fn (Supply $record): bool => $record->trashed()),
-                ])->columns(3)->columnSpan(2)->compact()->secondary(),
+                ])->columnSpan(2)->compact(),
             ])->columns(3);
     }
 }

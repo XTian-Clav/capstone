@@ -10,6 +10,7 @@ use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -91,30 +92,48 @@ class ReserveSupplyForm
                         ->searchable()
                         ->required()
                         ->reactive(),
-
-                    // Photo preview
-                    Placeholder::make('supply_preview')
+                    
+                    Placeholder::make('supply_details')
                         ->hiddenLabel()
                         ->content(function ($get) {
                             $supply = Supply::find($get('supply_id'));
-                            if (! $supply?->picture) return '';
-                            $url = Storage::url($supply->picture);
-                            return "<div style='max-width:400px;aspect-ratio:16/9'>
-                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg'>
+                            if (! $supply) return '';
+                            $html = '';
+
+                            // supply preview image
+                            if ($supply->picture) {
+                                $url = Storage::url($supply->picture);
+                                $html .= "<div style='max-width:400px;aspect-ratio:16/9;margin-bottom:0.5rem;'>
+                                            <img src='{$url}' style='width:100%;height:100%;object-fit:cover;border-radius:0.5rem;'>
+                                        </div>";
+                            }
+
+                            // Stock badge
+                            $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.25rem 0.5rem;border-radius:0.5rem;'>
+                                        Stock: {$supply->quantity}
                                     </div>";
+
+                            return $html;
                         })
                         ->reactive()
                         ->html(),
 
                     ReservationValidation::supplyQuantity(),
+                ])->compact(),
 
+                Section::make('Admin Review')
+                ->schema([
                     Select::make('status')
                         ->options(ReserveSupply::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false)
                         ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                ])->compact(),
+                    Textarea::make('admin_comment')
+                        ->columnSpanFull()
+                        ->nullable()
+                        ->rows(4),
+                ])->columnSpan(2)->columns(2)->compact(),
             ])->columns(3);
     }
 }

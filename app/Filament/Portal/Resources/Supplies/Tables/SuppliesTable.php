@@ -77,6 +77,7 @@ class SuppliesTable
                     ->label('Created At')
                     ->since()
                     ->width('10%')
+                    ->badge()
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->sortable(),

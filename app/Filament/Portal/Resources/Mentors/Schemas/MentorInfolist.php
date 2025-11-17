@@ -34,20 +34,18 @@ class MentorInfolist
                         ]),
                     Section::make()
                     ->schema([
-                        TextEntry::make('name')->weight('semibold'),
-                        TextEntry::make('email')->weight('semibold'),
-                        TextEntry::make('contact')->weight('semibold'),
-                        TextEntry::make('expertise')->weight('semibold'), 
+                        TextEntry::make('name')->label('Name:')->weight('semibold')->inlineLabel(),
+                        TextEntry::make('email')->label('Email:')->weight('semibold')->inlineLabel(),
+                        TextEntry::make('contact')->label('Contact:')->weight('semibold')->inlineLabel(),
                         Section::make()
                         ->schema([
                             TextEntry::make('personal_info')
                                 ->html()
                                 ->extraAttributes([
-                                    'style' => 'text-align: justify; white-space: pre-line; word-break: break-word;',
-                                ])
-                                ->columnSpan(3),
+                                    'style' => 'text-align: justify; word-break: break-word;',
+                                ]),
                         ])->columnSpanFull()->compact(),
-                    ])->columns(4)->columnSpan(4)->compact(),
+                    ])->columnSpan(4)->compact(),
                     
                     Section::make()
                     ->schema([

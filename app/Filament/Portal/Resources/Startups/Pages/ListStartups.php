@@ -27,12 +27,11 @@ class ListStartups extends ListRecords
     {
         $user = auth()->user();
 
-        $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
+        $isAdmin = $user->hasRole('admin');
+        $isSuperAdmin = $user->hasRole('super_admin');
         $isInvestor = $user->hasRole('investor');
         $isIncubatee = $user->hasRole('incubatee');
 
-
-        // Investor see approved only
         if ($isInvestor) {
             return [
                 'approved' => Tab::make('Approved')
@@ -41,18 +40,17 @@ class ListStartups extends ListRecords
             ];
         }
 
-        // Admin see all tabs while Incubatee see their own only
-        return [
+        $tabs = [
             'all' => Tab::make('All')
                 ->badge(fn () =>
-                    $isAdmin
+                    ($isAdmin || $isSuperAdmin)
                         ? Startup::count()
                         : Startup::where('user_id', $user->id)->count()
                 ),
 
             'pending' => Tab::make('Pending')
                 ->badge(fn () =>
-                    $isAdmin
+                    ($isAdmin || $isSuperAdmin)
                         ? Startup::where('status', 'pending')->count()
                         : Startup::where('status', 'pending')->where('user_id', $user->id)->count()
                 )
@@ -60,7 +58,7 @@ class ListStartups extends ListRecords
 
             'approved' => Tab::make('Approved')
                 ->badge(fn () =>
-                    $isAdmin
+                    ($isAdmin || $isSuperAdmin)
                         ? Startup::where('status', 'approved')->count()
                         : Startup::where('status', 'approved')->where('user_id', $user->id)->count()
                 )
@@ -68,14 +66,14 @@ class ListStartups extends ListRecords
 
             'rejected' => Tab::make('Rejected')
                 ->badge(fn () =>
-                    $isAdmin
+                    ($isAdmin || $isSuperAdmin)
                         ? Startup::where('status', 'rejected')->count()
                         : Startup::where('status', 'rejected')->where('user_id', $user->id)->count()
                 )
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
         ];
-        // Add archive tab only for SuperAdmin
-        if ($user->hasRole('super_admin')) {
+        
+        if ($isSuperAdmin) {
             $tabs['archived'] = Tab::make('Archive')
                 ->badge(fn () => Startup::onlyTrashed()->count())
                 ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());

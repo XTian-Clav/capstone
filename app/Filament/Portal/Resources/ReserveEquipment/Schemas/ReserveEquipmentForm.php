@@ -8,8 +8,10 @@ use Filament\Schemas\Schema;
 use App\Models\ReserveEquipment;
 use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -91,30 +93,48 @@ class ReserveEquipmentForm
                         ->searchable()
                         ->required()
                         ->reactive(),
-
-                    // Photo preview
-                    Placeholder::make('equipment_preview')
+                    
+                    Placeholder::make('equipment_details')
                         ->hiddenLabel()
                         ->content(function ($get) {
                             $equipment = Equipment::find($get('equipment_id'));
-                            if (! $equipment?->picture) return '';
-                            $url = Storage::url($equipment->picture);
-                            return "<div style='max-width:400px;aspect-ratio:16/9'>
-                                        <img src='{$url}' class='w-full h-full object-cover rounded-lg'>
+                            if (! $equipment) return '';
+                            $html = '';
+
+                            // Equipment preview image
+                            if ($equipment->picture) {
+                                $url = Storage::url($equipment->picture);
+                                $html .= "<div style='max-width:400px;aspect-ratio:16/9;margin-bottom:0.5rem;'>
+                                            <img src='{$url}' style='width:100%;height:100%;object-fit:cover;border-radius:0.5rem;'>
+                                        </div>";
+                            }
+
+                            // Stock badge
+                            $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.25rem 0.5rem;border-radius:0.5rem;'>
+                                        Stock: {$equipment->quantity}
                                     </div>";
+
+                            return $html;
                         })
                         ->reactive()
                         ->html(),
 
                     ReservationValidation::equipmentQuantity(),
+                ])->compact(),
 
+                Section::make('Admin Review')
+                ->schema([
                     Select::make('status')
                         ->options(ReserveEquipment::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false)
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),    
-                ])->compact(),
+                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    Textarea::make('admin_comment')
+                        ->columnSpanFull()
+                        ->nullable()
+                        ->rows(4),
+                ])->columnSpan(2)->columns(2)->compact(),
             ])->columns(3);
     }
 }

@@ -75,7 +75,6 @@ class VideosTable
                             ->badge()
                             ->sortable()
                             ->searchable()
-                            ->toggleable()
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
                         ]),

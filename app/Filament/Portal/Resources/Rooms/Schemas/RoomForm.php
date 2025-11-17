@@ -49,23 +49,12 @@ class RoomForm
                         ->maxLength(100)
                         ->placeholder('Enter capacity'),
                     
-                    RichEditor::make('inclusions')
+                    Textarea::make('inclusions')
                         ->label('Inclusions')
-                        ->default('<p><em>No Inclusions.</em></p>')
+                        ->default('No Inclusions.')
                         ->columnSpanFull()
-                        ->toolbarButtons([
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'bulletList',
-                            'orderedList',
-                            'link',
-                            'undo',
-                            'redo',
-                        ])
                         ->nullable()
-                        ->required(),
+                        ->rows(5),
                 
                 ])->columnSpan(2)->columns(2)->compact(),
 
