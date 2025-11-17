@@ -41,7 +41,7 @@ class RoomsTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('room_type')
                     ->searchable()

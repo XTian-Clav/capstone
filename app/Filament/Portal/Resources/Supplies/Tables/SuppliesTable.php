@@ -39,7 +39,7 @@ class SuppliesTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('item_name')
                     ->searchable()

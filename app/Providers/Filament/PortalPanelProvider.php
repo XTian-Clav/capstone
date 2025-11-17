@@ -127,6 +127,10 @@ class PortalPanelProvider extends PanelProvider
 
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Dashboard')
+                    ->icon('heroicon-o-home'),
+                
+                NavigationGroup::make()
                     ->label('Startup')
                     ->icon('heroicon-o-rocket-launch'),
                 
@@ -144,7 +148,7 @@ class PortalPanelProvider extends PanelProvider
 
                 NavigationGroup::make()
                     ->label('Manage Users')
-                    ->icon('heroicon-o-user'),
+                    ->icon('heroicon-o-user-group'),
                 
                 NavigationGroup::make()
                     ->label('System Settings')

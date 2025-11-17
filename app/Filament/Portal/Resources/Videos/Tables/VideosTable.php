@@ -37,7 +37,7 @@ class VideosTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->contentGrid(['xl' => 2])
             ->columns([
                 Split::make([

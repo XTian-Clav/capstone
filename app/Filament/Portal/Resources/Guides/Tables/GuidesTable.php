@@ -34,37 +34,30 @@ class GuidesTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Split::make([
                     TextColumn::make('title')
-                    ->sortable() 
-                    ->searchable()
-                    ->weight('semibold')
-                    ->iconColor('secondary')
-                    ->icon(Heroicon::DocumentText)
-                    ->wrap()
-                    ->width('70%'),      
-                
-                    TextColumn::make('url')
-                        ->label('Document Link')
+                        ->sortable() 
+                        ->searchable()
+                        ->weight('semibold')
+                        ->iconColor('secondary')
+                        ->icon(Heroicon::DocumentText)
+                        ->wrap()
+                        ->width('90%')
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()
-                        ->formatStateUsing(fn ($state) => $state ? 'Open Document' : 'No Link Available')
-                        ->icon('heroicon-m-arrow-top-right-on-square')
-                        ->iconColor('primary')
-                        ->weight('semibold')
-                        ->color('primary')
-                        ->width('15%'),
+                        ->tooltip('Open in New Tab'),
                     
                     TextColumn::make('created_at')
                         ->label('Created At')
                         ->since()
+                        ->badge()
                         ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                         ->searchable()
                         ->sortable()
-                        ->width('15%'),
-                ])
+                        ->width('10%'),
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
