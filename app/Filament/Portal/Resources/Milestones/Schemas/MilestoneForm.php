@@ -32,7 +32,7 @@ class MilestoneForm
                         
                         Select::make('startup_id')
                             ->label('Startup Name')
-                            ->options(Startup::pluck('startup_name', 'id'))
+                            ->options(fn () => Startup::where('status', 'Approved')->pluck('startup_name', 'id'))
                             ->searchable()
                             ->required()
                             ->columnSpanFull()

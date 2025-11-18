@@ -50,7 +50,7 @@ class MentorsTable
             ->emptyStateHeading('No mentors found')
             ->emptyStateDescription('All mentors will appear here once its created.')
 
-            ->contentGrid(['xl' => 1])
+            //->contentGrid(['xl' => 1])
             ->columns([
                 Split::make ([
                     ImageColumn::make('avatar')
