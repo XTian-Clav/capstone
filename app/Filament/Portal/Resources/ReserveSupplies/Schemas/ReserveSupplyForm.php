@@ -108,11 +108,6 @@ class ReserveSupplyForm
                                         </div>";
                             }
 
-                            // Stock badge
-                            $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.25rem 0.5rem;border-radius:0.5rem;'>
-                                        Stock: {$supply->quantity}
-                                    </div>";
-
                             return $html;
                         })
                         ->reactive()
