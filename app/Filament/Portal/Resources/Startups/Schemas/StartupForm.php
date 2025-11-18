@@ -128,7 +128,7 @@ class StartupForm
                             ->prefix('Link')
                             ->label('Drive Link Upload')
                             ->suffixIcon('heroicon-m-link')
-                            ->Helpertext('Upload your videos and powerpoint presentaion here.'),
+                            ->Helpertext('Upload your videos and powerpoint presentation here.'),
                     ])->columnSpanFull()->compact(),
                 ])->columnSpan(1),
 
@@ -140,6 +140,7 @@ class StartupForm
                         ->required()
                         ->native(false)
                         ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    
                     Textarea::make('admin_comment')
                         ->columnSpanFull()
                         ->nullable()
