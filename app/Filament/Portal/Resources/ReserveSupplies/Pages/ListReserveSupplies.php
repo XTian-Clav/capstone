@@ -11,8 +11,6 @@ use App\Filament\Portal\Resources\ReserveSupplies\ReserveSupplyResource;
 
 class ListReserveSupplies extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = ReserveSupplyResource::class;
 
     protected function getHeaderActions(): array

@@ -42,6 +42,11 @@ class EquipmentTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-wrench-screwdriver')
+            ->emptyStateHeading('No equipments found')
+            ->emptyStateDescription('All equipments will appear here once its created.')
+
             ->columns([
                 TextColumn::make('equipment_name')
                     ->searchable()

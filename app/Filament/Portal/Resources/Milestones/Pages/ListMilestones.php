@@ -9,8 +9,6 @@ use App\Filament\Portal\Resources\Milestones\MilestoneResource;
 
 class ListMilestones extends ListRecords
 {
-    use HasResizableColumn;
-
     protected static string $resource = MilestoneResource::class;
 
     protected function getHeaderActions(): array

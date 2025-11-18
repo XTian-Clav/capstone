@@ -75,37 +75,43 @@ class MentorForm
                     ScheduleForm::scheduleRepeater()->columnSpanFull()->label('Mentoring Schedules'),
                 ])->columnSpan(2)->columns(2)->compact(),
                 
-                Section::make('Photo Upload')
+                Grid::make()
                 ->schema([
-                    FileUpload::make('avatar')
-                        ->label('Profile Photo')
-                        ->image()
-                        ->imageEditor()
-                        
-                        //IMG DIRECTORY
-                        ->disk('public')
-                        ->directory('mentors/avatar')
-                        ->visibility('public')
+                    Section::make('Photo Upload')
+                    ->schema([
+                        FileUpload::make('avatar')
+                            ->label('Profile Photo')
+                            ->image()
+                            ->imageEditor()
+                            
+                            //IMG DIRECTORY
+                            ->disk('public')
+                            ->directory('mentors/avatar')
+                            ->visibility('public')
 
-                        //IMAGE CROP (1:1)
-                        ->imageCropAspectRatio('1:1')
-                        ->imageResizeMode('cover')
+                            //IMAGE CROP (1:1)
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeMode('cover')
 
-                        //FILE SIZE LIMIT
-                        ->maxSize(5120),
+                            //FILE SIZE LIMIT
+                            ->maxSize(5120),
 
-                    Select::make('expertise')
-                        ->options(Mentor::EXPERTISE)
-                        ->required()
-                        ->native(false),
-                    
-                    Select::make('startups')
-                        ->label('Assigned Startups')
-                        ->multiple() // since many-to-many
-                        ->relationship('startups', 'startup_name')
-                        ->preload()
-                        ->searchable(),
-                ])->compact(),
+                        Select::make('expertise')
+                            ->options(Mentor::EXPERTISE)
+                            ->required()
+                            ->native(false),
+                    ])->compact(),
+
+                    Section::make('Assigned Startups')
+                    ->schema([
+                        Select::make('startups')
+                            ->hiddenLabel()
+                            ->multiple()
+                            ->relationship('startups', 'startup_name')
+                            ->preload()
+                            ->searchable(),
+                    ])->compact(),
+                ])->columns(1),
             ])->columns(3);
     }
 }

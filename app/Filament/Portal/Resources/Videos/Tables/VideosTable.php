@@ -38,6 +38,11 @@ class VideosTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+            
+            ->emptyStateIcon('heroicon-o-film')
+            ->emptyStateHeading('No videos posted yet')
+            ->emptyStateDescription('All videos will appear here once its created.')
+
             ->contentGrid(['xl' => 2])
             ->columns([
                 Split::make([

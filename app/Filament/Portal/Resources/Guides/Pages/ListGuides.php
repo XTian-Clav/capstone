@@ -11,8 +11,6 @@ use App\Filament\Portal\Resources\Guides\GuideResource;
 
 class ListGuides extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = GuideResource::class;
 
     protected function getHeaderActions(): array

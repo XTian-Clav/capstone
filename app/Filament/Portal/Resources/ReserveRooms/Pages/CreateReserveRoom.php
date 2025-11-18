@@ -16,12 +16,12 @@ class CreateReserveRoom extends CreateRecord
         $data['user_id'] = auth()->id();
 
         $user = auth()->user();
-        $roomName = Room::find($data['room_id'] ?? null)?->room_name ?? 'a room';
+        $roomType = Room::find($data['room_id'] ?? null)?->room_type ?? 'a room';
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()
                 ->title('Reservation Submitted')
-                ->body('Your reservation for ' . $roomName . ' has been submitted successfully.')
+                ->body('Your reservation for ' . $roomType . ' has been submitted successfully.')
                 ->sendToDatabase($user);
         }
 

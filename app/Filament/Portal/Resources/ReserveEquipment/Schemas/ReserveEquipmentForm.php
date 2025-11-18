@@ -134,7 +134,7 @@ class ReserveEquipmentForm
                         ->columnSpanFull()
                         ->nullable()
                         ->rows(4),
-                ])->columnSpan(2)->columns(2)->compact(),
+                ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }

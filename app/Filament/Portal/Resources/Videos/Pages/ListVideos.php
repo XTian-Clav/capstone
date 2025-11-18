@@ -12,8 +12,6 @@ use App\Filament\Portal\Resources\Videos\VideoResource;
 
 class ListVideos extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = VideoResource::class;
 
     protected function getHeaderActions(): array

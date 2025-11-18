@@ -40,6 +40,11 @@ class UsersTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-user')
+            ->emptyStateHeading('No users found')
+            ->emptyStateDescription('All users will appear here once its created.')
+
             ->columns([
                 TextColumn::make('name')
                     ->searchable()

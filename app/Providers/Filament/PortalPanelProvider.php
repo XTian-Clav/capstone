@@ -132,27 +132,33 @@ class PortalPanelProvider extends PanelProvider
                 
                 NavigationGroup::make()
                     ->label('Startup')
-                    ->icon('heroicon-o-rocket-launch'),
+                    ->icon('heroicon-o-rocket-launch')
+                    ->collapsed(false),
                 
                 NavigationGroup::make()
                     ->label('Learning Materials')
-                    ->icon('heroicon-o-academic-cap'),
+                    ->icon('heroicon-o-academic-cap')
+                    ->collapsed(false),
                 
                 NavigationGroup::make()
                     ->label('Reservation')
-                    ->icon('heroicon-o-clipboard-document-check'),
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->collapsed(false),
 
                 NavigationGroup::make()
                     ->label('Inventory')
-                    ->icon('heroicon-o-archive-box'),
+                    ->icon('heroicon-o-archive-box')
+                    ->collapsed(false),
 
                 NavigationGroup::make()
                     ->label('Manage Users')
-                    ->icon('heroicon-o-user-group'),
+                    ->icon('heroicon-o-user-group')
+                    ->collapsed(false),
                 
                 NavigationGroup::make()
                     ->label('System Settings')
-                    ->icon('heroicon-o-cog-6-tooth'),
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsed(false),
             ])
 
             ->resourceCreatePageRedirect('index')
@@ -186,11 +192,6 @@ class PortalPanelProvider extends PanelProvider
                     ->navigationLabel('Roles And Permission')
                     ->navigationGroup('System Settings')
                     ->globallySearchable(false),
-
-                FilamentSpatieLaravelHealthPlugin::make()
-                    ->authorize(fn (): bool => auth()->user()->email === 'superadmin@gmail.com')
-                    ->navigationGroup('System Settings')
-                    ->navigationLabel('Website Health Check'),
                     
                 LightSwitchPlugin::make()
                     ->position(Alignment::BottomRight)

@@ -24,6 +24,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,61 +45,71 @@ class MentorsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'asc')
+
+            ->emptyStateIcon('heroicon-o-identification')
+            ->emptyStateHeading('No mentors found')
+            ->emptyStateDescription('All mentors will appear here once its created.')
+
+            ->contentGrid(['xl' => 1])
             ->columns([
-                ImageColumn::make('avatar')
-                    ->label('')
-                    ->disk('public')
-                    ->size(50)
-                    ->circular()
-                    ->toggleable()
-                    ->width('5%')
-                    ->defaultImageUrl(url('storage/default/user.png')),
+                Split::make ([
+                    ImageColumn::make('avatar')
+                        ->label('')
+                        ->disk('public')
+                        ->size(50)
+                        ->circular()
+                        ->defaultImageUrl(url('storage/default/user.png')),
 
-                TextColumn::make('name')
-                    ->weight('semibold')
-                    ->width('35%')
-                    ->searchable()
-                    ->sortable()
-                    ->wrap(),
+                    Stack::make ([
+                        TextColumn::make('name')
+                            ->weight('semibold')
+                            ->searchable()
+                            ->sortable(),
 
-                TextColumn::make('email')
-                    ->searchable()
-                    ->sortable()
-                    ->badge()
-                    ->width('30%')
-                    ->color('success')
-                    ->icon(Heroicon::Envelope),
-                
-                TextColumn::make('contact')
-                    ->searchable()
-                    ->width('10%')
-                    ->icon(Heroicon::Phone),
+                        TextColumn::make('expertise')
+                            ->searchable()
+                            ->badge(),
+                    ])->space(1),
 
-                TextColumn::make('schedules')
-                    ->label('Schedules')
-                    ->getStateUsing(function ($record) {
-                        if (blank($record->schedules)) {
-                            return '—';
-                        }
-                
-                        return collect($record->schedules)
-                            ->map(fn ($item) => substr($item['day'], 0, 3) . " {$item['hour']}{$item['meridiem']}")
-                            ->implode(', ');
-                    })
-                    ->wrap()
-                    ->toggleable()
-                    ->searchable()
-                    ->width('10%')
-                    ->weight('semibold'),               
-                
-                TextColumn::make('created_at')
-                    ->label('Created At')
-                    ->since()
-                    ->width('10%')
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(), 
+                    Stack::make ([
+                        TextColumn::make('email')
+                            ->searchable()
+                            ->sortable()
+                            ->badge()
+                            ->color('success')
+                            ->icon(Heroicon::Envelope)
+                            ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
+                        
+                        TextColumn::make('contact')
+                            ->searchable()
+                            ->badge()
+                            ->color('gray')
+                            ->icon(Heroicon::Phone),
+                    ])->space(1),
+                    
+                    TextColumn::make('schedules')
+                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
+                        ->label('Schedules')
+                        ->getStateUsing(function ($record) {
+                            if (blank($record->schedules)) {
+                                return 'No Schedule Yet';
+                            }
+                    
+                            return collect($record->schedules)
+                                ->map(fn ($item) => substr($item['day'], 0, 3) . ": {$item['start_time']} - {$item['end_time']}")
+                                ->implode("\n");
+                        })
+                        ->searchable()
+                        ->weight('semibold'),
+                        
+                    TextColumn::make('startups.startup_name')
+                        ->label('Assigned Startups')
+                        ->listWithLineBreaks()
+                        ->limitList(10)
+                        ->toggleable()
+                        ->searchable()
+                        ->badge(),
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

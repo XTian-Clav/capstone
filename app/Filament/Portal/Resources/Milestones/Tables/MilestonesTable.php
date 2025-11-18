@@ -28,9 +28,14 @@ class MilestonesTable
         return $table
             ->recordUrl(null)
             ->deferFilters(false)
-            ->defaultGroup('startup.startup_name')
             ->persistFiltersInSession()
+            ->defaultGroup('startup.startup_name')
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-trophy')
+            ->emptyStateHeading('No milestones posted yet')
+            ->emptyStateDescription('All milestones will appear here once its created.')
+
             ->contentGrid(['xl' => 3])
             ->columns([
                 Stack::make([

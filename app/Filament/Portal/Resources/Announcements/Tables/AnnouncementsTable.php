@@ -26,6 +26,11 @@ class AnnouncementsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-megaphone')
+            ->emptyStateHeading('No announcements posted yet')
+            ->emptyStateDescription('All announcements will appear here once its created.')
+
             ->contentGrid(['xl' => 3])
             ->columns([
                 Stack::make ([

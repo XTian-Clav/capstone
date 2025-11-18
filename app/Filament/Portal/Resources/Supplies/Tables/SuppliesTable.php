@@ -40,6 +40,11 @@ class SuppliesTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-archive-box')
+            ->emptyStateHeading('No supplies found')
+            ->emptyStateDescription('All supplies will appear here once its created.')
+
             ->columns([
                 TextColumn::make('item_name')
                     ->searchable()

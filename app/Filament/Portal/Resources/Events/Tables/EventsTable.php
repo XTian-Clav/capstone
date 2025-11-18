@@ -45,6 +45,11 @@ class EventsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-calendar-days')
+            ->emptyStateHeading('No events posted yet')
+            ->emptyStateDescription('All events will appear here once its created.')
+
             ->contentGrid(['xl' => 2])
             ->columns([
                 Split::make([

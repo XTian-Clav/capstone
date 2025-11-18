@@ -42,7 +42,12 @@ class ReserveRoomsTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-building-office')
+            ->emptyStateHeading('No room reservations found')
+            ->emptyStateDescription('All reservations will appear here once its created.')
+
             ->contentGrid(['xl' => 2])
             ->columns([
                 Stack::make([

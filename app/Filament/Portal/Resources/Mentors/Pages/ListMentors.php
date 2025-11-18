@@ -12,8 +12,6 @@ use App\Filament\Portal\Resources\Mentors\MentorResource;
 
 class ListMentors extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = MentorResource::class;
 
     protected function getHeaderActions(): array

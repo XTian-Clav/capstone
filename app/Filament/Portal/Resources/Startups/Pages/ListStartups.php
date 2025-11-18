@@ -12,8 +12,6 @@ use App\Filament\Portal\Resources\Startups\StartupResource;
 
 class ListStartups extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = StartupResource::class;
 
     protected function getHeaderActions(): array

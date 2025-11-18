@@ -11,8 +11,6 @@ use App\Filament\Portal\Resources\Users\UserResource;
 
 class ListUsers extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array

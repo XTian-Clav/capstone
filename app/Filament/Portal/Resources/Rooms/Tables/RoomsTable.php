@@ -42,6 +42,11 @@ class RoomsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-building-office')
+            ->emptyStateHeading('No rooms found')
+            ->emptyStateDescription('All rooms will appear here once its created.')
+
             ->columns([
                 TextColumn::make('room_type')
                     ->searchable()

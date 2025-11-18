@@ -45,6 +45,11 @@ class StartupsTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-rocket-launch')
+            ->emptyStateHeading('No startups found')
+            ->emptyStateDescription('All startups will appear here once its created.')
+
             ->contentGrid(['xl' => 2])
             ->columns([
                 Split::make([

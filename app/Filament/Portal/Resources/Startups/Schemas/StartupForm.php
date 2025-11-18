@@ -83,7 +83,9 @@ class StartupForm
                             
                             //UPLOAD SETTINGS
                             ->image()
+                            ->openable()
                             ->imageEditor()
+                            ->downloadable()
 
                             //IMG DIRECTORY
                             ->disk('public')
@@ -142,7 +144,7 @@ class StartupForm
                         ->columnSpanFull()
                         ->nullable()
                         ->rows(4),
-                ])->columnSpan(2)->columns(2)->compact(),
+                ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }

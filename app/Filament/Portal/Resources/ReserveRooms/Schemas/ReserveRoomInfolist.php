@@ -52,10 +52,10 @@ class ReserveRoomInfolist
                                 'danger' => 'Rejected',
                             ]),
                     ])->columnSpanFull()->columns(2)->compact(),
-                    Section::make()
+                    Section::make('Admin Comment')
                     ->schema([
-                        TextEntry::make('admin_comment'),
-                    ])->columnSpanFull()->compact(),
+                        TextEntry::make('admin_comment')->hiddenLabel()->color('danger'),
+                    ])->columnSpanFull()->compact()->collapsed(true),
                 ])->columnSpan(1)->columns(2)->compact()->secondary(),
                 
                 Section::make('Reservation Details')

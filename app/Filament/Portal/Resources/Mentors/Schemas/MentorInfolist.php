@@ -37,6 +37,7 @@ class MentorInfolist
                         TextEntry::make('name')->label('Name:')->weight('semibold')->inlineLabel(),
                         TextEntry::make('email')->label('Email:')->weight('semibold')->inlineLabel(),
                         TextEntry::make('contact')->label('Contact:')->weight('semibold')->inlineLabel(),
+                        TextEntry::make('expertise')->label('Expertise:')->weight('semibold')->inlineLabel(),
                         Section::make()
                         ->schema([
                             TextEntry::make('personal_info')

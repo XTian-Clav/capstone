@@ -35,6 +35,11 @@ class GuidesTable
             ->deferFilters(false)
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
+
+            ->emptyStateIcon('heroicon-o-book-open')
+            ->emptyStateHeading('No guides posted yet')
+            ->emptyStateDescription('All guides will appear here once its created.')
+
             ->columns([
                 Split::make([
                     TextColumn::make('title')

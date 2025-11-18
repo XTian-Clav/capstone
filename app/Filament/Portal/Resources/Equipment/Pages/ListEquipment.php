@@ -11,8 +11,6 @@ use App\Filament\Portal\Resources\Equipment\EquipmentResource;
 
 class ListEquipment extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = EquipmentResource::class;
 
     protected function getHeaderActions(): array

@@ -11,8 +11,6 @@ use App\Filament\Portal\Resources\Rooms\RoomResource;
 
 class ListRooms extends ListRecords
 {
-    use HasResizableColumn;
-    
     protected static string $resource = RoomResource::class;
 
     protected function getHeaderActions(): array
