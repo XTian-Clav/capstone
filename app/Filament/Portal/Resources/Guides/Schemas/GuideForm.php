@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Resources\Guides\Schemas;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\RichEditor;
@@ -27,23 +28,10 @@ class GuideForm
                         ->suffixIcon('heroicon-m-link')
                         ->placeholder('Enter drive link here'),
                     
-                    RichEditor::make('description')
-                        ->label('Description')
-                        ->default('<p><em>Enter description here.</em></p>')
+                    Textarea::make('description')
+                        ->default('Enter description here.')
                         ->columnSpanFull()
-                        ->toolbarButtons([
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'bulletList',
-                            'orderedList',
-                            'link',
-                            'undo',
-                            'redo',
-                        ])
-                        ->nullable()
-                        ->required(),
+                        ->rows(5),
                 ])->columns(2)->columnSpanFull(),
             ]);
     }

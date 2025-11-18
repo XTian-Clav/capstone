@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\Videos\Schemas;
 
 use Filament\Actions\Action;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
@@ -28,22 +29,11 @@ class VideoForm
                         ->prefix('Link')
                         ->suffixIcon('heroicon-m-link')
                         ->placeholder('Enter drive link here'),
-                    
-                    RichEditor::make('description')
-                        ->label('Description')
+
+                    Textarea::make('description')
+                        ->default('Enter description here.')
                         ->columnSpanFull()
-                        ->default('<p><em>Enter description here.</em></p>')
-                        ->toolbarButtons([
-                            'bold',
-                            'italic',
-                            'underline',
-                            'strike',
-                            'bulletList',
-                            'orderedList',
-                            'link',
-                        ])
-                        ->nullable()
-                        ->required(),
+                        ->rows(5),
                 ])->columns(2)->columnSpan(2),
                 Section::make('Thumbnail')
                 ->schema([
