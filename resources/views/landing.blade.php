@@ -26,6 +26,75 @@
     <link rel="icon" href="{{ asset('assets/favicon/favicon.ico') }}" type="image/x-icon">
     <script type="text/javascript" src="darkmode.js" defer></script>
     <title>Pitbi Portal | Tech Incubator</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white-bg);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            max-height: 400px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+            }
+        }
+
+        .modal-content h3 {
+            margin-bottom: 1rem;
+        }
+
+        .modal-content h4 {
+            font-weight: 500;
+            line-height: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .modal-close {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--secondary-color);
+            color: var(--text-white);
+            cursor: pointer;
+        }
+
+        .modal-contact {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .modal-contact a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .modal-contact a:hover {
+            color: var(--primary-color);
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +113,7 @@
           <li><a href="{{ url('/startups') }}">Startups</a></li>
           <li><a href="{{ url('/our-mission') }}">Our Mission</a></li>
           <li><a href="{{ url('/faqs') }}">FAQ</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="{{ url('/contact') }}">Contact</a></li>
           <li><a href="{{ url('/portal/login') }}" class="btn sign__in">Log In</a></li>
         </ul>
         <div class="nav__btns">
@@ -83,9 +152,33 @@
               mentorship, and a supportive ecosystem to transform research and innovative ideas into sustainable,
               commercially viable businesses.
             </p>
-            <form action="{{ url('/portal/login') }}">
-                <button type="submit">Join The Program</button>
+            <form>
+                <button type="button"
+                    onclick="document.getElementById('registerModal').classList.toggle('active')">
+                    Join The Program
+                </button>
             </form>
+            <div id="registerModal" class="modal" onclick="if(event.target === this) this.classList.remove('active')">
+                <div class="modal-content">
+                    <h3>Registration Notice</h3>
+                    <h4>
+                        To register an account, both incubatees and investors must contact the PITBI administrators.
+                        They need to submit their legal documents before an account can be created.
+                    </h4>
+                    <div class="modal-contact">
+                        <a href="https://facebook.com/PalawanITBI" target="_blank">
+                            <i class="ri-facebook-box-fill" style="margin-right: 0.5rem;"></i>Facebook
+                        </a> |
+                        <a href="mailto:contact@pitbi.com">
+                            <i class="ri-mail-fill" style="margin-right: 0.5rem;"></i>Email
+                        </a>
+                    </div>
+                    <button type="button" class="modal-close"
+                        onclick="document.getElementById('registerModal').classList.remove('active')">
+                        Close
+                    </button>
+                </div>
+            </div>            
             <div class="bar">
                 Copyright © 2025 Palawan International Technology Business Incubator.<br>All rights reserved.
             </div>

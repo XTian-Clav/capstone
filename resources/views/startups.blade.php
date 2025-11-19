@@ -117,7 +117,7 @@
             <li><a href="{{ url('/startups') }}">Startups</a></li>
             <li><a href="{{ url('/our-mission') }}">Our Mission</a></li>
             <li><a href="{{ url('/faqs') }}">FAQ</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{{ url('/contact') }}">Contact</a></li>
             <li><a href="{{ url('/portal/login') }}" class="btn sign__in">Log In</a></li>
         </ul>
         <div class="nav__btns">

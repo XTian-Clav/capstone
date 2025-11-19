@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="icon" href="{{ asset('assets/favicon/favicon.ico') }}" type="image/x-icon">
     <script type="text/javascript" src="darkmode.js" defer></script>
-    <title>PITBI Portal | Our Mission</title>
+    <title>PITBI Portal | Contact</title>
     <style>
-        .mission-header {
+        .contact-header {
             text-align: center;
             font-family: var(--header-font);
             font-size: 3rem;
@@ -19,7 +19,7 @@
             margin-bottom: 2rem;
         }
 
-        .mission-card {
+        .contact-card {
             max-width: 1000px;
             margin: 1rem auto;
             padding: 1.5rem 2rem;
@@ -28,13 +28,13 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .mission-card:hover {
+        .contact-card:hover {
             transform: translateY(-5px);
             border: 1px solid;
             border-color: var(--primary-color);
         }
 
-        .mission-question {
+        .contact-question {
             font-family: var(--header-font);
             font-size: 1.5rem;
             font-weight: 400;
@@ -43,20 +43,31 @@
             cursor: pointer;
         }
 
-        .mission-answer {
+        .contact-answer {
             margin-top: 0.75rem;
             font-size: 1rem;
             line-height: 1.5rem;
             color: var(--text-dark);
         }
 
+        .contact-answer a {
+            text-decoration: none;
+            color: #1877f2;
+            font-weight: 500;
+        }
+
+        .contact-answer a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
         @media (max-width: 768px) {
-            .mission-header {
+            .contact-header {
                 padding-top: 6rem;
                 font-size: 2rem;
             }
 
-            .mission-card {
+            .contact-card {
                 margin-inline: 1rem;
             }
         }
@@ -87,26 +98,28 @@
     </nav>
 
     <body>
-        <h2 class="mission-header">Our Mission</h2>
+        <h2 class="contact-header">Contact</h2>
     
-        <div class="mission-card">
-            <div class="mission-question"><i class="ri-lightbulb-line" style="margin-right: 0.5rem;"></i>Technology Transfer</div>
-            <div class="mission-answer" style="display: block;">
-                Efficiently transfer university-produced technology and research into scalable, real-world applications for the public and private sectors.
+        <div class="contact-card">
+            <div class="contact-question"><i class="ri-facebook-box-fill" style="margin-right: 0.5rem;"></i>Facebook</div>
+            <div class="contact-answer" style="display: block;">
+                <a href="https://facebook.com/PalawanITBI" target="_blank">
+                    https://facebook.com/PalawanITBI
+                </a>
             </div>
         </div>
         
-        <div class="mission-card">
-            <div class="mission-question"><i class="ri-briefcase-line" style="margin-right: 0.5rem;"></i>Job Creation & Growth</div>
-            <div class="mission-answer" style="display: block;">
-                Empower local entrepreneurs, fostering job creation and stimulating economic expansion within the MIMAROPA region and beyond.
+        <div class="contact-card">
+            <div class="contact-question"><i class="ri-mail-fill" style="margin-right: 0.5rem;"></i>Email</div>
+            <div class="contact-answer" style="display: block;">
+                palawanitbi@psu.palawan.edu.ph
             </div>
         </div>
         
-        <div class="mission-card">
-            <div class="mission-question"><i class="ri-group-line" style="margin-right: 0.5rem;"></i>Collaborative Ecosystem</div>
-            <div class="mission-answer" style="display: block;">
-                Build a strong network of partners, mentors, and investors to support start-ups from ideation to commercialization.
+        <div class="contact-card">
+            <div class="contact-question"><i class="ri-map-pin-fill" style="margin-right: 0.5rem;"></i>Location</div>
+            <div class="contact-answer" style="display: block;">
+                2nd Floor, Student's Innovation Park Building, Palawan State University-Main Campus, Tiniguiban Heights, 5300 Puerto Princesa, Philippines
             </div>
         </div>        
         <br>

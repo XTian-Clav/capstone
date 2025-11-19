@@ -50,3 +50,14 @@ ScrollReveal().reveal(".header__image__card", {
   interval: 500,
   delay: 2500,
 });
+
+// Show modal instead of form submit
+document.getElementById('joinBtn').addEventListener('click', function (e) {
+  e.preventDefault(); // prevent the form from submitting
+  document.getElementById('registerModal').style.display = 'flex';
+});
+
+// Hide modal
+document.querySelector('.modal-close').addEventListener('click', function () {
+  document.getElementById('registerModal').style.display = 'none';
+});
