@@ -72,7 +72,6 @@ class MentorForm
                             'orderedList',
                             'link',
                         ]),
-                    ScheduleForm::scheduleRepeater()->columnSpanFull()->label('Mentoring Schedules'),
                 ])->columnSpan(2)->columns(2)->compact(),
                 
                 Grid::make()
@@ -101,17 +100,12 @@ class MentorForm
                             ->required()
                             ->native(false),
                     ])->compact(),
-
-                    Section::make('Assigned Startups')
-                    ->schema([
-                        Select::make('startups')
-                            ->hiddenLabel()
-                            ->multiple()
-                            ->relationship('startups', 'startup_name')
-                            ->preload()
-                            ->searchable(),
-                    ])->compact(),
                 ])->columns(1),
+
+                Section::make()
+                ->schema([
+                    ScheduleForm::scheduleRepeater()->columnSpanFull()->label('Mentoring Schedules'),
+                ])->columnSpanFull()->compact(),
             ])->columns(3);
     }
 }

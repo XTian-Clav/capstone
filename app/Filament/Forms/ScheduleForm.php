@@ -2,6 +2,7 @@
 
 namespace App\Filament\Forms;
 
+use App\Models\Startup;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
 
@@ -48,8 +49,14 @@ class ScheduleForm
                     ->required()
                     ->searchable()
                     ->placeholder('End Time'),
+
+                Select::make('startup')
+                    ->options(Startup::where('status', 'approved')->pluck('startup_name', 'id'))
+                    ->searchable()
+                    ->required()
+                    ->placeholder('Choose a startup'),                
             ])
-            ->columns(3)
+            ->columns(4)
             ->defaultItems(1)
             ->disableItemMovement()
             ->addActionLabel('Add another schedule');

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Startups\Schemas;
 
+use App\Models\Mentor;
 use App\Models\Startup;
 use Filament\Actions\Action;
 use Filament\Schemas\Schema;
@@ -89,16 +90,30 @@ class StartupInfolist
                     ])->columnSpan(2)->compact(),
 
                     Section::make()
-                    ->description('Group Mentors')
+                    ->description('Mentors & Schedules')
                     ->schema([
-                        RepeatableEntry::make('mentors')
-                        ->hiddenLabel()
-                        ->schema([
-                            TextEntry::make('name')
-                                ->hiddenLabel()
-                                ->columnSpanFull()
-                                ->weight('semibold'),
-                        ])->grid(2)->columns(2),
+                        TextEntry::make('mentors_schedules')
+                            ->hiddenLabel()
+                            ->getStateUsing(function ($record) {
+                                if (!$record) return [];
+
+                                return Mentor::get()
+                                    ->map(function ($mentor) use ($record) {
+                                        $schedules = [];
+
+                                        foreach ($mentor->schedules ?? [] as $s) {
+                                            if (($s['startup'] ?? null) === $record->id) {
+                                                $schedules[] = "{$s['day']} {$s['start_time']} - {$s['end_time']}";
+                                            }
+                                        }
+                                        if (empty($schedules)) return null;
+                                        return "{$mentor->name} | " . implode('; ', $schedules);
+                                    })
+                                    ->filter()
+                                    ->values()
+                                    ->toArray();
+                            })
+                            ->listWithLineBreaks(),
                     ])->columnSpan(2)->compact(),
                 ])->columns(5)->columnSpanFull()->compact(),
                 Section::make('Admin Review')

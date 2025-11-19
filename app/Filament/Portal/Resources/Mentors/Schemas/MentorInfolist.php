@@ -3,8 +3,10 @@
 namespace App\Filament\Portal\Resources\Mentors\Schemas;
 
 use App\Models\Mentor;
+use App\Models\Startup;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -19,75 +21,74 @@ class MentorInfolist
             ->components([
                 Section::make('Mentor Details')
                 ->schema([
-                    ImageEntry::make('avatar')
-                        ->hiddenLabel()
-                        ->alignCenter()
-                        ->columnSpan(1)
-                        ->disk('public')
-                        ->imageHeight(200)
-                        ->visibility('public')
-                        ->defaultImageUrl(url('storage/default/user.png'))
-                        ->extraImgAttributes([
-                            'alt' => 'Logo',
-                            'loading' => 'lazy',
-                            'class' => 'rounded-xl object-cover',
-                        ]),
-                    Section::make()
+                    Grid::make()
                     ->schema([
-                        TextEntry::make('name')->label('Name:')->weight('semibold')->inlineLabel(),
-                        TextEntry::make('email')->label('Email:')->weight('semibold')->inlineLabel(),
-                        TextEntry::make('contact')->label('Contact:')->weight('semibold')->inlineLabel(),
-                        TextEntry::make('expertise')->label('Expertise:')->weight('semibold')->inlineLabel(),
                         Section::make()
                         ->schema([
-                            TextEntry::make('personal_info')
-                                ->html()
-                                ->extraAttributes([
-                                    'style' => 'text-align: justify; word-break: break-word;',
-                                ]),
-                        ])->columnSpanFull()->compact(),
-                    ])->columnSpan(4)->compact(),
-                    
-                    Section::make()
-                    ->schema([
-                        RepeatableEntry::make('startups')
-                        ->label('Assigned Startups')
-                        ->schema([
-                            TextEntry::make('startup_name')
+                            ImageEntry::make('avatar')
                                 ->hiddenLabel()
-                                ->columnSpanFull()
-                                ->weight('semibold'),
-                        ])->grid(4)->columns(4),
-                    ])->columnSpanFull()->compact(),
+                                ->alignCenter()
+                                ->columnSpan(1)
+                                ->disk('public')
+                                ->imageHeight(200)
+                                ->visibility('public')
+                                ->defaultImageUrl(url('storage/default/user.png'))
+                                ->extraImgAttributes([
+                                    'alt' => 'Logo',
+                                    'loading' => 'lazy',
+                                    'class' => 'rounded-xl object-cover',
+                                ])->columnSpan(1),
 
-                    Section::make()
-                    ->schema([
-                        RepeatableEntry::make('schedules')
+                                Section::make()
+                                ->schema([
+                                    TextEntry::make('name')->label('Name:')->weight('semibold')->inlineLabel(),
+                                    TextEntry::make('email')->label('Email:')->weight('semibold')->inlineLabel(),
+                                    TextEntry::make('contact')->label('Contact:')->weight('semibold')->inlineLabel(),
+                                    TextEntry::make('expertise')->label('Expertise:')->weight('semibold')->inlineLabel(),
+                                    
+                                    TextEntry::make('created_at')
+                                        ->dateTime('F j, Y h:i A')
+                                        ->weight('semibold')
+                                        ->label('Profile Creation')
+                                        ->inlineLabel(),
+                                    
+                                    TextEntry::make('deleted_at')
+                                        ->dateTime('M j, Y h:i A')
+                                        ->weight('semibold')
+                                        ->color('danger')
+                                        ->inlineLabel()
+                                        ->visible(fn (Mentor $record): bool => $record->trashed()),
+                                ])->columnSpan(2)->secondary()->compact(),
+                        ])->columnSpan(3)->columns(3)->compact(),
+                        Grid::make()
                         ->schema([
-                            TextEntry::make('day')->hiddenLabel()->weight('semibold')->columnSpan(2),
-                            TextEntry::make('hour')->hiddenLabel(),
-                            TextEntry::make('meridiem')->hiddenLabel(),
-                        ])->grid(4)->columns(4),
-                    ])->columnSpanFull()->compact(),
-
-                    Section::make()
-                    ->schema([
-                        TextEntry::make('created_at')
-                            ->dateTime('F j, Y h:i A')
-                            ->weight('semibold')
-                            ->label('Profile Creation'),
-
-                        TextEntry::make('updated_at')
-                            ->dateTime('F j, Y h:i A')
-                            ->weight('semibold')
-                            ->label('Updated At'),
-                        
-                        TextEntry::make('deleted_at')
-                            ->dateTime('M j, Y h:i A')
-                            ->weight('semibold')
-                            ->color('danger')
-                            ->visible(fn (Mentor $record): bool => $record->trashed()),
-                    ])->columnSpanFull()->columns(3)->compact(),
+                            Section::make()
+                            ->schema([
+                                TextEntry::make('personal_info')
+                                    ->html()
+                                    ->extraAttributes([
+                                        'style' => 'text-align: justify; word-break: break-word;',
+                                    ]),
+                            ])->columnSpanFull()->compact(),
+                            Section::make()
+                            ->schema([
+                                TextEntry::make('schedules')
+                                    ->getStateUsing(function ($record) {
+                                        $schedules = $record->schedules;
+                                        if (!$schedules) return [];
+                                
+                                        return collect($schedules)->map(function ($item) {
+                                            $startupNames = is_array($item['startup'] ?? null)
+                                                ? implode(', ', $item['startup'])
+                                                : (Startup::find($item['startup'])?->startup_name ?? 'N/A');
+                                
+                                            return "$startupNames | {$item['day']} {$item['start_time']} - {$item['end_time']}";
+                                        })->toArray();
+                                    })
+                                    ->listWithLineBreaks(),
+                            ])->columnSpanFull()->compact(),
+                        ])->columnSpan(2),
+                    ])->columnSpanFull()->columns(5),
                 ])->columns(5)->columnSpanFull()->compact(),
             ]);
     }
