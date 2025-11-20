@@ -99,7 +99,6 @@ class EventsTable
 
                         TextColumn::make('end_date')
                             ->dateTime('M j, Y h:i A')
-                            ->sortable()
                             ->badge()
                             ->color('gray'),
 
