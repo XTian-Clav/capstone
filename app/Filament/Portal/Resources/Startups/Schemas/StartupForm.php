@@ -109,7 +109,7 @@ class StartupForm
                             
                             //UPLOAD SETTINGS
                             ->openable()
-                            ->appendFiles()
+                            ->previewable()
                             ->downloadable()
                             ->acceptedFileTypes(['application/pdf'])
 
