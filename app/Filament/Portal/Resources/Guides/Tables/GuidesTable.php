@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
@@ -41,15 +42,13 @@ class GuidesTable
             ->emptyStateDescription('All guides will appear here once its created.')
 
             ->columns([
-                Split::make([
+                Stack::make([
                     TextColumn::make('title')
                         ->sortable() 
                         ->searchable()
                         ->weight('semibold')
                         ->iconColor('secondary')
                         ->icon(Heroicon::DocumentText)
-                        ->wrap()
-                        ->width('90%')
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()
                         ->tooltip('Open in New Tab'),
@@ -60,9 +59,8 @@ class GuidesTable
                         ->badge()
                         ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                         ->searchable()
-                        ->sortable()
-                        ->width('10%'),
-                ])->from('md')
+                        ->sortable(),
+                ])->space(1)
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

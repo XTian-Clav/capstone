@@ -72,19 +72,6 @@ class PortalPanelProvider extends PanelProvider
             ->colors([
                 //Nord Theme Colors
                 'danger' => Color::hex('#bf616a'), // nord11
-                'gray' => [
-                    50 => '#eceff4',  // nord6 - snow storm
-                    100 => '#e5e9f0', // nord5 - snow storm
-                    200 => '#d8dee9', // nord4 - snow storm
-                    300 => '#a7b1c5',
-                    400 => '#8c9ab3',
-                    500 => '#71829b',
-                    600 => '#4c566a', // nord3 - polar night
-                    700 => '#434c5e', // nord2 - polar night
-                    800 => '#3b4252', // nord1 - polar night
-                    900 => '#2e3440', // nord0 - polar night
-                    950 => '#232831',
-                ],
                 'info' => Color::hex('#81a1c1'), // nord9
                 'primary' => Color::hex('#013267'), // pitbi blue          
                 'secondary' => Color::hex('#fe800d'), // pitbi orange

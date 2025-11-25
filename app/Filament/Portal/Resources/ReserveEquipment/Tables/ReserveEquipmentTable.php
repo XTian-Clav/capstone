@@ -9,6 +9,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
 use Filament\Actions\ActionGroup;
+use Filament\Support\Enums\Width;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Tables\Filters\Filter;
@@ -18,7 +19,9 @@ use App\Filament\Actions\ArchiveAction;
 use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
@@ -33,7 +36,11 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Actions\Equipment\RejectEquipmentAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Actions\Equipment\ApproveEquipmentAction;
+use App\Filament\Actions\Equipment\CompleteEquipmentAction;
+use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
 class ReserveEquipmentTable
 {
@@ -111,14 +118,9 @@ class ReserveEquipmentTable
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
-                        ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveAction::make()
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    ForceDeleteAction::make()->color('danger')
+                    DeleteAction::make()
+                        ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
@@ -133,23 +135,23 @@ class ReserveEquipmentTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ApproveEquipmentAction::make(),
+                RejectEquipmentAction::make(),
+                CompleteEquipmentAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     ExportBulkAction::make()
                         ->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreBulkAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveBulkAction::make(),
-                    ForceDeleteBulkAction::make()
+                    DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

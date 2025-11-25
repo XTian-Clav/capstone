@@ -26,9 +26,6 @@ class ListReserveEquipment extends ListRecords
         $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
 
         $tabs = [
-            'all' => Tab::make('All')
-                ->badge(fn () => $isAdmin ? ReserveEquipment::count() : ReserveEquipment::where('user_id', $user->id)->count()),
-
             'pending' => Tab::make('Pending')
                 ->badge(fn () => $isAdmin 
                     ? ReserveEquipment::where('status', 'pending')->count() 
@@ -46,13 +43,13 @@ class ListReserveEquipment extends ListRecords
                     ? ReserveEquipment::where('status', 'rejected')->count()
                     : ReserveEquipment::where('status', 'rejected')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+
+            'completed' => Tab::make('Completed')
+                ->badge(fn () => $isAdmin 
+                    ? ReserveEquipment::where('status', 'completed')->count()
+                    : ReserveEquipment::where('status', 'completed')->where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
         ];
-        // Add archive tab only for SuperAdmin
-        if ($user->hasRole('super_admin')) {
-            $tabs['archived'] = Tab::make('Archive')
-                ->badge(fn () => ReserveEquipment::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());
-        }
 
         return $tabs;
     }

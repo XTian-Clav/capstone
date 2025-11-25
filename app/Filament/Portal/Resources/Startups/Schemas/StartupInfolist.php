@@ -24,11 +24,12 @@ class StartupInfolist
                 Section::make('Startup Details')
                 ->schema([
                     ImageEntry::make('logo')
+                        ->square()
                         ->hiddenLabel()
                         ->alignCenter()
                         ->columnSpan(1)
                         ->disk('public')
-                        ->imageHeight(200)
+                        ->imageHeight(220)
                         ->visibility('public')
                         ->defaultImageUrl(url('storage/default/no-image.png'))
                         ->extraImgAttributes([

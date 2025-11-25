@@ -32,12 +32,14 @@ class ReserveEquipmentForm
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
                             ->placeholder('Enter reserver name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Office')
                             ->placeholder('enter office or company name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
@@ -45,12 +47,14 @@ class ReserveEquipmentForm
                             ->label('Contact')
                             ->mask('0999-999-9999')
                             ->placeholder('09XX-XXX-XXXX')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
                             ->placeholder('enter reserver email')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
@@ -109,27 +113,45 @@ class ReserveEquipmentForm
                                         </div>";
                             }
 
+                            $html .= "<div style='margin-top:0.5rem; font-weight:600;'>
+                                        Available: {$equipment->quantity} pcs
+                                    </div>";
+
                             return $html;
                         })
                         ->reactive()
                         ->html(),
 
-                    ReservationValidation::equipmentQuantity(),
-                ])->compact(),
+                    TextInput::make('quantity')
+                        ->numeric()
+                        ->default(1)
+                        ->minValue(1)
+                        ->suffix('pcs')
+                        ->required()
+                        ->rule(function ($get, $record) {
+                            return function ($attribute, $value, $fail) use ($get, $record) {
+                                $equipment = Equipment::find($get('equipment_id'));
+                                if (! $equipment) return;
+                    
+                                $available = $equipment->quantity;
 
-                Section::make('Admin Review')
-                ->schema([
+                                if ($record?->status === 'Approved') {
+                                    $available += $record->quantity;
+                                }
+                    
+                                if ($value > $available) {
+                                    $fail("Only {$available} pcs are available for the selected equipment.");
+                                }
+                            };
+                        }),
+
                     Select::make('status')
                         ->options(ReserveEquipment::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false)
                         ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    Textarea::make('admin_comment')
-                        ->columnSpanFull()
-                        ->nullable()
-                        ->rows(4),
-                ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                ])->compact(),
             ])->columns(3);
     }
 }

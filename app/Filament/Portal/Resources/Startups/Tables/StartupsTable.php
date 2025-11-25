@@ -56,7 +56,7 @@ class StartupsTable
                     ImageColumn::make('logo')
                         ->label('')
                         ->square()
-                        ->imageSize(180)
+                        ->imageSize(220)
                         ->grow(false)
                         ->disk('public')
                         ->defaultImageUrl(url('storage/default/no-image.png'))

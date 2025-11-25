@@ -87,14 +87,6 @@ class ReserveEquipmentInfolist
                                 ->label('Submission Date:')
                                 ->weight('semibold')
                                 ->inlineLabel(),
-                            
-                            TextEntry::make('deleted_at')
-                                ->dateTime('M j, Y h:i A')
-                                ->weight('semibold')
-                                ->color('danger')
-                                ->label('Deleted At:')
-                                ->inlineLabel()
-                                ->visible(fn (ReserveEquipment $record): bool => $record->trashed()),
                         ])->columnSpanFull()->compact(),
                 ])->columns(3)->columnSpan(2)->compact()->secondary(),
             ])->columns(3);
