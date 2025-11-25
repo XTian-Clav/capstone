@@ -13,11 +13,11 @@ class CompleteEquipmentAction extends Action
     {
         return parent::make($name ?? 'complete')
             ->label('Complete')
-            ->color('info')
-            ->icon('heroicon-o-check-badge')
+            ->color('cyan')
+            ->icon('heroicon-m-check-badge')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
-            ->modalDescription('Mark this reservation as completed? Stock will be returned.')
+            ->modalDescription('Mark this reservation as completed? Stocks will be returned.')
             ->modalSubmitActionLabel('Complete')
             ->action(function (ReserveEquipment $record) {
                 $record->status = 'Completed';

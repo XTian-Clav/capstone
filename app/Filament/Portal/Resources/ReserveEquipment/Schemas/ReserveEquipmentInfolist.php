@@ -50,6 +50,7 @@ class ReserveEquipmentInfolist
                                 'warning' => 'Pending',
                                 'success' => 'Approved',
                                 'danger' => 'Rejected',
+                                'cyan' => 'Completed',
                             ]),
                     ])->columnSpanFull()->columns(2)->compact(),
                     Section::make('Admin Comment')

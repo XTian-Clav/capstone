@@ -78,6 +78,7 @@ class ReserveEquipmentTable
                             'warning' => 'Pending',
                             'success' => 'Approved',
                             'danger' => 'Rejected',
+                            'cyan' => 'Completed',
                         ]),
 
                     TextColumn::make('start_date')
