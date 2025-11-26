@@ -50,6 +50,7 @@ class ReserveRoomInfolist
                                 'warning' => 'Pending',
                                 'success' => 'Approved',
                                 'danger' => 'Rejected',
+                                'cyan' => 'Completed',
                             ]),
                     ])->columnSpanFull()->columns(2)->compact(),
                     Section::make('Admin Comment')
@@ -87,14 +88,6 @@ class ReserveRoomInfolist
                             ->label('Submission Date:')
                             ->weight('semibold')
                             ->inlineLabel(),
-                        
-                        TextEntry::make('deleted_at')
-                            ->dateTime('M j, Y h:i A')
-                            ->weight('semibold')
-                            ->color('danger')
-                            ->label('Deleted At:')
-                            ->inlineLabel()
-                            ->visible(fn (ReserveRoom $record): bool => $record->trashed()),
                     ])->columnSpanFull()->compact(),
                 ])->columnSpan(2)->compact()->secondary(),
             ])->columns(3);

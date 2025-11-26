@@ -41,4 +41,9 @@ class ReserveSupply extends Model
     {
         return $this->belongsTo(Supply::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

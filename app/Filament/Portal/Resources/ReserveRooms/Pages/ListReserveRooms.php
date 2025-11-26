@@ -26,9 +26,6 @@ class ListReserveRooms extends ListRecords
         $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
 
         $tabs = [
-            'all' => Tab::make('All')
-                ->badge(fn () => $isAdmin ? ReserveRoom::count() : ReserveRoom::where('user_id', $user->id)->count()),
-
             'pending' => Tab::make('Pending')
                 ->badge(fn () => $isAdmin 
                     ? ReserveRoom::where('status', 'pending')->count() 
@@ -46,13 +43,13 @@ class ListReserveRooms extends ListRecords
                     ? ReserveRoom::where('status', 'rejected')->count()
                     : ReserveRoom::where('status', 'rejected')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+
+            'completed' => Tab::make('Completed')
+                ->badge(fn () => $isAdmin 
+                    ? ReserveRoom::where('status', 'completed')->count()
+                    : ReserveRoom::where('status', 'completed')->where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
         ];
-        // Add archive tab only for SuperAdmin
-        if ($user->hasRole('super_admin')) {
-            $tabs['archived'] = Tab::make('Archive')
-                ->badge(fn () => ReserveRoom::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());
-        }
 
         return $tabs;
     }

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Filament\Actions\Equipment;
+namespace App\Filament\Actions\Room;
 
 use Filament\Actions\Action;
-use App\Models\ReserveEquipment;
+use App\Models\ReserveRoom;
+use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
-class ApproveEquipmentAction extends Action
+class ApproveRoomAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -16,24 +17,24 @@ class ApproveEquipmentAction extends Action
             ->color('success')
             ->icon('heroicon-o-check')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
+            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
             ->modalDescription('Are you sure you want to approve this reservation?')
             ->modalSubmitActionLabel('Approve')
-            ->action(function (ReserveEquipment $record) {
-                $equipment = $record->equipment;
-                if (! $equipment) {
+            ->action(function (ReserveRoom $record) {
+                $room = $record->room;
+                if (! $room) {
                     Notification::make()
                         ->title('Cannot Approve')
-                        ->body("This reservation has no associated equipment.")
+                        ->body('This reservation has no associated room.')
                         ->danger()
                         ->send();
                     return;
                 }
 
-                if ($equipment->quantity < $record->quantity) {
+                if (! $room->is_available) {
                     Notification::make()
                         ->title('Cannot Approve')
-                        ->body("Not enough stock for {$equipment->equipment_name}.")
+                        ->body("The room {$room->room_type} is already reserved.")
                         ->danger()
                         ->send();
                     return;
@@ -42,19 +43,22 @@ class ApproveEquipmentAction extends Action
                 $record->status = 'Approved';
                 $record->save();
 
+                $room->is_available = false;
+                $room->save();
+
                 $owner = $record->user;
                 $admin = auth()->user();
-                $equipmentName = $record->equipment?->equipment_name ?? 'an equipment';
+                $roomType = $room->room_type;
 
                 if ($owner) {
                     Notification::make()
                         ->title('Reservation Approved')
-                        ->body("Your reservation for {$equipmentName} has been approved.")
+                        ->body("Your reservation for {$roomType} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveEquipment::getUrl([
+                                ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -63,7 +67,7 @@ class ApproveEquipmentAction extends Action
 
                 Notification::make()
                     ->title('Reservation Approved')
-                    ->body("You approved the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You approved the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

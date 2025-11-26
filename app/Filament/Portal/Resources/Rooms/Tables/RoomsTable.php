@@ -81,14 +81,13 @@ class RoomsTable
                     ->width('10%')
                     ->verticallyAlignStart(),
 
-                ToggleColumn::make('is_available')
+                TextColumn::make('is_available')
+                    ->label('Availability')
+                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Occupied')
+                    ->color(fn ($state) => $state ? 'success' : 'danger')
                     ->width('10%')
-                    ->label('Available')
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->verticallyAlignStart()
-                    ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
-                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    ->sortable()
+                    ->badge(),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')

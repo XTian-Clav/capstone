@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\ReserveRooms\Tables;
 
+use Carbon\Carbon;
 use Filament\Tables\Table;
 use App\Models\ReserveRoom;
 use Filament\Actions\Action;
@@ -19,6 +20,7 @@ use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Enums\FiltersLayout;
@@ -31,8 +33,12 @@ use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Room\RejectRoomAction;
+use App\Filament\Actions\Room\ApproveRoomAction;
+use App\Filament\Actions\Room\CompleteRoomAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
 class ReserveRoomsTable
 {
@@ -70,6 +76,7 @@ class ReserveRoomsTable
                             'warning' => 'Pending',
                             'success' => 'Approved',
                             'danger' => 'Rejected',
+                            'cyan' => 'Completed',
                         ]),
 
                     TextColumn::make('start_date')
@@ -110,14 +117,9 @@ class ReserveRoomsTable
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
-                        ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveAction::make()
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    ForceDeleteAction::make()->color('danger')
+                    DeleteAction::make()
+                        ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
@@ -132,17 +134,17 @@ class ReserveRoomsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ApproveRoomAction::make(),
+                RejectRoomAction::make(),
+                CompleteRoomAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     ExportBulkAction::make()
                         ->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreBulkAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveBulkAction::make(),
-                    ForceDeleteBulkAction::make()
+                    DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
