@@ -57,9 +57,9 @@ class GuidesTable
                         ->label('Created At')
                         ->since()
                         ->badge()
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                        ->sortable()
                         ->searchable()
-                        ->sortable(),
+                        ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)
             ])
             ->filters([

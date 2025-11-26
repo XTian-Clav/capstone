@@ -49,7 +49,8 @@ class UsersTable
                 TextColumn::make('name')
                     ->searchable()
                     ->wrap()
-                    ->width('30%'),
+                    ->width('30%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('email')
                     ->label('Email address')
@@ -57,23 +58,27 @@ class UsersTable
                     ->icon(Heroicon::Envelope)
                     ->color('success')
                     ->width('10%')
-                    ->badge(),
+                    ->badge()
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('contact')
                     ->searchable()
                     ->icon(Heroicon::Phone)
-                    ->width('10%'),
+                    ->width('10%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('company')
                     ->searchable()
                     ->wrap()
-                    ->width('30%'),
+                    ->width('30%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('roles.name')
                     ->searchable()
                     ->badge()
                     ->color('danger')
-                    ->width('10%'),
+                    ->width('10%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('created_at')
                     ->label('Created At')
@@ -82,7 +87,8 @@ class UsersTable
                     ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
                     ->sortable()
-                    ->width('10%'),
+                    ->width('10%')
+                    ->verticallyAlignStart(),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

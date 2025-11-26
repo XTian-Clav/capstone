@@ -53,7 +53,8 @@ class EquipmentTable
                     ->width('25%')
                     ->sortable()
                     ->wrap()
-                    ->weight('semibold'),
+                    ->weight('semibold')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('quantity')
                     ->numeric()
@@ -63,20 +64,23 @@ class EquipmentTable
                     ->state(fn ($record) => 
                         $record->quantity === 0 ? 'Out of Stock':
                         $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
-                    ),
+                    )
+                    ->verticallyAlignStart(),
                     
                 TextColumn::make('property_no')
                     ->searchable()
                     ->width('20%')
                     ->sortable()
-                    ->wrap(),
+                    ->wrap()
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
                     ->width('25%')
                     ->sortable()
-                    ->wrap(),
+                    ->wrap()
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('remarks')
                     ->wrap()
@@ -84,16 +88,18 @@ class EquipmentTable
                     ->searchable()
                     ->toggleable()
                     ->width('20%')
-                    ->weight('semibold'),
+                    ->weight('semibold')
+                    ->verticallyAlignStart(),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
                     ->since()
                     ->badge()
+                    ->sortable()
                     ->width('5%')
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
                     ->searchable()
-                    ->sortable(),
+                    ->verticallyAlignStart()
+                    ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

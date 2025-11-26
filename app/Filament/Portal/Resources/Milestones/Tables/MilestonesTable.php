@@ -65,11 +65,11 @@ class MilestonesTable
                         ->since()
                         ->badge()
                         ->sortable()
+                        ->searchable()
                         ->color('gray')
+                        ->dateTimeTooltip('F j, Y g:i A')
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                        ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans())
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
-                        ->searchable(),
+                        ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans()),
                 ])->space(1)
             ])
             ->filters([

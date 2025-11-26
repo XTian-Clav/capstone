@@ -81,7 +81,7 @@ class VideosTable
                             ->sortable()
                             ->searchable()
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                            ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                            ->dateTimeTooltip('F j, Y g:i A'),
                         ]),
                 ])->from('md')
             ])

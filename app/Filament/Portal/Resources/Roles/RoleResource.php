@@ -109,16 +109,18 @@ class RoleResource extends Resource
                     ->badge()
                     ->label(__('filament-shield::filament-shield.column.permissions'))
                     ->counts('permissions')
-                    ->color('primary'),
+                    ->color('success'),
                 TextColumn::make('updated_at')
                     ->label(__('filament-shield::filament-shield.column.updated_at'))
-                    ->dateTime(),
+                    ->since()
+                    ->badge()
+                    ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()->color('gray'),
                 DeleteAction::make(),
             ])
             ->toolbarActions([

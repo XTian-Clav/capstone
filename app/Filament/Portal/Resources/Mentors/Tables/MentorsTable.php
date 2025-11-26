@@ -51,42 +51,45 @@ class MentorsTable
             ->emptyStateHeading('No mentors found')
             ->emptyStateDescription('All mentors will appear here once its created.')
 
-            ->contentGrid(['xl' => 2])
+            //->contentGrid(['xl' => 2])
             ->columns([
-                Stack::make ([
+                Split::make ([
                     ImageColumn::make('avatar')
                         ->label('')
                         ->disk('public')
                         ->size(50)
                         ->circular()
+                        ->grow(false)
                         ->defaultImageUrl(url('storage/default/user.png')),
                     
-                    TextColumn::make('name')
-                        ->weight('semibold')
-                        ->searchable()
-                        ->sortable(),
+                    Stack::make([
+                        TextColumn::make('name')
+                            ->weight('semibold')
+                            ->searchable()
+                            ->sortable(),
 
-                    TextColumn::make('expertise')
-                        ->searchable()
-                        ->badge(),
+                        TextColumn::make('expertise')
+                            ->searchable()
+                            ->badge(),
+                    ])->space(1),
                     
-                    TextColumn::make('email')
-                        ->searchable()
-                        ->sortable()
-                        ->badge()
-                        ->color('success')
-                        ->icon(Heroicon::Envelope)
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;']),
+                    Stack::make([
+                        TextColumn::make('email')
+                            ->searchable()
+                            ->sortable()
+                            ->badge()
+                            ->color('success')
+                            ->icon(Heroicon::Envelope),
                     
-                    TextColumn::make('contact')
-                        ->searchable()
-                        ->badge()
-                        ->color('gray')
-                        ->icon(Heroicon::Phone),
+                        TextColumn::make('contact')
+                            ->searchable()
+                            ->badge()
+                            ->color('gray')
+                            ->icon(Heroicon::Phone),
+                    ])->space(1),
                     
                     TextColumn::make('schedules')
                         ->label('Schedules')
-                        ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->getStateUsing(function ($record) {
                             $schedules = $record->schedules;
                             if (!$schedules) return [];
@@ -100,7 +103,7 @@ class MentorsTable
                             })->toArray();
                         })
                         ->listWithLineBreaks(),
-                ])->space(1)
+                ])->from('md')
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),

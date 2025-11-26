@@ -48,7 +48,7 @@ class ReserveSuppliesTable
             ->emptyStateHeading('No supply reservations found')
             ->emptyStateDescription('All reservations will appear here once its created.')
 
-            ->contentGrid(['xl' => 2])
+            ->contentGrid(['xl' => 3])
             ->columns([
                 Stack::make([
                     TextColumn::make('supply.item_name')
@@ -98,7 +98,7 @@ class ReserveSuppliesTable
                         ->searchable()
                         ->color('gray')
                         ->label('Submission Date')
-                        ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A')),
+                        ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)
             ])
             ->filters([

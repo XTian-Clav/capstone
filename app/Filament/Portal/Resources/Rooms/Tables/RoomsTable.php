@@ -54,18 +54,21 @@ class RoomsTable
                     ->wrap()
                     ->width('30%')
                     ->weight('semibold')
+                    ->verticallyAlignStart()
                     ->tooltip(fn ($record) => $record->room_type),
 
                 TextColumn::make('capacity')
                     ->searchable()
                     ->sortable()
-                    ->width('10%'),
+                    ->width('10%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('location')
                     ->searchable()
                     ->toggleable()
                     ->sortable()
-                    ->width('30%'),
+                    ->width('30%')
+                    ->verticallyAlignStart(),
 
                 TextColumn::make('room_rate')
                     ->sortable()
@@ -75,13 +78,15 @@ class RoomsTable
                             ? '₱' . number_format($state)
                             : 'None'
                     )
-                    ->width('10%'),
+                    ->width('10%')
+                    ->verticallyAlignStart(),
 
                 ToggleColumn::make('is_available')
                     ->width('10%')
                     ->label('Available')
                     ->onColor('success')
                     ->offColor('danger')
+                    ->verticallyAlignStart()
                     ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                 
@@ -90,9 +95,10 @@ class RoomsTable
                     ->width('10%')
                     ->since()
                     ->badge()
-                    ->tooltip(fn ($record) => $record->created_at->format('F j, Y g:i A'))
+                    ->sortable()
                     ->searchable()
-                    ->sortable(),
+                    ->verticallyAlignStart()
+                    ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
                 CreatedDateFilter::make('created_at')->columnSpan(2),
