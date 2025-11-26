@@ -33,9 +33,6 @@ class CompleteRoomAction extends Action
                 $record->status = 'Completed';
                 $record->save();
 
-                $room->is_available = true;
-                $room->save();
-
                 $owner = $record->user;
                 $admin = auth()->user();
                 $roomType = $room->room_type;

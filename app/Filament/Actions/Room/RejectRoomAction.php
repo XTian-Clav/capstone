@@ -38,11 +38,6 @@ class RejectRoomAction extends Action
                     return;
                 }
 
-                if ($record->status === 'Approved') {
-                    $room->is_available = true;
-                    $room->save();
-                }
-
                 $record->status = 'Rejected';
                 $record->admin_comment = $data['admin_comment'] ?? null;
                 $record->save();

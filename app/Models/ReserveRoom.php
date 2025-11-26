@@ -46,37 +46,4 @@ class ReserveRoom extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    protected static function booted()
-    {
-        static::updated(function ($reservation) {
-            if (! $reservation->isDirty('status')) return;
-
-            $oldStatus = $reservation->getOriginal('status');
-            $newStatus = $reservation->status;
-
-            $room = $reservation->room;
-            if (! $room) return;
-
-            if ($oldStatus === 'Pending' && $newStatus === 'Approved') {
-                $room->is_available = false;
-                $room->save();
-            }
-
-            if ($oldStatus === 'Approved' && in_array($newStatus, ['Completed', 'Rejected'])) {
-                $room->is_available = true;
-                $room->save();
-            }
-        });
-
-        static::deleted(function ($reservation) {
-            if ($reservation->status === 'Approved') {
-                $room = $reservation->room;
-                if ($room) {
-                    $room->is_available = true;
-                    $room->save();
-                }
-            }
-        });
-    }
 }

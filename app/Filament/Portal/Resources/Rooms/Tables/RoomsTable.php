@@ -83,7 +83,7 @@ class RoomsTable
 
                 TextColumn::make('is_available')
                     ->label('Availability')
-                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Occupied')
+                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Unavailable')
                     ->color(fn ($state) => $state ? 'success' : 'danger')
                     ->width('10%')
                     ->sortable()

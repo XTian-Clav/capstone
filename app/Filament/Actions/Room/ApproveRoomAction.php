@@ -31,10 +31,20 @@ class ApproveRoomAction extends Action
                     return;
                 }
 
-                if (! $room->is_available) {
+                $overlap = ReserveRoom::query()
+                    ->where('status', 'Approved')
+                    ->where('room_id', $room->id)
+                    ->where('id', '!=', $record->id)
+                    ->where(function ($q) use ($record) {
+                        $q->where('start_date', '<', $record->end_date)
+                          ->where('end_date', '>', $record->start_date);
+                    })
+                    ->exists();
+
+                if ($overlap) {
                     Notification::make()
                         ->title('Cannot Approve')
-                        ->body("The room {$room->room_type} is already reserved.")
+                        ->body("The room {$room->room_type} is already reserved during this time.")
                         ->danger()
                         ->send();
                     return;
@@ -42,9 +52,6 @@ class ApproveRoomAction extends Action
 
                 $record->status = 'Approved';
                 $record->save();
-
-                $room->is_available = false;
-                $room->save();
 
                 $owner = $record->user;
                 $admin = auth()->user();
