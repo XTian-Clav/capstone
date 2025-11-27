@@ -30,7 +30,7 @@ class MentorInfolist
                                 ->alignCenter()
                                 ->columnSpan(1)
                                 ->disk('public')
-                                ->imageHeight(200)
+                                ->imageHeight(160)
                                 ->visibility('public')
                                 ->defaultImageUrl(url('storage/default/user.png'))
                                 ->extraImgAttributes([

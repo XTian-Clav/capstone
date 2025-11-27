@@ -54,7 +54,7 @@ class ReserveRoomsTable
             ->emptyStateHeading('No room reservations found')
             ->emptyStateDescription('All reservations will appear here once its created.')
 
-            ->contentGrid(['xl' => 3])
+            ->contentGrid(['xl' => 2])
             ->columns([
                 Stack::make([
                     TextColumn::make('room.room_type')

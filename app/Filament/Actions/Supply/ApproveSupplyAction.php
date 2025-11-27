@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Actions\Room;
+namespace App\Filament\Actions\Supply;
 
-use App\Models\ReserveRoom;
 use Filament\Actions\Action;
+use App\Models\ReserveSupply;
 use Filament\Support\Enums\Size;
-use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
 
-class ApproveRoomAction extends Action
+class ApproveSupplyAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -21,34 +20,24 @@ class ApproveRoomAction extends Action
             ->color('success')
             ->icon('heroicon-o-check')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
+            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to approve this reservation?')
             ->modalSubmitActionLabel('Approve')
-            ->action(function (ReserveRoom $record) {
-                $room = $record->room;
-                if (! $room) {
+            ->action(function (ReserveSupply $record) {
+                $supply = $record->supply;
+                if (! $supply) {
                     Notification::make()
                         ->title('Cannot Approve')
-                        ->body('This reservation has no associated room.')
+                        ->body("This reservation has no associated supply.")
                         ->danger()
                         ->send();
                     return;
                 }
 
-                $overlap = ReserveRoom::query()
-                    ->where('status', 'Approved')
-                    ->where('room_id', $room->id)
-                    ->where('id', '!=', $record->id)
-                    ->where(function ($q) use ($record) {
-                        $q->where('start_date', '<', $record->end_date)
-                          ->where('end_date', '>', $record->start_date);
-                    })
-                    ->exists();
-
-                if ($overlap) {
+                if ($supply->quantity < $record->quantity) {
                     Notification::make()
                         ->title('Cannot Approve')
-                        ->body("The room {$room->room_type} is already reserved during this time.")
+                        ->body("Not enough stock for {$supply->item_name}.")
                         ->danger()
                         ->send();
                     return;
@@ -59,17 +48,17 @@ class ApproveRoomAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $roomType = $room->room_type;
+                $supplyName = $record->supply?->item_name ?? 'an supply';
 
                 if ($owner) {
                     Notification::make()
                         ->title('Reservation Approved')
-                        ->body("Your reservation for {$roomType} has been approved.")
+                        ->body("Your reservation for {$supplyName} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveRoom::getUrl([
+                                ->url(ViewReservesupply::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -78,7 +67,7 @@ class ApproveRoomAction extends Action
 
                 Notification::make()
                     ->title('Reservation Approved')
-                    ->body("You approved the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You approved the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

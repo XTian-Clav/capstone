@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Actions\Room;
+namespace App\Filament\Actions\Supply;
 
-use App\Models\ReserveRoom;
 use Filament\Actions\Action;
+use App\Models\ReserveSupply;
 use Filament\Support\Enums\Size;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
 
-class RejectRoomAction extends Action
+class RejectsupplyAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -21,7 +21,7 @@ class RejectRoomAction extends Action
             ->color('danger')
             ->icon('heroicon-o-x-mark')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
+            ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to reject this reservation?')
             ->modalSubmitActionLabel('Reject')
             ->schema([
@@ -31,12 +31,12 @@ class RejectRoomAction extends Action
                     ->rows(6)
                     ->placeholder('Enter reason for rejection...'),
             ])
-            ->action(function (ReserveRoom $record, array $data) {
-                $room = $record->room;
-                if (! $room) {
+            ->action(function (Reservesupply $record, array $data) {
+                $supply = $record->supply;
+                if (! $supply) {
                     Notification::make()
                         ->title('Cannot Reject')
-                        ->body('This reservation has no associated room.')
+                        ->body("This reservation has no associated supply.")
                         ->danger()
                         ->send();
                     return;
@@ -48,17 +48,17 @@ class RejectRoomAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $roomType = $room->room_type;
+                $supplyName = $record->supply?->item_name ?? 'an supply';
 
                 if ($owner) {
                     Notification::make()
                         ->title('Reservation Rejected')
-                        ->body("Your reservation for {$roomType} has been rejected.")
+                        ->body("Your reservation for {$supplyName} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveRoom::getUrl([
+                                ->url(ViewReservesupply::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -67,7 +67,7 @@ class RejectRoomAction extends Action
 
                 Notification::make()
                     ->title('Reservation Rejected')
-                    ->body("You rejected the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You rejected the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

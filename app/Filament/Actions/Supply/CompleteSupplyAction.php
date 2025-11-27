@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Actions\Room;
+namespace App\Filament\Actions\Supply;
 
-use App\Models\ReserveRoom;
 use Filament\Actions\Action;
+use App\Models\ReserveSupply;
 use Filament\Support\Enums\Size;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
 
-class CompleteRoomAction extends Action
+class CompleteSupplyAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -20,15 +20,15 @@ class CompleteRoomAction extends Action
             ->color('cyan')
             ->icon('heroicon-m-check-badge')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
-            ->modalDescription('Mark this reservation as completed? The room will become available again.')
+            ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
+            ->modalDescription('Mark this reservation as completed?')
             ->modalSubmitActionLabel('Complete')
-            ->action(function (ReserveRoom $record) {
-                $room = $record->room;
-                if (! $room) {
+            ->action(function (ReserveSupply $record) {
+                $supply = $record->supply;
+                if (! $supply) {
                     Notification::make()
                         ->title('Cannot Complete')
-                        ->body('This reservation has no associated room.')
+                        ->body("This reservation has no associated supply.")
                         ->danger()
                         ->send();
                     return;
@@ -39,17 +39,17 @@ class CompleteRoomAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $roomType = $room->room_type;
+                $supplyName = $record->supply?->item_name ?? 'an supply';
 
                 if ($owner) {
                     Notification::make()
                         ->title('Reservation Completed')
-                        ->body("Your reservation for {$roomType} has been completed.")
+                        ->body("Your reservation for {$supplyName} has been completed.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveRoom::getUrl([
+                                ->url(ViewReserveSupply::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -58,7 +58,7 @@ class CompleteRoomAction extends Action
 
                 Notification::make()
                     ->title('Reservation Completed')
-                    ->body("You completed the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You completed the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

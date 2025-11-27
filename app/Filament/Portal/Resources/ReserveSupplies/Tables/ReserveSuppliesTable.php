@@ -32,6 +32,9 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Actions\Supply\ApproveSupplyAction;
+use App\Filament\Actions\Supply\RejectSupplyAction;
+use App\Filament\Actions\Supply\CompleteSupplyAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ReserveSuppliesTable
@@ -48,7 +51,7 @@ class ReserveSuppliesTable
             ->emptyStateHeading('No supply reservations found')
             ->emptyStateDescription('All reservations will appear here once its created.')
 
-            ->contentGrid(['xl' => 3])
+            ->contentGrid(['xl' => 2])
             ->columns([
                 Stack::make([
                     TextColumn::make('supply.item_name')
@@ -70,6 +73,7 @@ class ReserveSuppliesTable
                             'warning' => 'Pending',
                             'success' => 'Approved',
                             'danger' => 'Rejected',
+                            'cyan' => 'Completed',
                         ]),
 
                     TextColumn::make('start_date')
@@ -110,14 +114,9 @@ class ReserveSuppliesTable
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
-                        ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveAction::make()
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    ForceDeleteAction::make()->color('danger')
+                    DeleteAction::make()
+                        ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
@@ -132,17 +131,17 @@ class ReserveSuppliesTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ApproveSupplyAction::make(),
+                RejectSupplyAction::make(),
+                CompleteSupplyAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     ExportBulkAction::make()
                         ->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    RestoreBulkAction::make()
-                        ->color('success')
-                        ->authorize(fn () => auth()->user()->hasRole('super_admin')),
-                    ArchiveBulkAction::make(),
-                    ForceDeleteBulkAction::make()
+                    DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])

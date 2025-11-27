@@ -22,56 +22,78 @@ class StartupForm
     {
         return $schema
             ->components([
-                Section::make('Startup Form')
+                Grid::make()
                 ->schema([
-                    TextInput::make('startup_name')
-                    ->required()
-                    ->unique()
-                    ->minLength(2)
-                    ->maxLength(255)
-                    ->autocapitalize('words')
-                    ->placeholder('Enter startup name'),
+                    Section::make('Startup Form')
+                    ->schema([
+                        TextInput::make('startup_name')
+                        ->required()
+                        ->unique()
+                        ->minLength(2)
+                        ->maxLength(255)
+                        ->autocapitalize('words')
+                        ->placeholder('Enter startup name')
+                        ->readOnly(fn ($record, $context) => $context === 'edit'),
 
-                TextInput::make('founder')
-                    ->required()
-                    ->minLength(2)
-                    ->maxLength(255)
-                    ->autocapitalize('words')
-                    ->placeholder('Enter the name of the founder')
-                    ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null),
+                    TextInput::make('founder')
+                        ->required()
+                        ->minLength(2)
+                        ->maxLength(255)
+                        ->autocapitalize('words')
+                        ->placeholder('Enter the name of the founder')
+                        ->readOnly(fn ($record, $context) => $context === 'edit')
+                        ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null),
 
-                RichEditor::make('description')
-                    ->label('Description')
-                    ->columnSpanFull()
-                    ->default('<p><em>Enter short description here.</em></p>')
-                    ->toolbarButtons([
-                        'bold',
-                        'italic',
-                        'underline',
-                        'strike',
-                        'bulletList',
-                        'orderedList',
-                        'link',
-                    ]),
-                Section::make()
-                ->footer('Maximum of 4 members excluding founder.')
-                ->schema([
-                    Repeater::make('members')
-                        ->label('Team Members')
-                        ->schema([
-                            TextInput::make('name')
-                                ->label('Member Name')
-                                ->placeholder('Enter member name'),
-                        ])
-                        ->grid(2)
-                        ->minItems(0)
-                        ->maxItems(4)
+                    RichEditor::make('description')
+                        ->label('Description')
                         ->columnSpanFull()
-                        ->disableItemMovement()
-                        ->addActionAlignment(Alignment::Start)
-                        ->createItemButtonLabel('Add Another Member'),
-                    ])->columnSpanFull()->compact(),
-                ])->columnSpan(2)->columns(2)->compact(),
+                        ->default('<p>Enter short description here.</p>')
+                        ->toolbarButtons([
+                            'bold',
+                            'italic',
+                            'underline',
+                            'strike',
+                            'bulletList',
+                            'orderedList',
+                            'link',
+                        ])
+                        ->disabled(fn ($record, $context) => $context === 'edit'),
+                    Section::make()
+                    ->footer('Maximum of 4 members excluding founder.')
+                    ->schema([
+                        Repeater::make('members')
+                            ->label('Team Members')
+                            ->schema([
+                                TextInput::make('name')
+                                    ->label('Member Name')
+                                    ->placeholder('Enter member name'),
+                            ])
+                            ->grid(2)
+                            ->minItems(0)
+                            ->maxItems(4)
+                            ->columnSpanFull()
+                            ->disableItemMovement()
+                            ->addActionAlignment(Alignment::Start)
+                            ->createItemButtonLabel('Add Another Member')
+                            ->disabled(fn ($record, $context) => $context === 'edit'),
+                        ])->columnSpanFull()->compact(),
+                    ])->columnSpan(2)->columns(2)->compact(),
+
+                    Section::make('Admin Review')
+                    ->schema([
+                        Select::make('status')
+                            ->options(Startup::STATUS)
+                            ->default('Pending')
+                            ->required()
+                            ->native(false)
+                            ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                        
+                        Textarea::make('admin_comment')
+                            ->columnSpanFull()
+                            ->nullable()
+                            ->rows(4),
+                    ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                ])->columnSpan(2),
                 
                 Grid::make()
                 ->schema([
@@ -98,7 +120,8 @@ class StartupForm
 
                             //FILE SIZE LIMIT
                             ->maxSize(5120)
-                            ->helperText('Photo file size limit is 5mb. '),
+                            ->helperText('Photo file size limit is 5mb. ')
+                            ->disabled(fn ($record, $context) => $context === 'edit'),
                     ])->columnSpanFull()->compact(),
 
                     Section::make('Startup Proposal Upload')
@@ -120,7 +143,8 @@ class StartupForm
 
                             //FILE SIZE LIMIT
                             ->maxSize(16000)
-                            ->helperText('Only one PDF upload is allowed (limit 15mb).'),
+                            ->helperText('Only one PDF upload is allowed (limit 15mb).')
+                            ->disabled(fn ($record, $context) => $context === 'edit'),
 
                         TextInput::make('url')
                             ->url()
@@ -128,24 +152,10 @@ class StartupForm
                             ->prefix('Link')
                             ->label('Drive Link Upload')
                             ->suffixIcon('heroicon-m-link')
-                            ->Helpertext('Upload your videos and powerpoint presentation here.'),
+                            ->Helpertext('Upload your videos and powerpoint presentation here.')
+                            ->readOnly(fn ($record, $context) => $context === 'edit'),
                     ])->columnSpanFull()->compact(),
                 ])->columnSpan(1),
-
-                Section::make('Admin Review')
-                ->schema([
-                    Select::make('status')
-                        ->options(Startup::STATUS)
-                        ->default('Pending')
-                        ->required()
-                        ->native(false)
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    
-                    Textarea::make('admin_comment')
-                        ->columnSpanFull()
-                        ->nullable()
-                        ->rows(4),
-                ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }

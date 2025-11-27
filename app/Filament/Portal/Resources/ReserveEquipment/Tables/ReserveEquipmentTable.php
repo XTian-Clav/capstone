@@ -56,7 +56,7 @@ class ReserveEquipmentTable
             ->emptyStateHeading('No equipment reservations found')
             ->emptyStateDescription('All reservations will appear here once its created.')
 
-            ->contentGrid(['xl' => 3])
+            ->contentGrid(['xl' => 2])
             ->columns([
                 Stack::make([
                     TextColumn::make('equipment.equipment_name')

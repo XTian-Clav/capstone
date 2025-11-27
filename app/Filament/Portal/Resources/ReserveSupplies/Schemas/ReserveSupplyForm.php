@@ -31,12 +31,14 @@ class ReserveSupplyForm
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
                             ->placeholder('Enter reserver name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Company')
                             ->placeholder('Select office or company name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
@@ -44,12 +46,14 @@ class ReserveSupplyForm
                             ->label('Contact')
                             ->mask('0999-999-9999')
                             ->placeholder('09XX-XXX-XXXX')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
                             ->placeholder('enter reserver email')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
@@ -86,9 +90,8 @@ class ReserveSupplyForm
                     Select::make('supply_id')
                         ->hiddenLabel()
                         ->placeholder('Select supply')
-                        ->options(Supply::where('quantity', '>', 0)
-                                ->pluck('item_name', 'id')
-                        )
+                        ->options(Supply::where('quantity', '>', 0)->pluck('item_name', 'id'))
+                        ->disabled(fn ($record, $context) => $context === 'edit')
                         ->searchable()
                         ->required()
                         ->reactive(),
@@ -108,12 +111,37 @@ class ReserveSupplyForm
                                         </div>";
                             }
 
+                            $html .= "<div style='margin-top:0.5rem; font-weight:600;'>
+                                        Available: {$supply->quantity} pcs
+                                    </div>";
+
                             return $html;
                         })
                         ->reactive()
                         ->html(),
 
-                    ReservationValidation::supplyQuantity(),
+                    TextInput::make('quantity')
+                        ->numeric()
+                        ->default(1)
+                        ->minValue(1)
+                        ->suffix('pcs')
+                        ->required()
+                        ->rule(function ($get, $record) {
+                            return function ($attribute, $value, $fail) use ($get, $record) {
+                                $supply = Supply::find($get('supply_id'));
+                                if (! $supply) return;
+                    
+                                $available = $supply->quantity;
+
+                                if ($record?->status === 'Approved') {
+                                    $available += $record->quantity;
+                                }
+                    
+                                if ($value > $available) {
+                                    $fail("Only {$available} pcs are available for the selected supply.");
+                                }
+                            };
+                        }),
                 ])->compact(),
 
                 Section::make('Admin Review')

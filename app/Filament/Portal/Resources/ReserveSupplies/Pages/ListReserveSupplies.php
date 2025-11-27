@@ -26,9 +26,6 @@ class ListReserveSupplies extends ListRecords
         $isAdmin = $user->hasAnyRole(['admin', 'super_admin']);
 
         $tabs = [
-            'all' => Tab::make('All')
-                ->badge(fn () => $isAdmin ? ReserveSupply::count() : ReserveSupply::where('user_id', $user->id)->count()),
-
             'pending' => Tab::make('Pending')
                 ->badge(fn () => $isAdmin 
                     ? ReserveSupply::where('status', 'pending')->count() 
@@ -46,13 +43,13 @@ class ListReserveSupplies extends ListRecords
                     ? ReserveSupply::where('status', 'rejected')->count()
                     : ReserveSupply::where('status', 'rejected')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
+
+            'completed' => Tab::make('Completed')
+                ->badge(fn () => $isAdmin 
+                    ? ReserveSupply::where('status', 'completed')->count()
+                    : ReserveSupply::where('status', 'completed')->where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
         ];
-        // Add archive tab only for SuperAdmin
-        if ($user->hasRole('super_admin')) {
-            $tabs['archived'] = Tab::make('Archive')
-                ->badge(fn () => ReserveSupply::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed());
-        }
 
         return $tabs;
     }

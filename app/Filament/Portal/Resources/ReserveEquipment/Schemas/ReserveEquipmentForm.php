@@ -91,9 +91,8 @@ class ReserveEquipmentForm
                     Select::make('equipment_id')
                         ->hiddenLabel()
                         ->placeholder('Select equipment')
-                        ->options(Equipment::where('quantity', '>', 0)
-                                ->pluck('equipment_name', 'id')
-                        )
+                        ->options(Equipment::where('quantity', '>', 0)->pluck('equipment_name', 'id'))
+                        ->disabled(fn ($record, $context) => $context === 'edit')
                         ->searchable()
                         ->required()
                         ->reactive(),
@@ -144,14 +143,21 @@ class ReserveEquipmentForm
                                 }
                             };
                         }),
+                ])->compact(),
 
+                Section::make('Admin Review')
+                ->schema([
                     Select::make('status')
                         ->options(ReserveEquipment::STATUS)
                         ->default('Pending')
                         ->required()
                         ->native(false)
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                ])->compact(),
+                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])), 
+                    Textarea::make('admin_comment')
+                        ->columnSpanFull()
+                        ->nullable()
+                        ->rows(4),
+                ])->columnSpan(2)->columns(2)->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }

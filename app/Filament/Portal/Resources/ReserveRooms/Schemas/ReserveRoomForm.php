@@ -32,12 +32,14 @@ class ReserveRoomForm
                         TextInput::make('reserved_by')
                             ->label('Reserved By')
                             ->placeholder('Enter reserver name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->name : null)
                             ->required(),
 
                         TextInput::make('company')
                             ->label('Company / Office')
                             ->placeholder('Enter office or company name')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->company : null)
                             ->required(),
                         
@@ -45,12 +47,14 @@ class ReserveRoomForm
                             ->label('Contact')
                             ->mask('0999-999-9999')
                             ->placeholder('09XX-XXX-XXXX')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->contact : null)
                             ->required(),
                         
                         TextInput::make('email')
                             ->label('Email')
                             ->placeholder('Enter reserver email')
+                            ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
                     ])->columnSpan(2)->columns(2)->compact()->secondary(),
@@ -91,8 +95,8 @@ class ReserveRoomForm
                     Select::make('room_id')
                         ->hiddenLabel()
                         ->placeholder('Select room')
-                        ->options(fn() => Room::where('is_available', true)
-                                ->pluck('room_type', 'id'))
+                        ->options(fn() => Room::where('is_available', true)->pluck('room_type', 'id'))
+                        ->disabled(fn ($record, $context) => $context === 'edit')
                         ->searchable()
                         ->required()
                         ->reactive(),
