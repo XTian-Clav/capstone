@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Actions\Equipment;
+namespace App\Filament\Actions\Startup;
 
+use App\Models\Startup;
 use Filament\Actions\Action;
-use App\Models\ReserveEquipment;
 use Filament\Support\Enums\Size;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
+use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
-class RejectEquipmentAction extends Action
+class RejectstartupAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -21,8 +21,8 @@ class RejectEquipmentAction extends Action
             ->color('danger')
             ->icon('heroicon-o-x-mark')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
-            ->modalDescription('Are you sure you want to reject this reservation?')
+            ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->startup_name ?? 'Startup'))
+            ->modalDescription('Are you sure you want to reject this startup proposal?')
             ->modalSubmitActionLabel('Reject')
             ->schema([
                 Textarea::make('admin_comment')
@@ -31,34 +31,25 @@ class RejectEquipmentAction extends Action
                     ->rows(6)
                     ->placeholder('Enter reason for rejection...'),
             ])
-            ->action(function (ReserveEquipment $record, array $data) {
-                $equipment = $record->equipment;
-                if (! $equipment) {
-                    Notification::make()
-                        ->title('Cannot Reject')
-                        ->body("This reservation has no associated equipment.")
-                        ->danger()
-                        ->send();
-                    return;
-                }
+            ->action(function (Startup $record, array $data) {
+
+                $startupName = $record->startup_name ?? 'a startup';
+                $owner = $record->user;
+                $admin = auth()->user();
 
                 $record->status = 'Rejected';
                 $record->admin_comment = $data['admin_comment'] ?? null;
                 $record->save();
 
-                $owner = $record->user;
-                $admin = auth()->user();
-                $equipmentName = $record->equipment?->equipment_name ?? 'an equipment';
-
                 if ($owner) {
                     Notification::make()
-                        ->title('Reservation Rejected')
-                        ->body("Your reservation for {$equipmentName} has been rejected.")
+                        ->title('Startup Proposal Rejected')
+                        ->body("Your startup proposal titled {$startupName} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveEquipment::getUrl([
+                                ->url(ViewStartup::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -66,8 +57,8 @@ class RejectEquipmentAction extends Action
                 }
 
                 Notification::make()
-                    ->title('Reservation Rejected')
-                    ->body("You rejected the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->title('Startup Proposal Rejected')
+                    ->body("You have rejected the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

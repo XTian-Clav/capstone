@@ -39,13 +39,6 @@ class ListStartups extends ListRecords
         }
 
         $tabs = [
-            'all' => Tab::make('All')
-                ->badge(fn () =>
-                    ($isAdmin || $isSuperAdmin)
-                        ? Startup::count()
-                        : Startup::where('user_id', $user->id)->count()
-                ),
-
             'pending' => Tab::make('Pending')
                 ->badge(fn () =>
                     ($isAdmin || $isSuperAdmin)

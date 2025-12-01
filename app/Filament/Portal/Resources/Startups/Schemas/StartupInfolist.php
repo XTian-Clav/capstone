@@ -123,6 +123,24 @@ class StartupInfolist
                     Grid::make()
                     ->schema([
                         Section::make()
+                        ->schema([
+                            TextEntry::make('founder')
+                                ->badge()
+                                ->label('Founder:')
+                                ->color('primary'),
+                            
+                            RepeatableEntry::make('members')
+                                ->label('Members:')
+                                ->schema([
+                                    TextEntry::make('name')
+                                        ->badge()
+                                        ->hiddenLabel()
+                                        ->color('primary')
+                                        ->columnSpanFull(),
+                                ])->contained(false),
+                        ])->ColumnSpanFull()->compact(),
+                        
+                        Section::make()
                         ->description('Startup Proposal Plan')
                         ->schema([
                             MediaAction::make('document')
@@ -142,24 +160,6 @@ class StartupInfolist
                                 ->openUrlInNewTab()
                                 ->tooltip(fn ($record) => $record->url),  
                         ])->columnSpanFull()->compact(),
-
-                        Section::make()
-                        ->schema([
-                            TextEntry::make('founder')
-                                ->badge()
-                                ->label('Founder:')
-                                ->color('primary'),
-                            
-                            RepeatableEntry::make('members')
-                                ->label('Members:')
-                                ->schema([
-                                    TextEntry::make('name')
-                                        ->badge()
-                                        ->hiddenLabel()
-                                        ->color('primary')
-                                        ->columnSpanFull(),
-                                ])->contained(false),
-                        ])->ColumnSpanFull()->compact(),
                     ])->columnSpan(1),
                 ])->columns(3)->columnSpanFull()->compact(),
             ])->columns(3);

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('accept_terms')->default(false)->nullable();
             $table->text('admin_comment')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(); //optional
         });
     }
 

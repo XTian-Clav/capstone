@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Actions\Equipment;
+namespace App\Filament\Actions\Startup;
 
+use App\Models\Startup;
 use Filament\Actions\Action;
-use App\Models\ReserveEquipment;
 use Filament\Support\Enums\Size;
 use Filament\Notifications\Notification;
-use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
+use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
-class ApproveEquipmentAction extends Action
+class ApproveStartupAction extends Action
 {
     public static function make(?string $name = null): static
     {
@@ -20,45 +20,27 @@ class ApproveEquipmentAction extends Action
             ->color('success')
             ->icon('heroicon-o-check')
             ->requiresConfirmation()
-            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
-            ->modalDescription('Are you sure you want to approve this reservation?')
+            ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->startup_name ?? 'Startup'))
+            ->modalDescription('Are you sure you want to approve this startup proposal?')
             ->modalSubmitActionLabel('Approve')
-            ->action(function (ReserveEquipment $record) {
-                $equipment = $record->equipment;
-                if (! $equipment) {
-                    Notification::make()
-                        ->title('Cannot Approve')
-                        ->body("This reservation has no associated equipment.")
-                        ->danger()
-                        ->send();
-                    return;
-                }
-
-                if ($equipment->quantity < $record->quantity) {
-                    Notification::make()
-                        ->title('Cannot Approve')
-                        ->body("Not enough stock for {$equipment->equipment_name}.")
-                        ->danger()
-                        ->send();
-                    return;
-                }
+            ->action(function (Startup $record) {
+                $startupName = $record->startup_name ?? 'a startup';
 
                 $record->status = 'Approved';
                 $record->save();
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $equipmentName = $record->equipment?->equipment_name ?? 'an equipment';
 
                 if ($owner) {
                     Notification::make()
-                        ->title('Reservation Approved')
-                        ->body("Your reservation for {$equipmentName} has been approved.")
+                        ->title('Startup Proposal Approved')
+                        ->body("Your startup proposal titled {$startupName} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
                                 ->color('secondary')
-                                ->url(ViewReserveEquipment::getUrl([
+                                ->url(ViewStartup::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
                         ])
@@ -66,8 +48,8 @@ class ApproveEquipmentAction extends Action
                 }
 
                 Notification::make()
-                    ->title('Reservation Approved')
-                    ->body("You approved the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->title('Startup Proposal Approved')
+                    ->body("You have approved the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

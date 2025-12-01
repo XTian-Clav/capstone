@@ -34,7 +34,10 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Actions\Startup\RejectStartupAction;
+use App\Filament\Actions\Startup\ApproveStartupAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
 class StartupsTable
 {
@@ -132,6 +135,9 @@ class StartupsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ApproveStartupAction::make(),
+                RejectStartupAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
