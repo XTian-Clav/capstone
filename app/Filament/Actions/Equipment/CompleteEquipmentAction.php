@@ -59,8 +59,9 @@ class CompleteEquipmentAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('cyan')
+                    ->iconColor('cyan')
+                    ->icon('heroicon-m-check-badge')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

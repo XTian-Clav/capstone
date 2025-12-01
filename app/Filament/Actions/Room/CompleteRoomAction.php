@@ -50,7 +50,7 @@ class CompleteRoomAction extends Action
                             Action::make('view')
                                 ->button()
                                 ->outlined()
-                                ->color('secondary')
+                                ->color('gray')
                                 ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
@@ -59,8 +59,9 @@ class CompleteRoomAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('cyan')
+                    ->iconColor('cyan')
+                    ->icon('heroicon-m-check-badge')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

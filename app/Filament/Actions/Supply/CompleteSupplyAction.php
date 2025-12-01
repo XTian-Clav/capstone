@@ -50,7 +50,7 @@ class CompleteSupplyAction extends Action
                             Action::make('view')
                                 ->button()
                                 ->outlined()
-                                ->color('secondary')
+                                ->color('gray')
                                 ->url(ViewReserveSupply::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
@@ -59,8 +59,9 @@ class CompleteSupplyAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('cyan')
+                    ->iconColor('cyan')
+                    ->icon('heroicon-m-check-badge')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

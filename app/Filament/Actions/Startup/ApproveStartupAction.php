@@ -40,7 +40,7 @@ class ApproveStartupAction extends Action
                             Action::make('view')
                                 ->button()
                                 ->outlined()
-                                ->color('secondary')
+                                ->color('gray')
                                 ->url(ViewStartup::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),

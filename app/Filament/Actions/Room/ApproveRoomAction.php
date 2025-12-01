@@ -69,7 +69,7 @@ class ApproveRoomAction extends Action
                             Action::make('view')
                                 ->button()
                                 ->outlined()
-                                ->color('secondary')
+                                ->color('gray')
                                 ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
