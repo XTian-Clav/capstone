@@ -77,7 +77,6 @@ class PortalPanelProvider extends PanelProvider
                 'secondary' => Color::hex('#fe800d'), // pitbi orange
                 'success' => Color::hex('#a3be8c'), // nord14
                 'warning' => Color::hex('#ebcb8b'), // nord13
-                'polarnight' => Color::hex('#3b4353'), // nord1
 
                 //Neutral Colors
                 'gray' => Color::Gray,

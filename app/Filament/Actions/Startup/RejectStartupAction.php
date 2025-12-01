@@ -15,8 +15,6 @@ class RejectstartupAction extends Action
     {
         return parent::make($name ?? 'reject')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Reject')
             ->color('danger')
             ->icon('heroicon-o-x-mark')

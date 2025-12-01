@@ -2,10 +2,12 @@
 
 namespace App\Filament\Portal\Resources\Startups\Pages;
 
-use App\Filament\Portal\Resources\Startups\StartupResource;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Actions\Startup\RejectStartupAction;
+use App\Filament\Actions\Startup\ApproveStartupAction;
+use App\Filament\Portal\Resources\Startups\StartupResource;
 
 class ViewStartup extends ViewRecord
 {
@@ -18,8 +20,9 @@ class ViewStartup extends ViewRecord
                 ->icon('heroicon-o-arrow-left')
                 ->color('gray')
                 ->url(static::getResource()::getUrl('index')),
-            
-            EditAction::make(),
+            //EditAction::make(),
+            ApproveStartupAction::make(),
+            RejectStartupAction::make(),
         ];
     }
 }

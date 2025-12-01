@@ -15,6 +15,8 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Hugomyb\FilamentMediaAction\Actions\MediaAction;
+use App\Filament\Actions\Startup\RejectStartupAction;
+use App\Filament\Actions\Startup\ApproveStartupAction;
 
 class StartupInfolist
 {

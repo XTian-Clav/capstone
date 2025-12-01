@@ -14,8 +14,6 @@ class ApproveStartupAction extends Action
     {
         return parent::make($name ?? 'approve')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Approve')
             ->color('success')
             ->icon('heroicon-o-check')

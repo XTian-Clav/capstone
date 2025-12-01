@@ -136,8 +136,8 @@ class StartupsTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                ApproveStartupAction::make(),
-                RejectStartupAction::make(),
+                ApproveStartupAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectStartupAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
