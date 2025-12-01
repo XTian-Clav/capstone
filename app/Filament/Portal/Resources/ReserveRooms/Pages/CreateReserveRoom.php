@@ -20,6 +20,9 @@ class CreateReserveRoom extends CreateRecord
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()
+                ->color('warning')
+                ->iconColor('warning')
+                ->icon('heroicon-o-clock')
                 ->title('Reservation Submitted')
                 ->body('Your reservation for ' . $roomType . ' has been submitted successfully.')
                 ->sendToDatabase($user);

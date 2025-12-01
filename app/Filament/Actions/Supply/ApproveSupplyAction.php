@@ -14,8 +14,6 @@ class ApproveSupplyAction extends Action
     {
         return parent::make($name ?? 'approve')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Approve')
             ->color('success')
             ->icon('heroicon-o-check')
@@ -52,11 +50,14 @@ class ApproveSupplyAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->success()
+                        ->color('success')
                         ->title('Reservation Approved')
                         ->body("Your reservation for {$supplyName} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReservesupply::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -66,6 +67,8 @@ class ApproveSupplyAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('success')
                     ->title('Reservation Approved')
                     ->body("You approved the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

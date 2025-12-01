@@ -41,11 +41,14 @@ class RejectstartupAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->danger()
+                        ->color('danger')
                         ->title('Startup Proposal Rejected')
                         ->body("Your startup proposal titled {$startupName} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewStartup::getUrl([
                                     'record' => $record->getRouteKey(),

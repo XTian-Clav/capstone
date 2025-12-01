@@ -95,24 +95,32 @@ class EventInfolist
 
                 Section::make('Attendance List')
                 ->schema([
-                    RepeatableEntry::make('attendance')
-                        ->hiddenLabel()
-                        ->table([
-                            TableColumn::make('Name'),
-                            TableColumn::make('Attending to Event'),
-                        ])
-                        ->schema([
-                            TextEntry::make('user')
-                                ->weight('semibold'),
+                    TextEntry::make('attendees.name')
+                        ->label('Registered Attendees')
+                        ->placeholder('No users have registered attendance yet.')
+                        ->listWithLineBreaks(),
 
-                            TextEntry::make('status')
-                                ->badge()
-                                ->color('success'),
-                        ])
-                        ->columns(2),
-                ])
-                ->columnSpanFull()
-                ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    TextEntry::make('registration_dates')
+                        ->label('Registration Dates')
+                        ->hiddenLabel(false)
+                        ->getStateUsing(function ($record) {
+                            $registrations = $record->attendees()->get();
+                            return $registrations->pluck('pivot.created_at');
+                        })
+                        ->dateTime('M j, Y h:i A')
+                        ->listWithLineBreaks()
+                        ->placeholder('—'),
+
+                    TextEntry::make('attendance_statuses')
+                        ->badge()
+                        ->listWithLineBreaks()
+                        ->label('Attendance Status')
+                        ->getStateUsing(fn ($record) => $record->attendees()->get()->pluck('pivot.is_attending'))
+                        ->formatStateUsing(fn ($state) => $state ? 'Attending' : 'Not Attending')
+                        ->color(fn ($state) => $state ? 'success' : 'danger')
+                        ->columnSpan(1),
+
+                ])->columns(3)->columnSpanFull()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }

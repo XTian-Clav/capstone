@@ -137,9 +137,9 @@ class ReserveEquipmentTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                ApproveEquipmentAction::make(),
-                RejectEquipmentAction::make(),
-                CompleteEquipmentAction::make(),
+                ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
+                CompleteEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

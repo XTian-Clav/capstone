@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\EventUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,7 +20,6 @@ class Event extends Model
         'start_date',
         'end_date',
         'status',
-        'attendance',
     ];
 
     const STATUS = [
@@ -31,8 +32,20 @@ class Event extends Model
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'attendance' => 'array',
     ];
+
+    public function attendees()
+    {
+        return $this->belongsToMany(User::class, 'event_users')
+                    ->using(EventUser::class)
+                    ->withPivot('is_attending')
+                    ->withTimestamps();
+    }
+
+    public function eventUsers()
+    {
+        return $this->hasMany(EventUser::class, 'event_id');
+    }
 
     protected static function booted()
     {

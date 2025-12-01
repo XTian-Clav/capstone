@@ -135,9 +135,9 @@ class ReserveRoomsTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                ApproveRoomAction::make(),
-                RejectRoomAction::make(),
-                CompleteRoomAction::make(),
+                ApproveRoomAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectRoomAction::make()->outlined()->size(Size::ExtraSmall),
+                CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

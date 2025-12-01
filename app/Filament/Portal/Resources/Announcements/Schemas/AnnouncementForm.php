@@ -24,7 +24,7 @@ class AnnouncementForm
                         ->default('Enter content here.')
                         ->rows(10)
                         ->cols(20),
-                ])->columnSpanFull()
+                ])->columnSpanFull()->secondary()
             ]);
     }
 }

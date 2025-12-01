@@ -4,12 +4,14 @@ namespace App\Models;
 
 
 use Filament\Panel;
+use App\Models\Event;
 use App\Models\Startup;
+use App\Models\EventUser;
 use Spatie\Permission\Traits\HasRoles;
 use Filament\Models\Contracts\HasAvatar;
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
-//use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -86,5 +88,13 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasEmailA
     public function startups()
     {
         return $this->hasMany(Startup::class);
+    }
+
+    public function attendedEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_user')
+                    ->using(EventUser::class)
+                    ->withPivot('is_attending')
+                    ->withTimestamps();
     }
 }

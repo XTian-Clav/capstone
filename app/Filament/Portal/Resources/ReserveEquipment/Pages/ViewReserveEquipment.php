@@ -2,9 +2,13 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment\Pages;
 
-use App\Filament\Portal\Resources\ReserveEquipment\ReserveEquipmentResource;
 use Filament\Actions\EditAction;
+use App\Filament\Actions\BackButton;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Actions\Equipment\RejectEquipmentAction;
+use App\Filament\Actions\Equipment\ApproveEquipmentAction;
+use App\Filament\Actions\Equipment\CompleteEquipmentAction;
+use App\Filament\Portal\Resources\ReserveEquipment\ReserveEquipmentResource;
 
 class ViewReserveEquipment extends ViewRecord
 {
@@ -13,7 +17,10 @@ class ViewReserveEquipment extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            BackButton::make(),
+            ApproveEquipmentAction::make(),
+            RejectEquipmentAction::make(),
+            CompleteEquipmentAction::make(),
         ];
     }
 }

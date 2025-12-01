@@ -109,41 +109,6 @@ class EventForm
                 ])->compact()
                 ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
                 ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                
-                Section::make('Attendance')
-                ->description('Press the Attend Event button to automatically register your attendance. Once submitted, you cannot edit or submit again.')
-                ->schema([
-                    Repeater::make('attendance')
-                        ->hiddenLabel()
-                        ->compact()
-                        ->schema([
-                            TextInput::make('user')
-                                ->default(fn () => auth()->user()?->name)
-                                ->label('Name')
-                                ->readonly()
-                                ->required(),
-
-                            TextInput::make('status')
-                                ->label('I will go to the event.')
-                                ->default('yes')
-                                ->readOnly(),
-                        ])
-                        ->columns(2)
-                        ->itemNumbers()
-                        ->defaultItems(1)
-                        ->deletable(false)
-                        ->reorderable(false)
-                        ->createItemButtonLabel('Attend Event')
-                        ->afterStateUpdated(function ($state, $set) {
-                            $unique = collect($state ?? [])
-                                ->unique('user')
-                                ->values()
-                                ->all();
-                            $set('attendance', $unique);
-                        })
-                        ->disabled(fn($record) => in_array($record->status, ['Completed', 'Cancelled'])),
-                ])->columnSpanFull()
-                ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])->columns(3);
     }
 }

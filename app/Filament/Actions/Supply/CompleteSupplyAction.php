@@ -14,8 +14,6 @@ class CompleteSupplyAction extends Action
     {
         return parent::make($name ?? 'complete')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Complete')
             ->color('cyan')
             ->icon('heroicon-m-check-badge')
@@ -43,11 +41,15 @@ class CompleteSupplyAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->color('cyan')
+                        ->iconColor('cyan')
+                        ->icon('heroicon-m-check-badge')
                         ->title('Reservation Completed')
                         ->body("Your reservation for {$supplyName} has been completed.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReserveSupply::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -57,6 +59,8 @@ class CompleteSupplyAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('cyan')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

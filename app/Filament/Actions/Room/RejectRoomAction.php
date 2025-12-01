@@ -15,8 +15,6 @@ class RejectRoomAction extends Action
     {
         return parent::make($name ?? 'reject')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Reject')
             ->color('danger')
             ->icon('heroicon-o-x-mark')
@@ -52,11 +50,14 @@ class RejectRoomAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->danger()
+                        ->color('danger')
                         ->title('Reservation Rejected')
                         ->body("Your reservation for {$roomType} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),

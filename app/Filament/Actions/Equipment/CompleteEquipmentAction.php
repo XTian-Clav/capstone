@@ -14,8 +14,6 @@ class CompleteEquipmentAction extends Action
     {
         return parent::make($name ?? 'complete')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Complete')
             ->color('cyan')
             ->icon('heroicon-m-check-badge')
@@ -43,12 +41,16 @@ class CompleteEquipmentAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->color('cyan')
+                        ->iconColor('cyan')
+                        ->icon('heroicon-m-check-badge')
                         ->title('Reservation Completed')
                         ->body("Your reservation for {$equipmentName} has been completed.")
                         ->actions([
                             Action::make('view')
                                 ->button()
-                                ->color('secondary')
+                                ->outlined()
+                                ->color('gray')
                                 ->url(ViewReserveEquipment::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
@@ -57,6 +59,8 @@ class CompleteEquipmentAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('cyan')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

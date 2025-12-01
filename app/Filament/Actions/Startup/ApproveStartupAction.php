@@ -32,11 +32,14 @@ class ApproveStartupAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->success()
+                        ->color('success')
                         ->title('Startup Proposal Approved')
                         ->body("Your startup proposal titled {$startupName} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewStartup::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -46,6 +49,8 @@ class ApproveStartupAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('success')
                     ->title('Startup Proposal Approved')
                     ->body("You have approved the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

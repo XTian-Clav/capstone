@@ -132,9 +132,9 @@ class ReserveSuppliesTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                ApproveSupplyAction::make(),
-                RejectSupplyAction::make(),
-                CompleteSupplyAction::make(),
+                ApproveSupplyAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectSupplyAction::make()->outlined()->size(Size::ExtraSmall),
+                CompleteSupplyAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

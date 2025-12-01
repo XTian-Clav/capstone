@@ -2,9 +2,10 @@
 
 namespace App\Filament\Portal\Resources\Milestones\Pages;
 
-use App\Filament\Portal\Resources\Milestones\MilestoneResource;
 use Filament\Actions\EditAction;
+use App\Filament\Actions\BackButton;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Portal\Resources\Milestones\MilestoneResource;
 
 class ViewMilestone extends ViewRecord
 {
@@ -13,10 +14,9 @@ class ViewMilestone extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            BackButton::make(),
             EditAction::make()
-            ->label(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin']) 
-                ? 'Edit Task' 
-                : 'Comply Task'),
+                ->label(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin']) ? 'Edit Task' : 'Comply Task'),
         ];
     }
 }

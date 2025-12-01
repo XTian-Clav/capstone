@@ -18,6 +18,9 @@ class CreateStartup extends CreateRecord
         // Only notify non-admin users
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()
+                ->color('warning')
+                ->iconColor('warning')
+                ->icon('heroicon-o-clock')
                 ->title('Startup Proposal Submitted')
                 ->body('Your startup proposal "' . $data['startup_name'] . '" has been submitted successfully. Please wait at least 2-3 business days for approval')
                 ->sendToDatabase($user);

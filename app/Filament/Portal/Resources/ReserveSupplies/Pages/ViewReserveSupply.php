@@ -2,9 +2,13 @@
 
 namespace App\Filament\Portal\Resources\ReserveSupplies\Pages;
 
-use App\Filament\Portal\Resources\ReserveSupplies\ReserveSupplyResource;
 use Filament\Actions\EditAction;
+use App\Filament\Actions\BackButton;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Actions\Supply\RejectSupplyAction;
+use App\Filament\Actions\Supply\ApproveSupplyAction;
+use App\Filament\Actions\Supply\CompleteSupplyAction;
+use App\Filament\Portal\Resources\ReserveSupplies\ReserveSupplyResource;
 
 class ViewReserveSupply extends ViewRecord
 {
@@ -13,7 +17,10 @@ class ViewReserveSupply extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            BackButton::make(),
+            ApproveSupplyAction::make(),
+            RejectSupplyAction::make(),
+            CompleteSupplyAction::make(),
         ];
     }
 }

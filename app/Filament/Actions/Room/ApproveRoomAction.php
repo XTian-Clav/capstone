@@ -15,8 +15,6 @@ class ApproveRoomAction extends Action
     {
         return parent::make($name ?? 'approve')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Approve')
             ->color('success')
             ->icon('heroicon-o-check')
@@ -63,11 +61,14 @@ class ApproveRoomAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->success()
+                        ->color('success')
                         ->title('Reservation Approved')
                         ->body("Your reservation for {$roomType} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -77,6 +78,8 @@ class ApproveRoomAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('success')
                     ->title('Reservation Approved')
                     ->body("You approved the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

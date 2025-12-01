@@ -31,6 +31,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
+use App\Filament\Actions\AttendEventAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -102,13 +103,18 @@ class EventsTable
                             ->badge()
                             ->color('gray'),
 
-                        TextColumn::make('attendance')
+                        TextColumn::make('attendees_count')
+                            ->label('Confirmed Going')
                             ->badge()
+                            ->color('primary')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
-                            ->getStateUsing(fn($record) => 'Going: ' . collect($record->attendance ?? [])
-                                ->where('status', 'yes')
-                                ->count()
-                            ),
+                            ->getStateUsing(function ($record) {
+                                $goingCount = $record->attendees()
+                                    ->wherePivot('is_attending', true)
+                                    ->count();
+                                
+                                return "Going: {$goingCount}";
+                            }),
                     ])->space(2)
                 ])->from('md')
             ])
@@ -143,13 +149,8 @@ class EventsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-                
-                EditAction::make('attendance')
-                    ->button()
-                    ->color('secondary')
-                    ->label('Attendance')
-                    ->icon('heroicon-s-clipboard-document-check')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                AttendEventAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

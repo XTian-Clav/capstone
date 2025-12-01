@@ -15,8 +15,6 @@ class RejectEquipmentAction extends Action
     {
         return parent::make($name ?? 'reject')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Reject')
             ->color('danger')
             ->icon('heroicon-o-x-mark')
@@ -52,12 +50,15 @@ class RejectEquipmentAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->danger()
+                        ->color('danger')
                         ->title('Reservation Rejected')
                         ->body("Your reservation for {$equipmentName} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
-                                ->color('secondary')
+                                ->outlined()
+                                ->color('gray')
                                 ->url(ViewReserveEquipment::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
@@ -66,6 +67,8 @@ class RejectEquipmentAction extends Action
                 }
 
                 Notification::make()
+                    ->danger()
+                    ->color('danger')
                     ->title('Reservation Rejected')
                     ->body("You rejected the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

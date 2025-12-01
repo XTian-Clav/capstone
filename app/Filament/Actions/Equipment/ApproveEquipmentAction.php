@@ -14,8 +14,6 @@ class ApproveEquipmentAction extends Action
     {
         return parent::make($name ?? 'approve')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Approve')
             ->color('success')
             ->icon('heroicon-o-check')
@@ -52,12 +50,15 @@ class ApproveEquipmentAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->success()
+                        ->color('success')
                         ->title('Reservation Approved')
                         ->body("Your reservation for {$equipmentName} has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
-                                ->color('secondary')
+                                ->outlined()
+                                ->color('gray')
                                 ->url(ViewReserveEquipment::getUrl([
                                     'record' => $record->getRouteKey(),
                                 ]), shouldOpenInNewTab: true),
@@ -66,6 +67,8 @@ class ApproveEquipmentAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('success')
                     ->title('Reservation Approved')
                     ->body("You approved the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

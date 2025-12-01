@@ -14,8 +14,6 @@ class CompleteRoomAction extends Action
     {
         return parent::make($name ?? 'complete')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Complete')
             ->color('cyan')
             ->icon('heroicon-m-check-badge')
@@ -43,11 +41,15 @@ class CompleteRoomAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->color('cyan')
+                        ->iconColor('cyan')
+                        ->icon('heroicon-m-check-badge')
                         ->title('Reservation Completed')
                         ->body("Your reservation for {$roomType} has been completed.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReserveRoom::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -57,6 +59,8 @@ class CompleteRoomAction extends Action
                 }
 
                 Notification::make()
+                    ->success()
+                    ->color('cyan')
                     ->title('Reservation Completed')
                     ->body("You completed the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

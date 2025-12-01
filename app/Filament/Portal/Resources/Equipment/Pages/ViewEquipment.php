@@ -2,10 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Equipment\Pages;
 
-use App\Filament\Portal\Resources\Equipment\EquipmentResource;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
+use App\Filament\Actions\BackButton;
 use Filament\Resources\Pages\ViewRecord;
+use App\Filament\Portal\Resources\Equipment\EquipmentResource;
 
 class ViewEquipment extends ViewRecord
 {
@@ -14,11 +15,7 @@ class ViewEquipment extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('back')
-                ->icon('heroicon-o-arrow-left')
-                ->color('gray')
-                ->url(static::getResource()::getUrl('index')),
-
+            BackButton::make(),
             EditAction::make(),
         ];
     }

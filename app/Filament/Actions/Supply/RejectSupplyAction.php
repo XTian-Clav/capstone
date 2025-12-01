@@ -15,8 +15,6 @@ class RejectsupplyAction extends Action
     {
         return parent::make($name ?? 'reject')
             ->button()
-            ->outlined()
-            ->size(Size::ExtraSmall)
             ->label('Reject')
             ->color('danger')
             ->icon('heroicon-o-x-mark')
@@ -52,11 +50,14 @@ class RejectsupplyAction extends Action
 
                 if ($owner) {
                     Notification::make()
+                        ->danger()
+                        ->color('danger')
                         ->title('Reservation Rejected')
                         ->body("Your reservation for {$supplyName} has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
+                                ->outlined()
                                 ->color('secondary')
                                 ->url(ViewReservesupply::getUrl([
                                     'record' => $record->getRouteKey(),
@@ -66,6 +67,8 @@ class RejectsupplyAction extends Action
                 }
 
                 Notification::make()
+                    ->danger()
+                    ->color('danger')
                     ->title('Reservation Rejected')
                     ->body("You rejected the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
