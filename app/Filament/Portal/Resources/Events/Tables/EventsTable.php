@@ -42,6 +42,7 @@ class EventsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()

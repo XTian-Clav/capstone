@@ -35,18 +35,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
 
-        //Spatie Health Check
-        Health::checks([
-            OptimizedAppCheck::new(),
-            DebugModeCheck::new(),
-            EnvironmentCheck::new(),
-            DatabaseCheck::new(),
-            CacheCheck::new(),
-            QueueCheck::new(),
-            ScheduleCheck::new(),
-            UsedDiskSpaceCheck::new()->warnWhenUsedSpaceIsAbovePercentage(80),
-        ]);
-
         //Global Table Settings
         Table::configureUsing(function (Table $table): void {
             $table
