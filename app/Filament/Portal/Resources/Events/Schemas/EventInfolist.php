@@ -67,8 +67,8 @@ class EventInfolist
                         ->badge()
                         ->colors([
                             'warning' => 'Upcoming',
-                            'info' => 'Ongoing',
-                            'success' => 'Completed',
+                            'success' => 'Ongoing',
+                            'cyan' => 'Completed',
                             'danger' => 'Cancelled',
                         ])
                         ->columnSpanFull()

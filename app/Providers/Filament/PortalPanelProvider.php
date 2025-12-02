@@ -33,6 +33,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Leandrocfe\FilamentApexCharts\FilamentApexChartsPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use WatheqAlshowaiter\FilamentStickyTableHeader\StickyTableHeaderPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class PortalPanelProvider extends PanelProvider
@@ -63,8 +64,7 @@ class PortalPanelProvider extends PanelProvider
             ->databaseNotifications()
 
             ->font('Poppins')
-            //->defaultThemeMode(ThemeMode::Light)
-            ->brandLogoHeight('2rem')
+            ->defaultThemeMode(ThemeMode::Light)
             ->brandLogo(fn () => view('logo-dark'))
             ->darkModeBrandLogo(fn () => view('logo-white'))
             ->favicon(asset('assets/favicon/favicon.ico'))
@@ -175,9 +175,26 @@ class PortalPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make()
-                    ->navigationLabel('Roles And Permission')
+                    ->navigationIcon('')
+                    ->activeNavigationIcon('')
+                    ->globallySearchable(false)
                     ->navigationGroup('System Settings')
-                    ->globallySearchable(false),
+                    ->navigationLabel('Roles And Permission')
+                    ->gridColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 3
+                    ])
+                    ->sectionColumnSpan(1)
+                    ->checkboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'lg' => 4,
+                    ])
+                    ->resourceCheckboxListColumns([
+                        'default' => 1,
+                        'sm' => 2,
+                    ]),
                     
                 LightSwitchPlugin::make()
                     ->position(Alignment::BottomRight)
@@ -187,9 +204,6 @@ class PortalPanelProvider extends PanelProvider
                         'auth.password',
                         'auth.register',
                     ]),
-                
-                ResizedColumnPlugin::make()
-                    ->preserveOnDB(false),
 
                 FilamentApexChartsPlugin::make(),
 

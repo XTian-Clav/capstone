@@ -20,12 +20,6 @@ class Room extends Model
         'is_available',
     ];
 
-    const ROOM_TYPE = [
-        'Small Meeting Room' => 'Small Meeting Room',
-        'Training Room' => 'Training Room',
-        'Co-Working Space' => 'Co-Working Space',
-    ];
-
     public function reservations()
     {
         return $this->hasMany(ReserveRoom::class);

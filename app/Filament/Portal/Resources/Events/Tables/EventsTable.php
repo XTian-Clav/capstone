@@ -34,6 +34,8 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Actions\AttendEventAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Event\CancelEventAction;
+use App\Filament\Actions\Event\CompleteEventAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
@@ -81,9 +83,9 @@ class EventsTable
                                 ->getStateUsing(fn ($record) => $record->status)
                                 ->badge()
                                 ->colors([
-                                    'indigo' => 'Upcoming',
-                                    'warning' => 'Ongoing',
-                                    'success' => 'Completed',
+                                    'warning' => 'Upcoming',
+                                    'success' => 'Ongoing',
+                                    'cyan' => 'Completed',
                                     'danger' => 'Cancelled',
                                 ]),
                         ]),
@@ -150,6 +152,9 @@ class EventsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                
+                CompleteEventAction::make()->outlined()->size(Size::ExtraSmall),
+                CancelEventAction::make()->outlined()->size(Size::ExtraSmall),
 
                 AttendEventAction::make(),
             ])

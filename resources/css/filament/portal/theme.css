@@ -22,7 +22,3 @@
     --color-main-accent: rgb(1, 50, 103);
     --color-main-light: rgb(248, 250, 252);
 }
-
-.fi-topbar {
-    @apply bg-transparent shadow-none ring-0;
-}

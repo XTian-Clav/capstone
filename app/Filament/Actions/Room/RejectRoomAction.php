@@ -67,6 +67,8 @@ class RejectRoomAction extends Action
                 }
 
                 Notification::make()
+                    ->danger()
+                    ->color('danger')
                     ->title('Reservation Rejected')
                     ->body("You rejected the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

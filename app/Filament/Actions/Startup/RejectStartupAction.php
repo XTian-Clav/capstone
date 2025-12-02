@@ -58,6 +58,8 @@ class RejectstartupAction extends Action
                 }
 
                 Notification::make()
+                    ->danger()
+                    ->color('danger')
                     ->title('Startup Proposal Rejected')
                     ->body("You have rejected the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
