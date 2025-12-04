@@ -120,7 +120,6 @@ class DatabaseSeeder extends Seeder
                 'quantity' => $faker->numberBetween(2, 14),
                 'property_no' => strtoupper($faker->bothify('PROPERTY-###??')),
                 'location' => $item['location'],
-                'remarks' => $faker->randomElement(['Checked', 'Missing', 'No reference no.']),
             ]);
         }
 
@@ -241,7 +240,6 @@ class DatabaseSeeder extends Seeder
                 'item_name' => $item['item_name'],
                 'quantity' => $faker->numberBetween(3, 30),
                 'location' => $item['location'],
-                'remarks' => $faker->randomElement(['New', 'Used']),
             ]);
         }
 

@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('equipment', function (Blueprint $table) {
+        Schema::create('unavailable_equipment', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('equipment_name')->unique();
-            $table->integer('quantity')->default(0);
-            $table->string('property_no')->unique();
-            $table->string('location');
+            $table->foreignId('equipment_id')->constrained('equipment')->cascadeOnDelete();
+            $table->unsignedInteger('unavailable_quantity')->default(1);
+            $table->string('status');
+            $table->string('remarks')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipment');
+        Schema::dropIfExists('unavailable_equipment');
     }
 };

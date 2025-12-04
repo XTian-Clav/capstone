@@ -61,9 +61,10 @@ class EquipmentTable
                     ->sortable()
                     ->width('5%')
                     ->searchable()
-                    ->state(fn ($record) => 
-                        $record->quantity === 0 ? 'Out of Stock':
-                        $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
+                    ->getStateUsing(fn ($record): string => 
+                        $record->quantity === 0
+                            ? 'Out of Stock'
+                            : $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
                     )
                     ->verticallyAlignStart(),
                     
@@ -80,15 +81,6 @@ class EquipmentTable
                     ->width('25%')
                     ->sortable()
                     ->wrap()
-                    ->verticallyAlignStart(),
-
-                TextColumn::make('remarks')
-                    ->wrap()
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable()
-                    ->width('20%')
-                    ->weight('semibold')
                     ->verticallyAlignStart(),
                 
                 TextColumn::make('created_at')

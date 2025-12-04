@@ -45,10 +45,6 @@ class EquipmentForm
                         ->required()
                         ->placeholder('Enter property number')
                         ->unique(),
-                    
-                    TextInput::make('remarks')
-                        ->default(null)
-                        ->placeholder('Enter remarks (Optional)'),
 
                     TextInput::make('location')
                         ->required()

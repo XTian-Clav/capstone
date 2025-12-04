@@ -16,7 +16,6 @@ class Equipment extends Model
         'quantity',
         'property_no',
         'location',
-        'remarks',
     ];
 
     public function reservations()
