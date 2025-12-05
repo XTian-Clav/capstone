@@ -39,11 +39,12 @@ class EquipmentTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->heading('Available Equipments')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('equipment_name', 'asc')
 
             ->emptyStateIcon('heroicon-o-wrench-screwdriver')
             ->emptyStateHeading('No equipments found')

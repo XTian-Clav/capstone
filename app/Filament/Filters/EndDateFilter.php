@@ -15,7 +15,8 @@ class EndDateFilter
             ->schema([
                 DatePicker::make('end_date')
                     ->label('End Date')
-                    ->native(false),
+                    ->native(false)
+                    ->placeholder('Select End Date'),
             ])
             ->query(function (Builder $query, array $data) use ($column): Builder {
                 return $query->when(

@@ -104,6 +104,7 @@ class EventsTable
                         TextColumn::make('end_date')
                             ->dateTime('M j, Y h:i A')
                             ->badge()
+                            ->sortable()
                             ->color('gray'),
 
                         TextColumn::make('attendees_count')
@@ -125,6 +126,24 @@ class EventsTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('event')
+                    ->options(
+                        Event::query()
+                            ->distinct()
+                            ->pluck('event', 'event') 
+                            ->toArray()
+                    )
+                    ->searchable()
+                    ->placeholder('Event'),
+                SelectFilter::make('location')
+                    ->options(
+                        Event::query()
+                            ->distinct()
+                            ->pluck('location', 'location') 
+                            ->toArray()
+                    )
+                    ->searchable()
+                    ->placeholder('Location'),
             ])
             ->recordActions([
                 ActionGroup::make([

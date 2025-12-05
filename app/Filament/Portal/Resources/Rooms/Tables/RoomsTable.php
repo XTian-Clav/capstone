@@ -41,7 +41,7 @@ class RoomsTable
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('room_type', 'asc')
 
             ->emptyStateIcon('heroicon-o-building-office')
             ->emptyStateHeading('No rooms found')
@@ -71,7 +71,6 @@ class RoomsTable
 
                 TextColumn::make('room_rate')
                     ->sortable()
-                    ->toggleable()
                     ->formatStateUsing(fn ($state) =>
                         ($state && $state > 0)
                             ? '₱' . number_format($state)

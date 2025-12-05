@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment\Tables;
 
+use App\Models\User;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use App\Models\ReserveEquipment;
@@ -117,6 +118,24 @@ class ReserveEquipmentTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('reserved_by')
+                    ->label('Reserver Name')
+                    ->options(
+                        ReserveEquipment::query()
+                            ->distinct()
+                            ->select('reserved_by')
+                            ->pluck('reserved_by', 'reserved_by') 
+                            ->toArray()
+                    )
+                    ->searchable() 
+                    ->placeholder('All Reservers'),
+                
+                SelectFilter::make('equipment')
+                    ->label('Equipment')
+                    ->relationship('equipment', 'equipment_name', fn (Builder $query) => $query->where('quantity', '>', 0))
+                    ->searchable()
+                    ->preload()
+                    ->placeholder('All Equipment'),
             ])
             ->recordActions([
                 ActionGroup::make([

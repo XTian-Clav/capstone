@@ -21,6 +21,7 @@ class UnavailableSuppliesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->heading('Unavailable Supplies')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)

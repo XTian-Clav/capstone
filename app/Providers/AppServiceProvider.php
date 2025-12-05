@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Filament\Tables\Table;
+use Filament\Support\Enums\Width;
 use Spatie\Health\Facades\Health;
 use Illuminate\Support\ServiceProvider;
 use Filament\Tables\Enums\FiltersLayout;
@@ -38,8 +39,9 @@ class AppServiceProvider extends ServiceProvider
         //Global Table Settings
         Table::configureUsing(function (Table $table): void {
             $table
-                ->hiddenFilterIndicators()
-                //->filtersLayout(FiltersLayout::AboveContentCollapsible)
+                ->filtersFormColumns(2)
+                ->filtersFormWidth(Width::ExtraLarge)
+                //->filtersLayout(FiltersLayout::Modal)
                 ->paginationPageOptions([10, 25, 50, 100]);
         });
     }

@@ -15,7 +15,8 @@ class StartDateFilter
             ->schema([
                 DatePicker::make('start_date')
                     ->label('Start Date')
-                    ->native(false),
+                    ->native(false)
+                    ->placeholder('Select Start Date'),
             ])
             ->query(function (Builder $query, array $data) use ($column): Builder {
                 return $query->when(

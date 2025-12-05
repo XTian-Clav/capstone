@@ -112,6 +112,24 @@ class ReserveSuppliesTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('reserved_by')
+                    ->label('Reserver Name')
+                    ->options(
+                        ReserveSupply::query()
+                            ->distinct()
+                            ->select('reserved_by')
+                            ->pluck('reserved_by', 'reserved_by') 
+                            ->toArray()
+                    )
+                    ->searchable() 
+                    ->placeholder('All Reservers'),
+                
+                SelectFilter::make('supply')
+                    ->label('Supply')
+                    ->relationship('supply', 'item_name', fn (Builder $query) => $query->where('quantity', '>', 0))
+                    ->searchable()
+                    ->preload()
+                    ->placeholder('All Supply'),
             ])
             ->recordActions([
                 ActionGroup::make([

@@ -17,18 +17,34 @@ class CreatedDateFilter
                     ->label('Quick Filter')
                     ->options([
                         'today' => 'Today',
-                        'last_week' => 'Last Week',
+                        'this_week' => 'This Week',
+                        'this_month' => 'This Month',
                         'last_month' => 'Last Month',
-                        'last_year' => 'Last Year',
                     ])
                     ->inline(),
             ])
             ->query(function (Builder $query, array $data) use ($column): Builder {
                 return match ($data['preset'] ?? null) {
-                    'today' => $query->whereBetween($column, [now()->startOfDay(), now()->endOfDay()]),
-                    'last_week' => $query->whereBetween($column, [now()->subWeek()->startOfWeek(), now()->subWeek()->endOfWeek()]),
-                    'last_month' => $query->whereBetween($column, [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()]),
-                    'last_year' => $query->whereBetween($column, [now()->subYear()->startOfYear(),now()->subYear()->endOfYear()]),
+                    'today' => $query->whereBetween($column, [
+                        now()->startOfDay(), 
+                        now()->endOfDay()
+                    ]),
+                    
+                    'this_week' => $query->whereBetween($column, [
+                        now()->startOfWeek(), 
+                        now()->endOfWeek()
+                    ]), 
+                    
+                    'this_month' => $query->whereBetween($column, [
+                        now()->startOfMonth(), 
+                        now()->endOfMonth()
+                    ]), 
+                    
+                    'last_month' => $query->whereBetween($column, [
+                        now()->subMonth()->startOfMonth(), 
+                        now()->subMonth()->endOfMonth()
+                    ]),
+                    
                     default => $query,
                 };
             });

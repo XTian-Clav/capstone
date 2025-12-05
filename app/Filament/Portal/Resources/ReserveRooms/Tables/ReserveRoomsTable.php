@@ -114,6 +114,24 @@ class ReserveRoomsTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('reserved_by')
+                    ->label('Reserver Name')
+                    ->options(
+                        ReserveRoom::query()
+                            ->distinct()
+                            ->select('reserved_by')
+                            ->pluck('reserved_by', 'reserved_by') 
+                            ->toArray()
+                    )
+                    ->searchable() 
+                    ->placeholder('All Reservers'),
+                
+                SelectFilter::make('room')
+                    ->label('Room')
+                    ->relationship('room', 'room_type', fn (Builder $query) => $query->where('is_available', true))
+                    ->searchable()
+                    ->preload()
+                    ->placeholder('All Room')
             ])
             ->recordActions([
                 ActionGroup::make([

@@ -37,11 +37,12 @@ class SuppliesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->heading('Available Supplies')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('item_name', 'asc')
 
             ->emptyStateIcon('heroicon-o-archive-box')
             ->emptyStateHeading('No supplies found')
