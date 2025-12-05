@@ -14,12 +14,14 @@ use App\Filament\Filters\EndDateFilter;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
 use App\Filament\Filters\CreatedDateFilter;
+use App\Filament\Actions\Equipment\AvailableEquipment;
 
 class UnavailableEquipmentTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
@@ -89,6 +91,9 @@ class UnavailableEquipmentTable
                 ->color('gray')
                 ->size(Size::ExtraSmall)
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+            ])
+            ->headerActions([
+                AvailableEquipment::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

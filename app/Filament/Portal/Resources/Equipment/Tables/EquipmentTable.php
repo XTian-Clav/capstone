@@ -31,6 +31,7 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Actions\Equipment\UnavailableEquipment;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class EquipmentTable
@@ -38,6 +39,7 @@ class EquipmentTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
@@ -77,7 +79,6 @@ class EquipmentTable
 
                 TextColumn::make('location')
                     ->searchable()
-                    ->toggleable()
                     ->width('25%')
                     ->sortable()
                     ->wrap()
@@ -117,6 +118,9 @@ class EquipmentTable
                 ->icon('heroicon-o-bars-3')
                 ->color('gray')
                 ->size(Size::ExtraSmall),
+            ])
+            ->headerActions([
+                UnavailableEquipment::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

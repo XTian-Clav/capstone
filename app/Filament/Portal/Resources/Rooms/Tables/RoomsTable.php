@@ -65,7 +65,6 @@ class RoomsTable
 
                 TextColumn::make('location')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->width('25%')
                     ->verticallyAlignStart(),

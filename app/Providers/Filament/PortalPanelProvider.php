@@ -112,7 +112,8 @@ class PortalPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Dashboard')
-                    ->icon('heroicon-o-home'),
+                    ->icon('heroicon-o-home')
+                    ->collapsed(false),
                 
                 NavigationGroup::make()
                     ->label('Startup')

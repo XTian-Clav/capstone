@@ -28,6 +28,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Supply\UnavailableSupply;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
@@ -36,6 +37,7 @@ class SuppliesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
@@ -67,7 +69,6 @@ class SuppliesTable
 
                 TextColumn::make('location')
                     ->searchable()
-                    ->toggleable()
                     ->sortable()
                     ->wrap()
                     ->width('30%')
@@ -109,6 +110,9 @@ class SuppliesTable
                 ->icon('heroicon-o-bars-3')
                 ->color('gray')
                 ->size(Size::ExtraSmall),
+            ])
+            ->headerActions([
+                UnavailableSupply::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
