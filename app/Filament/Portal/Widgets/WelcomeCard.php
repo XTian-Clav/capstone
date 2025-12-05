@@ -32,14 +32,14 @@ class WelcomeCard extends StatsOverviewWidget
             Stat::make("{$greeting}, {$user->name}!", 'Today is ' . $date)
                 ->description('Welcome to the PITBI Portal — wishing you a productive day ahead!')
                 ->descriptionIcon('heroicon-s-sparkles')
-                ->color('primary')
+                ->color('secondary')
                 ->columnSpan(2),
 
             // RIGHT CARD — Day + Time
             Stat::make($day, $time)
                 ->description('Current day and time')
                 ->descriptionIcon('heroicon-s-clock', IconPosition::Before)
-                ->color('primary')
+                ->color('secondary')
                 ->columnSpan(1),
         ];
     }

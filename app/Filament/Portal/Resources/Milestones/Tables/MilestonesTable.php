@@ -40,15 +40,16 @@ class MilestonesTable
             ->columns([
                 Stack::make([
                     TextColumn::make('startup.startup_name')
-                    ->label('Startup')
-                    ->sortable()
-                    ->searchable()
-                    ->weight('semibold'),
+                        ->label('Startup')
+                        ->sortable()
+                        ->searchable()
+                        ->weight('semibold'),
+                    
                     TextColumn::make('title')
                         ->label('Task')
                         ->sortable()
                         ->searchable()
-                        ->color('primary')
+                        ->color('secondary')
                         ->weight('semibold'),
                         
                     TextColumn::make('is_done')

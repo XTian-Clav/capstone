@@ -81,6 +81,7 @@ class VideosTable
                             ->badge()
                             ->sortable()
                             ->searchable()
+                            ->color('secondary')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->dateTimeTooltip('F j, Y g:i A'),
                         ]),

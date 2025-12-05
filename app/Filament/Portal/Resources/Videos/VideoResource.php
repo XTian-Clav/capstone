@@ -33,6 +33,11 @@ class VideoResource extends Resource
         return static::getModel()::count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'secondary';
+    }
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
@@ -57,7 +62,6 @@ class VideoResource extends Resource
         return [
             'index' => ListVideos::route('/'),
             'create' => CreateVideo::route('/create'),
-            //'view' => ViewVideo::route('/{record}'),
             'edit' => EditVideo::route('/{record}/edit'),
         ];
     }

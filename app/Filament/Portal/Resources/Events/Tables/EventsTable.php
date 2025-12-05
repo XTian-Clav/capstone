@@ -75,7 +75,7 @@ class EventsTable
                                 ->searchable()
                                 ->sortable()
                                 ->limit(40)
-                                ->color('primary')
+                                ->color('secondary')
                                 ->weight('semibold')
                                 ->tooltip(fn ($record) => $record->event),
     
@@ -109,7 +109,7 @@ class EventsTable
                         TextColumn::make('attendees_count')
                             ->label('Confirmed Going')
                             ->badge()
-                            ->color('primary')
+                            ->color('secondary')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->getStateUsing(function ($record) {
                                 $goingCount = $record->attendees()

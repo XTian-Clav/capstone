@@ -32,6 +32,11 @@ class MentorResource extends Resource
         return static::getModel()::count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'secondary';
+    }
+
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema

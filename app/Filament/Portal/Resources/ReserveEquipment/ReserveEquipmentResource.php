@@ -33,6 +33,11 @@ class ReserveEquipmentResource extends Resource
         return static::getEloquentQuery()->count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'secondary';
+    }
+
     protected static ?string $recordTitleAttribute = 'reserved_by';
 
     public static function form(Schema $schema): Schema

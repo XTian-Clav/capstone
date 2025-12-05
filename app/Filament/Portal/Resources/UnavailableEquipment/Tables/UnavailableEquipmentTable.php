@@ -64,7 +64,7 @@ class UnavailableEquipmentTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('primary')
+                    ->color('secondary')
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([

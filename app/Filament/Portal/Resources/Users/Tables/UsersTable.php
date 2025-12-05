@@ -88,6 +88,7 @@ class UsersTable
                     ->searchable()
                     ->sortable()
                     ->width('10%')
+                    ->color('secondary')
                     ->verticallyAlignStart(),
             ])
             ->filters([

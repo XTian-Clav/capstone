@@ -59,6 +59,7 @@ class GuidesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
+                        ->color('secondary')
                         ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)
             ])

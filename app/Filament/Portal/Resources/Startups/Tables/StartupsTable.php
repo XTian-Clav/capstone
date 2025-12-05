@@ -79,7 +79,7 @@ class StartupsTable
                         ->weight('semibold'),
     
                     TextColumn::make('founder')
-                        ->color('primary')
+                        ->color('secondary')
                         ->searchable()
                         ->sortable(),
                     

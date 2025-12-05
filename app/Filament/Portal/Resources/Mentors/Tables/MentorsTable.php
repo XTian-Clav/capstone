@@ -69,6 +69,7 @@ class MentorsTable
                             ->sortable(),
 
                         TextColumn::make('expertise')
+                            ->color('secondary')
                             ->searchable()
                             ->badge(),
                     ])->space(1),

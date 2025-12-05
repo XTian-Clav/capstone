@@ -35,6 +35,11 @@ class StartupResource extends Resource
         return static::getEloquentQuery()->count();
     }
 
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'secondary';
+    }
+
     protected static ?string $recordTitleAttribute = 'startup_name';
 
     public static function form(Schema $schema): Schema

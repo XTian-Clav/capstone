@@ -96,6 +96,7 @@ class RoomsTable
                     ->badge()
                     ->sortable()
                     ->searchable()
+                    ->color('secondary')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])

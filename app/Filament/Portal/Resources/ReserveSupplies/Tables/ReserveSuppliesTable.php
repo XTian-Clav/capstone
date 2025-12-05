@@ -66,6 +66,7 @@ class ReserveSuppliesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
+                        ->color('secondary')
                         ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
                         
                     TextColumn::make('status')

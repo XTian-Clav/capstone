@@ -73,8 +73,8 @@ class PortalPanelProvider extends PanelProvider
                 //Nord Theme Colors
                 'danger' => Color::hex('#bf616a'), // nord11
                 'info' => Color::hex('#81a1c1'), // nord9
-                'primary' => Color::hex('#013267'), // pitbi blue
-                'secondary' => Color::hex('#fe800d'), // pitbi orange
+                'primary' => Color::hex('#fe800d'), // pitbi orange
+                'secondary' => Color::hex('#013267'), // pitbi blue
                 'success' => Color::hex('#a3be8c'), // nord14
                 'warning' => Color::hex('#ebcb8b'), // nord13
 
