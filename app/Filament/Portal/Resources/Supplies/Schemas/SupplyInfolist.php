@@ -47,7 +47,6 @@ class SupplyInfolist
                         ->label('Quantity:'),
                     
                     TextEntry::make('location')->weight('semibold')->label('Location:')->inlineLabel(),
-                    TextEntry::make('remarks')->weight('semibold')->label('Remarks:')->inlineLabel(),
                     
                     TextEntry::make('deleted_at')
                         ->dateTime('M j, Y h:i A')

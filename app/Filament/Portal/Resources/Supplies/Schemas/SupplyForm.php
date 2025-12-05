@@ -41,10 +41,6 @@ class SupplyForm
                     ->default(0)
                     ->suffix('pcs'),
 
-                TextInput::make('remarks')
-                    ->default(null)
-                    ->placeholder('Enter remarks (Optional)'),
-
                 TextInput::make('location')
                     ->required()
                     ->placeholder('Enter location details'),

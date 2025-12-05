@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Portal\Resources\UnavailableEquipment\Tables;
+namespace App\Filament\Portal\Resources\UnavailableSupplies\Tables;
 
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
@@ -15,7 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
 use App\Filament\Filters\CreatedDateFilter;
 
-class UnavailableEquipmentTable
+class UnavailableSuppliesTable
 {
     public static function configure(Table $table): Table
     {
@@ -25,14 +25,14 @@ class UnavailableEquipmentTable
             ->persistFiltersInSession()
             ->defaultSort('created_at', 'desc')
 
-            ->emptyStateIcon('heroicon-o-wrench-screwdriver')
-            ->emptyStateHeading('No equipments found')
-            ->emptyStateDescription('All equipments will appear here once its created.')
+            ->emptyStateIcon('heroicon-o-archive-box')
+            ->emptyStateHeading('No supplies found')
+            ->emptyStateDescription('All supplies will appear here once its created.')
 
             ->columns([
-                TextColumn::make('equipment.equipment_name')
+                TextColumn::make('supply.item_name')
                     ->wrap()
-                    ->label('Equipment Name')
+                    ->label('Supply Name')
                     ->sortable()
                     ->width('30%')
                     ->searchable()

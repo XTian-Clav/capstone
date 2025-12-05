@@ -58,7 +58,7 @@ class SuppliesTable
                     ->numeric()
                     ->searchable()
                     ->sortable()
-                    ->width('10%')
+                    ->width('20%')
                     ->state(fn ($record) => 
                         $record->quantity === 0 ? 'Out of Stock':
                         $record->quantity . ' ' . ($record->quantity === 1 ? 'pc' : 'pcs')
@@ -71,15 +71,6 @@ class SuppliesTable
                     ->sortable()
                     ->wrap()
                     ->width('30%')
-                    ->verticallyAlignStart(),
-
-                TextColumn::make('remarks')
-                    ->searchable()
-                    ->toggleable()
-                    ->sortable()
-                    ->weight('semibold')
-                    ->wrap()
-                    ->width('10%')
                     ->verticallyAlignStart(),
 
                 TextColumn::make('created_at')

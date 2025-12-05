@@ -52,7 +52,7 @@ class RoomsTable
                     ->searchable()
                     ->sortable()
                     ->wrap()
-                    ->width('30%')
+                    ->width('35%')
                     ->weight('semibold')
                     ->verticallyAlignStart()
                     ->tooltip(fn ($record) => $record->room_type),
@@ -67,7 +67,7 @@ class RoomsTable
                     ->searchable()
                     ->toggleable()
                     ->sortable()
-                    ->width('30%')
+                    ->width('25%')
                     ->verticallyAlignStart(),
 
                 TextColumn::make('room_rate')

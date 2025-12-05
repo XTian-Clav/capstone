@@ -9,7 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
-class RejectstartupAction extends Action
+class RejectStartupAction extends Action
 {
     public static function make(?string $name = null): static
     {

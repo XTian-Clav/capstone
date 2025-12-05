@@ -9,7 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
 
-class RejectsupplyAction extends Action
+class RejectSupplyAction extends Action
 {
     public static function make(?string $name = null): static
     {

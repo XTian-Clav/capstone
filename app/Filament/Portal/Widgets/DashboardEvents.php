@@ -53,7 +53,7 @@ class DashboardEvents extends TableWidget
                         Split::make([
                             TextColumn::make('event')
                                 ->limit(40)
-                                ->color('primary')
+                                ->color('secondary')
                                 ->weight('semibold')
                                 ->tooltip(fn ($record) => $record->event),
     

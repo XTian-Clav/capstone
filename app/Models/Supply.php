@@ -15,7 +15,6 @@ class Supply extends Model
         'item_name',
         'quantity',
         'location',
-        'remarks',
     ];
 
     public function reservations()

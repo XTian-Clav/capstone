@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('supplies', function (Blueprint $table) {
+        Schema::create('unavailable_supplies', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('item_name')->unique();
-            $table->integer('quantity')->default(0);
-            $table->string('location');
+            $table->foreignId('supply_id')->constrained('supplies')->cascadeOnDelete();
+            $table->unsignedInteger('unavailable_quantity')->default(1);
+            $table->string('status');
+            $table->string('remarks')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('supplies');
+        Schema::dropIfExists('unavailable_supplies');
     }
 };

@@ -50,7 +50,7 @@ class EquipmentTable
             ->columns([
                 TextColumn::make('equipment_name')
                     ->searchable()
-                    ->width('25%')
+                    ->width('35%')
                     ->sortable()
                     ->wrap()
                     ->weight('semibold')
@@ -59,7 +59,7 @@ class EquipmentTable
                 TextColumn::make('quantity')
                     ->numeric()
                     ->sortable()
-                    ->width('5%')
+                    ->width('10%')
                     ->searchable()
                     ->getStateUsing(fn ($record): string => 
                         $record->quantity === 0
@@ -88,7 +88,7 @@ class EquipmentTable
                     ->since()
                     ->badge()
                     ->sortable()
-                    ->width('5%')
+                    ->width('10%')
                     ->searchable()
                     ->color('secondary')
                     ->verticallyAlignStart()

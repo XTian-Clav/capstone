@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Exception;
+use App\Models\Equipment;
 use Illuminate\Support\Facades\DB;
+use App\Models\UnavailableEquipment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,7 +56,7 @@ class UnavailableEquipment extends Model
         });
 
         // Delete picture when record is permanently deleted
-        static::Deleted(function ($unavailableEquipment) {
+        static::deleted(function ($unavailableEquipment) {
             if ($unavailableEquipment->picture) {
                 Storage::disk('public')->delete($unavailableEquipment->picture);
             }
