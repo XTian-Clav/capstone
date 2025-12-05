@@ -67,7 +67,7 @@ class MilestonesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
-                        ->color('gray')
+                        ->color('secondary')
                         ->dateTimeTooltip('F j, Y g:i A')
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans()),
@@ -104,7 +104,7 @@ class MilestonesTable
                 ])
                 ->label('Actions')
                 ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
+                ->color('gray')
                 ->size(Size::ExtraSmall)
                 ->button(),
             ])

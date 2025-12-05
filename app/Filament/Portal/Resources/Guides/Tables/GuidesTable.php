@@ -47,7 +47,7 @@ class GuidesTable
                         ->sortable() 
                         ->searchable()
                         ->weight('semibold')
-                        ->iconColor('secondary')
+                        ->iconColor('primary')
                         ->icon(Heroicon::DocumentText)
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()
@@ -85,7 +85,7 @@ class GuidesTable
                 ])
                 ->label('Actions')
                 ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
+                ->color('gray')
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

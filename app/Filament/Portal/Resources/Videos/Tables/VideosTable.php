@@ -109,7 +109,7 @@ class VideosTable
                 ])
                 ->label('Actions')
                 ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
+                ->color('gray')
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

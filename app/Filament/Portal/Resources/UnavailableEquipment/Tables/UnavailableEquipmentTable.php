@@ -81,11 +81,9 @@ class UnavailableEquipmentTable
                         ->color('danger')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
-                ->label('Actions')
-                ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
+                ->icon('heroicon-o-bars-3')
+                ->color('gray')
                 ->size(Size::ExtraSmall)
-                ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([

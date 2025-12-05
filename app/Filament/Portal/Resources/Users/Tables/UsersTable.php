@@ -111,11 +111,9 @@ class UsersTable
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
-                ->label('Actions')
-                ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
+                ->icon('heroicon-o-bars-3')
+                ->color('gray')
                 ->size(Size::ExtraSmall)
-                ->button()
                 ->visible(fn () => auth()->user()->hasRole('super_admin')),
 
                 ViewAction::make('alt_view')

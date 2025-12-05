@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace App\Filament\Portal\Resources\Roles;
 
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use App\Filament\Portal\Resources\Roles\Pages\CreateRole;
-use App\Filament\Portal\Resources\Roles\Pages\EditRole;
-use App\Filament\Portal\Resources\Roles\Pages\ListRoles;
-use App\Filament\Portal\Resources\Roles\Pages\ViewRole;
-use BezhanSalleh\FilamentShield\Support\Utils;
-use BezhanSalleh\FilamentShield\Traits\HasShieldFormComponents;
-use BezhanSalleh\PluginEssentials\Concerns\Resource as Essentials;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Facades\Filament;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Panel;
-use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
-use Filament\Support\Enums\FontWeight;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Schemas\Schema;
+use Filament\Facades\Filament;
+use Filament\Actions\EditAction;
+use Filament\Resources\Resource;
+use Filament\Support\Enums\Size;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Validation\Rules\Unique;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
+use BezhanSalleh\FilamentShield\Support\Utils;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use App\Filament\Portal\Resources\Roles\Pages\EditRole;
+use App\Filament\Portal\Resources\Roles\Pages\ViewRole;
+use App\Filament\Portal\Resources\Roles\Pages\ListRoles;
+use App\Filament\Portal\Resources\Roles\Pages\CreateRole;
+use BezhanSalleh\FilamentShield\Traits\HasShieldFormComponents;
+use BezhanSalleh\PluginEssentials\Concerns\Resource as Essentials;
 
 class RoleResource extends Resource
 {
@@ -121,8 +123,14 @@ class RoleResource extends Resource
                 //
             ])
             ->recordActions([
-                EditAction::make()->color('gray'),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make()->color('gray'),
+                    DeleteAction::make(),
+                ])
+                ->icon('heroicon-o-bars-3')
+                ->color('gray')
+                ->size(Size::ExtraSmall)
+                ->visible(fn () => auth()->user()->hasRole('super_admin')),
             ])
             ->toolbarActions([
                 DeleteBulkAction::make(),

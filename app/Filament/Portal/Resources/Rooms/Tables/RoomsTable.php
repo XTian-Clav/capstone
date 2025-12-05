@@ -120,11 +120,9 @@ class RoomsTable
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
                 ])
-                ->label('Actions')
-                ->icon('heroicon-o-bars-arrow-down')
-                ->color('secondary')
-                ->size(Size::ExtraSmall)
-                ->button(),
+                ->icon('heroicon-o-bars-3')
+                ->color('gray')
+                ->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
