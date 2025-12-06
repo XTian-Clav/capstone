@@ -45,7 +45,7 @@ class CompleteSupplyAction extends Action
                         ->iconColor('cyan')
                         ->icon('heroicon-m-check-badge')
                         ->title('Reservation Completed')
-                        ->body("Your reservation for {$supplyName} has been completed.")
+                        ->body("Your reservation for <strong>{$supplyName}</strong> has been completed.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -63,7 +63,7 @@ class CompleteSupplyAction extends Action
                     ->iconColor('cyan')
                     ->icon('heroicon-m-check-badge')
                     ->title('Reservation Completed')
-                    ->body("You completed the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You completed the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

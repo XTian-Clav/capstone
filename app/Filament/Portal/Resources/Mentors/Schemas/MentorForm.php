@@ -105,7 +105,7 @@ class MentorForm
                 Section::make()
                 ->schema([
                     ScheduleForm::scheduleRepeater()->columnSpanFull()->label('Mentoring Schedules'),
-                ])->columnSpanFull()->compact(),
+                ])->columnSpan(2)->compact(),
             ])->columns(3);
     }
 }

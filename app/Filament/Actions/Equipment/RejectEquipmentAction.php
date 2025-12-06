@@ -53,7 +53,7 @@ class RejectEquipmentAction extends Action
                         ->danger()
                         ->color('danger')
                         ->title('Reservation Rejected')
-                        ->body("Your reservation for {$equipmentName} has been rejected.")
+                        ->body("Your reservation for <strong>{$equipmentName}</strong> has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -70,7 +70,7 @@ class RejectEquipmentAction extends Action
                     ->danger()
                     ->color('danger')
                     ->title('Reservation Rejected')
-                    ->body("You rejected the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You rejected the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

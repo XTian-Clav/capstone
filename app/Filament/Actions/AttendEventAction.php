@@ -16,7 +16,7 @@ class AttendEventAction extends Action
         return parent::make($name ?? 'attend')
             ->button()
             ->label('Register Attendance')
-            ->color('secondary')
+            ->color('primary')
             ->icon('heroicon-o-clipboard-document-check')
             ->requiresConfirmation() 
             ->modalHeading(fn (Event $record) => 'Confirm Attendance for ' . ($record->event ?? 'the Event'))
@@ -57,7 +57,7 @@ class AttendEventAction extends Action
                     $body = "Thank you! Your attendance for <strong>{$eventName}</strong> has been confirmed.";
                     $color = 'success';
                 } else {
-                    $title = 'Registration Recorded';
+                    $title = 'Attendance Recorded';
                     $body = "Your response for <strong>{$eventName}</strong> has been recorded as 'Not Attending'.";
                     $color = 'danger';
                 }

@@ -16,12 +16,11 @@ use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
-use App\Filament\Pages\HealthCheckResults;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
-use Asmit\ResizedColumn\ResizedColumnPlugin;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Muazzam\SlickScrollbar\SlickScrollbarPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -205,6 +204,10 @@ class PortalPanelProvider extends PanelProvider
                     ]),
 
                 FilamentApexChartsPlugin::make(),
+
+                SlickScrollbarPlugin::make()
+                    ->size('6px')
+                    ->palette('primary'),
 
                 GlobalSearchModalPlugin::make()
                     ->modal(

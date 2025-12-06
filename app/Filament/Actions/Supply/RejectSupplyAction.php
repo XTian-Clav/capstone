@@ -53,7 +53,7 @@ class RejectSupplyAction extends Action
                         ->danger()
                         ->color('danger')
                         ->title('Reservation Rejected')
-                        ->body("Your reservation for {$supplyName} has been rejected.")
+                        ->body("Your reservation for <strong>{$supplyName}</strong> has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -70,7 +70,7 @@ class RejectSupplyAction extends Action
                     ->danger()
                     ->color('danger')
                     ->title('Reservation Rejected')
-                    ->body("You rejected the reservation for {$supplyName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You rejected the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

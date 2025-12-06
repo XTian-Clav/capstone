@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
         foreach ($equipments as $item) {
             Equipment::create([
                 'equipment_name' => $item['equipment_name'],
-                'quantity' => $faker->numberBetween(2, 14),
+                'quantity' => $faker->numberBetween(5, 14),
                 'property_no' => strtoupper($faker->bothify('PROPERTY-###??')),
                 'location' => $item['location'],
             ]);
@@ -238,7 +238,7 @@ class DatabaseSeeder extends Seeder
         foreach ($supplies as $item) {
             Supply::create([
                 'item_name' => $item['item_name'],
-                'quantity' => $faker->numberBetween(3, 30),
+                'quantity' => $faker->numberBetween(10, 30),
                 'location' => $item['location'],
             ]);
         }
@@ -334,12 +334,12 @@ class DatabaseSeeder extends Seeder
             $created_at = $faker->dateTimeThisYear();
 
             Startup::create([
-                'user_id' => User::inRandomOrder()->first()->id,
+                'user_id' => 1,
                 'startup_name' => $item['startup_name'],
                 'founder' => $item['founder'],
                 'description' => $item['description'],
                 'created_at' => $created_at,
-                'status' => $faker->randomElement(array_values(Startup::STATUS)),
+                'status' => 'Approved',
             ]);
         }
 

@@ -35,7 +35,7 @@ class ApproveStartupAction extends Action
                         ->success()
                         ->color('success')
                         ->title('Startup Proposal Approved')
-                        ->body("Your startup proposal titled {$startupName} has been approved.")
+                        ->body("Your startup proposal entitled <strong>{$startupName}</strong> has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -52,7 +52,7 @@ class ApproveStartupAction extends Action
                     ->success()
                     ->color('success')
                     ->title('Startup Proposal Approved')
-                    ->body("You have approved the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You have approved the startup proposal <strong>{$startupName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

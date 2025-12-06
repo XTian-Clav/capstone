@@ -53,7 +53,7 @@ class ApproveEquipmentAction extends Action
                         ->success()
                         ->color('success')
                         ->title('Reservation Approved')
-                        ->body("Your reservation for {$equipmentName} has been approved.")
+                        ->body("Your reservation for <strong>{$equipmentName}</strong> has been approved.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -70,7 +70,7 @@ class ApproveEquipmentAction extends Action
                     ->success()
                     ->color('success')
                     ->title('Reservation Approved')
-                    ->body("You approved the reservation for {$equipmentName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You approved the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

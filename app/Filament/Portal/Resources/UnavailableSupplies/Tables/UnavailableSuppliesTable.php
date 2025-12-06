@@ -29,8 +29,8 @@ class UnavailableSuppliesTable
             ->defaultSort('created_at', 'desc')
 
             ->emptyStateIcon('heroicon-o-archive-box')
-            ->emptyStateHeading('No supplies found')
-            ->emptyStateDescription('All supplies will appear here once its created.')
+            ->emptyStateHeading('No unavailable supplies found')
+            ->emptyStateDescription('All unavailable supplies will appear here once its created.')
 
             ->columns([
                 TextColumn::make('supply.item_name')

@@ -53,7 +53,7 @@ class RejectRoomAction extends Action
                         ->danger()
                         ->color('danger')
                         ->title('Reservation Rejected')
-                        ->body("Your reservation for {$roomType} has been rejected.")
+                        ->body("Your reservation for <strong>{$roomType}</strong> has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -70,7 +70,7 @@ class RejectRoomAction extends Action
                     ->danger()
                     ->color('danger')
                     ->title('Reservation Rejected')
-                    ->body("You rejected the reservation for {$roomType} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You rejected the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

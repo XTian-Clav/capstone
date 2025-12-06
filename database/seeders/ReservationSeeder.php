@@ -34,7 +34,7 @@ class ReservationSeeder extends Seeder
 
             ReserveEquipment::create([
                 'reserved_by' => $faker->name(),
-                'user_id' => $faker->randomElement($userIds),
+                'user_id' => $faker->randomElement([3, 4, 5]),
                 'equipment_id' => $faker->randomElement($equipmentIds),
                 'quantity' => rand(1, 5),
                 'status' => $faker->randomElement(['Pending', 'Approved', 'Rejected']),
@@ -58,7 +58,7 @@ class ReservationSeeder extends Seeder
         
             ReserveRoom::create([
                 'reserved_by' => $faker->name(),
-                'user_id' => $faker->randomElement($userIds),
+                'user_id' => $faker->randomElement([3, 4, 5]),
                 'room_id' => $room->id,
                 'status' => $faker->randomElement(['Pending', 'Approved', 'Rejected']),
                 'company' => $faker->company(),
@@ -80,7 +80,7 @@ class ReservationSeeder extends Seeder
 
             ReserveSupply::create([
                 'reserved_by' => $faker->name(),
-                'user_id' => $faker->randomElement($userIds),
+                'user_id' => $faker->randomElement([3, 4, 5]),
                 'supply_id' => $faker->randomElement($supplyIds),
                 'quantity' => rand(1, 10),
                 'status' => $faker->randomElement(['Pending', 'Approved', 'Rejected']),

@@ -44,7 +44,7 @@ class RejectStartupAction extends Action
                         ->danger()
                         ->color('danger')
                         ->title('Startup Proposal Rejected')
-                        ->body("Your startup proposal titled {$startupName} has been rejected.")
+                        ->body("Your startup proposal titled <strong>{$startupName}</strong> has been rejected.")
                         ->actions([
                             Action::make('view')
                                 ->button()
@@ -61,7 +61,7 @@ class RejectStartupAction extends Action
                     ->danger()
                     ->color('danger')
                     ->title('Startup Proposal Rejected')
-                    ->body("You have rejected the startup proposal {$startupName} for " . ($owner?->name ?? 'Unknown user') . ".")
+                    ->body("You have rejected the startup proposal <strong>{$startupName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
             ->visible(fn ($record) =>

@@ -29,8 +29,8 @@ class UnavailableEquipmentTable
             ->defaultSort('created_at', 'desc')
 
             ->emptyStateIcon('heroicon-o-wrench-screwdriver')
-            ->emptyStateHeading('No equipments found')
-            ->emptyStateDescription('All equipments will appear here once its created.')
+            ->emptyStateHeading('No unavailable equipment found')
+            ->emptyStateDescription('All unavailable equipment will appear here once its created.')
 
             ->columns([
                 TextColumn::make('equipment.equipment_name')

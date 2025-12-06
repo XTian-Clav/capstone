@@ -67,6 +67,10 @@ class ReserveSupply extends Model
                     $supply->decrement('quantity', $newQty);
                 }
 
+                if ($oldStatus === 'Approved' && $newStatus === 'Completed') {
+                    $supply->increment('quantity', $oldQty);
+                }
+
                 if ($oldStatus === 'Approved' && $newStatus === 'Rejected') {
                     $supply->increment('quantity', $oldQty);
                 }
