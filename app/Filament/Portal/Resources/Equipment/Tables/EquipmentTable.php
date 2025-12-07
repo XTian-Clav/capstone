@@ -33,6 +33,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Actions\Equipment\UnavailableEquipment;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class EquipmentTable
 {
@@ -122,12 +123,15 @@ class EquipmentTable
             ])
             ->headerActions([
                 UnavailableEquipment::make(),
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Equipment Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

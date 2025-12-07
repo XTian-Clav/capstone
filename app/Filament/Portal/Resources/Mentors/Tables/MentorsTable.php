@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Mentors\Tables;
 
+use Carbon\Carbon;
 use App\Models\Mentor;
 use App\Models\Startup;
 use Filament\Tables\Table;
@@ -36,6 +37,7 @@ use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class MentorsTable
 {
@@ -138,11 +140,23 @@ class MentorsTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Mentors Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('name'),
+                        TextColumn::make('expertise'),
+                        TextColumn::make('email'),
+                        TextColumn::make('contact'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

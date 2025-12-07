@@ -38,6 +38,7 @@ use App\Filament\Actions\Event\CancelEventAction;
 use App\Filament\Actions\Event\CompleteEventAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class EventsTable
 {
@@ -177,11 +178,25 @@ class EventsTable
 
                 AttendEventAction::make(),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Events Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('event'),
+                        TextColumn::make('description'),
+                        TextColumn::make('location'),
+                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('status'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

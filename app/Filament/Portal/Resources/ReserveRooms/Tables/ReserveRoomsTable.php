@@ -38,6 +38,7 @@ use App\Filament\Actions\Room\ApproveRoomAction;
 use App\Filament\Actions\Room\CompleteRoomAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
 class ReserveRoomsTable
@@ -64,12 +65,6 @@ class ReserveRoomsTable
                         ->searchable()
                         ->sortable()
                         ->weight('semibold'),
-    
-                    TextColumn::make('quantity')
-                            ->badge()
-                            ->sortable()
-                            ->searchable()
-                            ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
                         
                     TextColumn::make('status')
                         ->weight('semibold')
@@ -159,11 +154,25 @@ class ReserveRoomsTable
                 RejectRoomAction::make()->outlined()->size(Size::ExtraSmall),
                 CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Room Reservations Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('room.room_type'),
+                        TextColumn::make('status'),
+                        TextColumn::make('reserved_by'),
+                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

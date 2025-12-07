@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Startups\Tables;
 
+use Carbon\Carbon;
 use App\Models\Startup;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -38,6 +39,7 @@ use App\Filament\Actions\Startup\RejectStartupAction;
 use App\Filament\Actions\Startup\ApproveStartupAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class StartupsTable
 {
@@ -141,11 +143,25 @@ class StartupsTable
                 ApproveStartupAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectStartupAction::make()->outlined()->size(Size::ExtraSmall),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Startups Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('startup_name'),
+                        TextColumn::make('founder'),
+                        TextColumn::make('members'),
+                        TextColumn::make('description'),
+                        TextColumn::make('status'),
+                        TextColumn::make('admin_comment'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

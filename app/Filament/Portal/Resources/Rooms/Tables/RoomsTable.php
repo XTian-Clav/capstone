@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Rooms\Tables;
 
+use Carbon\Carbon;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -32,6 +33,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class RoomsTable
 {
@@ -122,16 +124,16 @@ class RoomsTable
                 ->color('gray')
                 ->size(Size::ExtraSmall),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Rooms Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait'),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        //Exclude is_available column
-                        ->exports([
-                            ExcelExport::make()->fromTable()->except(['is_available']),
-                            ExcelExport::make()->fromTable()->except(['availability_text']),
-                        ])
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

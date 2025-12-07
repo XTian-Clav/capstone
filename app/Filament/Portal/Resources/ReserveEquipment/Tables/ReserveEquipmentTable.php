@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment\Tables;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -41,6 +42,7 @@ use App\Filament\Actions\Equipment\RejectEquipmentAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Actions\Equipment\ApproveEquipmentAction;
 use App\Filament\Actions\Equipment\CompleteEquipmentAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
 class ReserveEquipmentTable
@@ -163,11 +165,25 @@ class ReserveEquipmentTable
                 RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
                 CompleteEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Equipment Reservation Report - '. Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('equipment.equipment_name'),
+                        TextColumn::make('status'),
+                        TextColumn::make('reserved_by'),
+                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\ReserveSupplies\Tables;
 
+use Carbon\Carbon;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use App\Models\ReserveSupply;
@@ -31,11 +32,12 @@ use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Supply\RejectSupplyAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Actions\Supply\ApproveSupplyAction;
-use App\Filament\Actions\Supply\RejectSupplyAction;
 use App\Filament\Actions\Supply\CompleteSupplyAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class ReserveSuppliesTable
 {
@@ -157,11 +159,25 @@ class ReserveSuppliesTable
                 RejectSupplyAction::make()->outlined()->size(Size::ExtraSmall),
                 CompleteSupplyAction::make()->outlined()->size(Size::ExtraSmall),
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Supply Reservations Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait')
+                    ->disableTableColumns()
+                    ->withColumns([
+                        TextColumn::make('supply.item_name'),
+                        TextColumn::make('status'),
+                        TextColumn::make('reserved_by'),
+                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
+                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
+                    ]),
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     DeleteBulkAction::make()
                         ->icon('heroicon-s-archive-box-x-mark')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

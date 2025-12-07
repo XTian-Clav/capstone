@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\UnavailableEquipment\Tables;
 
+use Carbon\Carbon;
 use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -15,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
 use App\Filament\Filters\CreatedDateFilter;
 use App\Filament\Actions\Equipment\AvailableEquipment;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class UnavailableEquipmentTable
 {
@@ -95,6 +97,12 @@ class UnavailableEquipmentTable
             ])
             ->headerActions([
                 AvailableEquipment::make(),
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Unavailable Equipment Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('portrait'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

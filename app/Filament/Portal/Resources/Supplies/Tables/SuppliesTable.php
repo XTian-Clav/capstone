@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\Supplies\Tables;
 
+use Carbon\Carbon;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -31,6 +32,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use App\Filament\Actions\Supply\UnavailableSupply;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class SuppliesTable
 {
@@ -114,12 +116,15 @@ class SuppliesTable
             ])
             ->headerActions([
                 UnavailableSupply::make(),
+                FilamentExportHeaderAction::make('export')
+                    ->outlined()
+                    ->color('secondary')
+                    ->fileName('Supplies Report - ' . Carbon::now()->format('F Y'))
+                    ->defaultFormat('pdf')
+                    ->defaultPageOrientation('landscape'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make()
-                        ->color('gray')
-                        ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreBulkAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),
