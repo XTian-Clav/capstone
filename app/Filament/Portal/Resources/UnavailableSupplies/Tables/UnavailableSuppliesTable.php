@@ -102,7 +102,8 @@ class UnavailableSuppliesTable
                     ->color('secondary')
                     ->fileName('Unavailable Supplies Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait'),
+                    ->defaultPageOrientation('portrait')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

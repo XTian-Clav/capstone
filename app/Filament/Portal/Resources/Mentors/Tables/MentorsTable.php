@@ -153,7 +153,8 @@ class MentorsTable
                         TextColumn::make('expertise'),
                         TextColumn::make('email'),
                         TextColumn::make('contact'),
-                    ]),
+                    ])
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

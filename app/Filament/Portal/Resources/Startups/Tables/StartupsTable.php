@@ -158,7 +158,8 @@ class StartupsTable
                         TextColumn::make('description'),
                         TextColumn::make('status'),
                         TextColumn::make('admin_comment'),
-                    ]),
+                    ])
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -40,6 +40,7 @@ class RoomsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->heading('List of all Rooms')
             ->recordUrl(null)
             ->deferFilters(false)
             ->persistFiltersInSession()
@@ -122,7 +123,13 @@ class RoomsTable
                 ])
                 ->icon('heroicon-o-bars-3')
                 ->color('gray')
-                ->size(Size::ExtraSmall),
+                ->size(Size::ExtraSmall)
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
@@ -130,7 +137,8 @@ class RoomsTable
                     ->color('secondary')
                     ->fileName('Rooms Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait'),
+                    ->defaultPageOrientation('portrait')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

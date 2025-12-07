@@ -119,16 +119,23 @@ class EquipmentTable
                 ])
                 ->icon('heroicon-o-bars-3')
                 ->color('gray')
-                ->size(Size::ExtraSmall),
+                ->size(Size::ExtraSmall)
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->headerActions([
-                UnavailableEquipment::make(),
+                UnavailableEquipment::make()->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->color('secondary')
                     ->fileName('Equipment Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait'),
+                    ->defaultPageOrientation('portrait')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

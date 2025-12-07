@@ -53,7 +53,7 @@ class ReservationSeeder extends Seeder
             $startDate = $faker->dateTimeThisYear();
             $createdAt = (clone $startDate)->modify('-' . rand(1, 7) . ' days');
             $endDate = (clone $startDate)->modify('+' . rand(1, 7) . ' days');
-        
+            
             $room = Room::inRandomOrder()->first();
         
             ReserveRoom::create([

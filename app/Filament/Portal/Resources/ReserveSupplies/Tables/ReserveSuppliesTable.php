@@ -174,7 +174,8 @@ class ReserveSuppliesTable
                         TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
                         TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
                         TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
-                    ]),
+                    ])
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

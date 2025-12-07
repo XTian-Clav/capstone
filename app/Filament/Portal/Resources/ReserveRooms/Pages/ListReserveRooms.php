@@ -18,7 +18,6 @@ class ListReserveRooms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            ApprovedScheduleAction::make(),
             CreateAction::make(),
         ];
     }

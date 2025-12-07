@@ -16,6 +16,10 @@ class EventInfolist
 {
     public static function configure(Schema $schema): Schema
     {
+        $registeredAttendees = function ($record) {
+            return $record->attendees()->get(); 
+        };
+
         return $schema
             ->components([
                 Section::make((fn ($record) => $record->event))
@@ -79,7 +83,7 @@ class EventInfolist
                         ->badge()
                         ->inlineLabel()
                         ->columnSpanFull()
-                        ->color('primary')
+                        ->color('gray')
                         ->label('Create At:')
                         ->formatStateUsing(fn ($state) => $state?->format('M j, Y'))
                         ->tooltip(fn ($state) => $state?->format('M j, Y h:i A')),
@@ -93,9 +97,9 @@ class EventInfolist
                         ->visible(fn (Event $record): bool => $record->trashed()),
                 ])->columnSpan(1)->compact(),
 
-                Section::make('Attendance List')
+                Section::make(fn ($record) => 'Attendance List for ' . $record->event)
                 ->schema([
-                    TextEntry::make('attendees.name')
+                    TextEntry::make('attendees.name') 
                         ->label('Registered Attendees')
                         ->placeholder('No users have registered attendance yet.')
                         ->listWithLineBreaks(),
@@ -103,23 +107,20 @@ class EventInfolist
                     TextEntry::make('registration_dates')
                         ->label('Registration Dates')
                         ->hiddenLabel(false)
-                        ->getStateUsing(function ($record) {
-                            $registrations = $record->attendees()->get();
-                            return $registrations->pluck('pivot.created_at');
-                        })
+                        ->getStateUsing(fn ($record) => $registeredAttendees($record)->pluck('pivot.created_at')) 
                         ->dateTime('M j, Y h:i A')
                         ->listWithLineBreaks()
                         ->placeholder('—'),
 
                     TextEntry::make('attendance_statuses')
                         ->badge()
+                        ->placeholder('—')
                         ->listWithLineBreaks()
                         ->label('Attendance Status')
-                        ->getStateUsing(fn ($record) => $record->attendees()->get()->pluck('pivot.is_attending'))
+                        ->getStateUsing(fn ($record) => $registeredAttendees($record)->pluck('pivot.is_attending'))
                         ->formatStateUsing(fn ($state) => $state ? 'Attending' : 'Not Attending')
                         ->color(fn ($state) => $state ? 'success' : 'danger')
                         ->columnSpan(1),
-
                 ])->columns(3)->columnSpanFull()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }

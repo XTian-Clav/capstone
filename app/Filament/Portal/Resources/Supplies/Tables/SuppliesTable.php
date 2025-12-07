@@ -112,16 +112,23 @@ class SuppliesTable
                 ])
                 ->icon('heroicon-o-bars-3')
                 ->color('gray')
-                ->size(Size::ExtraSmall),
+                ->size(Size::ExtraSmall)
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
+
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
             ])
             ->headerActions([
-                UnavailableSupply::make(),
+                UnavailableSupply::make()->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->color('secondary')
                     ->fileName('Supplies Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')
-                    ->defaultPageOrientation('landscape'),
+                    ->defaultPageOrientation('landscape')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
