@@ -8,6 +8,7 @@ use Spatie\Health\Facades\Health;
 use Illuminate\Support\ServiceProvider;
 use Filament\Tables\Enums\FiltersLayout;
 use BezhanSalleh\FilamentShield\Commands;
+use Filament\Tables\Enums\PaginationMode;
 use Spatie\Health\Checks\Checks\CacheCheck;
 use Spatie\Health\Checks\Checks\QueueCheck;
 use Spatie\Health\Checks\Checks\DatabaseCheck;
@@ -41,8 +42,8 @@ class AppServiceProvider extends ServiceProvider
             $table
                 ->filtersFormColumns(2)
                 ->filtersFormWidth(Width::ExtraLarge)
-                //->filtersLayout(FiltersLayout::Modal)
-                ->paginationPageOptions([10, 25, 50, 100]);
+                ->paginated([10, 25, 50, 100, 'all'])
+                ->paginationMode(PaginationMode::Cursor);
         });
     }
 }
