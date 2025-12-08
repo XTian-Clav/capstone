@@ -47,7 +47,7 @@ class StartupForm
                     RichEditor::make('description')
                         ->label('Description')
                         ->columnSpanFull()
-                        ->default('<p>Enter short description here.</p>')
+                        ->default('Enter short description here.')
                         ->toolbarButtons([
                             'bold',
                             'italic',

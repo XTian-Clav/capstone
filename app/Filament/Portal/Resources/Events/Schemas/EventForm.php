@@ -34,7 +34,7 @@ class EventForm
 
                     RichEditor::make('description')
                         ->label('Description')
-                        ->default('<p><em>Enter description here.</em></p>')
+                        ->default('Enter description here.')
                         ->columnSpanFull()
                         ->toolbarButtons([
                             'bold',

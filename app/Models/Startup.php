@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -59,5 +60,13 @@ class Startup extends Model
                 Storage::disk('public')->delete($startup->getOriginal('logo'));
             }
         });
+    }
+
+    protected function getLogoUrlAttribute(): string
+    {
+        if ($this->logo && File::exists(storage_path('app/public/' . $this->logo))) {
+            return asset('storage/' . $this->logo);
+        }
+        return asset('storage/default/no-image.png');
     }
 }

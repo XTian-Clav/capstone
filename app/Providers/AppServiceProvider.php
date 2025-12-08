@@ -5,6 +5,7 @@ namespace App\Providers;
 use Filament\Tables\Table;
 use Filament\Support\Enums\Width;
 use Spatie\Health\Facades\Health;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Filament\Tables\Enums\FiltersLayout;
 use BezhanSalleh\FilamentShield\Commands;
@@ -36,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
+
+        Paginator::useBootstrapfive();
 
         //Global Table Settings
         Table::configureUsing(function (Table $table): void {

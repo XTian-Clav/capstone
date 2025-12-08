@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\StartupController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        // User is logged in, redirect to dashboard
         return redirect('/portal');
     }
-    return view('landing');
+    
+    return (new LandingController())->index(); 
 });
 
-Route::get('startups', function () {
-    return view('startups');
-});
+Route::get('/startups', [StartupController::class, 'index']);
 
 Route::get('our-mission', function () {
     return view('our-mission');

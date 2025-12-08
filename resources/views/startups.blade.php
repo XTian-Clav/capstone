@@ -1,14 +1,10 @@
-@php
-    use App\Models\Startup;
-    $startups = Startup::where('status', 'Approved')->get();
-@endphp
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="icon" href="{{ asset('assets/favicon/favicon.ico') }}" type="image/x-icon">
@@ -84,21 +80,15 @@
             line-height: 1.5rem;
             text-align: justify;
             display: -webkit-box;
-            -webkit-line-clamp: 4;
+            -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
             overflow: hidden;
             flex-grow: 1;
         }
 
-        .startup-card a {
-            color: var(--primary-color);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .startup-card a:hover {
-            color: var(--secondary-color);
-        }
+        .pagination .page-link { font-family: 'Poppins', sans-serif; color: #333; }
+        .pagination .page-item.active .page-link { background: #FE800D; border-color: #FE800D; color: #fff; }
+        .pagination .page-link:focus { box-shadow: none; outline: none; }
     </style>
 </head>
 <body>
@@ -130,15 +120,9 @@
     <div class="startups-container">
         @forelse($startups as $startup)
             <div class="startup-card">
-                @php
-                    $logoPath =
-                        $startup->logo && file_exists(public_path('storage/' . $startup->logo))
-                            ? asset('storage/' . $startup->logo)
-                            : asset('storage/default/no-image.png');
-                @endphp
-                <img src="{{ $logoPath }}" alt="{{ $startup->startup_name }}" class="startup-logo">
+                <img src="{{ $startup->logo_url }}" alt="{{ $startup->startup_name }}" class="startup-logo">
                 <h3>{{ $startup->startup_name }}</h3>
-                <p>{!! str($startup->description)->sanitizeHtml() !!}</p>
+                <p>{{ Str::limit(strip_tags($startup->description), 200) }}</p>
                 <p><strong>Founder:</strong> {{ $startup->founder }}</p>
                 @if ($startup->url)
                     <a href="{{ $startup->url }}" target="_blank">Visit Website</a>
@@ -148,6 +132,11 @@
             <p style="text-align:center; color: var(--text-dark)">No startups found.</p>
         @endforelse
     </div>
+
+    <div class="d-flex justify-content-center my-3">
+        {{ $startups->links('pagination::bootstrap-5') }}
+    </div>
+
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="js/darkmode.js"></script>
     <script src="js/main.js"></script>

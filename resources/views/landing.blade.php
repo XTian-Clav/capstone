@@ -1,20 +1,3 @@
-@php
-    use App\Models\User;
-    use Spatie\Permission\Models\Role;
-
-    $startupCount = DB::table('startups')->count();
-    $eventCount = DB::table('events')->count();
-    $mentorCount = DB::table('mentors')->count();
-
-    // Check if the roles exist first
-    $investorRole = Role::where('name', 'investor')->first();
-    $incubateeRole = Role::where('name', 'incubatee')->first();
-
-    // Count users safely
-    $investorCount = $investorRole ? User::role('investor')->count() : 0;
-    $incubateeCount = $incubateeRole ? User::role('incubatee')->count() : 0;
-@endphp
-
 <!DOCTYPE html>
 <html lang="en">
 
