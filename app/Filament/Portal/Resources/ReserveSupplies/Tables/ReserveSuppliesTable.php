@@ -44,7 +44,7 @@ class ReserveSuppliesTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->poll('10s')
+            ->poll('60s')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
@@ -162,6 +162,7 @@ class ReserveSuppliesTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Supply Reservations Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

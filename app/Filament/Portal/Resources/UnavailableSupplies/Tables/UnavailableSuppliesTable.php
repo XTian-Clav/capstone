@@ -99,6 +99,7 @@ class UnavailableSuppliesTable
                 AvailableSupply::make(),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Unavailable Supplies Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

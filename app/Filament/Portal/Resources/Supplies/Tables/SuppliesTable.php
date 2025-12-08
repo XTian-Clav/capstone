@@ -124,6 +124,7 @@ class SuppliesTable
                 UnavailableSupply::make()->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Supplies Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

@@ -181,6 +181,7 @@ class EventsTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Events Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

@@ -50,7 +50,7 @@ class ReserveEquipmentTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->poll('10s')
+            ->poll('60s')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
@@ -168,6 +168,7 @@ class ReserveEquipmentTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Equipment Reservation Report - '. Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

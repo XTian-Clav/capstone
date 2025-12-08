@@ -146,6 +146,7 @@ class StartupsTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Startups Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

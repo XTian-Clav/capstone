@@ -143,6 +143,7 @@ class MentorsTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Mentors Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

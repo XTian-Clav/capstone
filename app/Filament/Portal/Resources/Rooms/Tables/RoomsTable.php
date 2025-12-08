@@ -134,6 +134,7 @@ class RoomsTable
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Rooms Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

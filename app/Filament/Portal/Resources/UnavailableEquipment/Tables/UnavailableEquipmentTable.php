@@ -99,6 +99,7 @@ class UnavailableEquipmentTable
                 AvailableEquipment::make(),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Unavailable Equipment Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')

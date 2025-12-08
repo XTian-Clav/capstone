@@ -28,6 +28,11 @@ class RoomResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Inventory';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

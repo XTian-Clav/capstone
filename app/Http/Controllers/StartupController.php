@@ -9,7 +9,7 @@ class StartupController extends Controller
 {
     public function index()
     {
-        $startups = Startup::where('status', 'Approved')->paginate(12);
+        $startups = Startup::where('status', 'Approved')->paginate(8);
         return view('startups', compact('startups'));
     }
 }

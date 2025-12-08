@@ -31,6 +31,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
+use App\Filament\Actions\Room\RoomSchedule;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use App\Filament\Actions\Room\RejectRoomAction;
@@ -46,7 +47,7 @@ class ReserveRoomsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->poll('10s')
+            ->poll('60s')
             ->deferLoading()
             ->recordUrl(null)
             ->deferFilters(false)
@@ -155,8 +156,10 @@ class ReserveRoomsTable
                 CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->headerActions([
+                RoomSchedule::make()->visible(fn () => auth()->user()->hasRole('incubatee')),
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
+                    ->size(Size::Small)
                     ->color('secondary')
                     ->fileName('Room Reservations Report - ' . Carbon::now()->format('F Y'))
                     ->defaultFormat('pdf')
