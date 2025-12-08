@@ -49,6 +49,9 @@ class ListReserveSupplies extends ListRecords
                     ? ReserveSupply::where('status', 'completed')->count()
                     : ReserveSupply::where('status', 'completed')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
+
+            'all' => Tab::make('All')
+                ->badge(fn () => ReserveSupply::count()),
         ];
 
         return $tabs;

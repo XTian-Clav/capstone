@@ -101,7 +101,7 @@ class UnavailableSuppliesTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Unavailable Supplies Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Unavailable Supplies Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

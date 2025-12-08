@@ -136,7 +136,7 @@ class RoomsTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Rooms Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Rooms Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

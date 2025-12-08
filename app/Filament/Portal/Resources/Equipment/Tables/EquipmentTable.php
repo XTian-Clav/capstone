@@ -133,7 +133,7 @@ class EquipmentTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Equipment Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Equipment Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

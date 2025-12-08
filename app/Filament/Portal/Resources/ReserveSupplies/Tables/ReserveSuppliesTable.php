@@ -164,14 +164,15 @@ class ReserveSuppliesTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Supply Reservations Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Supply Reservations Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->disableTableColumns()
                     ->withColumns([
                         TextColumn::make('supply.item_name'),
-                        TextColumn::make('status'),
+                        TextColumn::make('quantity'),
                         TextColumn::make('reserved_by'),
+                        TextColumn::make('status'),
                         TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
                         TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
                         TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),

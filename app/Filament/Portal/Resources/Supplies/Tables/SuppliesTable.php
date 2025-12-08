@@ -126,7 +126,7 @@ class SuppliesTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Supplies Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Supplies Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('landscape')
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

@@ -42,6 +42,9 @@ class ListEvents extends ListRecords
             'Cancelled' => Tab::make('Cancelled')
                 ->badge(fn () => Event::where('status', 'Cancelled')->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'Cancelled')),
+
+            'all' => Tab::make('All')
+                ->badge(fn () => Event::count()),
         ];
         // Add archive tab only for SuperAdmin
         if ($user->hasRole('super_admin')) {

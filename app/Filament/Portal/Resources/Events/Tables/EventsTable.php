@@ -183,7 +183,7 @@ class EventsTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Events Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Events Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->disableTableColumns()

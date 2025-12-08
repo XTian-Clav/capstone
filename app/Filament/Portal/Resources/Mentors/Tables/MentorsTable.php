@@ -145,7 +145,7 @@ class MentorsTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Mentors Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Mentors Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->disableTableColumns()

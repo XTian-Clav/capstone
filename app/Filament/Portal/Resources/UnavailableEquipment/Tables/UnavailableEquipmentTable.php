@@ -101,7 +101,7 @@ class UnavailableEquipmentTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Unavailable Equipment Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Unavailable Equipment Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),

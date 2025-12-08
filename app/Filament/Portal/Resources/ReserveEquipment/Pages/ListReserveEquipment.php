@@ -49,6 +49,9 @@ class ListReserveEquipment extends ListRecords
                     ? ReserveEquipment::where('status', 'completed')->count()
                     : ReserveEquipment::where('status', 'completed')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
+
+            'all' => Tab::make('All')
+                ->badge(fn () => ReserveEquipment::count()),
         ];
 
         return $tabs;

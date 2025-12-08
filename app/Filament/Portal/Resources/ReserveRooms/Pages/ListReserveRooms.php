@@ -51,6 +51,9 @@ class ListReserveRooms extends ListRecords
                     ? ReserveRoom::where('status', 'completed')->count()
                     : ReserveRoom::where('status', 'completed')->where('user_id', $user->id)->count())
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
+
+            'all' => Tab::make('All')
+                ->badge(fn () => ReserveRoom::count()),
         ];
 
         return $tabs;

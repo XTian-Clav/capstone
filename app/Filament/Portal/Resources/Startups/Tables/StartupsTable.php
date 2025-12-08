@@ -148,7 +148,7 @@ class StartupsTable
                     ->outlined()
                     ->size(Size::Small)
                     ->color('secondary')
-                    ->fileName('Startups Report - ' . Carbon::now()->format('F Y'))
+                    ->fileName('Startups Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')
                     ->disableTableColumns()
