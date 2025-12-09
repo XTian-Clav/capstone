@@ -2,23 +2,23 @@
 
 namespace App\Filament\Portal\Resources\ReserveRooms;
 
-use App\Filament\Portal\Resources\ReserveRooms\Pages\CreateReserveRoom;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\EditReserveRoom;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\ListReserveRooms;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
-use App\Filament\Portal\Resources\ReserveRooms\Schemas\ReserveRoomForm;
-use App\Filament\Portal\Resources\ReserveRooms\Schemas\ReserveRoomInfolist;
-use App\Filament\Portal\Resources\ReserveRooms\Tables\ReserveRoomsTable;
-use App\Models\ReserveRoom;
+use UnitEnum;
 use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use App\Models\ReserveRoom;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use UnitEnum;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintFile;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\EditReserveRoom;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\ListReserveRooms;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\CreateReserveRoom;
+use App\Filament\Portal\Resources\ReserveRooms\Schemas\ReserveRoomForm;
+use App\Filament\Portal\Resources\ReserveRooms\Tables\ReserveRoomsTable;
+use App\Filament\Portal\Resources\ReserveRooms\Schemas\ReserveRoomInfolist;
 
 class ReserveRoomResource extends Resource
 {
@@ -69,6 +69,7 @@ class ReserveRoomResource extends Resource
             'create' => CreateReserveRoom::route('/create'),
             'view' => ViewReserveRoom::route('/{record}'),
             'edit' => EditReserveRoom::route('/{record}/edit'),
+            'PrintFile' => PrintFile::route('/{record}/PrintFile'),
         ];
     }
 

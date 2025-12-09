@@ -39,6 +39,7 @@ use App\Filament\Actions\Room\ApproveRoomAction;
 use App\Filament\Actions\Room\CompleteRoomAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintFile;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
@@ -136,6 +137,12 @@ class ReserveRoomsTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    Action::make('print_pdf')
+                        ->color('secondary')
+                        ->label('Print')
+                        ->icon('heroicon-s-document-text')
+                        ->url(fn ($record) => PrintFile::getUrl(['record' => $record->id]))
+                        ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -151,6 +158,15 @@ class ReserveRoomsTable
                 ViewAction::make('alt_view')
                     ->button()
                     ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                Action::make('print_pdf')
+                    ->button()
+                    ->outlined()
+                    ->color('secondary')
+                    ->label('Print')
+                    ->icon('heroicon-o-document')
+                    ->url(fn ($record) => PrintFile::getUrl(['record' => $record->id]))
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
                 ApproveRoomAction::make()->outlined()->size(Size::ExtraSmall),

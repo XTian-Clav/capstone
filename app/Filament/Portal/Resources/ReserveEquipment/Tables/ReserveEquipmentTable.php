@@ -42,6 +42,7 @@ use App\Filament\Actions\Equipment\RejectEquipmentAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Actions\Equipment\ApproveEquipmentAction;
 use App\Filament\Actions\Equipment\CompleteEquipmentAction;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintFile;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
@@ -161,6 +162,15 @@ class ReserveEquipmentTable
                 ViewAction::make('alt_view')
                     ->button()
                     ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                Action::make('print_pdf')
+                    ->button()
+                    ->outlined()
+                    ->color('primary')
+                    ->label('Print PDF')
+                    ->icon('heroicon-s-document')
+                    ->url(fn ($record) => PrintFile::getUrl(['record' => $record->id]))
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
                 ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
