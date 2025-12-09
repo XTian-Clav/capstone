@@ -120,7 +120,8 @@ class ReserveRoomsTable
                             ->toArray()
                     )
                     ->searchable() 
-                    ->placeholder('All Reservers'),
+                    ->placeholder('All Reservers')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
                 
                 SelectFilter::make('room')
                     ->label('Room')
@@ -128,6 +129,7 @@ class ReserveRoomsTable
                     ->searchable()
                     ->preload()
                     ->placeholder('All Room')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
                 ActionGroup::make([

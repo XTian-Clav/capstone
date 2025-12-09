@@ -82,14 +82,13 @@ class MilestonesTable
                     ->searchable()
                     ->native(false)
                     ->options(User::pluck('name', 'id'))
-                    ->query(function ($query, $data) {
-                        if (blank($data['value'])) {
-                            return $query;
-                        }
-                        return $query->whereHas('startup', fn ($q) =>
-                            $q->where('user_id', $data['value'])
-                        );
-                    })
+                    ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    
+                SelectFilter::make('startup_name')
+                    ->label('Startup Name')
+                    ->searchable()
+                    ->native(false)
+                    ->options(fn () => Startup::where('status', 'Approved')->pluck('startup_name', 'id'))
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])
             ->recordActions([

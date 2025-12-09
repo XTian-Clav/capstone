@@ -130,14 +130,16 @@ class ReserveEquipmentTable
                             ->toArray()
                     )
                     ->searchable() 
-                    ->placeholder('All Reservers'),
+                    ->placeholder('All Reservers')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
                 
                 SelectFilter::make('equipment')
                     ->label('Equipment')
                     ->relationship('equipment', 'equipment_name', fn (Builder $query) => $query->where('quantity', '>', 0))
                     ->searchable()
                     ->preload()
-                    ->placeholder('All Equipment'),
+                    ->placeholder('All Equipment')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
                 ActionGroup::make([

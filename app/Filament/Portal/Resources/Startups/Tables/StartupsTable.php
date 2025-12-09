@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Resources\Startups\Tables;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Startup;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -112,6 +113,12 @@ class StartupsTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('founder')
+                    ->label('Founder')
+                    ->options(Startup::pluck('founder', 'founder'))
+                    ->searchable()
+                    ->placeholder('All Founders')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
                 ActionGroup::make([
