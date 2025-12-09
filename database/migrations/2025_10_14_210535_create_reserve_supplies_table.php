@@ -23,10 +23,8 @@ return new class extends Migration
             $table->string('email');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->boolean('accept_terms')->default(false)->nullable();
             $table->text('admin_comment')->nullable();
             $table->timestamps();
-            $table->softDeletes(); //optional
         });
     }
 

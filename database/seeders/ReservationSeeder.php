@@ -44,7 +44,7 @@ class ReservationSeeder extends Seeder
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'created_at'=> $createdAt,
-                'accept_terms' => true,
+                
             ]);
         }
 
@@ -66,7 +66,6 @@ class ReservationSeeder extends Seeder
                 'email' => $faker->safeEmail(),
                 'start_date' => $startDate,
                 'end_date' => $endDate,
-                'accept_terms' => true,
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
             ]);
@@ -89,7 +88,6 @@ class ReservationSeeder extends Seeder
                 'email' => $faker->safeEmail(),
                 'start_date' => $startDate,
                 'end_date' => $endDate,
-                'accept_terms' => true,
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt,
             ]);

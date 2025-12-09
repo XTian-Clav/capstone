@@ -20,7 +20,6 @@ class ReserveRoom extends Model
         'email',
         'start_date',
         'end_date',
-        'accept_terms',
         'admin_comment',
     ];
 

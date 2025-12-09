@@ -9,10 +9,12 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
+use App\Filament\Actions\Room\RoomTerms;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
@@ -57,80 +59,65 @@ class ReserveRoomForm
                             ->readOnly(fn ($record, $context) => $context === 'edit')
                             ->default(fn () => auth()->user()?->hasRole('incubatee') ? auth()->user()?->email : null)
                             ->required(),
-                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
+                    ])->columnSpan(2)->columns(2)->compact(),
 
                     Section::make()
                     ->schema([
                         ReservationValidation::roomStartDate('room_id', ReserveRoom::class),
                         ReservationValidation::roomEndDate('room_id', ReserveRoom::class),
                         Text::make('Overnight schedules are allowed for Room reservations.')->columnSpanFull(),
-                    ])->columnSpan(2)->columns(2)->compact()->secondary(),
-                    
-                Section::make()
-                    ->collapsed()->description('Guidelines')
-                    ->schema([
-                        Text::make(new HtmlString('
-                            <div style="text-align: justify; font-size: 0.85rem; line-height: 1.5; font-family: monospace;">
-                                ● Follow PITBI’s operating hours.<br>
-                                ● Turn off all electronics and lights before leaving.<br>
-                                ● Keep the space clean and dispose of trash properly.<br>
-                                ● Respect shared spaces and other occupants.<br>
-                                ● Securely lock doors and report any security concerns.<br>
-                                ● Complete a Client Satisfaction Measurement after the event.<br><br>
-                                PITBI reserves the right to approve or deny reservations based on availability and compliance.
-                            </div>
-                        ')),
-
-                        Checkbox::make('accept_terms')
-                        ->label('I agree to abide by these terms.')
-                        ->required()
-                        ->rules(['accepted'])
-                        ->columnSpan('full'),
-                    ])->columnSpanFull()->compact()->secondary(),
-
+                    ])->columnSpan(2)->columns(2)->compact(),
                 ])->columnSpan(2)->columns(2)->compact(),
 
-                Section::make('Select Room')
+                Grid::make()
                 ->schema([
-                    Select::make('room_id')
-                        ->hiddenLabel()
-                        ->placeholder('Select room')
-                        ->options(fn() => Room::where('is_available', true)->pluck('room_type', 'id'))
-                        ->disabled(fn ($record, $context) => $context === 'edit')
-                        ->searchable()
-                        ->required()
-                        ->reactive(),
-                    
-                    Placeholder::make('room_details')
-                        ->hiddenLabel()
-                        ->content(function ($get) {
-                            $room = Room::find($get('room_id'));
-                            if (! $room) return '';
-                            $html = '';
+                    Section::make('Select Room')
+                    ->schema([
+                        Select::make('room_id')
+                            ->hiddenLabel()
+                            ->placeholder('Select room')
+                            ->options(fn() => Room::where('is_available', true)->pluck('room_type', 'id'))
+                            ->disabled(fn ($record, $context) => $context === 'edit')
+                            ->searchable()
+                            ->required()
+                            ->reactive(),
+                        
+                        Placeholder::make('room_details')
+                            ->hiddenLabel()
+                            ->content(function ($get) {
+                                $room = Room::find($get('room_id'));
+                                if (! $room) return '';
+                                $html = '';
 
-                            // Room preview image
-                            if ($room->picture) {
-                                $url = Storage::url($room->picture);
-                                $html .= "<div style='max-width:400px;aspect-ratio:16/9;margin-bottom:0.5rem;'>
-                                            <img src='{$url}' style='width:100%;height:100%;object-fit:cover;border-radius:0.5rem;'>
+                                // Room preview image
+                                if ($room->picture) {
+                                    $url = Storage::url($room->picture);
+                                    $html .= "<div style='max-width:400px;aspect-ratio:16/9;margin-bottom:0.5rem;'>
+                                                <img src='{$url}' style='width:100%;height:100%;object-fit:cover;border-radius:0.5rem;'>
+                                            </div>";
+                                }
+                                // Room capacity
+                                $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.20rem 0.5rem;border-radius:0.5rem;'>
+                                            Capacity: {$room->capacity}
                                         </div>";
-                            }
-                            // Room capacity
-                            $html .= "<div style='display:inline-block;background-color:#013267;color:white;padding:0.20rem 0.5rem;border-radius:0.5rem;'>
-                                        Capacity: {$room->capacity}
-                                    </div>";
 
-                            // Room inclusions
-                            if ($room->inclusions) {
-                                $html .= "<div style='margin-top:0.5rem;'>Inclusions: {$room->inclusions}</div>";
-                            }
+                                // Room inclusions
+                                if ($room->inclusions) {
+                                    $html .= "<div style='margin-top:0.5rem;'>Inclusions: {$room->inclusions}</div>";
+                                }
 
-                            return $html;
-                        })
-                        ->reactive()
-                        ->html(),
-                ])->compact(),
-                
+                                return $html;
+                            })
+                            ->reactive()
+                            ->html(),
+                    ])->columnSpanFull()->compact(),
+                    
+                    Section::make()
+                    ->schema([
+                        RoomTerms::make(),
+                    ])->columnSpanFull()->compact(),
+                ])->columnSpan(1),
+
                 Section::make('Admin Review')
                 ->schema([
                     Select::make('status')
