@@ -2,23 +2,10 @@
 
 namespace App\Filament\Portal\Resources\Supplies\Schemas;
 
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-
-use Filament\Forms;
-use Filament\Tables;
-use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Forms\Form;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\BadgeColumn;
-use Illuminate\Support\Facades\Storage;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\FileUpload;
 
 class SupplyForm
 {

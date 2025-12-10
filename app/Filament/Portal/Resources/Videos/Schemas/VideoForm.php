@@ -2,13 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Videos\Schemas;
 
-use Filament\Actions\Action;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 
 class VideoForm
 {

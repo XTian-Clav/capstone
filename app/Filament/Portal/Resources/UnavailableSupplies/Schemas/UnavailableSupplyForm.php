@@ -2,13 +2,11 @@
 
 namespace App\Filament\Portal\Resources\UnavailableSupplies\Schemas;
 
-use Closure;
 use App\Models\Supply;
 use Filament\Schemas\Schema;
 use App\Models\UnavailableSupply;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\FileUpload;
