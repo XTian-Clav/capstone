@@ -12,6 +12,7 @@ class PrintRoomAction extends Action
         return parent::make($name ?? 'back')
             ->color('primary')
             ->label('Print')
-            ->icon('heroicon-s-printer');
+            ->icon('heroicon-s-printer')
+            ->url(route('PrintRoom'));
     }
 }

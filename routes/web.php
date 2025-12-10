@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\StartupController;
+use App\Http\Controllers\PrintRoomController;
+use App\Http\Controllers\PrintSupplyController;
+use App\Http\Controllers\PrintEquipmentController;
 
+//Landing Pages
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect('/portal');
@@ -26,3 +30,9 @@ Route::get('contact', function () {
     return view('contact');
 });
 
+//Print Function
+Route::get('/portal/print-room', [PrintRoomController::class, 'PrintRoom'])->name('PrintRoom');
+
+Route::get('/portal/print-supply', [PrintSupplyController::class, 'PrintSupply'])->name('PrintSupply');
+
+Route::get('/portal/print-equipment', [PrintEquipmentController::class, 'PrintEquipment'])->name('PrintEquipment');

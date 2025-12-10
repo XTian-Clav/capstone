@@ -22,35 +22,39 @@
         <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;">
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left; width: 35%;">Company</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Docufy</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->company }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Reserved By</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">John Doe</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->reserved_by }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Email</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Docufy@gmail.com</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->email }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Contact Number</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">0123456789</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->contact }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Room</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Innovation Lab</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->room->room_type }}</td>
+            </tr>
+            <tr>
+                <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Location</th>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->room->location }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Inclusions</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">None</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->room->inclusions }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Start Date</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">December 10, 2025 - 09:00 AM</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->start_date }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">End Date</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">December 10, 2025 - 12:00 PM</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveRoom->end_date }}</td>
             </tr>
         </table>
 
@@ -90,7 +94,7 @@
 
         <!-- Footer -->
         <div style="text-align: right; font-size: 12px; opacity: 0.7; margin-top: 40px;">
-            Reservation Form Generated on December 10, 2025
+            Generated on {{ now()->format('M-d-Y') }}
         </div>
 
     </div>

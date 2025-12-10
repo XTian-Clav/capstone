@@ -22,35 +22,35 @@
         <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;">
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left; width: 35%;">Company</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Docufy</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->company }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Reserved By</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">John Doe</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->reserved_by }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Email</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Docufy@gmail.com</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->email }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Contact Number</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">0123456789</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->contact }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Supply</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">Innovation Lab</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->supply->item_name }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Quantity</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">1 pc/s</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->quantity }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Start Date</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">December 10, 2025 - 09:00 AM</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->start_date }}</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">End Date</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">December 10, 2025 - 12:00 PM</td>
+                <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveSupply->end_date }}</td>
             </tr>
         </table>
 
@@ -90,7 +90,7 @@
 
         <!-- Footer -->
         <div style="text-align: right; font-size: 12px; opacity: 0.7; margin-top: 40px;">
-            Reservation Form Generated on December 10, 2025
+            Generated on {{ now()->format('M-d-Y') }}
         </div>
 
     </div>
