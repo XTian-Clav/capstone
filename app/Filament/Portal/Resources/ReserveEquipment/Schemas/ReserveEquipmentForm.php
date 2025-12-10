@@ -10,11 +10,11 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
-use App\Filament\Actions\EquipmentTerms;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use App\Filament\Forms\ReservationValidation;
+use App\Filament\Actions\Equipment\EquipmentTerms;
 
 class ReserveEquipmentForm
 {

@@ -5,7 +5,6 @@ namespace App\Filament\Portal\Resources\ReserveSupplies\Schemas;
 use App\Models\Supply;
 use Filament\Schemas\Schema;
 use App\Models\ReserveSupply;
-use App\Filament\Actions\SupplyTerms;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Text;
@@ -14,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
+use App\Filament\Actions\Supply\SupplyTerms;
 use App\Filament\Forms\ReservationValidation;
 
 class ReserveSupplyForm
