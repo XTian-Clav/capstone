@@ -31,8 +31,8 @@ Route::get('contact', function () {
 });
 
 //Print Function
-Route::get('/portal/print-room', [PrintRoomController::class, 'PrintRoom'])->name('PrintRoom');
+Route::get('/portal/print-room/{id}', [PrintRoomController::class, 'PrintRoom'])->name('PrintRoom');
 
-Route::get('/portal/print-supply', [PrintSupplyController::class, 'PrintSupply'])->name('PrintSupply');
+Route::get('/portal/print-supply/{id}', [PrintSupplyController::class, 'PrintSupply'])->name('PrintSupply');
 
-Route::get('/portal/print-equipment', [PrintEquipmentController::class, 'PrintEquipment'])->name('PrintEquipment');
+Route::get('/portal/print-equipment/{id}', [PrintEquipmentController::class, 'PrintEquipment'])->name('PrintEquipment');

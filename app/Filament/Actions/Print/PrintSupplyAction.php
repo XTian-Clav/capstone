@@ -12,7 +12,6 @@ class PrintSupplyAction extends Action
         return parent::make($name ?? 'back')
             ->color('primary')
             ->label('Print')
-            ->icon('heroicon-s-printer')
-            ->url(route('PrintSupply'));
+            ->icon('heroicon-s-printer');
     }
 }
