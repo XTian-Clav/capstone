@@ -5,12 +5,12 @@ namespace App\Filament\Portal\Resources\ReserveSupplies\Schemas;
 use App\Models\Supply;
 use Filament\Schemas\Schema;
 use App\Models\ReserveSupply;
+use App\Filament\Actions\SupplyTerms;
 use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
-use App\Filament\Actions\EquipmentTerms;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
@@ -127,7 +127,7 @@ class ReserveSupplyForm
 
                     Section::make()
                     ->schema([
-                        EquipmentTerms::make(),
+                        SupplyTerms::make(),
                     ])->columnSpanFull()->compact(),
                 ])->columnSpan(1),
 

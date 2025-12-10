@@ -37,12 +37,12 @@
                 <td style="border: 1px solid #aaa; padding: 10px;">0123456789</td>
             </tr>
             <tr>
-                <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Room</th>
+                <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Supply</th>
                 <td style="border: 1px solid #aaa; padding: 10px;">Innovation Lab</td>
             </tr>
             <tr>
-                <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Inclusions</th>
-                <td style="border: 1px solid #aaa; padding: 10px;">None</td>
+                <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Quantity</th>
+                <td style="border: 1px solid #aaa; padding: 10px;">1 pc/s</td>
             </tr>
             <tr>
                 <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Start Date</th>
@@ -67,15 +67,11 @@
             </ul>
         </div>      
 
-        <!-- Signature / Date -->
-        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-            <div style="flex: 1; margin-right: 20px; font-size: 12px;">
+        <!-- Signature -->
+        <div style="margin-top: 20px;">
+            <div style="max-width: 200px; font-size: 12px;">
                 <p>Borrower’s Name and Signature:</p>
-                <div style="margin-top: 20px; width: 80%; border-top: 1px solid #000;"></div>
-            </div>
-            <div style="flex: 1; margin-left: 20px; font-size: 12px;">
-                <p>Date Borrowed:</p>
-                <div style="margin-top: 20px; width: 80%; border-top: 1px solid #000;"></div>
+                <div style="margin-top: 20px; width: 100%; border-top: 1px solid #000;"></div>
             </div>
         </div>
 

@@ -67,15 +67,11 @@
             </ul>
         </div>      
 
-        <!-- Signature / Date -->
-        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-            <div style="flex: 1; margin-right: 20px; font-size: 12px;">
+        <!-- Signature -->
+        <div style="margin-top: 20px;">
+            <div style="max-width: 200px; font-size: 12px;">
                 <p>Borrower’s Name and Signature:</p>
-                <div style="margin-top: 20px; width: 80%; border-top: 1px solid #000;"></div>
-            </div>
-            <div style="flex: 1; margin-left: 20px; font-size: 12px;">
-                <p>Date Borrowed:</p>
-                <div style="margin-top: 20px; width: 80%; border-top: 1px solid #000;"></div>
+                <div style="margin-top: 20px; width: 100%; border-top: 1px solid #000;"></div>
             </div>
         </div>
 
