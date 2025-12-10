@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\ReserveEquipment\Pages;
 
 use Filament\Resources\Pages\Page;
 use App\Filament\Actions\BackButton;
+use App\Filament\Actions\Print\PrintEquipmentAction;
 use App\Filament\Portal\Resources\ReserveEquipment\ReserveEquipmentResource;
 
 class PrintEquipment extends Page
@@ -16,6 +17,7 @@ class PrintEquipment extends Page
     {
         return [
             BackButton::make(),
+            PrintEquipmentAction::make(),
         ];
     }
 }

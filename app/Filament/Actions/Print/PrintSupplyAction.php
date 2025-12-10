@@ -10,9 +10,8 @@ class PrintSupplyAction extends Action
     public static function make(?string $name = null): static
     {
         return parent::make($name ?? 'back')
-            ->color('secondary')
+            ->color('primary')
             ->label('Print')
-            ->icon('heroicon-s-document-text')
-            ->url(fn ($record) => PrintSupply::getUrl(['record' => $record->id]));
+            ->icon('heroicon-s-printer');
     }
 }

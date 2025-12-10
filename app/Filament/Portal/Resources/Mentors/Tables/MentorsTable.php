@@ -2,41 +2,27 @@
 
 namespace App\Filament\Portal\Resources\Mentors\Tables;
 
-use Carbon\Carbon;
-use App\Models\Mentor;
 use App\Models\Startup;
 use Filament\Tables\Table;
-use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
 use Filament\Actions\ActionGroup;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\RestoreAction;
-use Filament\Tables\Filters\Filter;
 use Filament\Support\Icons\Heroicon;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Actions\ArchiveAction;
 use App\Filament\Filters\EndDateFilter;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\SelectColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class MentorsTable
@@ -52,8 +38,6 @@ class MentorsTable
             ->emptyStateIcon('heroicon-o-identification')
             ->emptyStateHeading('No mentors found')
             ->emptyStateDescription('All mentors will appear here once its created.')
-
-            //->contentGrid(['xl' => 2])
             ->columns([
                 Split::make ([
                     ImageColumn::make('avatar')

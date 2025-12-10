@@ -2,42 +2,26 @@
 
 namespace App\Filament\Portal\Resources\ReserveSupplies\Tables;
 
-use Carbon\Carbon;
 use Filament\Tables\Table;
-use Filament\Actions\Action;
 use App\Models\ReserveSupply;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use App\Filament\Actions\ArchiveAction;
 use App\Filament\Filters\EndDateFilter;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Enums\FiltersLayout;
 use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\TrashedFilter;
-use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
-use Filament\Actions\ForceDeleteBulkAction;
-use App\Filament\Actions\Print\PrintSupplyAction;
+use App\Filament\Actions\Print\ViewSupplyAction;
 use App\Filament\Actions\Supply\RejectSupplyAction;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Actions\Supply\ApproveSupplyAction;
 use App\Filament\Actions\Supply\CompleteSupplyAction;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class ReserveSuppliesTable
@@ -141,7 +125,7 @@ class ReserveSuppliesTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    PrintSupplyAction::make()
+                    ViewSupplyAction::make()
                         ->visible(fn ($record) =>
                             $record?->status === 'Approved' &&
                             auth()->user()->hasAnyRole(['super_admin', 'admin'])
@@ -163,7 +147,7 @@ class ReserveSuppliesTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                PrintSupplyAction::make('print_pdf')
+                ViewSupplyAction::make('print_pdf')
                     ->button()
                     ->outlined()
                     ->visible(fn ($record) =>

@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\ReserveRooms\Pages;
 
 use Filament\Resources\Pages\Page;
 use App\Filament\Actions\BackButton;
+use App\Filament\Actions\Print\PrintRoomAction;
 use App\Filament\Portal\Resources\ReserveRooms\ReserveRoomResource;
 
 class PrintRoom extends Page
@@ -16,6 +17,7 @@ class PrintRoom extends Page
     {
         return [
             BackButton::make(),
+            PrintRoomAction::make(),
         ];
     }
 }

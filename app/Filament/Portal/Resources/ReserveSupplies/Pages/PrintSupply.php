@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\ReserveSupplies\Pages;
 
 use Filament\Resources\Pages\Page;
 use App\Filament\Actions\BackButton;
+use App\Filament\Actions\Print\PrintSupplyAction;
 use App\Filament\Portal\Resources\ReserveSupplies\ReserveSupplyResource;
 
 class PrintSupply extends Page
@@ -16,6 +17,7 @@ class PrintSupply extends Page
     {
         return [
             BackButton::make(),
+            PrintSupplyAction::make(),
         ];
     }
 }

@@ -13,11 +13,9 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Filters\EndDateFilter;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Columns\Layout\Stack;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\CreatedDateFilter;
 
