@@ -147,7 +147,11 @@ class ReserveEquipmentTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    PrintEquipmentAction::make()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])), 
+                    PrintEquipmentAction::make()
+                        ->visible(fn ($record) =>
+                            $record?->status === 'Approved' &&
+                            auth()->user()->hasAnyRole(['super_admin', 'admin'])
+                        ),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -168,7 +172,10 @@ class ReserveEquipmentTable
                 PrintEquipmentAction::make('print_pdf')
                     ->button()
                     ->outlined()
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ->visible(fn ($record) =>
+                        $record?->status === 'Approved' &&
+                        auth()->user()->hasRole('incubatee')
+                    ),
 
                 ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),

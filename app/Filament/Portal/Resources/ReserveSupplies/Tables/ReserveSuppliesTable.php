@@ -141,7 +141,11 @@ class ReserveSuppliesTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    PrintSupplyAction::make()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    PrintSupplyAction::make()
+                        ->visible(fn ($record) =>
+                            $record?->status === 'Approved' &&
+                            auth()->user()->hasAnyRole(['super_admin', 'admin'])
+                        ),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -162,7 +166,10 @@ class ReserveSuppliesTable
                 PrintSupplyAction::make('print_pdf')
                     ->button()
                     ->outlined()
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ->visible(fn ($record) =>
+                        $record?->status === 'Approved' &&
+                        auth()->user()->hasRole('incubatee')
+                    ),
 
                 ApproveSupplyAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectSupplyAction::make()->outlined()->size(Size::ExtraSmall),

@@ -139,7 +139,11 @@ class ReserveRoomsTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    PrintRoomAction::make()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),                        
+                    PrintRoomAction::make()
+                        ->visible(fn ($record) =>
+                            $record?->status === 'Approved' &&
+                            auth()->user()->hasAnyRole(['super_admin', 'admin'])
+                        ),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -160,7 +164,10 @@ class ReserveRoomsTable
                 PrintRoomAction::make()
                     ->button()
                     ->outlined()
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    ->visible(fn ($record) =>
+                        $record?->status === 'Approved' &&
+                        auth()->user()->hasRole('incubatee')
+                    ),
 
                 ApproveRoomAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectRoomAction::make()->outlined()->size(Size::ExtraSmall),
