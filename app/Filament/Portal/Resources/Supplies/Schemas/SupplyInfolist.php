@@ -4,9 +4,7 @@ namespace App\Filament\Portal\Resources\Supplies\Schemas;
 
 use App\Models\Supply;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 

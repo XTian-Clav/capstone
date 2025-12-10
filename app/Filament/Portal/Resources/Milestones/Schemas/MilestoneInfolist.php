@@ -5,7 +5,6 @@ namespace App\Filament\Portal\Resources\Milestones\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 
 class MilestoneInfolist

@@ -5,13 +5,10 @@ namespace App\Filament\Portal\Resources\Mentors\Schemas;
 use App\Models\Mentor;
 use App\Models\Startup;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 
 class MentorInfolist
 {

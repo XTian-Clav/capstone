@@ -5,9 +5,7 @@ namespace App\Filament\Portal\Resources\Rooms\Schemas;
 use Carbon\Carbon;
 use App\Models\Room;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 

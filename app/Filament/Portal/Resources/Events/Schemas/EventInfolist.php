@@ -2,15 +2,11 @@
 
 namespace App\Filament\Portal\Resources\Events\Schemas;
 
-use App\Models\event;
+use App\Models\Event;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 
 class EventInfolist
 {

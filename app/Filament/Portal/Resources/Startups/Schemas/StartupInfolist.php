@@ -6,17 +6,13 @@ use App\Models\Mentor;
 use App\Models\Startup;
 use Filament\Actions\Action;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
 use Filament\Schemas\Components\Grid;
 use Illuminate\Support\Facades\Storage;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Hugomyb\FilamentMediaAction\Actions\MediaAction;
-use App\Filament\Actions\Startup\RejectStartupAction;
-use App\Filament\Actions\Startup\ApproveStartupAction;
 
 class StartupInfolist
 {

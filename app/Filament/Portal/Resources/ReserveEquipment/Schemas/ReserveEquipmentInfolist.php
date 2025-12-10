@@ -2,15 +2,11 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment\Schemas;
 
-use App\Models\Equipment;
-use App\Models\ReserveEquipment;
 use Filament\Schemas\Schema;
-use Illuminate\Support\HtmlString;
+use App\Models\ReserveEquipment;
 use Filament\Schemas\Components\Section;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
-use Illuminate\Support\Facades\Storage;
 
 class ReserveEquipmentInfolist
 {
