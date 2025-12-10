@@ -2,23 +2,23 @@
 
 namespace App\Filament\Portal\Resources\ReserveEquipment;
 
-use App\Filament\Portal\Resources\ReserveEquipment\Pages\CreateReserveEquipment;
+use UnitEnum;
+use BackedEnum;
+use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use App\Models\ReserveEquipment;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Portal\Resources\ReserveEquipment\Pages\PrintEquipment;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\EditReserveEquipment;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ListReserveEquipment;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
+use App\Filament\Portal\Resources\ReserveEquipment\Pages\CreateReserveEquipment;
 use App\Filament\Portal\Resources\ReserveEquipment\Schemas\ReserveEquipmentForm;
-use App\Filament\Portal\Resources\ReserveEquipment\Schemas\ReserveEquipmentInfolist;
 use App\Filament\Portal\Resources\ReserveEquipment\Tables\ReserveEquipmentTable;
-use App\Models\ReserveEquipment;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use UnitEnum;
+use App\Filament\Portal\Resources\ReserveEquipment\Schemas\ReserveEquipmentInfolist;
 
 class ReserveEquipmentResource extends Resource
 {
@@ -69,6 +69,7 @@ class ReserveEquipmentResource extends Resource
             'create' => CreateReserveEquipment::route('/create'),
             'view' => ViewReserveEquipment::route('/{record}'),
             'edit' => EditReserveEquipment::route('/{record}/edit'),
+            'PrintEquipment' => PrintEquipment::route('/{record}/PrintEquipment'),
         ];
     }
 

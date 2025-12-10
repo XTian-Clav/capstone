@@ -32,6 +32,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Print\PrintSupplyAction;
 use App\Filament\Actions\Supply\RejectSupplyAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Actions\Supply\ApproveSupplyAction;
@@ -140,6 +141,7 @@ class ReserveSuppliesTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    PrintSupplyAction::make()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -155,6 +157,11 @@ class ReserveSuppliesTable
                 ViewAction::make('alt_view')
                     ->button()
                     ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                PrintSupplyAction::make('print_pdf')
+                    ->button()
+                    ->outlined()
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
                 ApproveSupplyAction::make()->outlined()->size(Size::ExtraSmall),

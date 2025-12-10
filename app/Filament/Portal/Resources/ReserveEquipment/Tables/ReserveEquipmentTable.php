@@ -38,11 +38,11 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Actions\Print\PrintEquipmentAction;
 use App\Filament\Actions\Equipment\RejectEquipmentAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Actions\Equipment\ApproveEquipmentAction;
 use App\Filament\Actions\Equipment\CompleteEquipmentAction;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintFile;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
@@ -147,6 +147,7 @@ class ReserveEquipmentTable
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    PrintEquipmentAction::make()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])), 
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-s-archive-box-x-mark')
@@ -164,13 +165,9 @@ class ReserveEquipmentTable
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
-                Action::make('print_pdf')
+                PrintEquipmentAction::make('print_pdf')
                     ->button()
                     ->outlined()
-                    ->color('primary')
-                    ->label('Print PDF')
-                    ->icon('heroicon-s-document')
-                    ->url(fn ($record) => PrintFile::getUrl(['record' => $record->id]))
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
 
                 ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),

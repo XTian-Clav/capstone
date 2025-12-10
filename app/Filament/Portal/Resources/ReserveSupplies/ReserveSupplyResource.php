@@ -2,23 +2,24 @@
 
 namespace App\Filament\Portal\Resources\ReserveSupplies;
 
-use App\Filament\Portal\Resources\ReserveSupplies\Pages\CreateReserveSupply;
-use App\Filament\Portal\Resources\ReserveSupplies\Pages\EditReserveSupply;
-use App\Filament\Portal\Resources\ReserveSupplies\Pages\ListReserveSupplies;
-use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
-use App\Filament\Portal\Resources\ReserveSupplies\Schemas\ReserveSupplyForm;
-use App\Filament\Portal\Resources\ReserveSupplies\Schemas\ReserveSupplyInfolist;
-use App\Filament\Portal\Resources\ReserveSupplies\Tables\ReserveSuppliesTable;
-use App\Models\ReserveSupply;
+use UnitEnum;
 use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use App\Models\ReserveSupply;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\PrintSupply;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\EditReserveSupply;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\CreateReserveSupply;
+use App\Filament\Portal\Resources\ReserveSupplies\Pages\ListReserveSupplies;
+use App\Filament\Portal\Resources\ReserveSupplies\Schemas\ReserveSupplyForm;
 
-use UnitEnum;
+use App\Filament\Portal\Resources\ReserveSupplies\Tables\ReserveSuppliesTable;
+use App\Filament\Portal\Resources\ReserveSupplies\Schemas\ReserveSupplyInfolist;
 
 class ReserveSupplyResource extends Resource
 {
@@ -69,6 +70,7 @@ class ReserveSupplyResource extends Resource
             'create' => CreateReserveSupply::route('/create'),
             'view' => ViewReserveSupply::route('/{record}'),
             'edit' => EditReserveSupply::route('/{record}/edit'),
+            'PrintSupply' => PrintSupply::route('/{record}/PrintSupply'),
         ];
     }
 

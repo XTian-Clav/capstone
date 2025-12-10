@@ -11,7 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintFile;
+use App\Filament\Portal\Resources\ReserveRooms\Pages\PrintRoom;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\EditReserveRoom;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ListReserveRooms;
@@ -69,7 +69,7 @@ class ReserveRoomResource extends Resource
             'create' => CreateReserveRoom::route('/create'),
             'view' => ViewReserveRoom::route('/{record}'),
             'edit' => EditReserveRoom::route('/{record}/edit'),
-            'PrintFile' => PrintFile::route('/{record}/PrintFile'),
+            'PrintRoom' => PrintRoom::route('/{record}/PrintRoom'),
         ];
     }
 
