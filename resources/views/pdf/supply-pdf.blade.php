@@ -2,7 +2,7 @@
     <title>Supply Reservation - {{ $reserveSupply->reserved_by }} - {{ now()->format('M-d-Y') }}</title>
 </head>
 
-<div style="background: white; font-family: font-family: 'Times New Roman', Times, serif;">
+<div style="margin: 0.4in; background: white; font-family: font-family: 'Times New Roman', Times, serif;">
     <!-- Header -->
     <table style="width: 100%; margin-bottom: 25px; text-align: center;">
         <tr>
