@@ -5,7 +5,7 @@
     <tr>
         <!-- Left Logo -->
         <td style="width: 20%; text-align: left; vertical-align: top;">
-            <img src="{{ asset('assets/logo/psu-logo.png') }}"
+            <img src="{{ asset('assets/logo/pdf/pdf-psu-logo.jpg') }}"
                     alt="PSU Logo"
                     style="width: 90px; height: auto;">
         </td>
@@ -23,7 +23,7 @@
 
         <!-- Right Logo -->
         <td style="width: 20%; text-align: right; vertical-align: top;">
-            <img src="{{ asset('assets/logo/pitbi-logo.png') }}" 
+            <img src="{{ asset('assets/logo/pdf/pdf-pitbi-logo.jpg') }}" 
                     alt="PITBI Logo" 
                     style="width: 100px; height: auto;">
         </td>

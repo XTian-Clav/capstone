@@ -2,7 +2,7 @@
 <!-- Reservation Details -->
 <div style="font-size: 12px; font-weight: 600; margin-top: 40px; margin-bottom: 10px; text-transform: uppercase">Borrower Details</div>
     
-<!-- USER INFO TABLE -->
+<!-- Borrower Details -->
 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;">
     <tr>
         <th style="border: 1px solid #aaa; padding: 10px; width: 35%; text-align: left;">Company</th>
@@ -54,7 +54,7 @@
     </ul>
 </div>
 
-<!-- Signature -->
+<!-- Signature / Date Printed -->
 <table style="width: 100%; margin-top: 30px; font-size: 12px; border-collapse: collapse;">
     <tr>
         <td style="width: 50%; vertical-align: top;">
@@ -79,7 +79,7 @@
             </div>
         </td>
     </tr>
-</table>             
+</table>
 
 <!-- Released By -->
 <div style="font-size: 12px; margin-top: 20px; text-transform: uppercase;">Released By:</div>
