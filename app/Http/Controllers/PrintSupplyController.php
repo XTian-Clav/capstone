@@ -19,7 +19,11 @@ class PrintSupplyController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.supply-pdf', compact('reserveSupply'));
             
-            return $pdf->stream();
+            $reservedBy = $reserveSupply->reserved_by;
+            $date = date('m-d-Y');
+            $filename = "Supply Reservation - {$reservedBy} - {$date}.pdf";
+            
+            return $pdf->stream($filename);
         }
         else
         {

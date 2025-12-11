@@ -19,7 +19,11 @@ class PrintEquipmentController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.equipment-pdf', compact('reserveEquipment'));
             
-            return $pdf->stream();
+            $reservedBy = $reserveEquipment->reserved_by;
+            $date = date('m-d-Y');
+            $filename = "Equipment Reservation - {$reservedBy} - {$date}.pdf";
+            
+            return $pdf->stream($filename);
         }
         else
         {

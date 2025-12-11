@@ -82,7 +82,7 @@
 
 <!-- Released By -->
 <div style="font-size: 12px; margin-top: 20px; text-transform: uppercase;">Released By:</div>
-<table style="width: 100%; margin-top: 20px;">
+<table style="width: 100%; margin-top: 10px;">
     <tr>
         <td style="width: 50%; vertical-align: top;">
             <p style="font-weight: 600; margin: 0 0 2px 0;">GLEN D. CERALES</p>

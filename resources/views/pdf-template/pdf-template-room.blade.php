@@ -1,7 +1,7 @@
 <!-- Reservation Details -->
 <div style="font-size: 12px; font-weight: 600; margin-top: 40px; margin-bottom: 10px; text-transform: uppercase">Borrower Details</div>
     
-<!-- USER INFO TABLE -->
+<!-- Borrower Details -->
 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;">
     <tr>
         <th style="border: 1px solid #aaa; padding: 10px; width: 35%; text-align: left;">Company</th>

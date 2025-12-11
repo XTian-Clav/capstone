@@ -19,7 +19,11 @@ class PrintRoomController extends Controller
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.room-pdf', compact('reserveRoom'));
             
-            return $pdf->stream();
+            $reservedBy = $reserveRoom->reserved_by;
+            $date = date('m-d-Y');
+            $filename = "Room Reservation - {$reservedBy} - {$date}.pdf";
+            
+            return $pdf->stream($filename);
         }
         else
         {
