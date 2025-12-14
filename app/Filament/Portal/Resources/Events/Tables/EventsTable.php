@@ -64,7 +64,6 @@ class EventsTable
                                 ->searchable()
                                 ->sortable()
                                 ->limit(40)
-                                ->color('secondary')
                                 ->weight('semibold')
                                 ->tooltip(fn ($record) => $record->event),
     
@@ -99,7 +98,7 @@ class EventsTable
                         TextColumn::make('attendees_count')
                             ->label('Confirmed Going')
                             ->badge()
-                            ->color('secondary')
+                            ->color('success')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->getStateUsing(function ($record) {
                                 $goingCount = $record->attendees()
@@ -170,7 +169,7 @@ class EventsTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Events Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

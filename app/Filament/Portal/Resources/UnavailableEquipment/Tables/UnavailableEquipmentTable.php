@@ -72,7 +72,7 @@ class UnavailableEquipmentTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('secondary')
+                    ->color('success')
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
@@ -99,7 +99,7 @@ class UnavailableEquipmentTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Unavailable Equipment Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

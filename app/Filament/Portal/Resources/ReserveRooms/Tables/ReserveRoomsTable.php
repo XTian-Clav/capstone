@@ -158,7 +158,7 @@ class ReserveRoomsTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Room Reservations Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

@@ -71,7 +71,7 @@ class SuppliesTable
                     ->sortable()
                     ->searchable()
                     ->width('10%')
-                    ->color('secondary')
+                    ->color('success')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -112,7 +112,7 @@ class SuppliesTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Supplies Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('landscape')

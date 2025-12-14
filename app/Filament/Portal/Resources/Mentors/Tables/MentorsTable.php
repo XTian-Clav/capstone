@@ -55,7 +55,7 @@ class MentorsTable
                             ->sortable(),
 
                         TextColumn::make('expertise')
-                            ->color('secondary')
+                            ->color('success')
                             ->searchable()
                             ->badge(),
                     ])->space(1),
@@ -65,13 +65,11 @@ class MentorsTable
                             ->searchable()
                             ->sortable()
                             ->badge()
-                            ->color('success')
                             ->icon(Heroicon::Envelope),
                     
                         TextColumn::make('contact')
                             ->searchable()
                             ->badge()
-                            ->color('gray')
                             ->icon(Heroicon::Phone),
                     ])->space(1),
                     
@@ -128,7 +126,7 @@ class MentorsTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Mentors Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

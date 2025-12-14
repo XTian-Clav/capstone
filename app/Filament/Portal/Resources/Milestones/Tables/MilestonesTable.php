@@ -47,7 +47,6 @@ class MilestonesTable
                         ->label('Task')
                         ->sortable()
                         ->searchable()
-                        ->color('secondary')
                         ->weight('semibold'),
                         
                     TextColumn::make('is_done')
@@ -65,7 +64,7 @@ class MilestonesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
-                        ->color('secondary')
+                        ->color('success')
                         ->dateTimeTooltip('F j, Y g:i A')
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->formatStateUsing(fn ($state, $record) => 'Created At: ' . $record->created_at->diffForHumans()),

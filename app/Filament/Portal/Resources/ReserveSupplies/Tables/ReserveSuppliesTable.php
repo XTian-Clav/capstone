@@ -53,7 +53,6 @@ class ReserveSuppliesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
-                        ->color('secondary')
                         ->formatStateUsing(fn ($state) => 'quantity: ' . $state . ' ' . ($state == 1 ? 'pc' : 'pcs')),
                         
                     TextColumn::make('status')
@@ -163,7 +162,7 @@ class ReserveSuppliesTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Supply Reservations Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

@@ -45,6 +45,7 @@ class AnnouncementsTable
                         ->badge()
                         ->sortable()
                         ->searchable()
+                        ->color('success')
                         ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                         ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)

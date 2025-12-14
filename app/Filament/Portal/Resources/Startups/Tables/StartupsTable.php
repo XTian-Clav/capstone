@@ -67,7 +67,6 @@ class StartupsTable
                         ->weight('semibold'),
     
                     TextColumn::make('founder')
-                        ->color('secondary')
                         ->searchable()
                         ->sortable(),
                     
@@ -139,7 +138,7 @@ class StartupsTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Startups Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

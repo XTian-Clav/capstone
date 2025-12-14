@@ -79,7 +79,7 @@ class EquipmentTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('secondary')
+                    ->color('success')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -118,7 +118,7 @@ class EquipmentTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Equipment Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

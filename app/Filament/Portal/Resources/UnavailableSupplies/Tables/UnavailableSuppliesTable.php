@@ -72,7 +72,7 @@ class UnavailableSuppliesTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('secondary')
+                    ->color('success')
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
@@ -99,7 +99,7 @@ class UnavailableSuppliesTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Unavailable Supplies Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

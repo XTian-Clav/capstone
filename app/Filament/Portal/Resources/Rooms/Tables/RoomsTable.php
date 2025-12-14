@@ -82,7 +82,7 @@ class RoomsTable
                     ->badge()
                     ->sortable()
                     ->searchable()
-                    ->color('secondary')
+                    ->color('success')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -120,7 +120,7 @@ class RoomsTable
                 FilamentExportHeaderAction::make('export')
                     ->outlined()
                     ->size(Size::Small)
-                    ->color('secondary')
+                    ->color('success')
                     ->fileName('Rooms Report')
                     ->defaultFormat('pdf')
                     ->defaultPageOrientation('portrait')

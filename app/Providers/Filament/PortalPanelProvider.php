@@ -9,13 +9,13 @@ use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use App\Filament\Pages\Backups;
 use Filament\Support\Enums\Width;
-use Filament\Support\Colors\Color;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
 use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
+use Openplain\FilamentShadcnTheme\Color;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -67,38 +67,7 @@ class PortalPanelProvider extends PanelProvider
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
-                //Nord Theme Colors
-                'danger' => Color::hex('#bf616a'), // nord11
-                'info' => Color::hex('#81a1c1'), // nord9
-                'primary' => Color::hex('#fe800d'), // pitbi orange
-                'secondary' => Color::hex('#013267'), // pitbi blue
-                'success' => Color::hex('#a3be8c'), // nord14
-                'warning' => Color::hex('#ebcb8b'), // nord13
-
-                //Neutral Colors
-                'gray' => Color::Gray,
-                'zinc' => Color::Zinc,
-                'neutral' => Color::Neutral,
-                'slate' => Color::Slate,
-                'stone' => Color::Stone,
-
-                //Tailwind Colors
-                'red' => Color::Red,
-                'rose' => Color::Rose,
-                'orange' => Color::Orange,
-                'amber' => Color::Amber,
-                'yellow' => Color::Yellow,
-                'green' => Color::Green,
-                'emerald' => Color::Emerald,
-                'teal' => Color::Teal,
-                'cyan' => Color::Cyan,
-                'sky' => Color::Sky,
-                'blue' => Color::Blue,
-                'indigo' => Color::Indigo,
-                'violet' => Color::Violet,
-                'purple' => Color::Purple,
-                'fuchsia' => Color::Fuchsia,
-                'pink' => Color::Pink,
+                'primary' => Color::Default,  // The Shadcn effect
             ])
 
             ->viteTheme('resources/css/filament/portal/theme.css')
