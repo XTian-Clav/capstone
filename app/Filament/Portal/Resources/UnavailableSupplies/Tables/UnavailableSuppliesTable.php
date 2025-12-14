@@ -72,7 +72,7 @@ class UnavailableSuppliesTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('success')
+                    ->color('info')
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([
@@ -113,7 +113,7 @@ class UnavailableSuppliesTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

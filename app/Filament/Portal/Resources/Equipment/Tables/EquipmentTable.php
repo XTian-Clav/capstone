@@ -79,7 +79,7 @@ class EquipmentTable
                     ->sortable()
                     ->width('10%')
                     ->searchable()
-                    ->color('success')
+                    ->color('info')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -136,7 +136,7 @@ class EquipmentTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

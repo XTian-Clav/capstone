@@ -77,7 +77,7 @@ class UsersTable
                     ->searchable()
                     ->sortable()
                     ->width('10%')
-                    ->color('success')
+                    ->color('info')
                     ->verticallyAlignStart(),
             ])
             ->filters([
@@ -122,7 +122,7 @@ class UsersTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

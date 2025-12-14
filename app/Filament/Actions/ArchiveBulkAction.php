@@ -12,7 +12,7 @@ class ArchiveBulkAction extends BulkAction
         return parent::make($name ?? 'archive')
             ->label('Archive Selected')
             ->icon('heroicon-s-archive-box-arrow-down')
-            ->color('secondary')
+            ->color('cyan')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Archive ' . $action->getTitleCasePluralModelLabel())
             ->modalDescription('Once archived, only Superadmin can restore it.')

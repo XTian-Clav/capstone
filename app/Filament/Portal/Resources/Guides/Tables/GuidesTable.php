@@ -41,7 +41,7 @@ class GuidesTable
                         ->sortable() 
                         ->searchable()
                         ->weight('semibold')
-                        ->iconColor('primary')
+                        ->iconColor('pitbi-orange')
                         ->icon(Heroicon::DocumentText)
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()
@@ -53,7 +53,7 @@ class GuidesTable
                         ->badge()
                         ->sortable()
                         ->searchable()
-                        ->color('success')
+                        ->color('info')
                         ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)
             ])
@@ -101,7 +101,7 @@ class GuidesTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

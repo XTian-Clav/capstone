@@ -89,7 +89,7 @@ class ReserveEquipmentTable
                         ->since()
                         ->sortable()
                         ->searchable()
-                        ->color('gray')
+                        ->color('info')
                         ->label('Submission Date')
                         ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)

@@ -9,18 +9,17 @@ use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use App\Filament\Pages\Backups;
 use Filament\Support\Enums\Width;
+use Filament\Support\Colors\Color;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
 use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
-use Openplain\FilamentShadcnTheme\Color;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Muazzam\SlickScrollbar\SlickScrollbarPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -67,7 +66,16 @@ class PortalPanelProvider extends PanelProvider
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
-                'primary' => Color::Default,  // The Shadcn effect
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Sky,
+                'primary' => Color::Gray,
+                'success' => Color::Lime,
+                'warning' => Color::Amber,
+
+                'cyan' => Color::Cyan,
+                'pitbi-orange' => '#fe800d',
+                'pitbi-blue' => '#013267',
             ])
 
             ->viteTheme('resources/css/filament/portal/theme.css')
@@ -173,10 +181,6 @@ class PortalPanelProvider extends PanelProvider
                     ]),
 
                 FilamentApexChartsPlugin::make(),
-
-                SlickScrollbarPlugin::make()
-                    ->size('6px')
-                    ->palette('primary'),
 
                 GlobalSearchModalPlugin::make()
                     ->modal(

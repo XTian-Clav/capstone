@@ -40,7 +40,7 @@ class RoomsTable
                     ->searchable()
                     ->sortable()
                     ->wrap()
-                    ->width('35%')
+                    ->width('30%')
                     ->weight('semibold')
                     ->verticallyAlignStart()
                     ->tooltip(fn ($record) => $record->room_type),
@@ -48,8 +48,16 @@ class RoomsTable
                 TextColumn::make('capacity')
                     ->searchable()
                     ->sortable()
-                    ->width('10%')
+                    ->width('15%')
                     ->verticallyAlignStart(),
+
+                TextColumn::make('is_available')
+                    ->label('Availability')
+                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Unavailable')
+                    ->color(fn ($state) => $state ? 'success' : 'danger')
+                    ->width('10%')
+                    ->sortable()
+                    ->badge(),
 
                 TextColumn::make('location')
                     ->searchable()
@@ -66,14 +74,6 @@ class RoomsTable
                     )
                     ->width('10%')
                     ->verticallyAlignStart(),
-
-                TextColumn::make('is_available')
-                    ->label('Availability')
-                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Unavailable')
-                    ->color(fn ($state) => $state ? 'success' : 'danger')
-                    ->width('10%')
-                    ->sortable()
-                    ->badge(),
                 
                 TextColumn::make('created_at')
                     ->label('Created At')
@@ -82,7 +82,7 @@ class RoomsTable
                     ->badge()
                     ->sortable()
                     ->searchable()
-                    ->color('success')
+                    ->color('info')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -138,7 +138,7 @@ class RoomsTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

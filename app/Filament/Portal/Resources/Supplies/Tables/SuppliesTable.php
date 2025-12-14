@@ -71,7 +71,7 @@ class SuppliesTable
                     ->sortable()
                     ->searchable()
                     ->width('10%')
-                    ->color('success')
+                    ->color('info')
                     ->verticallyAlignStart()
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
@@ -130,7 +130,7 @@ class SuppliesTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

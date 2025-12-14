@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Widgets;
 
 use Carbon\Carbon;
+use Filament\Support\Colors\Color;
 use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -32,14 +33,14 @@ class WelcomeCard extends StatsOverviewWidget
             Stat::make("{$greeting}, {$user->name}!", 'Today is ' . $date)
                 ->description('Welcome to the PITBI Portal — wishing you a productive day ahead!')
                 ->descriptionIcon('heroicon-s-sparkles')
-                ->color('secondary')
+                ->color(Color::Sky)
                 ->columnSpan(2),
 
             // RIGHT CARD — Day + Time
             Stat::make($day, $time)
                 ->description('Current day and time')
                 ->descriptionIcon('heroicon-s-clock', IconPosition::Before)
-                ->color('secondary')
+                ->color(Color::Sky)
                 ->columnSpan(1),
         ];
     }

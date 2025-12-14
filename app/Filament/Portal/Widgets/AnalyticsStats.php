@@ -7,6 +7,7 @@ use App\Models\Startup;
 use App\Models\ReserveRoom;
 use App\Models\ReserveSupply;
 use App\Models\ReserveEquipment;
+use Filament\Support\Colors\Color;
 use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -28,12 +29,12 @@ class AnalyticsStats extends StatsOverviewWidget
             Stat::make('Total Startups', Startup::count())
                 ->description('Total Startups submission')
                 ->descriptionIcon('heroicon-s-briefcase', IconPosition::Before)
-                ->color('secondary'),
+                ->color(Color::Sky),
 
             Stat::make('Total Events', Event::count())
                 ->description('Total Events held by Pitbi')
                 ->descriptionIcon('heroicon-s-calendar-days', IconPosition::Before)
-                ->color('secondary'),
+                ->color(Color::Sky),
 
             Stat::make(
                 'Total Reservations',
@@ -45,7 +46,7 @@ class AnalyticsStats extends StatsOverviewWidget
             )
                 ->description('Total reservations requests')
                 ->descriptionIcon('heroicon-s-clipboard-document-list', IconPosition::Before)
-                ->color('secondary'),
+                ->color(Color::Sky),
     ];
     }
 }

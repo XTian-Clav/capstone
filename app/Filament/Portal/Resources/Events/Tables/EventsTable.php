@@ -98,7 +98,7 @@ class EventsTable
                         TextColumn::make('attendees_count')
                             ->label('Confirmed Going')
                             ->badge()
-                            ->color('success')
+                            ->color('info')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->getStateUsing(function ($record) {
                                 $goingCount = $record->attendees()
@@ -196,7 +196,7 @@ class EventsTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

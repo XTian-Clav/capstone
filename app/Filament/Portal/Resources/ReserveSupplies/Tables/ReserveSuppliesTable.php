@@ -89,7 +89,7 @@ class ReserveSuppliesTable
                         ->since()
                         ->sortable()
                         ->searchable()
-                        ->color('gray')
+                        ->color('info')
                         ->label('Submission Date')
                         ->dateTimeTooltip('F j, Y g:i A'),
                 ])->space(1)
@@ -186,7 +186,7 @@ class ReserveSuppliesTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

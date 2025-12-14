@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f71d83619db49a598e69caf65d29c714",
+    "content-hash": "bfcfc5af91c94e87ba604905d6fae388",
     "packages": [
         {
             "name": "alperenersoy/filament-export",
@@ -4681,48 +4681,6 @@
                 }
             ],
             "time": "2025-03-24T10:02:05+00:00"
-        },
-        {
-            "name": "muazzam/slick-scrollbar",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Muazzamkhan95/slick-scrollbar.git",
-                "reference": "4cd7fcd73fa0a70ca9475ff6a53fd2dc87ff6d87"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Muazzamkhan95/slick-scrollbar/zipball/4cd7fcd73fa0a70ca9475ff6a53fd2dc87ff6d87",
-                "reference": "4cd7fcd73fa0a70ca9475ff6a53fd2dc87ff6d87",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^4.0",
-                "php": "^8.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Muazzam\\SlickScrollbar\\SlickScrollbarServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Muazzam\\SlickScrollbar\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Slick Scrollbar plugin for Filament panels (Filament v4).",
-            "support": {
-                "issues": "https://github.com/Muazzamkhan95/slick-scrollbar/issues",
-                "source": "https://github.com/Muazzamkhan95/slick-scrollbar/tree/v1.0.0"
-            },
-            "time": "2025-09-05T23:32:40+00:00"
         },
         {
             "name": "nesbot/carbon",

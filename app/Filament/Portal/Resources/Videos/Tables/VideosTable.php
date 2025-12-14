@@ -74,7 +74,7 @@ class VideosTable
                             ->badge()
                             ->sortable()
                             ->searchable()
-                            ->color('success')
+                            ->color('info')
                             ->extraAttributes(['style' => 'margin-top: 0.75rem;'])
                             ->dateTimeTooltip('F j, Y g:i A'),
                         ]),
@@ -124,7 +124,7 @@ class VideosTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);

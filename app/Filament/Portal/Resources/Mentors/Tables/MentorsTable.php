@@ -55,7 +55,7 @@ class MentorsTable
                             ->sortable(),
 
                         TextColumn::make('expertise')
-                            ->color('success')
+                            ->color('info')
                             ->searchable()
                             ->badge(),
                     ])->space(1),
@@ -65,11 +65,13 @@ class MentorsTable
                             ->searchable()
                             ->sortable()
                             ->badge()
+                            ->color('success')
                             ->icon(Heroicon::Envelope),
                     
                         TextColumn::make('contact')
                             ->searchable()
                             ->badge()
+                            ->color('gray')
                             ->icon(Heroicon::Phone),
                     ])->space(1),
                     
@@ -151,7 +153,7 @@ class MentorsTable
                 ])
                 ->label('Bulk Actions')
                 ->icon('heroicon-s-cog-6-tooth')
-                ->color('info')
+                ->color('gray')
                 ->size(Size::Small)
                 ->button(),
             ]);
