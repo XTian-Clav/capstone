@@ -36,7 +36,7 @@
 </div>
 
 <div style="margin-top: 20pt; border-top: 0.5pt solid #ccc; padding-top: 8pt; font-size: 10pt;">
-    <p style="margin: 0; color: #333;">
+    <p style="margin: 0; color: #333; text-align: justify; text-justify: inter-word;">
         <strong>Note:</strong> PITBI does not allow reservation extensions. If additional time or items are required, please submit a new reservation request for processing.
     </p>
 </div>
