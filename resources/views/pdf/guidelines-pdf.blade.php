@@ -1,5 +1,5 @@
 <head>
-    <title>Equipment Reservation - {{ $reserveEquipment->reserved_by }} - {{ now()->format('M-d-Y') }}</title>
+    <title>PITBI Policies and Guidelines</title>
 </head>
 
 <div style="margin: 0.4in; background: white; font-family: font-family: 'Times New Roman', Times, serif;">
@@ -20,7 +20,7 @@
                     Palawan State University
                 </div>
                 <div style="font-size: 14px; margin-bottom: 20px;">Puerto Princesa City</div>
-                <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Equipment Reservation</div>
+                <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Policies and Guidelines</div>
                 <div style="font-size: 14px;">Palawan International Technology Business Incubator</div>
             </td>
     
@@ -32,5 +32,5 @@
             </td>
         </tr>
     </table>
-    @include('pdf-template.pdf-template-equipment')
+    @include('pdf-template.pdf-template-guidelines')
 </div>

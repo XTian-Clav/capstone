@@ -16,6 +16,7 @@ use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
+use App\Filament\Portal\Pages\Guidelines;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -82,6 +83,10 @@ class PortalPanelProvider extends PanelProvider
             
             ->userMenuItems([
                 'profile' => fn (Action $action) => $action->label('Edit profile'),
+                'guidelines' => Action::make('Guidelines')
+                    ->label('Guidelines')
+                    ->icon('heroicon-o-book-open')
+                    ->url(fn (): string => Guidelines::getUrl()),
                 'logout' => fn (Action $action) => $action->label('Log out'),
             ])
 

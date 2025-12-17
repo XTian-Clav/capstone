@@ -16,7 +16,7 @@ class AttendEventAction extends Action
         return parent::make($name ?? 'attend')
             ->button()
             ->label('Register Attendance')
-            ->color('primary')
+            ->color('pitbi-orange')
             ->icon('heroicon-o-clipboard-document-check')
             ->requiresConfirmation() 
             ->modalHeading(fn (Event $record) => 'Confirm Attendance for ' . ($record->event ?? 'the Event'))

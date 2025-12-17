@@ -6,6 +6,7 @@ use App\Http\Controllers\StartupController;
 use App\Http\Controllers\PrintRoomController;
 use App\Http\Controllers\PrintSupplyController;
 use App\Http\Controllers\PrintEquipmentController;
+use App\Http\Controllers\PrintGuidelineController;
 
 //Landing Pages
 Route::get('/', function () {
@@ -31,6 +32,8 @@ Route::get('contact', function () {
 });
 
 //Print Function
+Route::get('/portal/print-guidelines', [PrintGuidelineController::class, 'PrintGuidelines'])->name('PrintGuidelines');
+
 Route::get('/portal/print-room/{id}', [PrintRoomController::class, 'PrintRoom'])->name('PrintRoom');
 
 Route::get('/portal/print-supply/{id}', [PrintSupplyController::class, 'PrintSupply'])->name('PrintSupply');

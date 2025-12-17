@@ -4,7 +4,7 @@
 
 <div style="margin: 0.4in; background: white; font-family: font-family: 'Times New Roman', Times, serif;">
     <!-- Header -->
-    <table style="width: 100%; margin-bottom: 25px; text-align: center;">
+    <table style="width: 100%; margin-bottom: 50px; text-align: center;">
         <tr>
             <!-- Left Logo -->
             <td style="width: 20%; text-align: left; vertical-align: top;">

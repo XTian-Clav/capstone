@@ -2,23 +2,22 @@
 
 namespace App\Filament\Portal\Resources\Rooms;
 
-use App\Filament\Portal\Resources\Rooms\Pages\CreateRoom;
-use App\Filament\Portal\Resources\Rooms\Pages\EditRoom;
-use App\Filament\Portal\Resources\Rooms\Pages\ListRooms;
-use App\Filament\Portal\Resources\Rooms\Pages\ViewRoom;
-use App\Filament\Portal\Resources\Rooms\Schemas\RoomForm;
-use App\Filament\Portal\Resources\Rooms\Schemas\RoomInfolist;
-use App\Filament\Portal\Resources\Rooms\Tables\RoomsTable;
-use App\Models\Room;
+use UnitEnum;
 use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use App\Models\Room;
 use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use UnitEnum;
+use App\Filament\Portal\Resources\Rooms\Pages\EditRoom;
+use App\Filament\Portal\Resources\Rooms\Pages\ViewRoom;
+use App\Filament\Portal\Resources\Rooms\Pages\ListRooms;
+use App\Filament\Portal\Resources\Rooms\Pages\CreateRoom;
+use App\Filament\Portal\Resources\Rooms\Schemas\RoomForm;
+use App\Filament\Portal\Resources\Rooms\Tables\RoomsTable;
+use App\Filament\Portal\Resources\Rooms\Schemas\RoomInfolist;
 
 class RoomResource extends Resource
 {

@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Resources\Rooms\Tables;
 
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
@@ -18,7 +19,9 @@ use App\Filament\Filters\StartDateFilter;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Portal\Resources\Rooms\Pages\RoomReport;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Filament\Actions\resourceEditPageRedirect\ViewRoomReportAction;
 
 class RoomsTable
 {
@@ -115,6 +118,13 @@ class RoomsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                    
+                Action::make('report')
+                    ->color('primary')
+                    ->label('Report')
+                    ->icon('heroicon-s-document-text')
+                    ->url(fn ($record) => RoomReport::getUrl(['record' => $record->id]))
+                    ->openUrlInNewTab(),
             ])
             ->headerActions([
                 FilamentExportHeaderAction::make('export')

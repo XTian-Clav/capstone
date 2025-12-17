@@ -10,7 +10,7 @@ class PrintEquipmentAction extends Action
     public static function make(?string $name = null): static
     {
         return parent::make($name ?? 'back')
-            ->color('primary')
+            ->color('info')
             ->label('Print')
             ->icon('heroicon-s-printer');
     }

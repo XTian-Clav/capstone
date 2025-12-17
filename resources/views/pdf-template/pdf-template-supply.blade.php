@@ -51,7 +51,7 @@
         <li>I assume full responsibility for their proper handling and condition. PITBI/PSU is not obligated to provide replacements for any supplies damaged while in my possession.</li>
         <li>I pledge that the supplies borrowed from PITBI/PSU will be used solely for the official purpose stated above and not for personal purposes.</li>
     </ul>
-</div>     
+</div>
 
 <!-- Signature -->
 <table style="width: 100%; margin-top: 30px; font-size: 12px; border-collapse: collapse;">

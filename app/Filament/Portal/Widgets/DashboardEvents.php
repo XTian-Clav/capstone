@@ -53,7 +53,7 @@ class DashboardEvents extends TableWidget
                         Split::make([
                             TextColumn::make('event')
                                 ->limit(40)
-                                ->color('secondary')
+                                ->color('info')
                                 ->weight('semibold')
                                 ->tooltip(fn ($record) => $record->event),
     
@@ -61,9 +61,9 @@ class DashboardEvents extends TableWidget
                                 ->getStateUsing(fn ($record) => $record->status)
                                 ->badge()
                                 ->colors([
-                                    'indigo' => 'Upcoming',
-                                    'warning' => 'Ongoing',
-                                    'success' => 'Completed',
+                                    'warning' => 'Upcoming',
+                                    'success' => 'Ongoing',
+                                    'cyan' => 'Completed',
                                     'danger' => 'Cancelled',
                                 ]),
                         ]),
