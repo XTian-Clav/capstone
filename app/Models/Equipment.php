@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UnavailableEquipment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,11 @@ class Equipment extends Model
     public function reservations()
     {
         return $this->hasMany(ReserveEquipment::class);
+    }
+
+    public function unavailable()
+    {
+        return $this->hasMany(UnavailableEquipment::class);
     }
 
     protected static function booted()

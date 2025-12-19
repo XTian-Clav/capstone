@@ -117,6 +117,11 @@ class PortalPanelProvider extends PanelProvider
                     ->collapsed(false),
 
                 NavigationGroup::make()
+                    ->label('Generate Reports')
+                    ->icon('heroicon-o-document-chart-bar')
+                    ->collapsed(false),
+                
+                NavigationGroup::make()
                     ->label('Manage Users')
                     ->icon('heroicon-o-user-group')
                     ->collapsed(false),

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Pages;
 
+use UnitEnum;
 use BackedEnum;
 use App\Models\Event;
 use Filament\Pages\Page;
@@ -15,6 +16,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\Summarizers\Count;
 use Filament\Tables\Columns\Summarizers\Range;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Columns\Summarizers\Average;
@@ -27,9 +29,12 @@ class EventReport extends Page implements HasActions, HasSchemas, HasTable
     use InteractsWithActions;
     use InteractsWithSchemas;
     use InteractsWithTable;
-
-    protected static ?string $navigationLabel = 'Event Reports';
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-chart-bar';
+    
+    protected static ?string $navigationLabel = 'Events Report';
+    protected static ?string $title = 'Event Performance Reports';
+    
+    protected static ?int $navigationSort = 4;
+    protected static string | UnitEnum | null $navigationGroup = 'Generate Reports';
 
     protected string $view = 'filament.portal.pages.event-report';
 
@@ -43,18 +48,9 @@ class EventReport extends Page implements HasActions, HasSchemas, HasTable
         ];
     }
 
-    public function getTabs(): array
-    {   
-        return [
-            'all' => Tab::make('All')
-                ->badge(fn () => Event::count()),
-        ];
-    }
-
     public function table(Table $table): Table
     {
         return $table
-            ->heading('Event Performance Report - Attendance Rate Analysis')
             ->query(
                 Event::query()
                     ->where('status', 'Completed')
@@ -84,6 +80,9 @@ class EventReport extends Page implements HasActions, HasSchemas, HasTable
                         'success' => 'Ongoing',
                         'cyan' => 'Completed',
                         'danger' => 'Cancelled',
+                    ])
+                    ->summarize([
+                        Count::make()->label('Total'),
                     ]),
                     
                 TextColumn::make('total_participants')
@@ -91,8 +90,7 @@ class EventReport extends Page implements HasActions, HasSchemas, HasTable
                     ->numeric()
                     ->sortable()
                     ->summarize([
-                        Sum::make(),
-                        Average::make(),
+                        Sum::make()->label('Total'),
                     ]),
                     
                 TextColumn::make('confirmed_attending')
@@ -100,8 +98,7 @@ class EventReport extends Page implements HasActions, HasSchemas, HasTable
                     ->numeric()
                     ->sortable()
                     ->summarize([
-                        Sum::make(),
-                        Average::make(),
+                        Sum::make()->label('Total'),
                     ]),
                     
                 TextColumn::make('attendance_rate')

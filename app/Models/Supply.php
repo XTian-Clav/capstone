@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UnavailableSupply;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +21,11 @@ class Supply extends Model
     public function reservations()
     {
         return $this->hasMany(ReserveSupply::class);
+    }
+
+    public function unavailable()
+    {
+        return $this->hasMany(UnavailableSupply::class);
     }
 
     protected static function booted()

@@ -8,11 +8,13 @@ use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
+use App\Models\UnavailableEquipment;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use App\Filament\Filters\EndDateFilter;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\CreatedDateFilter;
 use App\Filament\Actions\Equipment\AvailableEquipment;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
@@ -79,6 +81,12 @@ class UnavailableEquipmentTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(UnavailableEquipment::STATUS)
+                    ->searchable()
+                    ->placeholder('Status')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
                 ActionGroup::make([

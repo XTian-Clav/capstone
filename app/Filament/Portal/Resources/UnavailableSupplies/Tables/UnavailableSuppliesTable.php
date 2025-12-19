@@ -6,6 +6,7 @@ use Filament\Tables\Table;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
+use App\Models\UnavailableSupply;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
@@ -13,6 +14,7 @@ use Filament\Actions\DeleteBulkAction;
 use App\Filament\Filters\EndDateFilter;
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Filters\StartDateFilter;
+use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\CreatedDateFilter;
 use App\Filament\Actions\Supply\AvailableSupply;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
@@ -79,6 +81,12 @@ class UnavailableSuppliesTable
                 CreatedDateFilter::make('created_at')->columnSpan(2),
                 StartDateFilter::make(),
                 EndDateFilter::make(),
+                SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(UnavailableSupply::STATUS)
+                    ->searchable()
+                    ->placeholder('Status')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
                 ActionGroup::make([

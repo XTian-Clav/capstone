@@ -9,6 +9,11 @@ class Guidelines extends Page
 {
     protected string $view = 'filament.portal.pages.guidelines';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

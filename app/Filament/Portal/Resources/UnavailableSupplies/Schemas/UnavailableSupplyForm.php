@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\UnavailableSupplies\Schemas;
 
+use Closure;
 use App\Models\Supply;
 use Filament\Schemas\Schema;
 use App\Models\UnavailableSupply;

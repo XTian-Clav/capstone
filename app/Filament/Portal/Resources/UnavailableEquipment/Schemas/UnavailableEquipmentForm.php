@@ -2,6 +2,7 @@
 
 namespace App\Filament\Portal\Resources\UnavailableEquipment\Schemas;
 
+use Closure;
 use App\Models\Equipment;
 use Filament\Schemas\Schema;
 use App\Models\UnavailableEquipment;

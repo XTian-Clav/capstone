@@ -1,6 +1,6 @@
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
     <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
-        Equipment Reservation Guidelines
+        <strong>Equipment Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
         <li style="margin-bottom: 7px;">I agree to promptly return the equipment borrowed.</li>
@@ -11,7 +11,7 @@
 
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
     <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
-        Supply Reservation Guidelines
+        <strong>Supply Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
         <li style="margin-bottom: 7px;">I agree to replace the exact quantity of the supplies used.</li>
@@ -22,7 +22,7 @@
 
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
     <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
-        Room Reservation Guidelines
+        <strong>Room Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
         <li style="margin-bottom: 7px;">Adhere to the official operating hours of PITBI, ensuring alignment with designated working hours.</li>
