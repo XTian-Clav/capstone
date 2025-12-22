@@ -88,13 +88,13 @@
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
-                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 30%;">Event & Location</th>
-                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 14%;">Start Date</th>
-                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 14%;">End Date</th>
-                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 14%;">Total Participants</th>
-                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 14%;">Going</th>
-                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 14%;">Not Going</th>
-                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 14%;">Attendance Rate</th>
+                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 25%;">Event & Location</th>
+                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 12%;">Start Date</th>
+                        <th style="padding: 15px; text-align: left; color: #374151; font-weight: 600; width: 12%;">End Date</th>
+                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 12%;">Total Participants</th>
+                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 12%;">Going</th>
+                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 12%;">Not Going</th>
+                        <th style="padding: 15px; text-align: center; color: #374151; font-weight: 600; width: 15%;">Attendance Rate</th>
                     </tr>
                 </thead>
                 <tbody style="color: #374151;">
