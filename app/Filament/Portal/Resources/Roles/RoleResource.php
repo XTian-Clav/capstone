@@ -116,7 +116,7 @@ class RoleResource extends Resource
                     ->label(__('filament-shield::filament-shield.column.updated_at'))
                     ->since()
                     ->badge()
-                    ->color('secondary')
+                    ->color('info')
                     ->dateTimeTooltip('F j, Y g:i A'),
             ])
             ->filters([

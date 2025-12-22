@@ -36,7 +36,7 @@ class EquipmentReport extends Page
 
     public function mount(): void
     {
-        $this->equipments = Equipment::with(['reservations', 'unavailable'])->get();
+        $this->equipments = Equipment::with(['reservations', 'unavailable'])->orderBy('equipment_name', 'asc')->get();
 
         $this->equipments->transform(function ($equipment) {
             $approvedReservations = $equipment->reservations->where('status', 'Approved');
@@ -65,11 +65,11 @@ class EquipmentReport extends Page
         $this->mostBorrowed = $this->equipments->sortByDesc('borrow_count')->first();
 
         $this->lowStock = $this->equipments->filter(fn ($equipment) => 
-            $equipment->availability_percentage > 20 && $equipment->availability_percentage <= 50
+            $equipment->availability_percentage > 26 && $equipment->availability_percentage <= 50
         );
 
         $this->criticalStock = $this->equipments->filter(fn ($equipment) => 
-            $equipment->available > 0 && $equipment->availability_percentage <= 20
+            $equipment->available > 0 && $equipment->availability_percentage <= 25
         );
 
         $this->outOfStock = $this->equipments->filter(fn ($equipment) => 

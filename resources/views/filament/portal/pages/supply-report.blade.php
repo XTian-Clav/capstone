@@ -1,202 +1,191 @@
 <x-filament-panels::page>
-    <div class="space-y-6">
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Supply Inventory Overview</h2>
-            <div class="grid grid-cols-4 gap-4">
-                <div class="bg-blue-100 p-4 rounded-lg">
-                    <h3 class="font-bold text-blue-800">Total Supplies</h3>
-                    <p class="text-3xl font-bold text-blue-900">{{ $totalSupply }}</p>
-                </div>
-                <div class="bg-green-100 p-4 rounded-lg">
-                    <h3 class="font-bold text-green-800">Available</h3>
-                    <p class="text-3xl font-bold text-green-900">{{ $totalAvailable }}</p>
-                </div>
-                <div class="bg-yellow-100 p-4 rounded-lg">
-                    <h3 class="font-bold text-yellow-800">Reserved</h3>
-                    <p class="text-3xl font-bold text-yellow-900">{{ $totalReserved }}</p>
-                </div>
-                <div class="bg-red-100 p-4 rounded-lg">
-                    <h3 class="font-bold text-red-800">Unavailable</h3>
-                    <p class="text-3xl font-bold text-red-900">{{ $totalUnavailable }}</p>
-                </div>
+    <style>
+        .text-blue { color: #013267; }
+        .text-red { color: #991b1b; }
+        .text-green { color: #15803d; }
+        .text-orange { color: #c2410c; }
+        .text-yellow { color: #ca8a04; }
+    </style>
+
+    <div style="overflow: auto;">
+        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Supply Inventory Overview</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Total Supplies</div>
+                <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalSupply }}</div>
+                <div style="color: #666; font-size: 11px;">Total units</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Available</div>
+                <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalAvailable }}</div>
+                <div style="color: #666; font-size: 11px;">Ready for use</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Reserved</div>
+                <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalReserved }}</div>
+                <div style="color: #666; font-size: 11px;">Pending bookings</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Unavailable</div>
+                <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalUnavailable }}</div>
+                <div style="color: #666; font-size: 11px;">Out of service</div>
             </div>
         </div>
 
         @if($mostBorrowed && $mostBorrowed->borrow_count > 0)
-            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-indigo-500 overflow-hidden relative">
-                <div class="flex items-center justify-between relative z-10">
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">🏆 Most Frequently Borrowed</h4>
-                        <p class="text-2xl font-black text-gray-900 mt-1">{{ $mostBorrowed->item_name }}</p>
-                        <p class="text-sm text-gray-600 mt-1">
-                            This item has been requested in <span class="font-bold text-indigo-600">{{ $mostBorrowed->borrow_count }}</span> unique approved reservations.
-                        </p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs font-bold text-gray-400 uppercase">Usage Frequency</span>
-                        <div class="flex items-end justify-end gap-1 mt-2">
-                            <div class="w-2 bg-indigo-200 h-4 rounded-t"></div>
-                            <div class="w-2 bg-indigo-300 h-6 rounded-t"></div>
-                            <div class="w-2 bg-indigo-600 h-10 rounded-t"></div>
-                        </div>
-                    </div>
+            <div style="padding: 15px; border-radius: 10px; background-color: #f0fdf4; border: 1px solid #86efac; font-size: 12px; margin-bottom: 25px;">
+                <h4 class="text-green" style="font-weight: bold; margin-bottom: 5px;">Most Frequently Borrowed</h4>
+                <div>
+                    The <strong>{{ $mostBorrowed->item_name }}</strong> is your most requested item 
+                    with a total of <strong class="text-green">{{ $mostBorrowed->borrow_count }}</strong> reservation request.
                 </div>
             </div>
         @endif
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="px-6 py-4 bg-gray-50 border-b">
-                <h3 class="text-lg font-semibold">Supply Details</h3>
-            </div>
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Supply Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total Qty</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Available</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reserved</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Unavailable</th>
+        <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">Supply Details</h3>
+        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                    <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Supply Name</th>
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Location</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Total Qty</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Available</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Reserved</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Unavailable</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody style="color: #374151;">
                     @foreach($supplies as $supply)
-                        <tr>
-                            <td class="px-6 py-4 font-medium">{{ $supply->item_name }}</td>
-                            <td class="px-6 py-4">{{ $supply->location }}</td>
-                            <td class="px-6 py-4 font-semibold">{{ $supply->quantity }}</td>
-                            <td class="px-6 py-4 text-green-600 font-semibold">{{ $supply->available }}</td>
-                            <td class="px-6 py-4 text-yellow-600">{{ $supply->reserved }}</td>
-                            <td class="px-6 py-4 text-red-600">{{ $supply->unavailable_qty }}</td>
+                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                            <td style="padding: 12px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
+                            <td style="padding: 12px 15px;">{{ $supply->location }}</td>
+                            <td style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->quantity }}</td>
+                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
+                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->reserved }}</td>
+                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->unavailable_qty }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Supply Stock Alerts</h2>
-            
-            <div class="grid grid-cols-3 gap-4 mb-6">
-                <div class="bg-red-100 border-2 border-red-300 p-4 rounded-lg">
-                    <h3 class="font-bold text-red-800">Out of Stock</h3>
-                    <p class="text-3xl font-bold text-red-900">{{ $outOfStock->count() }}</p>
-                    <p class="text-sm text-red-700">Immediate restock required</p>
-                </div>
-                <div class="bg-orange-100 border-2 border-orange-300 p-4 rounded-lg">
-                    <h3 class="font-bold text-orange-800">Critical Stock</h3>
-                    <p class="text-3xl font-bold text-orange-900">{{ $criticalStock->count() }}</p>
-                    <p class="text-sm text-orange-700">≤20% available</p>
-                </div>
-                <div class="bg-yellow-100 border-2 border-yellow-300 p-4 rounded-lg">
-                    <h3 class="font-bold text-yellow-800">Low Stock</h3>
-                    <p class="text-3xl font-bold text-yellow-900">{{ $lowStock->count() }}</p>
-                    <p class="text-sm text-yellow-700">21-50% available</p>
-                </div>
+        <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Supply Stock Alerts</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+            <div style="background: #fef2f2; padding: 15px; border-radius: 10px; border: 1px solid #fca5a5;">
+                <div style="font-size: 12px; font-weight: bold; color: #991b1b; margin-bottom: 8px;">Out of Stock</div>
+                <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $outOfStock->count() }}</div>
+                <div style="color: #666; font-size: 11px;">Immediate restock required</div>
             </div>
-
-            @if($outOfStock->count() > 0)
-                <div class="bg-white rounded-lg shadow p-6 mb-4">
-                    <h3 class="text-lg font-bold text-red-800 mb-4">🚨 Out of Stock Supplies</h3>
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Supply</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Qty</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Reserved</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @foreach($outOfStock as $supply)
-                                <tr class="bg-red-50">
-                                    <td class="px-4 py-3 font-medium">{{ $supply->item_name }}</td>
-                                    <td class="px-4 py-3">{{ $supply->quantity }}</td>
-                                    <td class="px-4 py-3 text-yellow-600">{{ $supply->reserved }}</td>
-                                    <td class="px-4 py-3">{{ $supply->location }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-
-            @if($criticalStock->count() > 0)
-                <div class="bg-white rounded-lg shadow p-6 mb-4">
-                    <h3 class="text-lg font-bold text-orange-800 mb-4">⚠️ Critical Stock (≤20%)</h3>
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Supply</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Available</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Availability %</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @foreach($criticalStock as $supply)
-                                <tr class="bg-orange-50">
-                                    <td class="px-4 py-3 font-medium">{{ $supply->item_name }}</td>
-                                    <td class="px-4 py-3 text-orange-600 font-semibold">{{ $supply->available }}</td>
-                                    <td class="px-4 py-3">{{ $supply->quantity }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex items-center">
-                                            <div class="w-full bg-gray-200 rounded-full h-2 mr-2 max-w-[100px]">
-                                                <div class="bg-orange-600 h-2 rounded-full" style="width: {{ $supply->availability_percentage }}%"></div>
-                                            </div>
-                                            <span class="text-sm whitespace-nowrap">{{ round($supply->availability_percentage, 1) }}%</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3">{{ $supply->location }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-
-            @if($lowStock->count() > 0)
-                <div class="bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-bold text-yellow-800 mb-4">📊 Low Stock (21-50%)</h3>
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Supply</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Available</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Availability %</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @foreach($lowStock as $supply)
-                                <tr class="bg-yellow-50">
-                                    <td class="px-4 py-3 font-medium">{{ $supply->item_name }}</td>
-                                    <td class="px-4 py-3 text-yellow-600 font-semibold">{{ $supply->available }}</td>
-                                    <td class="px-4 py-3">{{ $supply->quantity }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex items-center">
-                                            <div class="w-full bg-gray-200 rounded-full h-2 mr-2 max-w-[100px]">
-                                                <div class="bg-yellow-600 h-2 rounded-full" style="width: {{ $supply->availability_percentage }}%"></div>
-                                            </div>
-                                            <span class="text-sm whitespace-nowrap">{{ round($supply->availability_percentage, 1) }}%</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3">{{ $supply->location }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-
-            @if($outOfStock->count() === 0 && $criticalStock->count() === 0 && $lowStock->count() === 0)
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                    <p class="text-green-800 font-semibold">✅ All supply stock levels are healthy!</p>
-                    <p class="text-green-600 text-sm mt-1">No low stock alerts at this time.</p>
-                </div>
-            @endif
+            <div style="background: #fff7ed; padding: 15px; border-radius: 10px; border: 1px solid #fdba74;">
+                <div style="font-size: 12px; font-weight: bold; color: #9a3412; margin-bottom: 8px;">Critical Stock</div>
+                <div class="text-orange" style="font-size: 20px; font-weight: bold;">{{ $criticalStock->count() }}</div>
+                <div style="color: #666; font-size: 11px;">below 25% available</div>
+            </div>
+            <div style="background: #fefce8; padding: 15px; border-radius: 10px; border: 1px solid #facc15;">
+                <div style="font-size: 12px; font-weight: bold; color: #854d0e; margin-bottom: 8px;">Low Stock</div>
+                <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $lowStock->count() }}</div>
+                <div style="color: #666; font-size: 11px;">26-50% available</div>
+            </div>
         </div>
+
+        @if($outOfStock->count() > 0)
+            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
+                <div style="background: #fef2f2; padding: 10px 15px; border-bottom: 1px solid #fee2e2;">
+                    <h3 class="text-red" style="font-size: 13px; font-weight: bold;">Out of Stock Items</h3>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                    <thead>
+                        <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                            <th style="padding: 10px 15px; text-align: left; color: #374151;">Supply</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Total Qty</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Reserved</th>
+                            <th style="padding: 10px 15px; text-align: left; width: 25%;">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($outOfStock as $supply)
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
+                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td class="text-yellow" style="padding: 10px 15px; text-align: center;">{{ $supply->reserved }}</td>
+                                <td style="padding: 10px 15px;">{{ $supply->location }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
+        @if($criticalStock->count() > 0)
+            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
+                <div style="background: #fff7ed; padding: 10px 15px; border-bottom: 1px solid #ffedd5;">
+                    <h3 class="text-orange" style="font-size: 13px; font-weight: bold;">Critical Stock (below 25%)</h3>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                    <thead>
+                        <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                            <th style="padding: 10px 15px; text-align: left; color: #374151;">Supply</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Remaining</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Total</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Availability %</th>
+                            <th style="padding: 10px 15px; text-align: left; width: 25%;">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($criticalStock as $supply)
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
+                                <td class="text-orange" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
+                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td style="padding: 10px 15px; text-align: center;">{{ round($supply->availability_percentage, 1) }}%</td>
+                                <td style="padding: 10px 15px;">{{ $supply->location }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
+        @if($lowStock->count() > 0)
+            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
+                <div style="background: #fefce8; padding: 10px 15px; border-bottom: 1px solid #fef3c7;">
+                    <h3 class="text-yellow" style="font-size: 13px; font-weight: bold;">Low Stock (26-50%)</h3>
+                </div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                    <thead>
+                        <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                            <th style="padding: 10px 15px; text-align: left; color: #374151;">Supply</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Remaining</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Total</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Availability %</th>
+                            <th style="padding: 10px 15px; text-align: left; width: 25%;">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($lowStock as $supply)
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
+                                <td class="text-yellow" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
+                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td style="padding: 10px 15px; text-align: center;">{{ round($supply->availability_percentage, 1) }}%</td>
+                                <td style="padding: 10px 15px;">{{ $supply->location }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
+
+        @if($outOfStock->count() === 0 && $criticalStock->count() === 0 && $lowStock->count() === 0)
+            <div style="padding: 20px; text-align: center; background-color: #f0fdf4; border: 1px solid #dcfce7; color: #15803d; border-radius: 10px; font-weight: bold; font-size: 12px;">
+                All supply stock levels are healthy.
+            </div>
+        @endif
     </div>
 </x-filament-panels::page>

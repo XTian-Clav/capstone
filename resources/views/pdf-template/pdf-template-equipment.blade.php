@@ -1,50 +1,49 @@
-<!-- Reservation Details -->
-<div style="font-size: 12px; font-weight: 600; margin-top: 40px; margin-bottom: 10px; text-transform: uppercase">Borrower Details</div>
-    
 <!-- Borrower Details -->
-<table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px;">
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; width: 35%; text-align: left;">Company</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->company }}</td>
+<div style="font-size: 12px; font-weight: 600; margin-top: 40px; margin-bottom: 10px; text-transform: uppercase; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">Borrower Details</div>
+    
+<table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; width: 35%; text-align: left; color: #4b5563; font-weight: 600;">Company</th>
+        <td style="padding: 10px; color: #111827; font-weight: 500;">{{ $reserveEquipment->company }}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">Reserved By</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->reserved_by }}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">Email</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->email }}</td>
     </tr>
     <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Reserved By</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->reserved_by }}</td>
-    </tr>
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Email</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->email }}</td>
-    </tr>
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Contact Number</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->contact }}</td>
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">Contact Number</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->contact }}</td>
     </tr>
 </table>
 
 <!-- Reservation Details -->
-<div style="font-size: 12px; font-weight: 600; margin-top: 25px; margin-bottom: 10px; text-transform: uppercase">Reservation Details</div>
+<div style="font-size: 12px; font-weight: 600; margin-top: 25px; margin-bottom: 10px; text-transform: uppercase; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">Reservation Details</div>
 
-<table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px;">
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; width: 35%; text-align: left;">Equipment</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->equipment->equipment_name }}</td>
+<table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; width: 35%; text-align: left; color: #4b5563; font-weight: 600;">Supply</th>
+        <td style="padding: 10px; color: #111827; font-weight: 500;">{{ $reserveEquipment->equipment->equipment_name }}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">Quantity</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->quantity }}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #e5e7eb;">
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">Start Date</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->start_date->format('F j, Y - h:i A') }}</td>
     </tr>
     <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Quantity</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->quantity }}</td>
-    </tr>
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">Start Date</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->start_date->format('F j, Y - h:i A') }}</td>
-    </tr>
-    <tr>
-        <th style="border: 1px solid #aaa; padding: 10px; text-align: left;">End Date</th>
-        <td style="border: 1px solid #aaa; padding: 10px;">{{ $reserveEquipment->end_date->format('F j, Y - h:i A') }}</td>
+        <th style="background-color: #f9fafb; padding: 10px; text-align: left; color: #4b5563; font-weight: 600;">End Date</th>
+        <td style="padding: 10px; color: #111827;">{{ $reserveEquipment->end_date->format('F j, Y - h:i A') }}</td>
     </tr>
 </table>
 
 <!-- Guidelines / T&C -->
-<div style="margin-top: 30px; padding: 8px 15px 15px 15px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; font-size: 12px; line-height: 1.6; color: #555;">
+<div style="margin-top: 30px; padding: 8px 15px 15px 15px; border: 1px solid #ffedd5; border-radius: 5px; background-color: #fffaf5; font-size: 12px; line-height: 1.6; color: #555;">
     <p style="font-weight: 600; margin: 0 0 6px 0;">Equipment Reservation Guidelines:</p>
     <ul style="padding-left: 20px; margin: 0; list-style-type: disc;">
         <li>I agree to promptly return the equipment borrowed.</li>

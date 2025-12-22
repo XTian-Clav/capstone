@@ -1,106 +1,94 @@
 <x-filament-panels::page>
-    <div class="space-y-6">
-        <div>
-            <h2 class="text-2xl font-bold mb-4">Room Performance Summary</h2>
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-blue-100 p-4 rounded-lg border-b-4 border-blue-500">
-                    <h3 class="font-bold text-blue-800">Total Revenue (Approved)</h3>
-                    <p class="text-3xl font-bold text-blue-900">₱{{ number_format($totalRevenue, 2) }}</p>
-                    <p class="text-sm text-blue-700">Actual earnings</p>
-                </div>
-                <div class="bg-red-100 p-4 rounded-lg border-b-4 border-red-500">
-                    <h3 class="font-bold text-red-800">Lost Opportunity</h3>
-                    <p class="text-3xl font-bold text-red-900">₱{{ number_format($totalLostRevenue, 2) }}</p>
-                    <p class="text-sm text-red-700">From rejected requests</p>
-                </div>
-                <div class="bg-purple-100 p-4 rounded-lg border-b-4 border-purple-500">
-                    <h3 class="font-bold text-purple-800">Total Room Units</h3>
-                    <p class="text-3xl font-bold text-purple-900">{{ $totalRooms }}</p>
-                    <p class="text-sm text-purple-700">Active rooms in system</p>
-                </div>
+    <style>
+        .text-blue { color: #013267; }
+        .text-red { color: #991b1b; }
+        .text-green { color: #15803d; }
+    </style>
+
+    <div style="overflow: auto;">
+        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Room Performance Summary</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Total Revenue (Approved)</div>
+                <div class="text-green" style="font-size: 20px; font-weight: bold;">₱{{ number_format($totalRevenue, 2) }}</div>
+                <div style="color: #666; font-size: 12px;">Actual earnings</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Lost Opportunity</div>
+                <div class="text-red" style="font-size: 20px; font-weight: bold;">₱{{ number_format($totalLostRevenue, 2) }}</div>
+                <div style="color: #666; font-size: 12px;">From rejected requests</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Total Room Units</div>
+                <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalRooms }} Rooms</div>
+                <div style="color: #666; font-size: 12px;">Active rooms in system</div>
             </div>
         </div>
-
-        <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-            <div class="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Utilization & Revenue Analysis</h3>
-                <span class="text-xs font-medium bg-gray-200 px-2 py-1 rounded text-gray-600 uppercase tracking-wider">Yield Performance</span>
-            </div>
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Room Details</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Capacity</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase text-center">Approved</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase text-center">Rejected</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Revenue / Loss</th>
-                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase">Popularity</th>
+    
+        <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Utilization & Revenue Analysis</h3>
+        
+        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                    <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Room Details</th>
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Capacity</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Approved</th>
+                        <th style="padding: 12px 15px; text-align: center; color: #374151;">Rejected</th>
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Revenue / Loss</th>
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Popularity</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody style="color: #374151;">
                     @foreach($rooms as $room)
-                        <tr>
-                            <td class="px-6 py-4">
-                                <div class="font-bold text-gray-900">{{ $room->room_type }}</div>
-                                <div class="text-xs text-gray-500">{{ $room->location }}</div>
+                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                            <td style="padding: 12px 15px;">
+                                <div style="font-weight: bold;">{{ $room->room_type }}</div>
+                                <div style="color: #666; font-size: 11px;">{{ $room->location }}</div>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-600">{{ $room->capacity }}</td>
-                            <td class="px-6 py-4 text-center text-sm font-semibold text-green-600">{{ $room->approved_count }}</td>
-                            <td class="px-6 py-4 text-center text-sm font-semibold text-red-400">{{ $room->rejected_count }}</td>
-                            <td class="px-6 py-4">
-                                <div class="text-xs font-bold text-green-700">Earnings: ₱{{ number_format($room->revenue, 2) }}</div>
-                                <div class="text-xs text-red-500">Loss: ₱{{ number_format($room->lost_revenue, 2) }}</div>
+                            <td style="padding: 12px 15px;">{{ $room->capacity }}</td>
+                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $room->approved_count }}</td>
+                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $room->rejected_count }}</td>
+                            <td style="padding: 12px 15px; font-weight: 600;">
+                                <div class="text-green">Revenue: ₱{{ number_format($room->revenue, 2) }}</div>
+                                <div class="text-red">Loss: ₱{{ number_format($room->lost_revenue, 2) }}</div>
                             </td>
-                            <td class="px-6 py-4">
+                            <td style="padding: 12px 15px; font-weight: bold;">
                                 @php
                                     $maxBookings = $rooms->max('total_requests') ?: 1;
                                     $popularity = ($room->total_requests / $maxBookings) * 100;
                                 @endphp
-                                <div class="flex items-center">
-                                    <div class="w-full bg-gray-200 rounded-full h-1.5 mr-2 max-w-[80px]">
-                                        <div class="bg-indigo-600 h-1.5 rounded-full" style="width: {{ $popularity }}%"></div>
-                                    </div>
-                                    <span class="text-xs text-gray-500">{{ round($popularity) }}%</span>
-                                </div>
+                                {{ round($popularity) }}%
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-
-        <div class="grid grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
-                <div class="flex items-center mb-2">
-                    <span class="text-xl mr-2">🏆</span>
-                    <h4 class="font-bold text-gray-800">Top Performer</h4>
-                </div>
+    
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div style="padding: 15px; border-radius: 10px; background-color: #f0fdf4; border: 1px solid #86efac; font-size: 12px;">
+                <h4 class="text-green" style="font-weight: bold; margin-bottom: 10px;">Most Popular Room</h4>
                 @php $topRoom = $rooms->sortByDesc('approved_count')->first(); @endphp
                 @if($topRoom)
-                    <p class="text-sm text-gray-600">
-                        The <span class="font-bold text-gray-900">{{ $topRoom->room_type }}</span> is your most successful asset with 
-                        <span class="font-bold text-green-600">{{ $topRoom->approved_count }}</span> confirmed bookings, generating 
-                        <span class="font-bold text-gray-900">₱{{ number_format($topRoom->revenue, 2) }}</span>.
-                    </p>
+                    The <strong>{{ $topRoom->room_type }}</strong> is your most successful asset with 
+                    <strong>{{ $topRoom->approved_count }}</strong> confirmed bookings, generating 
+                    <strong class="text-green">₱{{ number_format($topRoom->revenue, 2) }}</strong> revenue.
                 @endif
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-red-500">
-                <div class="flex items-center mb-2">
-                    <span class="text-xl mr-2">💸</span>
-                    <h4 class="font-bold text-gray-800">Revenue Leakage</h4>
-                </div>
+            <div style="padding: 15px; border-radius: 10px; background-color: #fef2f2; border: 1px solid #fca5a5; font-size: 12px;">
+                <h4 class="text-red" style="font-weight: bold; margin-bottom: 10px;">Revenue Lost</h4>
                 @php $mostRejected = $rooms->sortByDesc('lost_revenue')->first(); @endphp
                 @if($mostRejected && $mostRejected->lost_revenue > 0)
-                    <p class="text-sm text-gray-600">
-                        The <span class="font-bold text-gray-900">{{ $mostRejected->room_type }}</span> has the highest lost opportunity. You missed out on 
-                        <span class="font-bold text-red-600">₱{{ number_format($mostRejected->lost_revenue, 2) }}</span> due to 
-                        <span class="font-bold text-gray-900">{{ $mostRejected->rejected_count }}</span> rejections.
-                    </p>
+                    The <strong>{{ $mostRejected->room_type }}</strong> has the highest lost opportunity. You missed out on 
+                    <strong class="text-red">₱{{ number_format($mostRejected->lost_revenue, 2) }}</strong> due to 
+                    <strong>{{ $mostRejected->rejected_count }}</strong> rejections.
                 @else
-                    <p class="text-sm text-gray-600">
-                        Excellent! There is currently no significant revenue leakage from rejected bookings.
-                    </p>
+                    No significant revenue loss from rejected bookings.
                 @endif
             </div>
         </div>

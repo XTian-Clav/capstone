@@ -36,7 +36,7 @@ class SupplyReport extends Page
 
     public function mount(): void
     {
-        $this->supplies = Supply::with(['reservations', 'unavailable'])->get();
+        $this->supplies = Supply::with(['reservations', 'unavailable'])->orderBy('item_name', 'asc')->get();
 
         $this->supplies->transform(function ($supply) {
             $approvedReservations = $supply->reservations->where('status', 'Approved');
@@ -65,11 +65,11 @@ class SupplyReport extends Page
         $this->mostBorrowed = $this->supplies->sortByDesc('borrow_count')->first();
 
         $this->lowStock = $this->supplies->filter(fn ($supply) => 
-            $supply->availability_percentage > 20 && $supply->availability_percentage <= 50
+            $supply->availability_percentage > 26 && $supply->availability_percentage <= 50
         );
 
         $this->criticalStock = $this->supplies->filter(fn ($supply) => 
-            $supply->available > 0 && $supply->availability_percentage <= 20
+            $supply->available > 0 && $supply->availability_percentage <= 25
         );
 
         $this->outOfStock = $this->supplies->filter(fn ($supply) => 

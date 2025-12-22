@@ -3,121 +3,93 @@
 namespace App\Filament\Portal\Pages;
 
 use UnitEnum;
-use BackedEnum;
 use App\Models\Event;
 use Filament\Pages\Page;
-use Filament\Tables\Table;
 use Filament\Actions\Action;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Schemas\Contracts\HasSchemas;
-use Filament\Tables\Columns\Summarizers\Sum;
-use Filament\Tables\Columns\Summarizers\Count;
-use Filament\Tables\Columns\Summarizers\Range;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Tables\Columns\Summarizers\Average;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Schemas\Concerns\InteractsWithSchemas;
 
-class EventReport extends Page implements HasActions, HasSchemas, HasTable
+class EventReport extends Page
 {
-    use InteractsWithActions;
-    use InteractsWithSchemas;
-    use InteractsWithTable;
-    
-    protected static ?string $navigationLabel = 'Events Report';
-    protected static ?string $title = 'Event Performance Reports';
-    
     protected static ?int $navigationSort = 4;
-    protected static string | UnitEnum | null $navigationGroup = 'Generate Reports';
+    protected static string|UnitEnum|null $navigationGroup = 'Generate Reports';
 
     protected string $view = 'filament.portal.pages.event-report';
+
+    public $events;
+    public $totalEventsMonth = 0;
+    public $completedEventsMonth = 0;
+    public $totalCancelled = 0;
+    public $avgAttendanceRate = 0;
+    public $loyalParticipantsCount = 0;
+    public $noShowGap = 0;
+    public $topEvent;
 
     protected function getHeaderActions(): array
     {
         return [
             Action::make('print_report')
-                ->color('info')
                 ->label('Print')
-                ->icon('heroicon-s-printer'),
+                ->icon('heroicon-s-printer')
+                ->color('info'),
         ];
     }
 
-    public function table(Table $table): Table
+    public function mount(): void
     {
-        return $table
-            ->query(
-                Event::query()
-                    ->where('status', 'Completed')
-                    ->withCount([
-                        'attendees as total_participants',
-                        'attendees as confirmed_attending' => fn($q) => $q->where('event_users.is_attending', true)
-                    ])
-            )
-            ->columns([
-                TextColumn::make('event')
-                    ->searchable()
-                    ->sortable()
-                    ->wrap(),
-                    
-                TextColumn::make('location'),
-                    
-                TextColumn::make('start_date')
-                    ->dateTime('M d, Y'),
-                
-                TextColumn::make('end_date')
-                    ->dateTime('M d, Y'),
-                    
-                TextColumn::make('status')
-                    ->badge()
-                    ->colors([
-                        'warning' => 'Upcoming',
-                        'success' => 'Ongoing',
-                        'cyan' => 'Completed',
-                        'danger' => 'Cancelled',
-                    ])
-                    ->summarize([
-                        Count::make()->label('Total'),
-                    ]),
-                    
-                TextColumn::make('total_participants')
-                    ->label('Total Participants')
-                    ->numeric()
-                    ->sortable()
-                    ->summarize([
-                        Sum::make()->label('Total'),
-                    ]),
-                    
-                TextColumn::make('confirmed_attending')
-                    ->label('Attended')
-                    ->numeric()
-                    ->sortable()
-                    ->summarize([
-                        Sum::make()->label('Total'),
-                    ]),
-                    
-                TextColumn::make('attendance_rate')
-                    ->label('Attendance Rate')
-                    ->getStateUsing(function (Event $record): string {
-                        $total = $record->total_participants ?? 0;
-                        $confirmed = $record->confirmed_attending ?? 0;
-                        if ($total == 0) return '0%';
-                        return round(($confirmed / $total) * 100) . '%';
-                    })
-                    ->badge()
-                    ->color(fn (string $state): string => 
-                        (int)str_replace('%', '', $state) >= 70 ? 'success' : (
-                            (int)str_replace('%', '', $state) >= 50 ? 'warning' : 'danger'
-                        )
-                    ),
-            ])
-            ->defaultSort('start_date', 'desc');
-    }
+        $now = now();
 
-    
+        $events = Event::with('attendees')
+            ->whereYear('start_date', $now->year)
+            ->whereMonth('start_date', $now->month)
+            ->orderByDesc('start_date')
+            ->get();
+
+        $this->totalCancelled = $events->where('status', 'Cancelled')->count();
+        $this->totalEventsMonth = $events->whereIn('status', ['Upcoming', 'Ongoing', 'Completed'])->count();
+
+        $completedEvents = $events->where('status', 'Completed');
+        $this->completedEventsMonth = $completedEvents->count();
+
+        $totalParticipants = 0;
+        $totalAttended = 0;
+        $attendedUserIds = collect();
+
+        $this->events = $completedEvents->values()->transform(function ($event) use (
+            &$totalParticipants,
+            &$totalAttended,
+            &$attendedUserIds,
+        ) {
+            $totalRegistrations = $event->attendees->count();
+            $attendedCount = $event->attendees->where('pivot.is_attending', true)->count();
+            $declinedCount = $event->attendees->where('pivot.is_attending', false)->count();
+
+            $event->total_registrations = $totalRegistrations;
+            $event->attended_count = $attendedCount;
+            $event->declined_count = $declinedCount;
+
+            $event->attendance_rate = $totalRegistrations > 0
+                ? round(($attendedCount / $totalRegistrations) * 100, 1)
+                : 0;
+
+            $totalParticipants += $totalRegistrations;
+            $totalAttended += $attendedCount;
+            $attendedUserIds->push(...$event->attendees
+                ->where('pivot.is_attending', true)
+                ->pluck('id'));
+
+            return $event;
+        });
+
+        $this->avgAttendanceRate = $totalParticipants > 0
+            ? round(($totalAttended / $totalParticipants) * 100, 1)
+            : 0;
+
+        $this->noShowGap = $totalParticipants - $totalAttended;
+
+        $this->topEvent = $this->events->sortByDesc('attended_count')->first();
+
+        $this->loyalParticipantsCount = $attendedUserIds
+            ->countBy()
+            ->filter(fn($count) => $count > 1)
+            ->count();
+    }
 }

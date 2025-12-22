@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class EventUser extends Pivot
 {
-    protected $table = 'event_user';
+    protected $table = 'event_users';
 
     protected $fillable = [
         'event_id',
