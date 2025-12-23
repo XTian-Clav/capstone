@@ -4,7 +4,7 @@
     .text-green { color: #15803d; }
 </style>
 
-<div style="overflow: auto;">
+<div style="font-family: sans-serif; overflow: auto;">
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">Room Performance Summary</h2>
     
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 12px;">

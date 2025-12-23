@@ -34,7 +34,9 @@ class EventReport extends Page
             Action::make('print_report')
                 ->label('Print')
                 ->icon('heroicon-s-printer')
-                ->color('info'),
+                ->color('info')
+                ->url(route('EventReport'))
+                ->openUrlInNewTab(),
         ];
     }
 
