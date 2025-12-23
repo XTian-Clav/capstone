@@ -13,7 +13,6 @@ class ViewEquipmentAction extends Action
             ->color('info')
             ->label('Print')
             ->icon('heroicon-s-document-text')
-            ->url(fn ($record) => PrintEquipment::getUrl(['record' => $record->id]))
-            ->openUrlInNewTab();
+            ->url(fn ($record) => PrintEquipment::getUrl(['record' => $record->id]));
     }
 }

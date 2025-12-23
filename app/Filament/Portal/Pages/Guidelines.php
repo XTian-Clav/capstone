@@ -21,7 +21,8 @@ class Guidelines extends Page
                 ->color('info')
                 ->label('Print')
                 ->icon('heroicon-s-printer')
-                ->url(route('PrintGuidelines')),
+                ->url(route('PrintGuidelines'))
+                ->openUrlInNewTab(),
         ];
     }
 }

@@ -27,7 +27,7 @@ class PrintEquipment extends Page
     {
         return [
             BackButton::make(),
-            PrintEquipmentAction::make()->url(route('PrintEquipment', ['id' => $this->record])),
+            PrintEquipmentAction::make()->url(route('PrintEquipment', ['id' => $this->record]))->openUrlInNewTab(),
         ];
     }
 }

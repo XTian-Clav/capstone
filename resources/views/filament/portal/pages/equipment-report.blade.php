@@ -8,6 +8,34 @@
     </style>
 
     <div style="overflow: auto;">
+        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Reservation Status Summary</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Completed Reservations</div>
+                <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalCompleted }}</div>
+                <div style="color: #666; font-size: 11px;">Successfully returned</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Approved Reservations</div>
+                <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalApproved }}</div>
+                <div style="color: #666; font-size: 11px;">Active reservations</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Pending Reservations</div>
+                <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalPending }}</div>
+                <div style="color: #666; font-size: 11px;">Awaiting action</div>
+            </div>
+
+            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Rejected Reservations</div>
+                <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalRejected }}</div>
+                <div style="color: #666; font-size: 11px;">Cancelled requests</div>
+            </div>
+        </div>
+        
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Equipment Inventory Overview</h2>
         
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
@@ -18,19 +46,19 @@
             </div>
 
             <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Available</div>
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Available Equipment</div>
                 <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalAvailable }}</div>
                 <div style="color: #666; font-size: 11px;">Ready for use</div>
             </div>
 
             <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Reserved</div>
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Reserved Equipment</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalReserved }}</div>
-                <div style="color: #666; font-size: 11px;">Pending bookings</div>
+                <div style="color: #666; font-size: 11px;">Currently borrowed</div>
             </div>
 
             <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Unavailable</div>
+                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Unavailable Equipment</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalUnavailable }}</div>
                 <div style="color: #666; font-size: 11px;">Out of service</div>
             </div>

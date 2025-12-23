@@ -14,6 +14,11 @@ class SupplyReport extends Page
 
     protected string $view = 'filament.portal.pages.supply-report';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -29,6 +34,12 @@ class SupplyReport extends Page
     public $totalAvailable = 0;
     public $totalReserved = 0;
     public $totalUnavailable = 0;
+
+    public $totalPending = 0;
+    public $totalApproved = 0;
+    public $totalRejected = 0;
+    public $totalCompleted = 0;
+
     public $mostBorrowed;
     public $criticalStock;
     public $lowStock;
@@ -39,23 +50,37 @@ class SupplyReport extends Page
         $this->supplies = Supply::with(['reservations', 'unavailable'])->orderBy('item_name', 'asc')->get();
 
         $this->supplies->transform(function ($supply) {
-            $approvedReservations = $supply->reservations->where('status', 'Approved');
-            $reserved = $supply->reservations->where('status', 'Approved')->sum('quantity');
-            $unavailable = $supply->unavailable->sum('unavailable_quantity');
-            $available = $supply->quantity - $reserved - $unavailable;
+            $pending = $supply->reservations->where('status', 'Pending');
+            $approved = $supply->reservations->where('status', 'Approved');
+            $rejected = $supply->reservations->where('status', 'Rejected');
+            $completed = $supply->reservations->where('status', 'Completed');
 
-            $supply->reserved = $reserved;
-            $supply->unavailable_qty = $unavailable;
+            $supply->pending_count = $pending->count();
+            $supply->approved_count = $approved->count();
+            $supply->rejected_count = $rejected->count();
+            $supply->completed_count = $completed->count();
+
+            $reservedQty = $approved->sum('quantity');
+            $unavailableQty = $supply->unavailable->sum('unavailable_quantity');
+            $available = $supply->quantity - $reservedQty - $unavailableQty;
+
+            $supply->reserved = $reservedQty;
+            $supply->unavailable_qty = $unavailableQty;
             $supply->available = $available;
             $supply->availability_percentage = $supply->quantity > 0
                 ? ($available / $supply->quantity) * 100
                 : 0;
 
             $this->totalSupply += $supply->quantity;
-            $this->totalReserved += $reserved;
-            $this->totalUnavailable += $unavailable;
+            $this->totalReserved += $reservedQty;
+            $this->totalUnavailable += $unavailableQty;
 
-            $supply->borrow_count = $approvedReservations->count();
+            $this->totalPending += $supply->pending_count;
+            $this->totalApproved += $supply->approved_count;
+            $this->totalRejected += $supply->rejected_count;
+            $this->totalCompleted += $supply->completed_count;
+
+            $supply->borrow_count = $supply->approved_count + $supply->completed_count;
 
             return $supply;
         });

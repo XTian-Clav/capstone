@@ -14,6 +14,11 @@ class EventReport extends Page
 
     protected string $view = 'filament.portal.pages.event-report';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+    }
+
     public $events;
     public $totalEventsMonth = 0;
     public $completedEventsMonth = 0;

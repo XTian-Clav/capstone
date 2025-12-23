@@ -13,7 +13,6 @@ class ViewSupplyAction extends Action
             ->color('info')
             ->label('Print')
             ->icon('heroicon-s-document-text')
-            ->url(fn ($record) => PrintSupply::getUrl(['record' => $record->id]))
-            ->openUrlInNewTab();
+            ->url(fn ($record) => PrintSupply::getUrl(['record' => $record->id]));
     }
 }

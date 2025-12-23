@@ -27,7 +27,7 @@ class PrintSupply extends Page
     {
         return [
             BackButton::make(),
-            PrintSupplyAction::make()->url(route('PrintSupply', ['id' => $this->record])),
+            PrintSupplyAction::make()->url(route('PrintSupply', ['id' => $this->record]))->openUrlInNewTab(),
         ];
     }
 }

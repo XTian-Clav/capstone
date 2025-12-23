@@ -13,7 +13,6 @@ class ViewRoomAction extends Action
             ->color('info')
             ->label('Print')
             ->icon('heroicon-s-document-text')
-            ->url(fn ($record) => PrintRoom::getUrl(['record' => $record->id]))
-            ->openUrlInNewTab();
+            ->url(fn ($record) => PrintRoom::getUrl(['record' => $record->id]));
     }
 }

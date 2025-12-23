@@ -14,6 +14,11 @@ class RoomReport extends Page
 
     protected string $view = 'filament.portal.pages.room-report';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -21,7 +26,8 @@ class RoomReport extends Page
                 ->label('Print')
                 ->icon('heroicon-s-printer')
                 ->color('info')
-                ->url(route('RoomReport')),
+                ->url(route('RoomReport'))
+                ->openUrlInNewTab(),
         ];
     }
 

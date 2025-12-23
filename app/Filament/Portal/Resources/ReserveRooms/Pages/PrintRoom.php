@@ -27,7 +27,7 @@ class PrintRoom extends Page
     {
         return [
             BackButton::make(),
-            PrintRoomAction::make()->url(route('PrintRoom', ['id' => $this->record])),
+            PrintRoomAction::make()->url(route('PrintRoom', ['id' => $this->record]))->openUrlInNewTab(),
         ];
     }
 }
