@@ -140,7 +140,7 @@
         <table style="width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid #eee;">
             <thead>
                 <tr style="background-color: #f9fafb;">
-                    <th style="padding: 10px; text-align: left; border-bottom: 1px solid #eee; color: #666; width: 45%;">Supply Name & Status</th>
+                    <th style="padding: 10px; text-align: left; border-bottom: 1px solid #eee; color: #666; width: 45%;">Iten Name</th>
                     <th style="padding: 10px; text-align: center; border-bottom: 1px solid #eee; color: #666; width: 20%;">Available / Total</th>
                     <th style="padding: 10px; text-align: center; border-bottom: 1px solid #eee; color: #666; width: 10%;">Level</th>
                     <th style="padding: 10px; text-align: left; border-bottom: 1px solid #eee; color: #666; width: 25%;">Location</th>
