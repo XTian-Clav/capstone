@@ -88,8 +88,8 @@
         <thead>
             <tr style="background-color: #fcfcfc;">
                 <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: left; color: #555;">Equipment</th>
-                <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: left; color: #555;">Location</th>
-                <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: center; color: #555;">Total</th>
+                <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: left; color: #555;">Borrow Count</th>
+                <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: center; color: #555;">Total Qty</th>
                 <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: center; color: #555;">Avail</th>
                 <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: center; color: #555;">Res</th>
                 <th style="border-bottom: 1px solid #eee; padding: 12px 11px; text-align: center; color: #555;">Unavail</th>
@@ -104,11 +104,11 @@
                 @endphp
                 <tr>
                     <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                    <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; color: #666;">{{ $equipment->location }}</td>
+                    <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; color: #666;">{{ $equipment->borrow_count }}</td>
                     <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center; font-weight: bold;">{{ $equipment->quantity }}</td>
-                    <td class="text-green" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center; font-weight: bold;">{{ $available }}</td>
-                    <td class="text-yellow" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center; font-weight: bold;">{{ $reserved }}</td>
-                    <td class="text-red" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center; font-weight: bold;">{{ $unavailable }}</td>
+                    <td class="text-green" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $available }}</td>
+                    <td class="text-yellow" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $reserved }}</td>
+                    <td class="text-red" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $unavailable }}</td>
                 </tr>
             @endforeach
         </tbody>

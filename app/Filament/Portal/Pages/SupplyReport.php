@@ -61,6 +61,8 @@ class SupplyReport extends Page
             $supply->approved_count = $approved->count();
             $supply->rejected_count = $rejected->count();
             $supply->completed_count = $completed->count();
+            
+            $supply->borrow_count = $supply->approved_count + $supply->completed_count;
 
             $reservedQty = $approved->sum('quantity');
             $unavailableQty = $supply->unavailable->sum('unavailable_quantity');
@@ -81,8 +83,6 @@ class SupplyReport extends Page
             $this->totalApproved += $supply->approved_count;
             $this->totalRejected += $supply->rejected_count;
             $this->totalCompleted += $supply->completed_count;
-
-            $supply->borrow_count = $supply->approved_count + $supply->completed_count;
 
             return $supply;
         });

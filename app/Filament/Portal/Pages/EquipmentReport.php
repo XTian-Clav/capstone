@@ -49,7 +49,9 @@ class EquipmentReport extends Page
 
     public function mount(): void
     {
-        $this->equipments = Equipment::with(['reservations', 'unavailable'])->orderBy('equipment_name', 'asc')->get();
+        $this->equipments = Equipment::with(['reservations', 'unavailable'])
+            ->orderBy('equipment_name', 'asc')
+            ->get();
 
         $this->equipments->transform(function ($equipment) {
             $pending = $equipment->reservations->where('status', 'Pending');
@@ -61,6 +63,8 @@ class EquipmentReport extends Page
             $equipment->approved_count = $approved->count();
             $equipment->rejected_count = $rejected->count();
             $equipment->completed_count = $completed->count();
+
+            $equipment->borrow_count = $equipment->approved_count + $equipment->completed_count;
 
             $reservedQty = $approved->sum('quantity');
             $unavailableQty = $equipment->unavailable->sum('unavailable_quantity');
@@ -79,8 +83,6 @@ class EquipmentReport extends Page
             $this->totalApproved += $equipment->approved_count;
             $this->totalRejected += $equipment->rejected_count;
             $this->totalCompleted += $equipment->completed_count;
-
-            $equipment->borrow_count = $equipment->approved_count + $equipment->completed_count;
 
             return $equipment;
         });

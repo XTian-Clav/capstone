@@ -80,7 +80,7 @@
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 12px 15px; text-align: left; color: #374151;">Equipment</th>
-                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Property No</th>
+                        <th style="padding: 12px 15px; text-align: left; color: #374151;">Borrow Count</th>
                         <th style="padding: 12px 15px; text-align: left; color: #374151;">Location</th>
                         <th style="padding: 12px 15px; text-align: center; color: #374151;">Total</th>
                         <th style="padding: 12px 15px; text-align: center; color: #374151;">Available</th>
@@ -97,7 +97,7 @@
                         @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 12px 15px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                            <td style="padding: 12px 15px;">{{ $equipment->property_no }}</td>
+                            <td style="padding: 12px 15px; font-weight: bold;">{{ $equipment->borrow_count }}</td>
                             <td style="padding: 12px 15px;">{{ $equipment->location }}</td>
                             <td style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $equipment->quantity }}</td>
                             <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $available }}</td>
@@ -138,7 +138,7 @@
                     <thead>
                         <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                             <th style="padding: 10px 15px; text-align: left; color: #374151;">Equipment</th>
-                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Total Qty</th>
+                            <th style="padding: 10px 15px; text-align: center; width: 15%;">Total</th>
                             <th style="padding: 10px 15px; text-align: center; width: 15%;">Reserved</th>
                             <th style="padding: 10px 15px; text-align: left; width: 25%;">Location</th>
                         </tr>
