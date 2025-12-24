@@ -18,7 +18,9 @@ class ListEvents extends ListRecords
         $user = auth()->user();
         
         return [
-            CreateAction::make()->visible(fn () => $user->hasAnyRole(['admin', 'super_admin'])),
+            CreateAction::make()
+                ->label('Create Event')->icon('heroicon-o-plus')
+                ->visible(fn () => $user->hasAnyRole(['admin', 'super_admin'])),
         ];
     }
 

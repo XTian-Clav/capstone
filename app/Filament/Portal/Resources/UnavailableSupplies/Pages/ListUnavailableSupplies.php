@@ -13,7 +13,7 @@ class ListUnavailableSupplies extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()->label('Add Unavailable Supply')->icon('heroicon-o-plus'),
         ];
     }
 }

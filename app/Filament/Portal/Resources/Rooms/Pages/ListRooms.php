@@ -16,7 +16,7 @@ class ListRooms extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()->label('Create Room')->icon('heroicon-o-plus'),
         ];
     }
 

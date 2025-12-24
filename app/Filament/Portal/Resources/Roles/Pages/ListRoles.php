@@ -15,7 +15,7 @@ class ListRoles extends ListRecords
     protected function getActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()->label('Create Role')->icon('heroicon-o-plus'),
         ];
     }
 }

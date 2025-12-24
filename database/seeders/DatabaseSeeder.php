@@ -244,22 +244,34 @@ class DatabaseSeeder extends Seeder
         }
 
         // --- Room ---
-        $roomCapacities = [
-            'Small Meeting Room' => '6–10 pax',
-            'Training Room' => '40–50 pax',
-            'Co-Working Space' => '40–50 pax',
+        $rooms = [
+            [
+                'room_type' => 'Small Meeting Room',
+                'capacity'  => '6–10 pax',
+                'room_rate' => 200,
+            ],
+            [
+                'room_type' => 'Training Room',
+                'capacity'  => '40–50 pax',
+                'room_rate' => 125,
+            ],
+            [
+                'room_type' => 'Co-Working Space',
+                'capacity'  => '40–50 pax',
+                'room_rate' => 125,
+            ],
         ];
         
-        foreach ($roomCapacities as $roomType => $capacity) {
+        foreach ($rooms as $room) {
             Room::create([
-                'room_type' => $roomType,
-                'location' => $faker->city(),
-                'capacity' => $capacity,
-                'room_rate' => 0,
-                'inclusions' => $faker->sentence(),
+                'room_type'    => $room['room_type'],
+                'location'     => $faker->city(),
+                'capacity'     => $room['capacity'],
+                'room_rate'    => $room['room_rate'],
+                'inclusions'   => $faker->sentence(),
                 'is_available' => true,
             ]);
-        }        
+        }      
 
         // --- Startup ---
         $startups = [

@@ -13,7 +13,7 @@ class ListAnnouncements extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()->label('Create Announcement')->icon('heroicon-o-plus'),
         ];
     }
 }
