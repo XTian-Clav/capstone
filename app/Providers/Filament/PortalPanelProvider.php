@@ -67,7 +67,7 @@ class PortalPanelProvider extends PanelProvider
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
-                'danger' => Color::Rose,
+                'danger' => Color::Red,
                 'gray' => Color::Gray,
                 'info' => Color::Sky,
                 'primary' => Color::Gray,

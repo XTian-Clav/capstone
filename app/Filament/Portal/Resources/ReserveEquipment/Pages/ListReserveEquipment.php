@@ -51,7 +51,10 @@ class ListReserveEquipment extends ListRecords
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
 
             'all' => Tab::make('All')
-                ->badge(fn () => ReserveEquipment::count()),
+                ->badge(fn () => $isAdmin 
+                    ? ReserveEquipment::count() 
+                    : ReserveEquipment::where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $isAdmin ? $query : $query->where('user_id', $user->id)),
         ];
 
         return $tabs;

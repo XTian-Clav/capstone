@@ -53,7 +53,10 @@ class ListReserveRooms extends ListRecords
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
 
             'all' => Tab::make('All')
-                ->badge(fn () => ReserveRoom::count()),
+                ->badge(fn () => $isAdmin 
+                    ? ReserveRoom::count() 
+                    : ReserveRoom::where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $isAdmin ? $query : $query->where('user_id', $user->id)),
         ];
 
         return $tabs;

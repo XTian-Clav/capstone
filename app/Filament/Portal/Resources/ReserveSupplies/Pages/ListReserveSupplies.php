@@ -51,7 +51,10 @@ class ListReserveSupplies extends ListRecords
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'completed')),
 
             'all' => Tab::make('All')
-                ->badge(fn () => ReserveSupply::count()),
+                ->badge(fn () => $isAdmin 
+                    ? ReserveSupply::count() 
+                    : ReserveSupply::where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => $isAdmin ? $query : $query->where('user_id', $user->id)),
         ];
 
         return $tabs;

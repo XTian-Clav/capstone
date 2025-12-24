@@ -64,7 +64,10 @@ class ListStartups extends ListRecords
                 ->modifyQueryUsing(fn ($query) => $query->where('status', 'rejected')),
 
             'all' => Tab::make('All')
-                ->badge(fn () => Startup::count()),
+                ->badge(fn () => ($isAdmin || $isSuperAdmin)
+                    ? Startup::count() 
+                    : Startup::where('user_id', $user->id)->count())
+                ->modifyQueryUsing(fn ($query) => ($isAdmin || $isSuperAdmin) ? $query : $query->where('user_id', $user->id)),
         ];
         
         if ($isSuperAdmin) {

@@ -16,7 +16,7 @@ class RoomReport extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->hasAnyRole(['admin', 'super_admin']);
+        return auth()->user()->hasRole('super_admin');
     }
 
     protected function getHeaderActions(): array
