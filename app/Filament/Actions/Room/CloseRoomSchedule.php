@@ -11,7 +11,7 @@ class CloseRoomSchedule
     {
         return Action::make('view_approved_schedule')
             ->button()
-            ->color('zinc')
+            ->color('gray')
             ->label('Close')
             ->icon('heroicon-o-x-mark')
             ->url(fn (): string => ReserveRoomResource::getUrl('index'));

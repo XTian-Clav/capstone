@@ -70,7 +70,7 @@ class PortalPanelProvider extends PanelProvider
                 'danger' => Color::Red,
                 'gray' => Color::Gray,
                 'info' => Color::Sky,
-                'primary' => Color::Gray,
+                'primary' => '#fe800d',
                 'secondary' => Color::Gray,
                 'success' => Color::Lime,
                 'warning' => Color::Amber,
