@@ -8,6 +8,7 @@ use App\Http\Controllers\RoomReportController;
 use App\Http\Controllers\EventReportController;
 use App\Http\Controllers\PrintSupplyController;
 use App\Http\Controllers\SupplyReportController;
+use App\Http\Controllers\ReturnedItemsController;
 use App\Http\Controllers\PrintEquipmentController;
 use App\Http\Controllers\PrintGuidelineController;
 use App\Http\Controllers\EquipmentReportController;
@@ -52,3 +53,5 @@ Route::get('/portal/print-equipment-report', [EquipmentReportController::class, 
 Route::get('/portal/print-supply-report', [SupplyReportController::class, 'SupplyReport'])->name('SupplyReport');
 
 Route::get('/portal/print-event-report', [EventReportController::class, 'EventReport'])->name('EventReport');
+
+Route::get('/portal/print-returned-items', [ReturnedItemsController::class, 'ReturnedItems'])->name('ReturnedItems');
