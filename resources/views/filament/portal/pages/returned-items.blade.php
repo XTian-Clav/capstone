@@ -69,6 +69,7 @@
         </div>
 
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Borrowed Equipment and Supplies</h2>
+        
         {{-- BORROWED EQUIPMENT --}}
         <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
             <div style="background: #fff7ed; padding: 10px 15px; border-bottom: 1px solid #ffedd5;">
@@ -89,7 +90,7 @@
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->equipment?->equipment_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $item->quantity }}</td>
-                            <td class="text-orange" style="padding: 10px 15px; font-weight: bold;">{{ \Carbon\Carbon::parse($item->end_date)->format('M d, Y') }}</td>
+                            <td class="text-orange" style="padding: 10px 15px; font-weight: bold;">{{ $item->end_date->format('M d, Y') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="4" style="padding: 20px; text-align: center; color: #666;">No active borrowed items.</td></tr>
@@ -118,7 +119,7 @@
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->supply?->item_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $item->quantity }}</td>
-                            <td class="text-orange" style="padding: 10px 15px; font-weight: bold;">{{ \Carbon\Carbon::parse($item->end_date)->format('M d, Y') }}</td>
+                            <td class="text-orange" style="padding: 10px 15px; font-weight: bold;">{{ $item->end_date->format('M d, Y') }}</td>
                         </tr>
                     @empty
                         <tr><td colspan="4" style="padding: 20px; text-align: center; color: #666;">No active borrowed supplies.</td></tr>
@@ -128,6 +129,7 @@
         </div>
 
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Overdue Equipment and Supplies</h2>
+        
         {{-- OVERDUE EQUIPMENT --}}
         <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 40px;">
             <div style="background: #fef2f2; padding: 10px 15px; border-bottom: 1px solid #fee2e2;">
@@ -145,16 +147,14 @@
                 </thead>
                 <tbody>
                     @forelse($overdueEquipment as $item)
-                        @php
-                            $endDate = \Carbon\Carbon::parse($item->end_date)->startOfDay();
-                            $now = now()->startOfDay();
-                            $daysLate = $endDate->diffInDays($now); 
+                        @php 
+                            $daysLate = $item->end_date->startOfDay()->diffInDays(now()->startOfDay()); 
                         @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->equipment?->equipment_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $item->quantity }}</td>
-                            <td style="padding: 10px 15px; font-weight: bold;">{{ $endDate->format('M d, Y') }}</td>
+                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->end_date->format('M d, Y') }}</td>
                             <td class="text-red" style="padding: 10px 15px; text-align: right; font-weight: bold;">
                                 {{ (int) $daysLate }} Days
                             </td>
@@ -184,15 +184,13 @@
                 <tbody>
                     @forelse($overdueSupply as $item)
                         @php 
-                            $endDate = \Carbon\Carbon::parse($item->end_date)->startOfDay();
-                            $now = now()->startOfDay();
-                            $daysLate = $endDate->diffInDays($now); 
+                            $daysLate = $item->end_date->startOfDay()->diffInDays(now()->startOfDay()); 
                         @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->supply?->item_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $item->quantity }}</td>
-                            <td style="padding: 10px 15px; font-weight: bold;">{{ $endDate->format('M d, Y') }}</td>
+                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->end_date->format('M d, Y') }}</td>
                             <td class="text-red" style="padding: 10px 15px; text-align: right; font-weight: bold;">
                                 {{ (int) $daysLate }} Days
                             </td>
