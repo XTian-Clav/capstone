@@ -19,7 +19,6 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use App\Filament\Actions\Equipment\UnavailableEquipment;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class EquipmentTable
 {
@@ -115,14 +114,6 @@ class EquipmentTable
             ])
             ->headerActions([
                 UnavailableEquipment::make()->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Equipment Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

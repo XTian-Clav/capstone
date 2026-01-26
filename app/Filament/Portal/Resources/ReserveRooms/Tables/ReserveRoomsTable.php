@@ -23,7 +23,6 @@ use App\Filament\Actions\Print\ViewRoomAction;
 use App\Filament\Actions\Room\RejectRoomAction;
 use App\Filament\Actions\Room\ApproveRoomAction;
 use App\Filament\Actions\Room\CompleteRoomAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class ReserveRoomsTable
 {
@@ -155,24 +154,6 @@ class ReserveRoomsTable
             ])
             ->headerActions([
                 RoomSchedule::make()->visible(fn () => auth()->user()->hasRole('incubatee')),
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Room Reservations Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->disableTableColumns()
-                    ->withColumns([
-                        TextColumn::make('room.room_type'),
-                        TextColumn::make('quantity'),
-                        TextColumn::make('reserved_by'),
-                        TextColumn::make('status'),
-                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

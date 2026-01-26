@@ -23,7 +23,6 @@ use Filament\Tables\Columns\Layout\Stack;
 use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class MentorsTable
 {
@@ -123,23 +122,6 @@ class MentorsTable
                     ->button()
                     ->color('gray')
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-            ])
-            ->headerActions([
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Mentors Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->disableTableColumns()
-                    ->withColumns([
-                        TextColumn::make('name'),
-                        TextColumn::make('expertise'),
-                        TextColumn::make('email'),
-                        TextColumn::make('contact'),
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

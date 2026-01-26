@@ -22,7 +22,6 @@ use App\Filament\Actions\Print\ViewSupplyAction;
 use App\Filament\Actions\Supply\RejectSupplyAction;
 use App\Filament\Actions\Supply\ApproveSupplyAction;
 use App\Filament\Actions\Supply\CompleteSupplyAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class ReserveSuppliesTable
 {
@@ -157,26 +156,6 @@ class ReserveSuppliesTable
                 ApproveSupplyAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectSupplyAction::make()->outlined()->size(Size::ExtraSmall),
                 CompleteSupplyAction::make()->outlined()->size(Size::ExtraSmall),
-            ])
-            ->headerActions([
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Supply Reservations Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->disableTableColumns()
-                    ->withColumns([
-                        TextColumn::make('supply.item_name'),
-                        TextColumn::make('quantity'),
-                        TextColumn::make('reserved_by'),
-                        TextColumn::make('status'),
-                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -17,7 +17,6 @@ use App\Filament\Filters\StartDateFilter;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Filters\CreatedDateFilter;
 use App\Filament\Actions\Supply\AvailableSupply;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class UnavailableSuppliesTable
 {
@@ -104,14 +103,6 @@ class UnavailableSuppliesTable
             ])
             ->headerActions([
                 AvailableSupply::make(),
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Unavailable Supplies Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

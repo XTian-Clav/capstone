@@ -22,7 +22,6 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Filament\Actions\Equipment\RejectEquipmentAction;
 use App\Filament\Actions\Equipment\ApproveEquipmentAction;
 use App\Filament\Actions\Equipment\CompleteEquipmentAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class ReserveEquipmentTable
 {
@@ -157,26 +156,6 @@ class ReserveEquipmentTable
                 ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
                 CompleteEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
-            ])
-            ->headerActions([
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Equipment Reservation Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->disableTableColumns()
-                    ->withColumns([
-                        TextColumn::make('equipment.equipment_name'),
-                        TextColumn::make('quantity'),
-                        TextColumn::make('reserved_by'),
-                        TextColumn::make('status'),
-                        TextColumn::make('start_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('end_date')->dateTime('M j, Y h:i A'),
-                        TextColumn::make('created_at')->dateTime('M j, Y h:i A')->label('Submitted At'),
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

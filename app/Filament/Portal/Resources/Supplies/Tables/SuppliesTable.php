@@ -19,7 +19,6 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use App\Filament\Actions\Supply\UnavailableSupply;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class SuppliesTable
 {
@@ -109,14 +108,6 @@ class SuppliesTable
             ])
             ->headerActions([
                 UnavailableSupply::make()->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Supplies Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('landscape')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

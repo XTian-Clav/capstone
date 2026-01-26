@@ -25,7 +25,6 @@ use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
 use App\Filament\Actions\Startup\RejectStartupAction;
 use App\Filament\Actions\Startup\ApproveStartupAction;
-use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class StartupsTable
 {
@@ -133,25 +132,6 @@ class StartupsTable
 
                 ApproveStartupAction::make()->outlined()->size(Size::ExtraSmall),
                 RejectStartupAction::make()->outlined()->size(Size::ExtraSmall),
-            ])
-            ->headerActions([
-                FilamentExportHeaderAction::make('export')
-                    ->outlined()
-                    ->size(Size::Small)
-                    ->color('success')
-                    ->fileName('Startups Report')
-                    ->defaultFormat('pdf')
-                    ->defaultPageOrientation('portrait')
-                    ->disableTableColumns()
-                    ->withColumns([
-                        TextColumn::make('startup_name'),
-                        TextColumn::make('founder'),
-                        TextColumn::make('members'),
-                        TextColumn::make('description'),
-                        TextColumn::make('status'),
-                        TextColumn::make('admin_comment'),
-                    ])
-                    ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

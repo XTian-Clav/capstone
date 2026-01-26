@@ -3,6 +3,7 @@
 namespace App\Filament\Portal\Pages;
 
 use UnitEnum;
+use Carbon\Carbon;
 use Filament\Pages\Page;
 use Filament\Actions\Action;
 use App\Models\ReserveSupply;
@@ -24,7 +25,7 @@ class ReturnedItems extends Page
     {
         return [
             Action::make('print_report')
-                ->label('Print')
+                ->label('Print Returned Items')
                 ->icon('heroicon-s-printer')
                 ->color('info')
                 ->url(route('ReturnedItems'))
@@ -35,16 +36,34 @@ class ReturnedItems extends Page
     public $returnedEquipment = [];
     public $returnedSupply = [];
     
+    public $borrowedEquipment = [];
+    public $borrowedSupply = [];
+
+    public $overdueEquipment = [];
+    public $overdueSupply = [];
+    
     public function mount(): void
     {
-        $this->returnedEquipment = ReserveEquipment::with('equipment')
-            ->where('status', 'Completed')
-            ->latest('updated_at')
+        $now = Carbon::now();
+
+        $allEquipment = ReserveEquipment::with('equipment')
+            ->whereIn('status', ['Completed', 'Approved'])
             ->get();
 
-        $this->returnedSupply = ReserveSupply::with('supply')
-            ->where('status', 'Completed')
-            ->latest('updated_at')
+        $this->returnedEquipment = $allEquipment->where('status', 'Completed')->sortByDesc('updated_at');
+        
+        $approvedEquip = $allEquipment->where('status', 'Approved');
+        $this->borrowedEquipment = $approvedEquip->where('end_date', '>=', $now)->sortByDesc('end_date');
+        $this->overdueEquipment = $approvedEquip->where('end_date', '<', $now)->sortByDesc('end_date');
+
+        $allSupplies = ReserveSupply::with('supply')
+            ->whereIn('status', ['Completed', 'Approved'])
             ->get();
+
+        $this->returnedSupply = $allSupplies->where('status', 'Completed')->sortByDesc('updated_at');
+
+        $approvedSupp = $allSupplies->where('status', 'Approved');
+        $this->borrowedSupply = $approvedSupp->where('end_date', '>=', $now)->sortByDesc('end_date');
+        $this->overdueSupply = $approvedSupp->where('end_date', '<', $now)->sortByDesc('end_date');
     }
 }
