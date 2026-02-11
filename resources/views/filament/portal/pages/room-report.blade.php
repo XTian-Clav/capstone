@@ -3,7 +3,91 @@
         .text-blue { color: #013267; }
         .text-red { color: #991b1b; }
         .text-green { color: #15803d; }
+
+        .filter-container {
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        .filter-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+        .active-btn {
+            background-color: #fe800d;
+            color: white;
+            border-color: #fe800d;
+        }
+        .inactive-btn {
+            background-color: #f9fafb;
+            color: #374151;
+        }
+        .inactive-btn:hover {
+            background-color: #f3f4f6;
+        }
     </style>
+
+    @php
+        $currentMonth = request('month');
+        $currentYear = request('year', now()->year);
+    @endphp
+
+    <div class="filter-container">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-end;">
+            
+            <div style="flex: 1; min-width: 300px;">
+                <span class="filter-label" style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563; font-size: 12px; text-transform: uppercase;">Month</span>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    @foreach(range(1, 12) as $m)
+                        <a href="{{ request()->fullUrlWithQuery(['month' => $m]) }}" 
+                        class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}"
+                        style="text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px;">
+                            {{ date('M', mktime(0, 0, 0, $m, 1)) }}
+                        </a>
+                    @endforeach
+
+                    <a href="{{ request()->fullUrlWithQuery(['month' => null]) }}" 
+                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}"
+                    style="text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">
+                        All
+                    </a>
+                </div>
+            </div>
+
+            <div style="min-width: 160px;">
+                <span class="filter-label" style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563; font-size: 12px; text-transform: uppercase;">Year</span>
+                <div style="position: relative;">
+                    <select onchange="window.location.href = this.value"
+                        style="width: 100%; height: 32px; padding: 0 32px 0 12px; font-size: 12px; font-weight: 500; color: #111827; background-color: white; border: 2px solid #fe800d; border-radius: 6px; appearance: none; cursor: pointer; outline: none;">
+                        @foreach($availableYears as $y)
+                            <option value="{{ request()->fullUrlWithQuery(['year' => $y]) }}" {{ $currentYear == $y ? 'selected' : '' }}>
+                                {{ $y }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #fe800d;">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div style="overflow: auto;">
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Room Performance Summary</h2>
