@@ -33,5 +33,10 @@
             </td>
         </tr>
     </table>
+    
+    <div style="font-size: 11px; text-align: right; text-transform: uppercase; color: #4b5563;">
+        Date Printed: {{ now()->format('M d, Y') }}
+    </div>
+
     @include('pdf-template.pdf-template-report-event')
 </div>
