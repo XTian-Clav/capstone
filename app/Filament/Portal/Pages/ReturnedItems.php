@@ -35,13 +35,10 @@ class ReturnedItems extends Page
 
     public $returnedEquipment = [];
     public $returnedSupply = [];
-    
     public $borrowedEquipment = [];
     public $borrowedSupply = [];
-
     public $overdueEquipment = [];
     public $overdueSupply = [];
-    
     public $availableYears = [];
 
     public function mount(): void

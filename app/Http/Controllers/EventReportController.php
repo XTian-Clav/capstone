@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class EventReportController extends Controller
 {
-    public function EventReport()
+    public function EventReport(Request $request)
     {
-        $now = now();
+        $month = $request->query('month');
+        $year = $request->query('year', now()->year);
 
         $events = Event::with('attendees')
-            ->whereYear('start_date', $now->year)
-            ->whereMonth('start_date', $now->month)
+            ->whereYear('start_date', $year)
+            ->when($month, fn($q) => $q->whereMonth('start_date', $month))
             ->orderByDesc('start_date')
             ->get();
 
@@ -65,6 +67,12 @@ class EventReportController extends Controller
             ->filter(fn($count) => $count > 1)
             ->count();
 
+        $monthName = $month ? date('F', mktime(0, 0, 0, $month, 1)) : '';
+
+        $reportTitle = $month 
+            ? "Event Report - {$monthName} {$year}" 
+            : "Annual Event Report {$year}";
+
         $pdf = App::make('dompdf.wrapper');
         
         $pdf->loadView('pdf.report-event-pdf', [
@@ -76,9 +84,10 @@ class EventReportController extends Controller
             'loyalParticipantsCount' => $loyalParticipantsCount,
             'noShowGap' => $noShowGap,
             'topEvent' => $topEvent,
-            'month' => $now->format('F Y'),
+            'reportTitle' => $reportTitle,
+            'date' => now()->format('m/d/Y'),
         ]);
 
-        return $pdf->stream("Event Report - " . $now->format('M Y') . ".pdf");
+        return $pdf->stream("$reportTitle.pdf");
     }
 }

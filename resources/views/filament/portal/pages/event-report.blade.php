@@ -8,29 +8,128 @@
         .card-value { font-size: 24px; font-weight: bold; line-height: 1; }
         .card-sub { color: #666; font-size: 11px; margin-top: 4px; }
         .stat-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+        .filter-container {
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        .filter-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+        .active-btn {
+            background-color: #fe800d;
+            color: white;
+            border-color: #fe800d;
+        }
+        .inactive-btn {
+            background-color: #f9fafb;
+            color: #374151;
+        }
+        .inactive-btn:hover {
+            background-color: #f3f4f6;
+        }
     </style>
+
+    @php
+        $currentMonth = request('month');
+        $currentYear = request('year', now()->year);
+        $monthLabel = $currentMonth 
+            ? date('F', mktime(0, 0, 0, $currentMonth, 1)) 
+            : 'Annual';
+    @endphp
+
+    <div class="filter-container">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-end;">
+            
+            <div style="flex: 1; min-width: 300px;">
+                <span class="filter-label" style="margin-bottom: 14px;">Month</span>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                    @foreach(range(1, 12) as $m)
+                        <a href="{{ request()->fullUrlWithQuery(['month' => $m]) }}" 
+                        class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}">
+                            {{ date('M', mktime(0, 0, 0, $m, 1)) }}
+                        </a>
+                    @endforeach
+
+                    <a href="{{ request()->fullUrlWithQuery(['month' => null]) }}" 
+                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}">
+                        All Months
+                    </a>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                <div style="width: 140px;">
+                    <span class="filter-label">Year</span>
+                    <x-filament::dropdown placement="bottom-start">
+                        <x-slot name="trigger">
+                            <button type="button" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
+                                {{ $currentYear }}
+                                <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
+                            </button>
+                        </x-slot>
+                        <x-filament::dropdown.list>
+                            @foreach($availableYears as $y)
+                                <x-filament::dropdown.list.item 
+                                    tag="a" 
+                                    href="{{ request()->fullUrlWithQuery(['year' => $y]) }}"
+                                    :color="$currentYear == $y ? 'warning' : 'gray'">
+                                    {{ $y }}
+                                </x-filament::dropdown.list.item>
+                            @endforeach
+                        </x-filament::dropdown.list>
+                    </x-filament::dropdown>
+                </div>
+
+                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" 
+                style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.background='#e5e7eb'" 
+                onmouseout="this.style.background='#f3f4f6'">
+                    <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
+                    Reset
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div style="overflow: auto;">
         
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">
-            Event Performance Dashboard ({{ now()->format('F  Y') }})
+            Event Performance Dashboard ({{ $monthLabel }} {{ $currentYear }})
         </h2>
         
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
             <div class="stat-card">
-                <div class="card-label">Active Events ({{ now()->format('F') }})</div>
+                <div class="card-label">Active Events</div>
                 <div class="text-blue card-value">{{ $totalEventsMonth }}</div>
                 <div class="card-sub">Upcoming, ongoing, and completed events</div>
             </div>
 
             <div class="stat-card">
-                <div class="card-label">Completed Events ({{ now()->format('F') }})</div>
+                <div class="card-label">Completed Events</div>
                 <div class="text-green card-value">{{ $completedEventsMonth }}</div>
                 <div class="card-sub">Successfully finished this month</div>
             </div>
 
             <div class="stat-card">
-                <div class="card-label">Cancelled Events ({{ now()->format('F') }})</div>
+                <div class="card-label">Cancelled Events</div>
                 <div class="text-red card-value">{{ $totalCancelled }}</div>
                 <div class="card-sub">Events cancelled within the month</div>
             </div>
@@ -58,7 +157,7 @@
             <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); padding: 25px; border-radius: 15px; border: 1px solid #86efac; margin-bottom: 30px; position: relative; overflow: hidden;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                     <h3 class="text-green" style="font-weight: bold; font-size: 14px; text-transform: uppercase;">
-                        Top Attended Event for the month of {{ now()->format('F') }}
+                        Top Attended Event: {{ $monthLabel }} {{ $currentYear }}
                     </h3>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: flex-end;">
@@ -81,7 +180,7 @@
         @endif
 
         <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">
-            Completed Events ({{ now()->format('F') }})
+            Completed Events - {{ $monthLabel }} {{ $currentYear }}
         </h3>
 
         <div style="background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);">

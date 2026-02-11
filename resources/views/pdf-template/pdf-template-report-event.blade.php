@@ -4,17 +4,25 @@
     .text-green { color: #15803d; }
 </style>
 
+@php
+    $currentMonth = request('month');
+    $currentYear = request('year', now()->year);
+    $monthLabel = $currentMonth 
+        ? date('F', mktime(0, 0, 0, $currentMonth, 1)) 
+        : 'Annual';
+@endphp
+
 <div style="font-family: sans-serif; overflow: auto;">
     
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
-        Event Performance Analysis ({{ now()->format('F Y') }})
+        Event Performance Analysis ({{ $monthLabel }} {{ $currentYear }})
     </h2>
     
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 12px;">
         <tr>
-            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 33%;">Active Events ({{ now()->format('F') }})</th>
-            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 33%;">Completed Events ({{ now()->format('F') }})</th>
-            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 34%;">Cancelled Events ({{ now()->format('F') }})</th>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 33%;">Active Events</th>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 33%;">Completed Events</th>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 34%;">Cancelled Events</th>
         </tr>
         <tr>
             <td style="padding: 15px 10px;">
@@ -54,7 +62,7 @@
     @if($topEvent)
         <div style="border: 1px solid #eee; margin-bottom: 25px; font-size: 12px; border-radius: 4px;">
             <div class="text-green" style="background-color: #f0fdf4; padding: 8px 12px; font-weight: bold; border-bottom: 1px solid #eee; text-transform: uppercase;">
-                Top Attended Event ({{ now()->format('F') }})
+                Top Attended Event: {{ $monthLabel }} {{ $currentYear }}
             </div>
             <div style="padding: 12px; color: #444; line-height: 1.4;">
                 The <strong>{{ $topEvent->event }}</strong> at <strong>{{ $topEvent->location }}</strong> is the most successful event with 
@@ -64,7 +72,7 @@
     @endif
 
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
-        Completed Events ({{ now()->format('F') }})
+        Completed Events - {{ $monthLabel }} {{ $currentYear }}
     </h2>
 
     <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 25px;">

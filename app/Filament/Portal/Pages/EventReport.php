@@ -19,6 +19,18 @@ class EventReport extends Page
         return auth()->user()->hasRole('super_admin');
     }
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('print_report')
+                ->label('Print')
+                ->icon('heroicon-s-printer')
+                ->color('info')
+                ->url(route('EventReport', request()->only(['month', 'year'])))
+                ->openUrlInNewTab(),
+        ];
+    }
+
     public $events;
     public $totalEventsMonth = 0;
     public $completedEventsMonth = 0;
@@ -27,26 +39,30 @@ class EventReport extends Page
     public $loyalParticipantsCount = 0;
     public $noShowGap = 0;
     public $topEvent;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            Action::make('print_report')
-                ->label('Print')
-                ->icon('heroicon-s-printer')
-                ->color('info')
-                ->url(route('EventReport'))
-                ->openUrlInNewTab(),
-        ];
-    }
-
+    public $availableYears = [];
+    
     public function mount(): void
     {
-        $now = now();
+        if (!request()->query('month') && !request()->query('year')) {
+            $this->redirect(request()->fullUrlWithQuery([
+                'month' => now()->month,
+                'year' => now()->year,
+            ]));
+            return;
+        }
+
+        $month = request('month');
+        $year = request('year', now()->year);
+
+        $this->availableYears = Event::selectRaw('YEAR(start_date) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year')
+            ->toArray() ?: [now()->year];
 
         $events = Event::with('attendees')
-            ->whereYear('start_date', $now->year)
-            ->whereMonth('start_date', $now->month)
+            ->whereYear('start_date', $year)
+            ->when($month, fn($q) => $q->whereMonth('start_date', $month))
             ->orderByDesc('start_date')
             ->get();
 
@@ -91,7 +107,6 @@ class EventReport extends Page
             : 0;
 
         $this->noShowGap = $totalParticipants - $totalAttended;
-
         $this->topEvent = $this->events->sortByDesc('attended_count')->first();
 
         $this->loyalParticipantsCount = $attendedUserIds

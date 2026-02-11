@@ -24,6 +24,7 @@ use App\Filament\Actions\ArchiveBulkAction;
 use App\Filament\Actions\AttendEventAction;
 use App\Filament\Filters\CreatedDateFilter;
 use Filament\Actions\ForceDeleteBulkAction;
+use App\Filament\Actions\Event\StartEventAction;
 use App\Filament\Actions\Event\CancelEventAction;
 use App\Filament\Actions\Event\CompleteEventAction;
 
@@ -160,6 +161,7 @@ class EventsTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
                 
                 CompleteEventAction::make()->outlined()->size(Size::ExtraSmall),
+                StartEventAction::make()->outlined()->size(Size::ExtraSmall),
                 CancelEventAction::make()->outlined()->size(Size::ExtraSmall),
 
                 AttendEventAction::make(),

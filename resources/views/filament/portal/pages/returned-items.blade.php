@@ -85,7 +85,7 @@
             
             <div style="flex: 1; min-width: 300px;">
                 <span class="filter-label" style="margin-bottom: 14px;">Month</span>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
                     @foreach(range(1, 12) as $m)
                         <a href="{{ request()->fullUrlWithQuery(['month' => $m]) }}" 
                         class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}">
@@ -94,42 +94,42 @@
                     @endforeach
 
                     <a href="{{ request()->fullUrlWithQuery(['month' => null]) }}" 
-                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}"
-                    style="font-weight: bold;">
-                        All
+                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}">
+                        All Months
                     </a>
                 </div>
             </div>
 
-            <div style="width: 160px;">
-                <span class="filter-label">Year</span>
-                
-                <x-filament::dropdown placement="bottom-start">
-                    <x-slot name="trigger">
-                        <button 
-                            type="button"
-                            style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;"
-                        >
-                            {{ $currentYear }}
-                            <x-filament::icon
-                                icon="heroicon-m-chevron-down"
-                                style="width: 16px; height: 16px; color: #9ca3af;"
-                            />
-                        </button>
-                    </x-slot>
-            
-                    <x-filament::dropdown.list>
-                        @foreach($availableYears as $y)
-                            <x-filament::dropdown.list.item 
-                                tag="a" 
-                                href="{{ request()->fullUrlWithQuery(['year' => $y]) }}"
-                                :color="$currentYear == $y ? 'warning' : 'gray'"
-                            >
-                                {{ $y }}
-                            </x-filament::dropdown.list.item>
-                        @endforeach
-                    </x-filament::dropdown.list>
-                </x-filament::dropdown>
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                <div style="width: 140px;">
+                    <span class="filter-label">Year</span>
+                    <x-filament::dropdown placement="bottom-start">
+                        <x-slot name="trigger">
+                            <button type="button" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
+                                {{ $currentYear }}
+                                <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
+                            </button>
+                        </x-slot>
+                        <x-filament::dropdown.list>
+                            @foreach($availableYears as $y)
+                                <x-filament::dropdown.list.item 
+                                    tag="a" 
+                                    href="{{ request()->fullUrlWithQuery(['year' => $y]) }}"
+                                    :color="$currentYear == $y ? 'warning' : 'gray'">
+                                    {{ $y }}
+                                </x-filament::dropdown.list.item>
+                            @endforeach
+                        </x-filament::dropdown.list>
+                    </x-filament::dropdown>
+                </div>
+
+                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" 
+                style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.background='#e5e7eb'" 
+                onmouseout="this.style.background='#f3f4f6'">
+                    <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
+                    Reset
+                </a>
             </div>
         </div>
     </div>
