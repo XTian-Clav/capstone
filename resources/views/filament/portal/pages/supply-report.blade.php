@@ -92,12 +92,12 @@
                     @foreach($supplies as $supply)
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 12px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
-                            <td style="padding: 12px 15px; font-weight: bold;">{{ $supply->borrow_count }}</td>
+                            <td style="padding: 12px 15px; font-weight: 600;">{{ $supply->borrow_count }}</td>
                             <td style="padding: 12px 15px;">{{ $supply->location }}</td>
-                            <td style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->quantity }}</td>
-                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
-                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->reserved }}</td>
-                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $supply->unavailable_qty }}</td>
+                            <td style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
+                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->available }}</td>
+                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->reserved }}</td>
+                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->unavailable_qty }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -142,7 +142,7 @@
                         @foreach($outOfStock as $supply)
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
                                 <td class="text-yellow" style="padding: 10px 15px; text-align: center;">{{ $supply->reserved }}</td>
                                 <td style="padding: 10px 15px;">{{ $supply->location }}</td>
                             </tr>
@@ -171,8 +171,8 @@
                         @foreach($criticalStock as $supply)
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
-                                <td class="text-orange" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td class="text-orange" style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $supply->available }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
                                 <td style="padding: 10px 15px; text-align: center;">{{ round($supply->availability_percentage, 1) }}%</td>
                                 <td style="padding: 10px 15px;">{{ $supply->location }}</td>
                             </tr>
@@ -201,8 +201,8 @@
                         @foreach($lowStock as $supply)
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
-                                <td class="text-yellow" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $supply->available }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $supply->quantity }}</td>
+                                <td class="text-yellow" style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $supply->available }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
                                 <td style="padding: 10px 15px; text-align: center;">{{ round($supply->availability_percentage, 1) }}%</td>
                                 <td style="padding: 10px 15px;">{{ $supply->location }}</td>
                             </tr>

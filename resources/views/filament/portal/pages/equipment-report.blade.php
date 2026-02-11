@@ -97,12 +97,12 @@
                         @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 12px 15px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                            <td style="padding: 12px 15px; font-weight: bold;">{{ $equipment->borrow_count }}</td>
+                            <td style="padding: 12px 15px; font-weight: 600;">{{ $equipment->borrow_count }}</td>
                             <td style="padding: 12px 15px;">{{ $equipment->location }}</td>
-                            <td style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $equipment->quantity }}</td>
-                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $available }}</td>
-                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $reserved }}</td>
-                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: bold;">{{ $unavailable }}</td>
+                            <td style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $equipment->quantity }}</td>
+                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $available }}</td>
+                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $reserved }}</td>
+                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $unavailable }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -147,7 +147,7 @@
                         @foreach($outOfStock as $equipment)
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $equipment->quantity }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $equipment->quantity }}</td>
                                 <td class="text-yellow" style="padding: 10px 15px; text-align: center;">{{ $equipment->reservations->where('status', 'Approved')->sum('quantity') }}</td>
                                 <td style="padding: 10px 15px;">{{ $equipment->location }}</td>
                             </tr>
@@ -182,8 +182,8 @@
                             @endphp
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                                <td class="text-orange" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $avail }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $equipment->quantity }}</td>
+                                <td class="text-orange" style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $avail }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $equipment->quantity }}</td>
                                 <td style="padding: 10px 15px; text-align: center;">{{ round($perc, 1) }}%</td>
                                 <td style="padding: 10px 15px;">{{ $equipment->location }}</td>
                             </tr>
@@ -218,8 +218,8 @@
                             @endphp
                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                 <td style="padding: 10px 15px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
-                                <td class="text-yellow" style="padding: 10px 15px; text-align: center; font-weight: bold;">{{ $avail }}</td>
-                                <td style="padding: 10px 15px; text-align: center;">{{ $equipment->quantity }}</td>
+                                <td class="text-yellow" style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $avail }}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $equipment->quantity }}</td>
                                 <td style="padding: 10px 15px; text-align: center;">{{ round($perc, 1) }}%</td>
                                 <td style="padding: 10px 15px;">{{ $equipment->location }}</td>
                             </tr>
