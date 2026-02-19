@@ -15,7 +15,7 @@
 <div style="font-family: sans-serif; overflow: auto;">
     
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
-        Event Performance Analysis ({{ $monthLabel }} {{ $currentYear }})
+        Event Performance Analysis: {{ $monthLabel }} {{ $currentYear }}
     </h2>
     
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 12px;">
@@ -72,7 +72,7 @@
     @endif
 
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
-        Completed Events - {{ $monthLabel }} {{ $currentYear }}
+        Completed Events: {{ $monthLabel }} {{ $currentYear }}
     </h2>
 
     <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 25px;">

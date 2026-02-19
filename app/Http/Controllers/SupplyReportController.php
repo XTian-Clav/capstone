@@ -3,58 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supply;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class SupplyReportController extends Controller
 {
-    public function SupplyReport()
+    public function SupplyReport(Request $request)
     {
-        $supplies = Supply::with(['reservations', 'unavailable'])
+        $month = $request->query('month');
+        $year = $request->query('year', now()->year);
+
+        $supplies = Supply::withSum('unavailable as total_unavailable_qty', 'unavailable_quantity')
+            ->withSum(['reservations as current_reserved_qty' => fn ($q) => $q->where('status', 'Approved')], 'quantity')
+            ->withCount([
+                'reservations as pending_count' => fn ($q) => $q->where('status', 'Pending')->whereYear('created_at', $year)->when($month, fn($query) => $query->whereMonth('created_at', $month)),
+                'reservations as approved_count' => fn ($q) => $q->where('status', 'Approved')->whereYear('created_at', $year)->when($month, fn($query) => $query->whereMonth('created_at', $month)),
+                'reservations as rejected_count' => fn ($q) => $q->where('status', 'Rejected')->whereYear('created_at', $year)->when($month, fn($query) => $query->whereMonth('created_at', $month)),
+                'reservations as completed_count' => fn ($q) => $q->where('status', 'Completed')->whereYear('created_at', $year)->when($month, fn($query) => $query->whereMonth('created_at', $month)),
+            ])
             ->orderBy('item_name', 'asc')
             ->get();
 
-        $totalSupply = 0;
-        $totalReserved = 0;
-        $totalUnavailable = 0;
-        $totalPending = 0;
-        $totalApproved = 0;
-        $totalRejected = 0;
-        $totalCompleted = 0;
+        $totalSupply = 0; $totalReserved = 0; $totalUnavailable = 0;
+        $totalPending = 0; $totalApproved = 0; $totalRejected = 0; $totalCompleted = 0;
 
-        $supplies->transform(function ($supply) use (&$totalSupply, &$totalReserved, &$totalUnavailable, &$totalPending, &$totalApproved, &$totalRejected, &$totalCompleted) {
-            $pending = $supply->reservations->where('status', 'Pending');
-            $approved = $supply->reservations->where('status', 'Approved');
-            $rejected = $supply->reservations->where('status', 'Rejected');
-            $completed = $supply->reservations->where('status', 'Completed');
-
-            $supply->pending_count = $pending->count();
-            $supply->approved_count = $approved->count();
-            $supply->rejected_count = $rejected->count();
-            $supply->completed_count = $completed->count();
-
-            $reservedQty = $approved->sum('quantity');
-            $unavailableQty = $supply->unavailable->sum('unavailable_quantity');
-            $available = $supply->quantity - $reservedQty - $unavailableQty;
-
-            $supply->reserved = $reservedQty;
-            $supply->unavailable_qty = $unavailableQty;
-            $supply->available = $available;
-            $supply->availability_percentage = $supply->quantity > 0
-                ? ($available / $supply->quantity) * 100
-                : 0;
+        foreach ($supplies as $supply) {
+            $supply->borrow_count = $supply->approved_count + $supply->completed_count;
+            $supply->available = $supply->quantity - ($supply->current_reserved_qty ?? 0) - ($supply->total_unavailable_qty ?? 0);
+            $supply->availability_percentage = $supply->quantity > 0 ? ($supply->available / $supply->quantity) * 100 : 0;
 
             $totalSupply += $supply->quantity;
-            $totalReserved += $reservedQty;
-            $totalUnavailable += $unavailableQty;
+            $totalReserved += ($supply->current_reserved_qty ?? 0);
+            $totalUnavailable += ($supply->total_unavailable_qty ?? 0);
             $totalPending += $supply->pending_count;
             $totalApproved += $supply->approved_count;
             $totalRejected += $supply->rejected_count;
             $totalCompleted += $supply->completed_count;
-
-            $supply->borrow_count = $supply->approved_count + $supply->completed_count;
-
-            return $supply;
-        });
+        }
 
         $totalAvailable = $totalSupply - $totalReserved - $totalUnavailable;
         $mostBorrowed = $supplies->sortByDesc('borrow_count')->first();
@@ -63,24 +48,17 @@ class SupplyReportController extends Controller
         $criticalStock = $supplies->filter(fn ($s) => $s->available > 0 && $s->availability_percentage <= 25);
         $outOfStock = $supplies->filter(fn ($s) => $s->available <= 0);
 
+        $monthName = $month ? date('F', mktime(0, 0, 0, $month, 1)) : '';
+        $reportTitle = $month ? "Supply Report - {$monthName} {$year}" : "Annual Supply Report {$year}";
         $pdf = App::make('dompdf.wrapper');
-        
-        $pdf->loadView('pdf.report-supply-pdf', [
-            'supplies' => $supplies,
-            'totalSupply' => $totalSupply,
-            'totalAvailable' => $totalAvailable,
-            'totalReserved' => $totalReserved,
-            'totalUnavailable' => $totalUnavailable,
-            'totalPending' => $totalPending,
-            'totalApproved' => $totalApproved,
-            'totalRejected' => $totalRejected,
-            'totalCompleted' => $totalCompleted,
-            'mostBorrowed' => $mostBorrowed,
-            'lowStock' => $lowStock,
-            'criticalStock' => $criticalStock,
-            'outOfStock' => $outOfStock,
-        ]);
 
-        return $pdf->stream("Supply Report.pdf");
+        $pdf->loadView('pdf.report-supply-pdf', compact(
+            'supplies', 'totalSupply', 'totalAvailable', 'totalReserved', 
+            'totalUnavailable', 'totalPending', 'totalApproved', 'totalRejected', 
+            'totalCompleted', 'mostBorrowed', 'lowStock', 'criticalStock', 
+            'outOfStock', 'reportTitle'
+        ));
+
+        return $pdf->stream("$reportTitle.pdf");
     }
 }

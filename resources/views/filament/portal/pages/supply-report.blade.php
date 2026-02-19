@@ -5,7 +5,103 @@
         .text-green { color: #15803d; }
         .text-orange { color: #c2410c; }
         .text-yellow { color: #ca8a04; }
+        .filter-container {
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        .filter-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+        .active-btn {
+            background-color: #fe800d;
+            color: white;
+            border-color: #fe800d;
+        }
+        .inactive-btn {
+            background-color: #f9fafb;
+            color: #374151;
+        }
+        .inactive-btn:hover {
+            background-color: #f3f4f6;
+        }
     </style>
+
+    @php
+    $currentMonth = request('month');
+    $currentYear = request('year', now()->year);
+    @endphp
+
+    <div class="filter-container">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-end;">
+            
+            <div style="flex: 1; min-width: 300px;">
+                <span class="filter-label" style="margin-bottom: 14px;">Month</span>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                    @foreach(range(1, 12) as $m)
+                        <a href="{{ request()->fullUrlWithQuery(['month' => $m]) }}" 
+                        class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}">
+                            {{ date('M', mktime(0, 0, 0, $m, 1)) }}
+                        </a>
+                    @endforeach
+
+                    <a href="{{ request()->fullUrlWithQuery(['month' => null]) }}" 
+                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}">
+                        All Months
+                    </a>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+                <div style="width: 140px;">
+                    <span class="filter-label">Year</span>
+                    <x-filament::dropdown placement="bottom-start">
+                        <x-slot name="trigger">
+                            <button type="button" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
+                                {{ $currentYear }}
+                                <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
+                            </button>
+                        </x-slot>
+                        <x-filament::dropdown.list>
+                            @foreach($availableYears as $y)
+                                <x-filament::dropdown.list.item 
+                                    tag="a" 
+                                    href="{{ request()->fullUrlWithQuery(['year' => $y]) }}"
+                                    :color="$currentYear == $y ? 'warning' : 'gray'">
+                                    {{ $y }}
+                                </x-filament::dropdown.list.item>
+                            @endforeach
+                        </x-filament::dropdown.list>
+                    </x-filament::dropdown>
+                </div>
+
+                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" 
+                style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.background='#e5e7eb'" 
+                onmouseout="this.style.background='#f3f4f6'">
+                    <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
+                    Reset
+                </a>
+            </div>
+        </div>
+    </div>
 
     <div style="overflow: auto;">
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Reservation Status Summary</h2>
@@ -90,15 +186,15 @@
                 </thead>
                 <tbody style="color: #374151;">
                     @foreach($supplies as $supply)
-                        <tr style="border-bottom: 1px solid #f3f4f6;">
-                            <td style="padding: 12px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
-                            <td style="padding: 12px 15px; font-weight: 600;">{{ $supply->borrow_count }}</td>
-                            <td style="padding: 12px 15px;">{{ $supply->location }}</td>
-                            <td style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
-                            <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->available }}</td>
-                            <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->reserved }}</td>
-                            <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->unavailable_qty }}</td>
-                        </tr>
+                    <tr style="border-bottom: 1px solid #f3f4f6;">
+                        <td style="padding: 12px 15px; font-weight: bold;">{{ $supply->item_name }}</td>
+                        <td style="padding: 12px 15px; font-weight: 600;">{{ $supply->borrow_count }}</td>
+                        <td style="padding: 12px 15px;">{{ $supply->location }}</td>
+                        <td style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->quantity }}</td>
+                        <td class="text-green" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->available }}</td>
+                        <td class="text-yellow" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->current_reserved_qty ?? 0 }}</td>
+                        <td class="text-red" style="padding: 12px 15px; text-align: center; font-weight: 600;">{{ $supply->total_unavailable_qty ?? 0 }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

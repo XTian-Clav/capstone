@@ -6,9 +6,17 @@
     .text-yellow { color: #ca8a04; }
 </style>
 
+@php
+    $currentMonth = request('month');
+    $currentYear = request('year', now()->year);
+    $monthLabel = $currentMonth 
+        ? date('F', mktime(0, 0, 0, $currentMonth, 1)) 
+        : 'Annual';
+@endphp
+
 <div style="font-family: sans-serif; overflow: auto;">
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
-        Reservation Status Summary
+        Reservation Status Summary: {{ $monthLabel }} {{ $currentYear }}
     </h2>
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 12px;">
@@ -21,7 +29,7 @@
         <tr>
             <td style="padding: 15px 10px;">
                 <div class="text-blue" style="font-size: 16px; font-weight: bold;">{{ $totalCompleted }}</div>
-                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Successfully returned</div>
+                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Items Returned</div>
             </td>
             <td style="padding: 15px 10px;">
                 <div class="text-green" style="font-size: 16px; font-weight: bold;">{{ $totalApproved }}</div>
@@ -33,7 +41,7 @@
             </td>
             <td style="padding: 15px 10px;">
                 <div class="text-red" style="font-size: 16px; font-weight: bold;">{{ $totalRejected }}</div>
-                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Cancelled requests</div>
+                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Cancelled Request</div>
             </td>
         </tr>
     </table>
@@ -97,18 +105,13 @@
         </thead>
         <tbody>
             @foreach($equipments as $equipment)
-                @php
-                    $reserved = $equipment->reservations->where('status', 'Approved')->sum('quantity');
-                    $unavailable = $equipment->unavailable->sum('unavailable_quantity');
-                    $available = $equipment->quantity - $reserved - $unavailable;
-                @endphp
                 <tr>
                     <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; font-weight: bold;">{{ $equipment->equipment_name }}</td>
                     <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; color: #666;">{{ $equipment->borrow_count }}</td>
                     <td style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center; font-weight: bold;">{{ $equipment->quantity }}</td>
-                    <td class="text-green" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $available }}</td>
-                    <td class="text-yellow" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $reserved }}</td>
-                    <td class="text-red" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $unavailable }}</td>
+                    <td class="text-green" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $equipment->available }}</td>
+                    <td class="text-yellow" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $equipment->current_reserved_qty ?? 0 }}</td>
+                    <td class="text-red" style="border-bottom: 1px solid #f5f5f5; padding: 10px; text-align: center;">{{ $equipment->current_reserved_qty ?? 0 }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -117,26 +120,25 @@
     <h2 style="font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; color: #333; background-color: #fff7ed; padding: 8px 12px; border-left: 4px solid #fe800d;">
         Equipment Stock Alerts
     </h2>
-    
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px;">
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 12px;">
         <tr>
-            <td style="padding-right: 10px; width: 33%;">
-                <div style="background: #fef2f2; padding: 12px; border: 1px solid #fca5a5; border-radius: 4px; text-align: center;">
-                    <div style="font-size: 10px; font-weight: bold; color: #991b1b; text-transform: uppercase;">Out of Stock</div>
-                    <div class="text-red" style="font-size: 18px; font-weight: bold;">{{ $outOfStock->count() }}</div>
-                </div>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 25%;">Out of Stock</th>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 25%;">Critical Stock</th>
+            <th style="border-bottom: 1px solid #eee; padding: 10px; text-align: left; color: #666; width: 25%;">Low Stock<</th>
+        </tr>
+        <tr>
+            <td style="padding: 15px 10px;">
+                <div class="text-red" style="font-size: 16px; font-weight: bold;">{{ $outOfStock->count() }}</div>
+                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Requires Restock</div>
             </td>
-            <td style="padding: 0 5px; width: 33%;">
-                <div style="background: #fff7ed; padding: 12px; border: 1px solid #fdba74; border-radius: 4px; text-align: center;">
-                    <div style="font-size: 10px; font-weight: bold; color: #9a3412; text-transform: uppercase;">Critical Stock</div>
-                    <div class="text-orange" style="font-size: 18px; font-weight: bold;">{{ $criticalStock->count() }}</div>
-                </div>
+            <td style="padding: 15px 10px;">
+                <div class="text-orange" style="font-size: 16px; font-weight: bold;">{{ $criticalStock->count() }}</div>
+                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Urgent Restock</div>
             </td>
-            <td style="padding-left: 10px; width: 34%;">
-                <div style="background: #fefce8; padding: 12px; border: 1px solid #facc15; border-radius: 4px; text-align: center;">
-                    <div style="font-size: 10px; font-weight: bold; color: #854d0e; text-transform: uppercase;">Low Stock</div>
-                    <div class="text-yellow" style="font-size: 18px; font-weight: bold;">{{ $lowStock->count() }}</div>
-                </div>
+            <td style="padding: 15px 10px;">
+                <div class="text-yellow" style="font-size: 16px; font-weight: bold;">{{ $lowStock->count() }}</div>
+                <div style="color: #999; font-size: 11px; text-transform: uppercase;">Pending Restock</div>
             </td>
         </tr>
     </table>

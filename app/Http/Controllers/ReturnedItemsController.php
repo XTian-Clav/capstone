@@ -29,11 +29,7 @@ class ReturnedItemsController extends Controller
             ->get();
 
         $monthName = $month ? date('F', mktime(0, 0, 0, $month, 1)) : '';
-        
-        $reportTitle = $month 
-            ? "Returned Items Report - {$monthName} {$year}" 
-            : "Annual Returned Items Report {$year}";
-
+        $reportTitle = $month ? "Returned Items Report - {$monthName} {$year}" : "Annual Returned Items Report {$year}";
         $pdf = App::make('dompdf.wrapper');
         
         $pdf->loadView('pdf.returned-items-pdf', [
@@ -43,6 +39,6 @@ class ReturnedItemsController extends Controller
             'date' => now()->format('m/d/Y'),
         ]);
 
-        return $pdf->stream("{$reportTitle}.pdf");
+        return $pdf->stream("$reportTitle.pdf");
     }
 }

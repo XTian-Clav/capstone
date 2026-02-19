@@ -68,11 +68,7 @@ class EventReportController extends Controller
             ->count();
 
         $monthName = $month ? date('F', mktime(0, 0, 0, $month, 1)) : '';
-
-        $reportTitle = $month 
-            ? "Event Report - {$monthName} {$year}" 
-            : "Annual Event Report {$year}";
-
+        $reportTitle = $month ? "Event Report - {$monthName} {$year}" : "Annual Event Report {$year}";
         $pdf = App::make('dompdf.wrapper');
         
         $pdf->loadView('pdf.report-event-pdf', [

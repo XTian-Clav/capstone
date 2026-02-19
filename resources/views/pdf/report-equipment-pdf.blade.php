@@ -1,5 +1,5 @@
 <head>
-    <title>Equipment Report - {{ now()->format('M-d-Y') }}</title>
+    <title>{{ $reportTitle }}</title>
     <style>.peso { font-family: 'DejaVu Sans', sans-serif; } </style>
 </head>
 
@@ -21,7 +21,7 @@
                     Palawan State University
                 </div>
                 <div style="font-size: 14px; margin-bottom: 20px;">Puerto Princesa City</div>
-                <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">Equipment Report</div>
+                <div style="font-size: 14px; font-weight: 700; margin-bottom: 2px;">{{ $reportTitle }}</div>
                 <div style="font-size: 14px;">Palawan International Technology Business Incubator</div>
             </td>
     
