@@ -19,22 +19,6 @@ class RoomSchedule
             ->color('success')
             ->size(Size::Small)
             ->label('View Schedules')
-            ->icon('heroicon-o-calendar-days')
-            ->requiresConfirmation()
-            ->modalHeading('Select Room')
-            ->modalIcon('heroicon-o-building-office')
-            ->modalDescription('Please select a room to view their schedules.')
-            ->modalSubmitActionLabel('Confirm')
-            ->schema([
-                Section::make([
-                    Radio::make('room_id')
-                        ->label('Select Room')
-                        ->options(Room::pluck('room_type', 'id'))
-                        ->required(),
-                ])
-            ])
-            ->action(fn (array $data) => redirect(
-                RoomResource::getUrl('view', ['record' => $data['room_id']])
-            ));
+            ->icon('heroicon-o-calendar-days');
     }
 }

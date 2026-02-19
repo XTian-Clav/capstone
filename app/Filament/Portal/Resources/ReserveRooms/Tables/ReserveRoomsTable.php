@@ -153,7 +153,7 @@ class ReserveRoomsTable
                 CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->headerActions([
-                RoomSchedule::make()->visible(fn () => auth()->user()->hasRole('incubatee')),
+                RoomSchedule::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

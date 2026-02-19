@@ -19,6 +19,7 @@ use Filament\Navigation\NavigationGroup;
 use App\Filament\Portal\Pages\Guidelines;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Portal\Pages\RoomSchedule;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -88,6 +89,10 @@ class PortalPanelProvider extends PanelProvider
                     ->label('Guidelines')
                     ->icon('heroicon-o-book-open')
                     ->url(fn (): string => Guidelines::getUrl()),
+                'room-schedule' => Action::make('Room Schedule')
+                    ->label('Room Schedule')
+                    ->icon('heroicon-o-calendar-days')
+                    ->url(fn (): string => RoomSchedule::getUrl()),
                 'logout' => fn (Action $action) => $action->label('Log out'),
             ])
 

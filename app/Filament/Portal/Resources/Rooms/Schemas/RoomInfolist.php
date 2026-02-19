@@ -22,7 +22,6 @@ class RoomInfolist
                 ->where('room_id', $record->id)
                 ->where('start_date', '<=', $endOfMonth) 
                 ->where('end_date', '>=', $startOfMonth)
-                //->whereBetween('start_date', [$startOfMonth, $endOfMonth]) //Old month validation
                 ->with('user')
                 ->orderBy('start_date')
                 ->get();
@@ -84,42 +83,6 @@ class RoomInfolist
                         ->inlineLabel()
                         ->visible(fn (Room $record): bool => $record->trashed()),
                 ])->columnSpan(2)->compact(),
-
-                Section::make(fn ($record) => 'Approved Room Schedules for ' . $record->room_type . ' (' . Carbon::now()->format('F Y') . ')')
-                ->schema([
-                    // 1. Reserved By Column
-                    TextEntry::make('reserved_by_list')
-                        ->label('Reserved By')
-                        ->placeholder('No approved reservations found.')
-                        ->getStateUsing(fn ($record) => $approvedReservations($record)->pluck('user.name'))
-                        ->listWithLineBreaks(),
-
-                    // 2. Company/Organization
-                    TextEntry::make('company_list')
-                        ->label('Company/Organization')
-                        ->placeholder('—')
-                        ->getStateUsing(fn ($record) => $approvedReservations($record)->pluck('company'))
-                        ->listWithLineBreaks()
-                        ->columnSpan(1),
-
-                    // 3. Start Time
-                    TextEntry::make('start_time_list')
-                        ->label('Start Time')
-                        ->placeholder('—')
-                        ->hiddenLabel(false)
-                        ->getStateUsing(fn ($record) => $approvedReservations($record)->pluck('start_date'))
-                        ->dateTime('M j, Y h:i A')
-                        ->listWithLineBreaks(),
-                    
-                    // 4. End Time
-                    TextEntry::make('end_time_list')
-                        ->label('End Time')
-                        ->placeholder('—')
-                        ->getStateUsing(fn ($record) => $approvedReservations($record)->pluck('end_date'))
-                        ->dateTime('M j, Y h:i A')
-                        ->listWithLineBreaks()
-                        ->columnSpan(1),
-                ])->columns(4)->columnSpanFull(),
             ])->columns(3);
     }
 }
