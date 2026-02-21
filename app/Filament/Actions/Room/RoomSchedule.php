@@ -2,12 +2,9 @@
 
 namespace App\Filament\Actions\Room;
 
-use App\Models\Room;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
-use Filament\Forms\Components\Radio;
-use Filament\Schemas\Components\Section;
-use App\Filament\Portal\Resources\Rooms\RoomResource;
+use App\Filament\Portal\Pages\RoomSchedule as RoomSchedulePage;
 
 class RoomSchedule
 {
@@ -19,6 +16,8 @@ class RoomSchedule
             ->color('success')
             ->size(Size::Small)
             ->label('View Schedules')
-            ->icon('heroicon-o-calendar-days');
+            ->icon('heroicon-o-calendar-days')
+            ->url(fn (): string => RoomSchedulePage::getUrl())
+            ->openUrlInNewTab();
     }
 }
