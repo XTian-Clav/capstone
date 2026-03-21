@@ -28,6 +28,10 @@ Route::get('our-mission', function () {
     return view('our-mission');
 });
 
+Route::get('international-travel', function () {
+    return view('international-travel');
+});
+
 Route::get('faqs', function () {
     return view('faqs');
 });

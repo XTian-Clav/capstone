@@ -28,12 +28,6 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .contact-card:hover {
-            transform: translateY(-5px);
-            border: 1px solid;
-            border-color: var(--primary-color);
-        }
-
         .contact-question {
             font-family: var(--header-font);
             font-size: 1.5rem;
@@ -41,24 +35,6 @@
             color: var(--primary-color);
             letter-spacing: 0.8px;
             cursor: pointer;
-        }
-
-        .contact-answer {
-            margin-top: 0.75rem;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .contact-answer a {
-            text-decoration: none;
-            color: #1877f2;
-            font-weight: 500;
-        }
-
-        .contact-answer a:hover {
-            text-decoration: underline;
-            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
@@ -99,31 +75,47 @@
     </nav>
 
     <body>
-        <h2 class="contact-header">Contact</h2>
+        <h2 class="contact-header">International Travel</h2>
     
         <div class="contact-card">
-            <div class="contact-question"><i class="ri-facebook-box-fill" style="margin-right: 0.5rem;"></i>Facebook</div>
-            <div class="contact-answer" style="display: block;">
-                <a href="https://facebook.com/PalawanITBI" target="_blank">
-                    https://facebook.com/PalawanITBI
-                </a>
-            </div>
+            <p>
+                The following countries, State Universities and Colleges (SUCs), and Higher Education Institutions (HEIs) have a Memorandum of Agreement (MOA) with Palawan State University. 
+                These countries are authorized for travel under the PITBI (Palawan International Technology Business Incubator) and are subject to the guidelines of
+                <em>CHED CMO No. 3, Series of 2025</em>.
+            </p>
+            
+            <br>
+            
+            <p class="contact-question">List of UNIIC members:</p>
+            <ul style="list-style-type: disc; margin-left: 20px; margin-top: 10px;">
+                <li>Tra Vinh University (Vietnam)</li>
+                <li>Can Tho University (Vietnam)</li>
+                <li>Hung Vuong University Ho Chi Minh City (Vietnam)</li>
+                <li>Universitas Trisakti (Indonesia)</li>
+                <li>Telkom University, Bandung (Indonesia)</li>
+                <li>Universitas Multimedia Nusantara (Indonesia)</li>
+                <li>Palawan State University (Philippines)</li>
+                <li>Western Philippines University (Philippines)</li>
+                <li>Mindoro State University (Philippines)</li>
+                <li>Adamson University (Philippines)</li>
+                <li>Occidental Mindoro State College (Philippines)</li>
+                <li>University of the Cordilleras (Philippines)</li>
+                <li>Department of Science & Technology (Philippines)</li>
+                <li>National University of Cheasim Kamchaymear (Cambodia)</li>
+                <li>Cambodia University of Technology & Science (Cambodia)</li>
+                <li>Coimbatore Institute of Technology (India)</li>
+                <li>Chitkara University (India)</li>
+                <li>Asia Pacific University of Technology & Innovation (Malaysia)</li>
+                <li>University of Mpumalanga (South Africa)</li>
+                <li>Sefako Makgatho Health Sciences University (South Africa)</li>
+                <li>Mangosuthu University of Technology (South Africa)</li>
+                <li>Tshwane University of Technology (South Africa)</li>
+                <li>National University of Kaohsiung (Taiwan)</li>
+                <li>Millat Umidi University (Uzbekistan)</li>
+                <li>AJOU University (Uzbekistan)</li>
+                <li>Asian Society of Innovation & Policy (South Korea)</li>
+            </ul>
         </div>
-        
-        <div class="contact-card">
-            <div class="contact-question"><i class="ri-mail-fill" style="margin-right: 0.5rem;"></i>Email</div>
-            <div class="contact-answer" style="display: block;">
-                palawanitbi@psu.palawan.edu.ph
-            </div>
-        </div>
-        
-        <div class="contact-card">
-            <div class="contact-question"><i class="ri-map-pin-fill" style="margin-right: 0.5rem;"></i>Location</div>
-            <div class="contact-answer" style="display: block;">
-                1st Floor, Student's Innovation Park Building, Palawan State University-Main Campus, Tiniguiban Heights, 5300 Puerto Princesa, Philippines
-            </div>
-        </div>        
-        <br>
 
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="js/darkmode.js"></script>

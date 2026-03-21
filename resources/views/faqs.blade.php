@@ -101,6 +101,7 @@
             <li><a href="{{ url('/our-mission') }}">Our Mission</a></li>
             <li><a href="{{ url('/faqs') }}">FAQ</a></li>
             <li><a href="{{ url('/contact') }}">Contact</a></li>
+            <li><a href="{{ url('/international-travel') }}">International Travel</a></li>
             <li><a href="{{ url('/portal/login') }}" class="btn sign__in">Log In</a></li>
         </ul>
         <div class="nav__btns">
@@ -195,7 +196,51 @@
         <div class="faq-card" onclick="this.classList.toggle('active')">
             <div class="faq-question">How do we process the visa when going overseas?</div>
             <div class="faq-answer">Incubatees should contact the PITBI administrators to assist with visa processing. The administrators will provide guidance and handle the necessary steps as required.</div>
-        </div><br>
+        </div>
+        <div class="faq-card" onclick="this.classList.toggle('active')">
+            <div class="faq-question">International Travel</div>
+            <div class="faq-answer">
+                <p>
+                    The following countries, State Universities and Colleges (SUCs), and Higher Education Institutions (HEIs) have a Memorandum of Agreement (MOA) with Palawan State University. 
+                    These countries are authorized for travel under the PITBI (Palawan International Technology Business Incubator) and are subject to the guidelines of
+                    <em>CHED CMO No. 3, Series of 2025</em>.
+                </p>
+                
+                <br>
+                
+                <p><strong>List of UNIIC members:</strong></p>
+                <ul style="list-style-type: disc; margin-left: 20px; margin-top: 10px;">
+                    <li>Tra Vinh University (Vietnam)</li>
+                    <li>Can Tho University (Vietnam)</li>
+                    <li>Hung Vuong University Ho Chi Minh City (Vietnam)</li>
+                    <li>Universitas Trisakti (Indonesia)</li>
+                    <li>Telkom University, Bandung (Indonesia)</li>
+                    <li>Universitas Multimedia Nusantara (Indonesia)</li>
+                    <li>Palawan State University (Philippines)</li>
+                    <li>Western Philippines University (Philippines)</li>
+                    <li>Mindoro State University (Philippines)</li>
+                    <li>Adamson University (Philippines)</li>
+                    <li>Occidental Mindoro State College (Philippines)</li>
+                    <li>University of the Cordilleras (Philippines)</li>
+                    <li>Department of Science & Technology (Philippines)</li>
+                    <li>National University of Cheasim Kamchaymear (Cambodia)</li>
+                    <li>Cambodia University of Technology & Science (Cambodia)</li>
+                    <li>Coimbatore Institute of Technology (India)</li>
+                    <li>Chitkara University (India)</li>
+                    <li>Asia Pacific University of Technology & Innovation (Malaysia)</li>
+                    <li>University of Mpumalanga (South Africa)</li>
+                    <li>Sefako Makgatho Health Sciences University (South Africa)</li>
+                    <li>Mangosuthu University of Technology (South Africa)</li>
+                    <li>Tshwane University of Technology (South Africa)</li>
+                    <li>National University of Kaohsiung (Taiwan)</li>
+                    <li>Millat Umidi University (Uzbekistan)</li>
+                    <li>AJOU University (Uzbekistan)</li>
+                    <li>Asian Society of Innovation & Policy (South Korea)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <br>
 
         <script src="https://unpkg.com/scrollreveal"></script>
         <script src="js/darkmode.js"></script>
