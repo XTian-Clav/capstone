@@ -194,11 +194,15 @@
         
         <h2 class="faq-category">Visa & Travel</h2>
         <div class="faq-card" onclick="this.classList.toggle('active')">
-            <div class="faq-question">How do we process the visa when going overseas?</div>
-            <div class="faq-answer">Incubatees should contact the PITBI administrators to assist with visa processing. The administrators will provide guidance and handle the necessary steps as required.</div>
+            <div class="faq-question">How do I process my visa for overseas travel?</div>
+            <div class="faq-answer">
+                Incubatees should contact the PITBI administrators for assistance with visa processing. 
+                The administrators will provide guidance and handle the necessary steps as required. 
+                E-visa links for each country are also available in the International Travel tab.
+            </div>
         </div>
         <div class="faq-card" onclick="this.classList.toggle('active')">
-            <div class="faq-question">International Travel</div>
+            <div class="faq-question">Which countries and institutions are included in PITBI's International Travel program?</div>
             <div class="faq-answer">
                 <p>
                     The following countries, State Universities and Colleges (SUCs), and Higher Education Institutions (HEIs) have a Memorandum of Agreement (MOA) with Palawan State University. 
