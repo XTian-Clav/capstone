@@ -30,6 +30,12 @@ class ReturnedItems extends Page
                 ->color('info')
                 ->url(route('ReturnedItems', request()->only(['month', 'year'])))
                 ->openUrlInNewTab(),
+            Action::make('print_overdue_report')
+                ->label('Print Overdue Items')
+                ->icon('heroicon-s-printer')
+                ->color('danger')
+                ->url(route('OverdueItems', request()->only(['month', 'year'])))
+                ->openUrlInNewTab(),
         ];
     }
 

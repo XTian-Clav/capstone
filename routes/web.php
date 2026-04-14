@@ -7,6 +7,7 @@ use App\Http\Controllers\PrintRoomController;
 use App\Http\Controllers\RoomReportController;
 use App\Http\Controllers\EventReportController;
 use App\Http\Controllers\PrintSupplyController;
+use App\Http\Controllers\OverdueItemsController;
 use App\Http\Controllers\SupplyReportController;
 use App\Http\Controllers\ReturnedItemsController;
 use App\Http\Controllers\PrintEquipmentController;
@@ -59,3 +60,5 @@ Route::get('/portal/print-supply-report', [SupplyReportController::class, 'Suppl
 Route::get('/portal/print-event-report', [EventReportController::class, 'EventReport'])->name('EventReport');
 
 Route::get('/portal/print-returned-items', [ReturnedItemsController::class, 'ReturnedItems'])->name('ReturnedItems');
+
+Route::get('/portal/print-overdue-items', [OverdueItemsController::class, 'OverdueItems'])->name('OverdueItems');
