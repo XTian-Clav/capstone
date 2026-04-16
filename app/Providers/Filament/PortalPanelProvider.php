@@ -60,6 +60,7 @@ class PortalPanelProvider extends PanelProvider
 
             ->profile(EditProfile::class, isSimple: false)
             ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
 
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::Light)

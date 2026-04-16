@@ -6,6 +6,7 @@ use App\Models\Startup;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Filament\Notifications\Notification;
+use App\Notifications\StartupApprovedNotification;
 use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
 class ApproveStartupAction extends Action
@@ -31,21 +32,7 @@ class ApproveStartupAction extends Action
                 $admin = auth()->user();
 
                 if ($owner) {
-                    Notification::make()
-                        ->success()
-                        ->color('success')
-                        ->title('Startup Proposal Approved')
-                        ->body("Your startup proposal entitled <strong>{$startupName}</strong> has been approved.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewStartup::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new StartupApprovedNotification($record));
                 }
 
                 Notification::make()
