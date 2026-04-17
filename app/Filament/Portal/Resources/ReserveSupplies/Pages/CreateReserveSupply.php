@@ -23,7 +23,7 @@ class CreateReserveSupply extends CreateRecord
                 ->color('warning')
                 ->iconColor('warning')
                 ->icon('heroicon-o-clock')
-                ->title('Reservation Submitted')
+                ->title('Supply Reservation Submitted')
                 ->body('Your reservation for ' . $supplyName . ' has been submitted successfully.')
                 ->sendToDatabase($user);
         }

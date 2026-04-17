@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use App\Models\ReserveEquipment;
 use Filament\Support\Enums\Size;
 use Filament\Forms\Components\Textarea;
+use App\Notifications\EquipmentRejected;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
@@ -46,30 +47,19 @@ class RejectEquipmentAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $equipmentName = $record->equipment?->equipment_name ?? 'an equipment';
+                
+                $name = $record->equipment?->equipment_name ?? 'an equipment';
+                $qty = $record->quantity ?? 1;
+                $equipmentName = "{$name} ({$qty})";
 
                 if ($owner) {
-                    Notification::make()
-                        ->danger()
-                        ->color('danger')
-                        ->title('Reservation Rejected')
-                        ->body("Your reservation for <strong>{$equipmentName}</strong> has been rejected.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReserveEquipment::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new EquipmentRejected($record));
                 }
 
                 Notification::make()
                     ->danger()
                     ->color('danger')
-                    ->title('Reservation Rejected')
+                    ->title('Equipment Reservation Rejected')
                     ->body("You rejected the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

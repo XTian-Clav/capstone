@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Supply;
 use Filament\Actions\Action;
 use App\Models\ReserveSupply;
 use Filament\Support\Enums\Size;
+use App\Notifications\SupplyRejected;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
@@ -46,30 +47,19 @@ class RejectSupplyAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $supplyName = $record->supply?->item_name ?? 'an supply';
+                
+                $name = $record->supply?->item_name ?? 'an supply';
+                $qty = $record->quantity ?? 1;
+                $supplyName = "{$name} ({$qty})";
 
                 if ($owner) {
-                    Notification::make()
-                        ->danger()
-                        ->color('danger')
-                        ->title('Reservation Rejected')
-                        ->body("Your reservation for <strong>{$supplyName}</strong> has been rejected.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReservesupply::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new SupplyRejected($record));
                 }
 
                 Notification::make()
                     ->danger()
                     ->color('danger')
-                    ->title('Reservation Rejected')
+                    ->title('Supply Reservation Rejected')
                     ->body("You rejected the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

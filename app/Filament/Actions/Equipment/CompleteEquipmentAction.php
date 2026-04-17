@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use App\Models\ReserveEquipment;
 use Filament\Support\Enums\Size;
 use Filament\Notifications\Notification;
+use App\Notifications\EquipmentCompleted;
 use App\Filament\Portal\Resources\ReserveEquipment\Pages\ViewReserveEquipment;
 
 class CompleteEquipmentAction extends Action
@@ -37,32 +38,20 @@ class CompleteEquipmentAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $equipmentName = $record->equipment?->equipment_name ?? 'an equipment';
+                
+                $name = $record->equipment?->equipment_name ?? 'an equipment';
+                $qty = $record->quantity ?? 1;
+                $equipmentName = "{$name} ({$qty})";
 
                 if ($owner) {
-                    Notification::make()
-                        ->color('cyan')
-                        ->iconColor('cyan')
-                        ->icon('heroicon-m-check-badge')
-                        ->title('Reservation Completed')
-                        ->body("Your reservation for <strong>{$equipmentName}</strong> has been completed.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReserveEquipment::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new EquipmentCompleted($record));
                 }
 
                 Notification::make()
                     ->color('cyan')
                     ->iconColor('cyan')
                     ->icon('heroicon-m-check-badge')
-                    ->title('Reservation Completed')
+                    ->title('Equipment Reservation Completed')
                     ->body("You completed the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

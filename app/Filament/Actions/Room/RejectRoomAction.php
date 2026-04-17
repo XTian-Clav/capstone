@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Room;
 use App\Models\ReserveRoom;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
+use App\Notifications\RoomRejected;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
@@ -49,27 +50,13 @@ class RejectRoomAction extends Action
                 $roomType = $room->room_type;
 
                 if ($owner) {
-                    Notification::make()
-                        ->danger()
-                        ->color('danger')
-                        ->title('Reservation Rejected')
-                        ->body("Your reservation for <strong>{$roomType}</strong> has been rejected.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReserveRoom::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new RoomRejected($record));
                 }
 
                 Notification::make()
                     ->danger()
                     ->color('danger')
-                    ->title('Reservation Rejected')
+                    ->title('Room Reservation Rejected')
                     ->body("You rejected the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Supply;
 use Filament\Actions\Action;
 use App\Models\ReserveSupply;
 use Filament\Support\Enums\Size;
+use App\Notifications\SupplyApproved;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveSupplies\Pages\ViewReserveSupply;
 
@@ -46,30 +47,19 @@ class ApproveSupplyAction extends Action
 
                 $owner = $record->user;
                 $admin = auth()->user();
-                $supplyName = $record->supply?->item_name ?? 'an supply';
+
+                $name = $record->supply?->item_name ?? 'an supply';
+                $qty = $record->quantity ?? 1;
+                $supplyName = "{$name} ({$qty})";
 
                 if ($owner) {
-                    Notification::make()
-                        ->success()
-                        ->color('success')
-                        ->title('Reservation Approved')
-                        ->body("Your reservation for <strong>{$supplyName}</strong> has been approved.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReservesupply::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new SupplyApproved($record));
                 }
 
                 Notification::make()
                     ->success()
                     ->color('success')
-                    ->title('Reservation Approved')
+                    ->title('Supply Reservation Approved')
                     ->body("You approved the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

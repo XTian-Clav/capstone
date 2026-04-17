@@ -5,8 +5,8 @@ namespace App\Filament\Actions\Startup;
 use App\Models\Startup;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
+use App\Notifications\StartupApproved;
 use Filament\Notifications\Notification;
-use App\Notifications\StartupApprovedNotification;
 use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
 
 class ApproveStartupAction extends Action
@@ -32,7 +32,7 @@ class ApproveStartupAction extends Action
                 $admin = auth()->user();
 
                 if ($owner) {
-                    $owner->notify(new StartupApprovedNotification($record));
+                    $owner->notify(new StartupApproved($record));
                 }
 
                 Notification::make()

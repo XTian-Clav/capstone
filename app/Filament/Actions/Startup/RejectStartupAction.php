@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Startup;
 use App\Models\Startup;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
+use App\Notifications\StartupRejected;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\Startups\Pages\ViewStartup;
@@ -40,21 +41,7 @@ class RejectStartupAction extends Action
                 $record->save();
 
                 if ($owner) {
-                    Notification::make()
-                        ->danger()
-                        ->color('danger')
-                        ->title('Startup Proposal Rejected')
-                        ->body("Your startup proposal titled <strong>{$startupName}</strong> has been rejected.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewStartup::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new StartupRejected($record));
                 }
 
                 Notification::make()

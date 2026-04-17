@@ -23,7 +23,7 @@ class CreateReserveRoom extends CreateRecord
                 ->color('warning')
                 ->iconColor('warning')
                 ->icon('heroicon-o-clock')
-                ->title('Reservation Submitted')
+                ->title('Room Reservation Submitted')
                 ->body('Your reservation for ' . $roomType . ' has been submitted successfully.')
                 ->sendToDatabase($user);
         }

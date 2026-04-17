@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Room;
 use App\Models\ReserveRoom;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
+use App\Notifications\RoomCompleted;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
 
@@ -40,29 +41,14 @@ class CompleteRoomAction extends Action
                 $roomType = $room->room_type;
 
                 if ($owner) {
-                    Notification::make()
-                        ->color('cyan')
-                        ->iconColor('cyan')
-                        ->icon('heroicon-m-check-badge')
-                        ->title('Reservation Completed')
-                        ->body("Your reservation for <strong>{$roomType}</strong> has been completed.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReserveRoom::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new RoomCompleted($record));
                 }
 
                 Notification::make()
                     ->color('cyan')
                     ->iconColor('cyan')
                     ->icon('heroicon-m-check-badge')
-                    ->title('Reservation Completed')
+                    ->title('Room Reservation Completed')
                     ->body("You completed the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

@@ -23,7 +23,7 @@ class CreateReserveEquipment extends CreateRecord
                 ->color('warning')
                 ->iconColor('warning')
                 ->icon('heroicon-o-clock')
-                ->title('Reservation Submitted')
+                ->title('Equipment Reservation Submitted')
                 ->body('Your reservation for ' . $equipmentName . ' has been submitted successfully.')
                 ->sendToDatabase($user);
         }

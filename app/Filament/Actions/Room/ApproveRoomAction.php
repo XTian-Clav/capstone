@@ -5,6 +5,7 @@ namespace App\Filament\Actions\Room;
 use App\Models\ReserveRoom;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
+use App\Notifications\RoomApproved;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use App\Filament\Portal\Resources\ReserveRooms\Pages\ViewReserveRoom;
@@ -60,27 +61,13 @@ class ApproveRoomAction extends Action
                 $roomType = $room->room_type;
 
                 if ($owner) {
-                    Notification::make()
-                        ->success()
-                        ->color('success')
-                        ->title('Reservation Approved')
-                        ->body("Your reservation for <strong>{$roomType}</strong> has been approved.")
-                        ->actions([
-                            Action::make('view')
-                                ->button()
-                                ->outlined()
-                                ->color('gray')
-                                ->url(ViewReserveRoom::getUrl([
-                                    'record' => $record->getRouteKey(),
-                                ]), shouldOpenInNewTab: true),
-                        ])
-                        ->sendToDatabase($owner);
+                    $owner->notify(new RoomApproved($record));
                 }
 
                 Notification::make()
                     ->success()
                     ->color('success')
-                    ->title('Reservation Approved')
+                    ->title('Room Reservation Approved')
                     ->body("You approved the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })
