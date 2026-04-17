@@ -16,7 +16,12 @@ class CreateReserveEquipment extends CreateRecord
         $data['user_id'] = auth()->id();
 
         $user = auth()->user();
-        $equipmentName = Equipment::find($data['equipment_id'] ?? null)?->equipment_name ?? 'a equipment';
+        
+        $equipment = Equipment::find($data['equipment_id'] ?? null);
+        $name = $equipment?->equipment_name ?? 'an equipment';
+        $qty = $data['quantity'] ?? 1;
+        
+        $equipmentName = "<strong>{$name} ({$qty})</strong>";
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()

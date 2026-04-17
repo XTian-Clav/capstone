@@ -16,7 +16,12 @@ class CreateReserveSupply extends CreateRecord
         $data['user_id'] = auth()->id();
 
         $user = auth()->user();
-        $supplyName = Supply::find($data['supply_id'] ?? null)?->item_name ?? 'a supply';
+
+        $supply = Supply::find($data['supply_id'] ?? null);
+        $name = $supply?->item_name ?? 'an supply';
+        $qty = $data['quantity'] ?? 1;
+
+        $supplyName = "<strong>{$name} ({$qty})</strong>";
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()
