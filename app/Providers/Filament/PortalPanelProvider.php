@@ -12,6 +12,7 @@ use Filament\Support\Enums\Width;
 use Filament\Support\Colors\Color;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
+use App\Filament\Portal\Pages\Faqs;
 use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
@@ -86,14 +87,18 @@ class PortalPanelProvider extends PanelProvider
             
             ->userMenuItems([
                 'profile' => fn (Action $action) => $action->label('Edit profile'),
-                'guidelines' => Action::make('Guidelines')
-                    ->label('Guidelines')
-                    ->icon('heroicon-o-book-open')
-                    ->url(fn (): string => Guidelines::getUrl()),
                 'room-schedule' => Action::make('Room Schedule')
                     ->label('Room Schedule')
                     ->icon('heroicon-o-calendar-days')
                     ->url(fn (): string => RoomSchedule::getUrl()),
+                'guidelines' => Action::make('Guidelines')
+                    ->label('Guidelines')
+                    ->icon('heroicon-o-book-open')
+                    ->url(fn (): string => Guidelines::getUrl()),
+                'faqs' => Action::make('Faqs')
+                    ->label('Faqs')
+                    ->icon('heroicon-o-question-mark-circle')
+                    ->url(fn (): string => Faqs::getUrl()),
                 'logout' => fn (Action $action) => $action->label('Log out'),
             ])
 
