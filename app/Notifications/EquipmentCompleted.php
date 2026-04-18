@@ -20,7 +20,7 @@ class EquipmentCompleted extends Notification
         $name = $this->reservation->equipment?->equipment_name ?? 'Equipment';
         $qty = $this->reservation->quantity ?? 1;
 
-        $this->EquipmentName = "{$name} ({$qty})";
+        $this->EquipmentName = "{$name} - Qty: {$qty}";
     }
 
     public function via(object $notifiable): array
@@ -31,14 +31,11 @@ class EquipmentCompleted extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->success()
             ->subject('PITBI Portal Update: Equipment Reservation Completed')
             ->greeting('Good Day ' . ($notifiable->name ?? 'Incubatee') . '!')
-            ->line("Your request for **{$this->EquipmentName}** has been marked completed.")
+            ->line("Your request for **{$this->EquipmentName}** has been marked completed by the Admin.")
             ->line("We hope the equipment was instrumental in your operations. Please ensure that the items have been returned in good condition to maintain our shared resources for all startups.")
             ->line("Thank you for using the PITBI services.")
-            ->line("")
-            ->action('Login to PITBI Portal', 'https://pitbiportal.site')
             ->salutation("Best regards, **PITBI Admin**");
     }
 
@@ -48,7 +45,7 @@ class EquipmentCompleted extends Notification
             ->success()
             ->color('cyan')
             ->title('Equipment Reservation Completed')
-            ->body("Your reservation for <strong>{$this->EquipmentName}</strong> has been marked completed.")
+            ->body("Your reservation for <strong>{$this->EquipmentName}</strong> has been marked completed completed by the Admin.")
             ->getDatabaseMessage();
     }
 }

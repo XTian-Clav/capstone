@@ -20,7 +20,7 @@ class SupplyCompleted extends Notification
         $name = $this->reservation->supply?->item_name ?? 'Supply';
         $qty = $this->reservation->quantity ?? 1;
 
-        $this->SupplyName = "{$name} ({$qty})";
+        $this->SupplyName = "{$name} - Qty: {$qty}";
     }
 
     public function via(object $notifiable): array
@@ -31,13 +31,11 @@ class SupplyCompleted extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->success()
             ->subject('PITBI Portal Update: Supply Reservation Completed')
             ->greeting('Good Day ' . ($notifiable->name ?? 'Incubatee') . '!')
+            ->line("Your request for **{$this->SupplyName}** has been marked completed by the Admin.")
             ->line("We are glad to support your resource needs. As a reminder, please ensure the consumable items are replaced as per the PITBI's policy to keep the inventory ready for the next incubatee.")
             ->line("Thank you for using the PITBI services.")
-            ->line("")
-            ->action('Login to PITBI Portal', 'https://pitbiportal.site')
             ->salutation("Best regards, **PITBI Admin**");
     }
 
@@ -47,7 +45,7 @@ class SupplyCompleted extends Notification
             ->success()
             ->color('cyan')
             ->title('Supply Reservation Completed')
-            ->body("Your reservation for <strong>{$this->SupplyName}</strong> has been marked completed.")
+            ->body("Your reservation for <strong>{$this->SupplyName}</strong> has been marked completed by the Admin.")
             ->getDatabaseMessage();
     }
 }

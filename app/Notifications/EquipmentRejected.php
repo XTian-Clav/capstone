@@ -20,7 +20,7 @@ class EquipmentRejected extends Notification
         $name = $this->reservation->equipment?->equipment_name ?? 'Equipment';
         $qty = $this->reservation->quantity ?? 1;
 
-        $this->EquipmentName = "{$name} ({$qty})";
+        $this->EquipmentName = "{$name} - Qty: {$qty}";
     }
 
     public function via(object $notifiable): array

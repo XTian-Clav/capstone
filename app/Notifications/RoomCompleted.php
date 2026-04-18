@@ -28,13 +28,11 @@ class RoomCompleted extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->success()
             ->subject('PITBI Portal Update: Room Reservation Completed')
             ->greeting('Good Day ' . ($notifiable->name ?? 'Incubatee') . '!')
+            ->line("Your request for **{$this->RoomName}** has been marked completed by the Admin.")
             ->line("We hope the facility provided a productive environment for your activities. We look forward to hosting your next session or meeting soon.")
             ->line("Thank you for using the PITBI services.")
-            ->line("")
-            ->action('Login to PITBI Portal', 'https://pitbiportal.site')
             ->salutation("Best regards, **PITBI Admin**");
     }
 
@@ -44,7 +42,7 @@ class RoomCompleted extends Notification
             ->success()
             ->color('cyan')
             ->title('Room Reservation Completed')
-            ->body("Your reservation for <strong>{$this->RoomName}</strong> has been marked completed.")
+            ->body("Your reservation for <strong>{$this->RoomName}</strong> has been marked completed by the Admin.")
             ->getDatabaseMessage();
     }
 }

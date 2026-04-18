@@ -41,7 +41,7 @@ class CompleteSupplyAction extends Action
                 
                 $name = $record->supply?->item_name ?? 'an supply';
                 $qty = $record->quantity ?? 1;
-                $supplyName = "{$name} ({$qty})";
+                $supplyName = "{$name} - Qty: {$qty}";
 
                 if ($owner) {
                     $owner->notify(new SupplyCompleted($record));

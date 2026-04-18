@@ -21,7 +21,7 @@ class CreateReserveSupply extends CreateRecord
         $name = $supply?->item_name ?? 'an supply';
         $qty = $data['quantity'] ?? 1;
 
-        $supplyName = "<strong>{$name} ({$qty})</strong>";
+        $supplyName = "<strong>{$name} - Qty: {$qty}</strong>";
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()

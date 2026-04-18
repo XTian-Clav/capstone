@@ -50,7 +50,7 @@ class ApproveEquipmentAction extends Action
 
                 $name = $record->equipment?->equipment_name ?? 'an equipment';
                 $qty = $record->quantity ?? 1;
-                $equipmentName = "{$name} ({$qty})";
+                $equipmentName = "{$name} - Qty: {$qty}";
 
                 if ($owner) {
                     $owner->notify(new EquipmentApproved($record));

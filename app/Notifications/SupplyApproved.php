@@ -20,7 +20,7 @@ class SupplyApproved extends Notification
         $name = $this->reservation->supply?->item_name ?? 'Supply';
         $qty = $this->reservation->quantity ?? 1;
 
-        $this->SupplyName = "{$name} ({$qty})";
+        $this->SupplyName = "{$name} - Qty: {$qty}";
     }
 
     public function via(object $notifiable): array

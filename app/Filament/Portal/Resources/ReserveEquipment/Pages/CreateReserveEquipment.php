@@ -21,7 +21,7 @@ class CreateReserveEquipment extends CreateRecord
         $name = $equipment?->equipment_name ?? 'an equipment';
         $qty = $data['quantity'] ?? 1;
         
-        $equipmentName = "<strong>{$name} ({$qty})</strong>";
+        $equipmentName = "<strong>{$name} - Qty: {$qty}</strong>";
 
         if (! $user->hasAnyRole(['admin', 'super_admin'])) {
             Notification::make()
