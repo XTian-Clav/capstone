@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Event;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Radio;
+use App\Notifications\EventAttendance;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 
@@ -16,7 +17,7 @@ class AttendEventAction extends Action
         return parent::make($name ?? 'attend')
             ->button()
             ->label('Register Attendance')
-            ->color('pitbi-orange')
+            ->color('warning')
             ->icon('heroicon-o-clipboard-document-check')
             ->requiresConfirmation() 
             ->modalHeading(fn (Event $record) => 'Confirm Attendance for ' . ($record->event ?? 'the Event'))
@@ -44,29 +45,13 @@ class AttendEventAction extends Action
             ->action(function (Event $record, array $data) {
                 /** @var User $user */
                 $user = auth()->user();
-                $eventName = $record->event ?? 'the event'; 
+                $isAttending = (bool) $data['is_attending'];
 
-                $isAttending = $data['is_attending'];
-                
-                $record->attendees()->attach($user->id, [
-                    'is_attending' => $isAttending,
+                $record->attendees()->syncWithoutDetaching([
+                    $user->id => ['is_attending' => $isAttending]
                 ]);
-                
-                if ($isAttending) {
-                    $title = 'Attendance Confirmed';
-                    $body = "Thank you! Your attendance for <strong>{$eventName}</strong> has been confirmed.";
-                    $color = 'success';
-                } else {
-                    $title = 'Attendance Recorded';
-                    $body = "Your response for <strong>{$eventName}</strong> has been recorded as 'Not Attending'.";
-                    $color = 'danger';
-                }
 
-                Notification::make()
-                    ->title($title)
-                    ->body($body)
-                    ->color($color)
-                    ->sendToDatabase($user);
+                $user->notify(new EventAttendance($record, $isAttending));
             })
             ->hidden(fn (Event $record): bool =>
                 $record->attendees()->where('user_id', auth()->id())->exists()

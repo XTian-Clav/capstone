@@ -38,7 +38,7 @@ class EquipmentApproved extends Notification
             ->line("Please proceed to the PITBI office to claim the equipment. We kindly remind you to adhere to the equipment usage guidelines and coordinate with the PITBI Staff for the turnover process.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

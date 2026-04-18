@@ -120,7 +120,7 @@
         <div class="contact-card">
             <div class="contact-question"><i class="ri-map-pin-fill" style="margin-right: 0.5rem;"></i>Location</div>
             <div class="contact-answer" style="display: block;">
-                1st Floor, Student's Innovation Park Building, Palawan State University-Main Campus, Tiniguiban Heights, 5300 Puerto Princesa, Philippines
+                1st Floor, Student's Innovation Park Building, Palawan State University-Main Campus, Tiniguiban Heights, 5300 Puerto Princesa City, Philippines
             </div>
         </div>        
         <br>

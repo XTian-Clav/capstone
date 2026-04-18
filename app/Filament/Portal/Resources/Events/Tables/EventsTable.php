@@ -73,7 +73,7 @@ class EventsTable
                                 ->colors([
                                     'warning' => 'Upcoming',
                                     'success' => 'Ongoing',
-                                    'cyan' => 'Completed',
+                                    'info' => 'Completed',
                                     'danger' => 'Cancelled',
                                 ]),
                         ]),
@@ -134,6 +134,17 @@ class EventsTable
                     ->placeholder('Location'),
             ])
             ->recordActions([
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+                
+                CompleteEventAction::make()->outlined()->size(Size::ExtraSmall),
+                StartEventAction::make()->outlined()->size(Size::ExtraSmall),
+                CancelEventAction::make()->outlined()->size(Size::ExtraSmall),
+
+                AttendEventAction::make()->outlined(),
+
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
@@ -154,17 +165,6 @@ class EventsTable
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-
-                ViewAction::make('alt_view')
-                    ->button()
-                    ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-                
-                CompleteEventAction::make()->outlined()->size(Size::ExtraSmall),
-                StartEventAction::make()->outlined()->size(Size::ExtraSmall),
-                CancelEventAction::make()->outlined()->size(Size::ExtraSmall),
-
-                AttendEventAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

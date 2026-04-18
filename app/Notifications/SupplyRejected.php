@@ -41,7 +41,7 @@ class SupplyRejected extends Notification
             ->line("If you have questions regarding the replacement policy or availability, please reach out to the PITBI staff.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

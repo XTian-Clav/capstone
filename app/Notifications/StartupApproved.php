@@ -32,7 +32,7 @@ class StartupApproved extends Notification
             ->line('You may log in to the PITBI Portal to view your status and proceed with the next steps.')
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

@@ -33,7 +33,7 @@ class StartupRejected extends Notification
             ->line('You may log in to the PITBI portal at your convenience to review your submission details.')
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

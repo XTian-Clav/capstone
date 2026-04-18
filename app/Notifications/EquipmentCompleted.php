@@ -36,7 +36,7 @@ class EquipmentCompleted extends Notification
             ->line("Your request for **{$this->EquipmentName}** has been marked completed by the Admin.")
             ->line("We hope the equipment was instrumental in your operations. Please ensure that the items have been returned in good condition to maintain our shared resources for all startups.")
             ->line("Thank you for using the PITBI services.")
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

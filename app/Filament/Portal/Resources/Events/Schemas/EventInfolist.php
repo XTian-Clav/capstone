@@ -68,7 +68,7 @@ class EventInfolist
                         ->colors([
                             'warning' => 'Upcoming',
                             'success' => 'Ongoing',
-                            'cyan' => 'Completed',
+                            'info' => 'Completed',
                             'danger' => 'Cancelled',
                         ])
                         ->columnSpanFull()

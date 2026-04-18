@@ -9,7 +9,6 @@ use Filament\Enums\ThemeMode;
 use Filament\Pages\Dashboard;
 use App\Filament\Pages\Backups;
 use Filament\Support\Enums\Width;
-use Filament\Support\Colors\Color;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Portal\Pages\Faqs;
@@ -17,6 +16,7 @@ use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
+use Openplain\FilamentShadcnTheme\Color;
 use App\Filament\Portal\Pages\Guidelines;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -70,17 +70,7 @@ class PortalPanelProvider extends PanelProvider
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
-                'danger' => Color::Red,
-                'gray' => Color::Gray,
-                'info' => Color::Sky,
-                'primary' => '#fe800d',
-                'secondary' => Color::Gray,
-                'success' => Color::Lime,
-                'warning' => Color::Amber,
-
-                'cyan' => Color::Cyan,
-                'pitbi-orange' => '#fe800d',
-                'pitbi-blue' => '#013267',
+                'primary' => Color::Default,
             ])
 
             ->viteTheme('resources/css/filament/portal/theme.css')

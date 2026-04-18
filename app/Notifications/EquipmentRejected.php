@@ -41,7 +41,7 @@ class EquipmentRejected extends Notification
             ->line("You may review the available inventory or coordinate with the PITBI Staff for alternative tools.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

@@ -35,7 +35,7 @@ class RoomApproved extends Notification
             ->line("The room is now scheduled for your use. Please ensure you follow the facility guidelines and coordinate with the PITBI staff for access on your scheduled date.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

@@ -36,7 +36,7 @@ class SupplyCompleted extends Notification
             ->line("Your request for **{$this->SupplyName}** has been marked completed by the Admin.")
             ->line("We are glad to support your resource needs. As a reminder, please ensure the consumable items are replaced as per the PITBI's policy to keep the inventory ready for the next incubatee.")
             ->line("Thank you for using the PITBI services.")
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

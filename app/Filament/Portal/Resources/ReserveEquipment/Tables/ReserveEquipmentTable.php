@@ -61,7 +61,7 @@ class ReserveEquipmentTable
                             'warning' => 'Pending',
                             'success' => 'Approved',
                             'danger' => 'Rejected',
-                            'cyan' => 'Completed',
+                            'info' => 'Completed',
                         ]),
 
                     TextColumn::make('start_date')
@@ -119,6 +119,23 @@ class ReserveEquipmentTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ViewEquipmentAction::make('print_pdf')
+                    ->button()
+                    ->outlined()
+                    ->visible(fn ($record) =>
+                        $record?->status === 'Approved' &&
+                        auth()->user()->hasRole('incubatee')
+                    ),
+
+                ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
+                CompleteEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
+
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
@@ -139,23 +156,6 @@ class ReserveEquipmentTable
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-
-                ViewAction::make('alt_view')
-                    ->button()
-                    ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-
-                ViewEquipmentAction::make('print_pdf')
-                    ->button()
-                    ->outlined()
-                    ->visible(fn ($record) =>
-                        $record?->status === 'Approved' &&
-                        auth()->user()->hasRole('incubatee')
-                    ),
-
-                ApproveEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
-                RejectEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
-                CompleteEquipmentAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

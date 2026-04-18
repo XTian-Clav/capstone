@@ -38,7 +38,7 @@ class SupplyApproved extends Notification
             ->line("You may now collect the items at the PITBI office.Please be reminded that these are consumable supplies provided under a replacement policy—ensure that used items are replaced with the same brand or quality upon the conclusion of your usage.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

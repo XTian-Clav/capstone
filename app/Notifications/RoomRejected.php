@@ -38,7 +38,7 @@ class RoomRejected extends Notification
             ->line("The room may be unavailable due to a prior booking or maintenance. Please check the calendar for an alternative schedule.")
             ->line("")
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

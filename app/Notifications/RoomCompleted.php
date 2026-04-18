@@ -33,7 +33,7 @@ class RoomCompleted extends Notification
             ->line("Your request for **{$this->RoomName}** has been marked completed by the Admin.")
             ->line("We hope the facility provided a productive environment for your activities. We look forward to hosting your next session or meeting soon.")
             ->line("Thank you for using the PITBI services.")
-            ->salutation("Best regards, **PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array

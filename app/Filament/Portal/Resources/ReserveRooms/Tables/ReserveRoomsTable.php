@@ -56,7 +56,7 @@ class ReserveRoomsTable
                             'warning' => 'Pending',
                             'success' => 'Approved',
                             'danger' => 'Rejected',
-                            'cyan' => 'Completed',
+                            'info' => 'Completed',
                         ]),
 
                     TextColumn::make('start_date')
@@ -114,6 +114,23 @@ class ReserveRoomsTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ViewRoomAction::make()
+                    ->button()
+                    ->outlined()
+                    ->visible(fn ($record) =>
+                        $record?->status === 'Approved' &&
+                        auth()->user()->hasRole('incubatee')
+                    ),
+
+                ApproveRoomAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectRoomAction::make()->outlined()->size(Size::ExtraSmall),
+                CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
+
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
@@ -134,23 +151,6 @@ class ReserveRoomsTable
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-
-                ViewAction::make('alt_view')
-                    ->button()
-                    ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-
-                ViewRoomAction::make()
-                    ->button()
-                    ->outlined()
-                    ->visible(fn ($record) =>
-                        $record?->status === 'Approved' &&
-                        auth()->user()->hasRole('incubatee')
-                    ),
-
-                ApproveRoomAction::make()->outlined()->size(Size::ExtraSmall),
-                RejectRoomAction::make()->outlined()->size(Size::ExtraSmall),
-                CompleteRoomAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->headerActions([
                 RoomSchedule::make(),

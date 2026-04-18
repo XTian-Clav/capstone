@@ -104,6 +104,14 @@ class StartupsTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->recordActions([
+                ViewAction::make('alt_view')
+                    ->button()
+                    ->color('gray')
+                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
+
+                ApproveStartupAction::make()->outlined()->size(Size::ExtraSmall),
+                RejectStartupAction::make()->outlined()->size(Size::ExtraSmall),
+
                 ActionGroup::make([
                     ViewAction::make()->color('gray'),
                     EditAction::make()->color('gray')
@@ -124,14 +132,6 @@ class StartupsTable
                 ->size(Size::ExtraSmall)
                 ->button()
                 ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
-
-                ViewAction::make('alt_view')
-                    ->button()
-                    ->color('gray')
-                    ->visible(fn () => auth()->user()->hasAnyRole(['incubatee', 'investor'])),
-
-                ApproveStartupAction::make()->outlined()->size(Size::ExtraSmall),
-                RejectStartupAction::make()->outlined()->size(Size::ExtraSmall),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
