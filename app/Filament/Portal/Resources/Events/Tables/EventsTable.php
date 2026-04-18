@@ -4,6 +4,7 @@ namespace App\Filament\Portal\Resources\Events\Tables;
 
 use App\Models\Event;
 use Filament\Tables\Table;
+use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
@@ -150,6 +151,12 @@ class EventsTable
                     EditAction::make()->color('gray')
                         ->visible(fn ($record) => ! $record->trashed())
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    Action::make('view_attendance')
+                        ->label('Attendance List')
+                        ->icon('heroicon-s-users')
+                        ->color('warning')
+                        ->url(fn ($record) => url("/portal/event-attendance?event_id={$record->id}"))
+                        ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                     RestoreAction::make()
                         ->color('success')
                         ->authorize(fn () => auth()->user()->hasRole('super_admin')),

@@ -92,32 +92,6 @@ class EventInfolist
                         ->label('Deleted At:')
                         ->visible(fn (Event $record): bool => $record->trashed()),
                 ])->columnSpan(1)->compact(),
-
-                Section::make(fn ($record) => 'Attendance List for ' . $record->event)
-                ->schema([
-                    TextEntry::make('attendees.name') 
-                        ->label('Registered Attendees')
-                        ->placeholder('No users have registered attendance yet.')
-                        ->listWithLineBreaks(),
-
-                    TextEntry::make('registration_dates')
-                        ->label('Registration Dates')
-                        ->hiddenLabel(false)
-                        ->getStateUsing(fn ($record) => $registeredAttendees($record)->pluck('pivot.created_at')) 
-                        ->dateTime('M j, Y h:i A')
-                        ->listWithLineBreaks()
-                        ->placeholder('—'),
-
-                    TextEntry::make('attendance_statuses')
-                        ->badge()
-                        ->placeholder('—')
-                        ->listWithLineBreaks()
-                        ->label('Attendance Status')
-                        ->getStateUsing(fn ($record) => $registeredAttendees($record)->pluck('pivot.is_attending'))
-                        ->formatStateUsing(fn ($state) => $state ? 'Attending' : 'Not Attending')
-                        ->color(fn ($state) => $state ? 'success' : 'danger')
-                        ->columnSpan(1),
-                ])->columns(3)->columnSpanFull()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])->columns(3);
     }
 }
