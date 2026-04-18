@@ -27,7 +27,7 @@ class CreateReserveEquipment extends CreateRecord
             Notification::make()
                 ->color('warning')
                 ->iconColor('warning')
-                ->icon('heroicon-o-clock')
+                ->icon('heroicon-m-clock')
                 ->title('Equipment Reservation Submitted')
                 ->body('Your reservation for ' . $equipmentName . ' has been submitted successfully.')
                 ->sendToDatabase($user);

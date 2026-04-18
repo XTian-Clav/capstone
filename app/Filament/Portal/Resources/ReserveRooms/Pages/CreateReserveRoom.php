@@ -24,7 +24,7 @@ class CreateReserveRoom extends CreateRecord
             Notification::make()
                 ->color('warning')
                 ->iconColor('warning')
-                ->icon('heroicon-o-clock')
+                ->icon('heroicon-m-clock')
                 ->title('Room Reservation Submitted')
                 ->body('Your reservation for ' . $roomName . ' has been submitted successfully.')
                 ->sendToDatabase($user);

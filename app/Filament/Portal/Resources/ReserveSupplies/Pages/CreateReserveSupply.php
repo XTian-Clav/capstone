@@ -27,7 +27,7 @@ class CreateReserveSupply extends CreateRecord
             Notification::make()
                 ->color('warning')
                 ->iconColor('warning')
-                ->icon('heroicon-o-clock')
+                ->icon('heroicon-m-clock')
                 ->title('Supply Reservation Submitted')
                 ->body('Your reservation for ' . $supplyName . ' has been submitted successfully.')
                 ->sendToDatabase($user);
