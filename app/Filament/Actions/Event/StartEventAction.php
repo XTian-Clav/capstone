@@ -16,7 +16,7 @@ class StartEventAction extends Action
             ->button()
             ->label('Start Event')
             ->color('success')
-            ->icon('heroicon-o-check')
+            ->icon('heroicon-m-check-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Start ' . ($action->getRecord()?->event ?? 'event'))
             ->modalDescription('Are you sure you want to Start this event?')

@@ -41,8 +41,9 @@ class RoomApproved extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
             ->color('success')
+            ->iconColor('sucess')
+            ->icon('heroicon-m-check-circle')
             ->title('Room Reservation Approved')
             ->body("Your reservation for <strong>{$this->RoomName}</strong> has been approved.")
             ->getDatabaseMessage();

@@ -17,7 +17,7 @@ class ApproveSupplyAction extends Action
             ->button()
             ->label('Approve')
             ->color('success')
-            ->icon('heroicon-o-check')
+            ->icon('heroicon-m-check-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to approve this reservation?')
@@ -57,9 +57,9 @@ class ApproveSupplyAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('success')
-                    ->title('Supply Reservation Approved')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->body("You approved the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

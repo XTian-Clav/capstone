@@ -18,7 +18,7 @@ class ApproveRoomAction extends Action
             ->button()
             ->label('Approve')
             ->color('success')
-            ->icon('heroicon-o-check')
+            ->icon('heroicon-m-check-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
             ->modalDescription('Are you sure you want to approve this reservation?')
@@ -65,8 +65,9 @@ class ApproveRoomAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('success')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->title('Room Reservation Approved')
                     ->body("You approved the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

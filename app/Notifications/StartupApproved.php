@@ -38,8 +38,9 @@ class StartupApproved extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
             ->color('success')
+            ->iconColor('sucess')
+            ->icon('heroicon-m-check-circle')
             ->title('Startup Proposal Approved')
             ->body("Your startup proposal entitled <strong>{$this->startup->startup_name}</strong> has been approved.")
             ->getDatabaseMessage();

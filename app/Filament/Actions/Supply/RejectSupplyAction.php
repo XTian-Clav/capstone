@@ -18,7 +18,7 @@ class RejectSupplyAction extends Action
             ->button()
             ->label('Reject')
             ->color('danger')
-            ->icon('heroicon-o-x-mark')
+            ->icon('heroicon-m-x-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to reject this reservation?')
@@ -57,9 +57,9 @@ class RejectSupplyAction extends Action
                 }
 
                 Notification::make()
-                    ->danger()
                     ->color('danger')
-                    ->title('Supply Reservation Rejected')
+                    ->iconColor('danger')
+                    ->icon('heroicon-m-x-circle')
                     ->body("You rejected the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

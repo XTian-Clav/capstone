@@ -17,7 +17,7 @@ class ApproveEquipmentAction extends Action
             ->button()
             ->label('Approve')
             ->color('success')
-            ->icon('heroicon-o-check')
+            ->icon('heroicon-m-check-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to approve this reservation?')
@@ -57,8 +57,9 @@ class ApproveEquipmentAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('success')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->title('Equipment Reservation Approved')
                     ->body("You approved the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

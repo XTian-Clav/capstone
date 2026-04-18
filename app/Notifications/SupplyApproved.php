@@ -44,8 +44,9 @@ class SupplyApproved extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
             ->color('success')
+            ->iconColor('sucess')
+            ->icon('heroicon-m-check-circle')
             ->title('Supply Reservation Approved')
             ->body("Your reservation for <strong>{$this->SupplyName}</strong> has been approved.")
             ->getDatabaseMessage();

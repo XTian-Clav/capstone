@@ -18,7 +18,7 @@ class RejectRoomAction extends Action
             ->button()
             ->label('Reject')
             ->color('danger')
-            ->icon('heroicon-o-x-mark')
+            ->icon('heroicon-m-x-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
             ->modalDescription('Are you sure you want to reject this reservation?')
@@ -54,9 +54,9 @@ class RejectRoomAction extends Action
                 }
 
                 Notification::make()
-                    ->danger()
                     ->color('danger')
-                    ->title('Room Reservation Rejected')
+                    ->iconColor('danger')
+                    ->icon('heroicon-m-x-circle')
                     ->body("You rejected the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);
             })

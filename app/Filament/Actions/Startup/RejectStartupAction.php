@@ -18,7 +18,7 @@ class RejectStartupAction extends Action
             ->button()
             ->label('Reject')
             ->color('danger')
-            ->icon('heroicon-o-x-mark')
+            ->icon('heroicon-m-x-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->startup_name ?? 'Startup'))
             ->modalDescription('Are you sure you want to reject this startup proposal?')
@@ -45,8 +45,9 @@ class RejectStartupAction extends Action
                 }
 
                 Notification::make()
-                    ->danger()
                     ->color('danger')
+                    ->iconColor('danger')
+                    ->icon('heroicon-m-x-circle')
                     ->title('Startup Proposal Rejected')
                     ->body("You have rejected the startup proposal <strong>{$startupName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

@@ -18,7 +18,7 @@ class RejectEquipmentAction extends Action
             ->button()
             ->label('Reject')
             ->color('danger')
-            ->icon('heroicon-o-x-mark')
+            ->icon('heroicon-m-x-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Reject ' . ($action->getRecord()?->equipment?->equipment_name ?? 'Reservation'))
             ->modalDescription('Are you sure you want to reject this reservation?')
@@ -57,8 +57,9 @@ class RejectEquipmentAction extends Action
                 }
 
                 Notification::make()
-                    ->danger()
                     ->color('danger')
+                    ->iconColor('danger')
+                    ->icon('heroicon-m-x-circle')
                     ->title('Equipment Reservation Rejected')
                     ->body("You rejected the reservation for <strong>{$equipmentName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

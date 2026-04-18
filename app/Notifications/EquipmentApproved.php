@@ -44,8 +44,9 @@ class EquipmentApproved extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
             ->color('success')
+            ->iconColor('sucess')
+            ->icon('heroicon-m-check-circle')
             ->title('Equipment Reservation Approved')
             ->body("Your reservation for <strong>{$this->EquipmentName}</strong> has been approved.")
             ->getDatabaseMessage();

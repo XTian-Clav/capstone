@@ -17,7 +17,7 @@ class ApproveStartupAction extends Action
             ->button()
             ->label('Approve')
             ->color('success')
-            ->icon('heroicon-o-check')
+            ->icon('heroicon-m-check-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Approve ' . ($action->getRecord()?->startup_name ?? 'Startup'))
             ->modalDescription('Are you sure you want to approve this startup proposal?')
@@ -36,8 +36,9 @@ class ApproveStartupAction extends Action
                 }
 
                 Notification::make()
-                    ->success()
                     ->color('success')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->title('Startup Proposal Approved')
                     ->body("You have approved the startup proposal <strong>{$startupName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
                     ->sendToDatabase($admin);

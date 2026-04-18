@@ -16,7 +16,7 @@ class CancelEventAction extends Action
             ->button()
             ->label('Cancel Event')
             ->color('danger')
-            ->icon('heroicon-o-x-mark')
+            ->icon('heroicon-m-x-circle')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Cancel ' . ($action->getRecord()?->event ?? 'event'))
             ->modalDescription('Are you sure you want to cancel this event?')
