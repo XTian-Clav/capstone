@@ -39,7 +39,7 @@ class StartupRejected extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
+            ->danger()
             ->color('danger')
             ->title('Startup Proposal Rejected')
             ->body("Your startup proposal entitled <strong>{$this->startup->startup_name}</strong> has been rejected.")

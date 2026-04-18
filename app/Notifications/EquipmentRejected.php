@@ -47,7 +47,7 @@ class EquipmentRejected extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
+            ->danger()
             ->color('danger')
             ->title('Equipment Reservation Rejected')
             ->body("Your reservation for <strong>{$this->EquipmentName}</strong> has been rejected.")

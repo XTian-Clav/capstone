@@ -47,7 +47,7 @@ class SupplyRejected extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
+            ->danger()
             ->color('danger')
             ->title('Supply Reservation Rejected')
             ->body("Your reservation for <strong>{$this->SupplyName}</strong> has been rejected.")

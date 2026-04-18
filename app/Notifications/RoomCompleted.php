@@ -39,8 +39,9 @@ class RoomCompleted extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
-            ->color('cyan')
+            ->color('info')
+            ->iconColor('info')
+            ->icon('heroicon-m-check-badge')
             ->title('Room Reservation Completed')
             ->body("Your reservation for <strong>{$this->RoomName}</strong> has been marked completed by the Admin.")
             ->getDatabaseMessage();

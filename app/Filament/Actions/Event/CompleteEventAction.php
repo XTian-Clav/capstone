@@ -15,7 +15,7 @@ class CompleteEventAction extends Action
         return parent::make($name ?? 'complete')
             ->button()
             ->label('Mark as Completed')
-            ->color('cyan')
+            ->color('info')
             ->icon('heroicon-m-check-badge')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->event ?? 'event'))

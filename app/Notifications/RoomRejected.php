@@ -44,7 +44,7 @@ class RoomRejected extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
+            ->danger()
             ->color('danger')
             ->title('Room Reservation Rejected')
             ->body("Your reservation for <strong>{$this->RoomName}</strong> has been rejected.")

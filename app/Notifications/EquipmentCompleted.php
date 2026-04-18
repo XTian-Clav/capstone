@@ -42,8 +42,9 @@ class EquipmentCompleted extends Notification
     public function toDatabase(object $notifiable): array
     {
         return FilamentNotification::make()
-            ->success()
-            ->color('cyan')
+            ->color('info')
+            ->iconColor('info')
+            ->icon('heroicon-m-check-badge')
             ->title('Equipment Reservation Completed')
             ->body("Your reservation for <strong>{$this->EquipmentName}</strong> has been marked completed completed by the Admin.")
             ->getDatabaseMessage();

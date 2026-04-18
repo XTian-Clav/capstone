@@ -16,7 +16,7 @@ class CompleteSupplyAction extends Action
         return parent::make($name ?? 'complete')
             ->button()
             ->label('Complete')
-            ->color('cyan')
+            ->color('info')
             ->icon('heroicon-m-check-badge')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->supply?->item_name ?? 'Reservation'))
@@ -48,8 +48,8 @@ class CompleteSupplyAction extends Action
                 }
 
                 Notification::make()
-                    ->color('cyan')
-                    ->iconColor('cyan')
+                    ->color('info')
+                    ->iconColor('info')
                     ->icon('heroicon-m-check-badge')
                     ->title('Supply Reservation Completed')
                     ->body("You completed the reservation for <strong>{$supplyName}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")

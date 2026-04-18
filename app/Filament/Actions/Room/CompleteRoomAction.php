@@ -16,7 +16,7 @@ class CompleteRoomAction extends Action
         return parent::make($name ?? 'complete')
             ->button()
             ->label('Complete')
-            ->color('cyan')
+            ->color('info')
             ->icon('heroicon-m-check-badge')
             ->requiresConfirmation()
             ->modalHeading(fn ($action) => 'Complete ' . ($action->getRecord()?->room?->room_type ?? 'Reservation'))
@@ -45,8 +45,8 @@ class CompleteRoomAction extends Action
                 }
 
                 Notification::make()
-                    ->color('cyan')
-                    ->iconColor('cyan')
+                    ->color('info')
+                    ->iconColor('info')
                     ->icon('heroicon-m-check-badge')
                     ->title('Room Reservation Completed')
                     ->body("You completed the reservation for <strong>{$roomType}</strong> for " . ($owner?->name ?? 'Unknown user') . ".")
