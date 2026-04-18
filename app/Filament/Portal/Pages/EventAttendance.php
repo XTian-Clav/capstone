@@ -2,15 +2,17 @@
 
 namespace App\Filament\Portal\Pages;
 
+use App\Models\User;
 use App\Models\Event;
-use App\Models\EventUser;
 use Filament\Pages\Page;
+use App\Models\EventUser;
 use Filament\Actions\Action;
 use Filament\Support\Enums\Size;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
+use App\Notifications\EventAttendanceAdmin;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
 
@@ -101,17 +103,23 @@ class EventAttendance extends Page implements HasForms, HasActions
             ->modalSubmitActionLabel('Yes, update it')
             ->action(function (array $arguments) {
                 $index = $arguments['index'];
+                $userId = $this->attendees[$index]['user_id'];
                 $newStatus = ! $this->attendees[$index]['is_attending'];
 
                 EventUser::where('event_id', $this->event->id)
-                    ->where('user_id', $this->attendees[$index]['user_id'])
+                    ->where('user_id', $userId)
                     ->update(['is_attending' => $newStatus]);
+                
+                $user = User::find($userId);
+                if ($user) {
+                    $user->notify(new EventAttendanceAdmin($this->event, $newStatus));
+                }
 
                 Notification::make()
-                    ->title('Status updated successfully')
+                    ->title('Status updated and user notified')
                     ->success()
                     ->send();
-
+    
                 $this->loadAttendees();
             });
     }

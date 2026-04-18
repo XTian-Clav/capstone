@@ -52,7 +52,7 @@ class EventAttendance extends Notification
         return $message
             ->action('Login to PITBI Portal', 'https://pitbiportal.site')
             ->line("Thank you for using the PITBI Portal.")
-            ->salutation("Best regards,  \n**PITBI Admin**");
+            ->salutation("Best regards, \n**PITBI Admin**");
     }
 
     public function toDatabase(object $notifiable): array
@@ -66,6 +66,7 @@ class EventAttendance extends Notification
 
         return FilamentNotification::make()
             ->title($this->isAttending ? 'Attendance Confirmed' : 'Absence Recorded')
+            ->icon($this->isAttending ? 'heroicon-m-check-circle' : 'heroicon-m-x-circle')
             ->status($status)
             ->color($status)
             ->body("
