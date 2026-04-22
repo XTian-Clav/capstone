@@ -1,5 +1,5 @@
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
-    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
+    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;">
         <strong>Equipment Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
@@ -10,7 +10,7 @@
 </div>
 
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
-    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
+    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;">
         <strong>Supply Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
@@ -21,7 +21,7 @@
 </div>
 
 <div style="margin-bottom: 15px; page-break-inside: avoid;">
-    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; color: #333;">
+    <h2 style="font-size: 12pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;">
         <strong>Room Reservation Guidelines</strong>
     </h2>
     <ul style="padding-left: 20px; line-height: 1.5; font-size: 11pt; list-style-type: disc;">
@@ -36,7 +36,7 @@
 </div>
 
 <div style="margin-top: 20pt; border-top: 0.5pt solid #ccc; padding-top: 8pt; font-size: 10pt;">
-    <p style="margin: 0; color: #333; text-align: justify; text-justify: inter-word;">
+    <p style="margin: 0; text-align: justify; text-justify: inter-word;">
         <strong>Note:</strong> PITBI does not allow reservation extensions. If additional time or items are required, please submit a new reservation request for processing.
     </p>
 </div>

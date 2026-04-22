@@ -1,12 +1,14 @@
 <x-filament-panels::page>
     <style>
-        .text-blue { color: #013267; }
-        .text-red { color: #991b1b; }
-        .text-green { color: #15803d; }
-        .text-orange { color: #c2410c; }
-        .text-yellow { color: #ca8a04; }
-
-        .filter-container {
+        /* 1. Typography & Brand Colors */
+        .text-blue   { color: #013267; } .dark .text-blue   { color: #60a5fa; }
+        .text-red    { color: #991b1b; } .dark .text-red    { color: #f87171; }
+        .text-green  { color: #15803d; } .dark .text-green  { color: #4ade80; }
+        .text-orange { color: #c2410c; } .dark .text-orange { color: #fb923c; }
+        .text-yellow { color: #ca8a04; } .dark .text-yellow { color: #facc15; }
+    
+        /* 2. Layout & Container Groups */
+        .widget-card, .filter-container, .table-card {
             background: white; 
             padding: 20px; 
             border-radius: 10px; 
@@ -14,35 +16,64 @@
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             margin-bottom: 25px;
         }
-        .filter-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #666;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
+    
+        /* Remove top radius and margin to stick to header above */
+        .table-card {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
         }
+    
+        .widget-label, .filter-label {
+            font-size: 11px; font-weight: bold; color: #666;
+            text-transform: uppercase; margin-bottom: 10px; display: block;
+        }
+    
         .filter-btn {
-            padding: 6px 12px;
+            padding: 6px 12px; font-size: 12px; border-radius: 6px;
+            font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid #e5e7eb;
+        }
+        .active-btn { background-color: #fe800d; color: white; border-color: #fe800d; }
+        .inactive-btn { background-color: #f9fafb; color: #374151; }
+    
+        /* 3. Alerts & Featured Card (Standalone items) */
+        .alert-danger, .alert-warning, .alert-low, .alert-success, .featured-card {
+            padding: 15px; border-radius: 10px; margin-bottom: 25px;
+        }
+        .featured-card { font-size: 12px; }
+    
+        /* 4. Table Headers (Stuck to table) */
+        .table-header-danger, .table-header-warning, .table-header-low {
+            padding: 12px 15px;
+            margin-bottom: 0;
+            border-radius: 10px 10px 0 0;
+            border-bottom: none;
             font-size: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: 1px solid #e5e7eb;
+            font-weight: bold;
         }
-        .active-btn {
-            background-color: #fe800d;
-            color: white;
-            border-color: #fe800d;
+    
+        /* Shared Color Mapping */
+        .alert-danger,  .table-header-danger  { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+        .alert-warning, .table-header-warning { background: #fff7ed; border: 1px solid #fdba74; color: #c2410c; }
+        .alert-low,     .table-header-low     { background: #fefce8; border: 1px solid #facc15; color: #ca8a04; }
+        .alert-success, .featured-card        { background: #f0fdf4; border: 1px solid #86efac; color: #1a2e1a; }
+    
+        /* 5. DARK MODE (Consolidated) */
+        .dark .widget-card, .dark .filter-container, .dark .table-card { background: #121212 !important; border-color: #333 !important; color: #ffffff; }
+        .dark .widget-label, .dark .filter-label, .dark h2, .dark h3 { color: #ffffff !important; }
+    
+        .dark .inactive-btn, .dark .year-dropdown-btn, .dark .reset-btn, .dark table thead tr {
+            background-color: #1f2937 !important; color: #ffffff !important; border-color: #374151 !important;
         }
-        .inactive-btn {
-            background-color: #f9fafb;
-            color: #374151;
-        }
-        .inactive-btn:hover {
-            background-color: #f3f4f6;
-        }
+        
+        .dark table tbody tr { color: #d1d5db !important; }
+        .dark thead, .dark tr, .dark th, .dark td { border-color: #333 !important; }
+        .dark thead th { color: white !important; background-color: #1f2937 !important; }
+    
+        /* Dark Status Colors */
+        .dark .alert-danger,  .dark .table-header-danger  { background: #3b1e1e !important; border-color: #991b1b !important; color: #fee2e2 !important; }
+        .dark .alert-warning, .dark .table-header-warning { background: #3b2318 !important; border-color: #9a3412 !important; color: #ffedd5 !important; }
+        .dark .alert-low,     .dark .table-header-low     { background: #3b3518 !important; border-color: #854d0e !important; color: #fef9c3 !important; }
+        .dark .alert-success, .dark .featured-card        { background: #064e3b !important; border-color: #10b981 !important; color: #ecfdf5 !important; }
     </style>
 
     @php
@@ -75,7 +106,7 @@
                     <span class="filter-label">Year</span>
                     <x-filament::dropdown placement="bottom-start">
                         <x-slot name="trigger">
-                            <button type="button" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
+                            <button type="button" class="year-dropdown-btn" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
                                 {{ $currentYear }}
                                 <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
                             </button>
@@ -93,8 +124,8 @@
                     </x-filament::dropdown>
                 </div>
 
-                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" 
-                style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
+                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" class="reset-btn"
+                style="height: 36px; padding: 0 12px; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
                 onmouseover="this.style.background='#e5e7eb'" 
                 onmouseout="this.style.background='#f3f4f6'">
                     <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
@@ -108,26 +139,26 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Reservation Status Summary</h2>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Completed Reservations</div>
+            <div class="widget-card">
+                <div class="widget-label">Completed Reservations</div>
                 <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalCompleted }}</div>
                 <div style="color: #666; font-size: 11px;">Successfully returned</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Approved Reservations</div>
+            <div class="widget-card">
+                <div class="widget-label">Approved Reservations</div>
                 <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalApproved }}</div>
                 <div style="color: #666; font-size: 11px;">Active reservations</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Pending Reservations</div>
+            <div class="widget-card">
+                <div class="widget-label">Pending Reservations</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalPending }}</div>
                 <div style="color: #666; font-size: 11px;">Awaiting action</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Rejected Reservations</div>
+            <div class="widget-card">
+                <div class="widget-label">Rejected Reservations</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalRejected }}</div>
                 <div style="color: #666; font-size: 11px;">Cancelled requests</div>
             </div>
@@ -136,33 +167,33 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Equipment Inventory Overview</h2>
         
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Total Equipment</div>
+            <div class="widget-card">
+                <div class="widget-label">Total Equipment</div>
                 <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalEquipment }}</div>
                 <div style="color: #666; font-size: 11px;">Total units</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Available Equipment</div>
+            <div class="widget-card">
+                <div class="widget-label">Available Equipment</div>
                 <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalAvailable }}</div>
                 <div style="color: #666; font-size: 11px;">Ready for use</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Reserved Equipment</div>
+            <div class="widget-card">
+                <div class="widget-label">Reserved Equipment</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalReserved }}</div>
                 <div style="color: #666; font-size: 11px;">Currently borrowed</div>
             </div>
 
-            <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 8px;">Unavailable Equipment</div>
+            <div class="widget-card">
+                <div class="widget-label">Unavailable Equipment</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalUnavailable }}</div>
                 <div style="color: #666; font-size: 11px;">Out of service</div>
             </div>
         </div>
 
         @if($mostBorrowed && $mostBorrowed->borrow_count > 0)
-            <div style="padding: 15px; border-radius: 10px; background-color: #f0fdf4; border: 1px solid #86efac; font-size: 12px; margin-bottom: 25px;">
+            <div class="featured-card">
                 <h4 class="text-green" style="font-weight: bold; margin-bottom: 5px;">Most Frequently Borrowed</h4>
                 <div>
                     The <strong>{{ $mostBorrowed->equipment_name }}</strong> is your most requested equipment 
@@ -172,8 +203,8 @@
         @endif
 
         <h3 style="font-size: 16px; font-weight: bold; margin-bottom: 15px;">Equipment Details</h3>
-        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+            <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 12px 15px; text-align: left; color: #374151;">Equipment</th>
@@ -204,29 +235,29 @@
         <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 15px;">Equipment Stock Alerts</h3>
         
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
-            <div style="background: #fef2f2; padding: 15px; border-radius: 10px; border: 1px solid #fca5a5;">
-                <div style="font-size: 12px; font-weight: bold; color: #991b1b; margin-bottom: 8px;">Out of Stock</div>
+            <div class="alert-danger">
+                <div class="text-red" style="font-size: 12px; font-weight: bold; margin-bottom: 8px;">Out of Stock</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $outOfStock->count() }}</div>
-                <div style="color: #666; font-size: 11px;">Immediate attention required</div>
+                <div class="text-red" style="font-size: 11px;">Immediate attention required</div>
             </div>
-            <div style="background: #fff7ed; padding: 15px; border-radius: 10px; border: 1px solid #fdba74;">
-                <div style="font-size: 12px; font-weight: bold; color: #9a3412; margin-bottom: 8px;">Critical Stock</div>
+            <div class="alert-warning">
+                <div class="text-orange" style="font-size: 12px; font-weight: bold; margin-bottom: 8px;">Critical Stock</div>
                 <div class="text-orange" style="font-size: 20px; font-weight: bold;">{{ $criticalStock->count() }}</div>
-                <div style="color: #666; font-size: 11px;">below 25% available</div>
+                <div class="text-orange" style="font-size: 11px;">below 25% available</div>
             </div>
-            <div style="background: #fefce8; padding: 15px; border-radius: 10px; border: 1px solid #facc15;">
-                <div style="font-size: 12px; font-weight: bold; color: #854d0e; margin-bottom: 8px;">Low Stock</div>
+            <div class="alert-low">
+                <div class="text-yellow" style="font-size: 12px; font-weight: bold; margin-bottom: 8px;">Low Stock</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $lowStock->count() }}</div>
-                <div style="color: #666; font-size: 11px;">26-50% available</div>
+                <div class="text-yellow" style="font-size: 11px;">26-50% available</div>
             </div>
         </div>
 
         @if($outOfStock->count() > 0)
-            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-                <div style="background: #fef2f2; padding: 10px 15px; border-bottom: 1px solid #fee2e2;">
+            <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+                <div class="table-header-danger">
                     <h3 class="text-red" style="font-size: 13px; font-weight: bold;">Out of Stock Equipment</h3>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                     <thead>
                         <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                             <th style="padding: 10px 15px; text-align: left; color: #374151;">Equipment</th>
@@ -250,11 +281,11 @@
         @endif
 
         @if($criticalStock->count() > 0)
-            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-                <div style="background: #fff7ed; padding: 10px 15px; border-bottom: 1px solid #ffedd5;">
+            <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+                <div class="table-header-warning">
                     <h3 class="text-orange" style="font-size: 13px; font-weight: bold;">Critical Stock (below 25%)</h3>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                     <thead>
                         <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                             <th style="padding: 10px 15px; text-align: left; color: #374151;">Equipment</th>
@@ -286,11 +317,11 @@
         @endif
 
         @if($lowStock->count() > 0)
-            <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-                <div style="background: #fefce8; padding: 10px 15px; border-bottom: 1px solid #fef3c7;">
+            <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+                <div class="table-header-low">
                     <h3 class="text-yellow" style="font-size: 13px; font-weight: bold;">Low Stock (26-50%)</h3>
                 </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                     <thead>
                         <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                             <th style="padding: 10px 15px; text-align: left; color: #374151;">Equipment</th>
@@ -322,7 +353,7 @@
         @endif
 
         @if($outOfStock->count() === 0 && $criticalStock->count() === 0 && $lowStock->count() === 0)
-            <div style="padding: 20px; text-align: center; background-color: #f0fdf4; border: 1px solid #dcfce7; color: #15803d; border-radius: 10px; font-weight: bold; font-size: 12px;">
+            <div class="alert-success" style="padding: 20px; text-align: center; color: #15803d; border-radius: 10px; font-weight: bold; font-size: 12px;">
                 All equipment stock levels are healthy.
             </div>
         @endif

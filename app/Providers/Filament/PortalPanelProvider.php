@@ -65,8 +65,8 @@ class PortalPanelProvider extends PanelProvider
 
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::Light)
-            ->brandLogo(fn () => view('logo-dark'))
-            ->darkModeBrandLogo(fn () => view('logo-white'))
+            ->brandLogo(fn () => view('logo-lightmode'))
+            ->darkModeBrandLogo(fn () => view('logo-darkmode'))
             ->favicon(asset('assets/favicon/favicon.ico'))
 
             ->colors([
