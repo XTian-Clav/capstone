@@ -1,12 +1,12 @@
 <x-filament-panels::page>
     <style>
-        .text-blue { color: #013267; }
-        .text-red { color: #991b1b; }
-        .text-green { color: #15803d; }
-        .text-orange { color: #c2410c; }
-        .text-yellow { color: #ca8a04; }
+        .text-blue   { color: #013267; } .dark .text-blue   { color: #60a5fa; }
+        .text-red    { color: #991b1b; } .dark .text-red    { color: #f87171; }
+        .text-green  { color: #15803d; } .dark .text-green  { color: #4ade80; }
+        .text-orange { color: #c2410c; } .dark .text-orange { color: #fb923c; }
+        .text-yellow { color: #ca8a04; } .dark .text-yellow { color: #facc15; }
 
-        .filter-container {
+        .widget-card, .filter-container, .table-card {
             background: white; 
             padding: 20px; 
             border-radius: 10px; 
@@ -14,34 +14,90 @@
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             margin-bottom: 25px;
         }
-        .filter-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #555;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
+
+        .table-card {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
         }
+    
+        .widget-label, .filter-label {
+            font-size: 11px; font-weight: bold; color: #555;
+            text-transform: uppercase; margin-bottom: 10px; display: block;
+        }
+    
         .filter-btn {
-            padding: 6px 12px;
+            padding: 6px 12px; font-size: 12px; border-radius: 6px;
+            font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid #e5e7eb;
+        }
+        .active-btn { background-color: #fe800d; color: white; border-color: #fe800d; }
+        .inactive-btn { background-color: #f9fafb; color: #27272a; }
+
+        .alert-danger, .alert-warning, .alert-low, .alert-success, .featured-card {
+            padding: 15px; border-radius: 10px; margin-bottom: 25px;
+        }
+        .featured-card { font-size: 12px; }
+
+        .table-header-danger, .table-header-warning, .table-header-low, .table-header-success {
+            padding: 12px 15px;
+            margin-bottom: 0;
+            border-radius: 10px 10px 0 0;
+            border-bottom: none;
             font-size: 12px;
-            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .alert-danger,  .table-header-danger  { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+        .alert-warning, .table-header-warning { background: #fff7ed; border: 1px solid #fdba74; color: #c2410c; }
+        .alert-low,     .table-header-low     { background: #fefce8; border: 1px solid #facc15; color: #ca8a04; }
+        .alert-success, .table-header-success, .featured-card   { background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
+
+        .badge-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: 1px solid #e5e7eb;
+            text-transform: uppercase;
+            line-height: 1;
+            border: 1px solid transparent;
         }
-        .active-btn {
-            background-color: #fe800d;
-            color: white;
-            border-color: #fe800d;
+
+        .badge-equipment {
+            background-color: #e0f2fe;
+            color: #0369a1;
         }
-        .inactive-btn {
-            background-color: #f9fafb;
-            color: #374151;
+
+        .badge-supply {
+            background-color: #fef3c7;
+            color: #92400e;
         }
-        .inactive-btn:hover {
-            background-color: #f3f4f6;
+
+        .dark .widget-card, .dark .filter-container, .dark .table-card { background: #18181b !important; border-color: #333 !important; color: #ffffff; }
+        .dark .widget-label, .dark .filter-label, .dark h2, .dark h3 { color: #ffffff !important; }
+    
+        .dark .inactive-btn, .dark .year-dropdown-btn, .dark .reset-btn, .dark table thead tr {
+            background-color: #27272a !important; color: #ffffff !important; border-color: #27272a !important;
+        }
+        
+        .dark table tbody tr { color: #d1d5db !important; }
+        .dark thead, .dark tr, .dark th, .dark td { border-color: #333 !important; }
+        .dark thead th { color: white !important; background-color: #27272a !important; }
+        
+        .dark .alert-danger,  .dark .table-header-danger  { background: #3b1e1e !important; border-color: #991b1b !important; color: #fee2e2 !important; }
+        .dark .alert-warning, .dark .table-header-warning { background: #3b2318 !important; border-color: #9a3412 !important; color: #ffedd5 !important; }
+        .dark .alert-low,     .dark .table-header-low     { background: #3b3518 !important; border-color: #854d0e !important; color: #fef9c3 !important; }
+        .dark .alert-success, .dark .table-header-success, .dark .featured-card { background: #064e3b !important; border-color: #10b981 !important; color: #ecfdf5 !important; }
+
+        .dark .badge-equipment {
+            background-color: #0369a1;
+            color: #e0f2fe;
+        }
+
+        .dark .badge-supply {
+            background-color: #92400e;
+            color: #fef3c7;
         }
     </style>
 
@@ -105,7 +161,7 @@
                     <span class="filter-label">Year</span>
                     <x-filament::dropdown placement="bottom-start">
                         <x-slot name="trigger">
-                            <button type="button" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
+                            <button type="button" class="year-dropdown-btn" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
                                 {{ $currentYear }}
                                 <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
                             </button>
@@ -123,7 +179,7 @@
                     </x-filament::dropdown>
                 </div>
 
-                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" 
+                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" class="reset-btn"
                 style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
                 onmouseover="this.style.background='#e5e7eb'" 
                 onmouseout="this.style.background='#f3f4f6'">
@@ -138,11 +194,11 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Returned Equipment and Supplies</h2>
 
         {{-- RETURNED EQUIPMENT --}}
-        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-            <div style="background: #f0fdf4; padding: 10px 15px; border-bottom: 1px solid #dcfce7;">
+        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+            <div class="table-header-success">
                 <h3 class="text-green" style="font-size: 13px; font-weight: bold;">Returned Equipment (Completed)</h3>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
@@ -167,11 +223,11 @@
         </div>
 
         {{-- RETURNED SUPPLIES --}}
-        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-            <div style="background: #f0fdf4; padding: 10px 15px; border-bottom: 1px solid #dcfce7;">
+        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+            <div class="table-header-success">
                 <h3 class="text-green" style="font-size: 13px; font-weight: bold;">Replaced Supplies (Completed)</h3>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
@@ -198,11 +254,11 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Borrowed Equipment and Supplies</h2>
 
         {{-- CURRENTLY BORROWED --}}
-        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 25px;">
-            <div style="background: #fff7ed; padding: 10px 15px; border-bottom: 1px solid #ffedd5;">
+        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+            <div class="table-header-warning">
                 <h3 class="text-orange" style="font-size: 13px; font-weight: bold;">Currently Borrowed Items</h3>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
@@ -234,11 +290,11 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Overdue Equipment and Supplies</h2>
 
         {{-- OVERDUE --}}
-        <div style="background: white; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 40px;">
-            <div style="background: #fef2f2; padding: 10px 15px; border-bottom: 1px solid #fee2e2;">
+        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 40px;">
+            <div class="table-header-danger">
                 <h3 class="text-red" style="font-size: 13px; font-weight: bold;">Overdue Items</h3>
             </div>
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+            <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
@@ -255,9 +311,9 @@
                         @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->borrower }}</td>
-                            <td style="padding: 10px 15px;">
+                            <td style="padding: 10px 15px; vertical-align: middle;">
                                 <div style="font-weight: 500; margin-bottom: 4px;">{{ $item->item }}</div>
-                                <span style="background: {{ $item->type === 'Equipment' ? '#e0f2fe' : '#fef3c7' }}; color: {{ $item->type === 'Equipment' ? '#0369a1' : '#92400e' }}; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase;">
+                                <span class="badge-item {{ $item->type === 'Equipment' ? 'badge-equipment' : 'badge-supply' }}">
                                     {{ $item->type }}
                                 </span>
                             </td>
