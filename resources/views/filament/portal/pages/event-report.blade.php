@@ -177,7 +177,7 @@
         @if($topEvent)
             <div class="featured-card">
                 <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
-                    <div style="grid-column: span 2; margin-bottom: 12px;">
+                    <div style="grid-column: span 2;">
                         <h3 class="text-green" style="font-weight: bold; font-size: 14px; text-transform: uppercase; margin: 0;">
                             Top Attended Event: {{ $monthLabel }} {{ $currentYear }}
                         </h3>
