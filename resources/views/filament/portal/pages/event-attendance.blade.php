@@ -1,9 +1,28 @@
 <x-filament-panels::page>
     <style>
-        .attendee-table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb; }
+        /* Default Light Mode Styles */
+        .table-container { background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
+        .attendee-table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; }
         .attendee-table th { background: #f9fafb; padding: 12px 24px; text-align: left; font-size: 12px; font-weight: 800; color: #6b7280; text-transform: uppercase; border-bottom: 1px solid #e5e7eb; }
         .attendee-table td { padding: 16px 24px; border-bottom: 1px solid #f3f4f6; color: #111827; }
-        .table-container { background: white; border-radius: 12px; border: 1px solid #e5e7eb; overflow: hidden; }
+    
+        /* Dark Mode - Broadened Selectors */
+        :where(.dark) .table-container,
+        :where(.dark) .attendee-table { 
+            background-color: #18181b !important; 
+            border-color: #3f3f46 !important; 
+        }
+    
+        :where(.dark) .attendee-table th { 
+            background-color: #27272a !important; 
+            color: #a1a1aa !important; 
+            border-bottom-color: #3f3f46 !important; 
+        }
+    
+        :where(.dark) .attendee-table td { 
+            color: #f4f4f5 !important; 
+            border-bottom-color: #27272a !important; 
+        }
     </style>
 
     {{-- Search Bar --}}

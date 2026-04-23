@@ -64,7 +64,7 @@ class EventAttendance extends Page implements HasForms, HasActions
     {
         return [
             TextInput::make('search')
-                ->label('')
+                ->label('Search Name')
                 ->placeholder('Search attendees...')
                 ->live()
                 ->afterStateUpdated(fn () => $this->loadAttendees()),

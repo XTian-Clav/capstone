@@ -1,104 +1,36 @@
 <x-filament-panels::page>
     <style>
-        .filter-container {
-            background: white; 
-            padding: 20px; 
-            border-radius: 10px; 
-            border: 1px solid #e5e7eb; 
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            margin-bottom: 25px;
-        }
-        .filter-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #666;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .filter-btn {
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: 1px solid #e5e7eb;
-        }
-        .active-btn {
-            background-color: #fe800d;
-            color: white;
-            border-color: #fe800d;
-        }
-        .inactive-btn {
-            background-color: #f9fafb;
-            color: #374151;
-        }
-        .inactive-btn:hover {
-            background-color: #f3f4f6;
-        }
-
-        .calendar-grid {
-            display: grid;
-            width: 100%;
-            background: #e5e7eb;
-            gap: 1px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            overflow: hidden;
-            grid-template-columns: repeat(1, 1fr);
-        }
-
-        @media (min-width: 1024px) {
-            .calendar-grid { grid-template-columns: repeat(7, 1fr); }
-        }
-
-        .calendar-cell {
-            background: white;
-            min-height: 120px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .day-off { background-color: #f9fafb; color: #d1d5db; }
+        .filter-container { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 25px; }
+        .filter-label { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .filter-btn { padding: 6px 12px; font-size: 12px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid #e5e7eb; }
+        .active-btn { background-color: #fe800d; color: white; border-color: #fe800d; }
+        .inactive-btn { background-color: #f9fafb; color: #374151; }
+        .inactive-btn:hover { background-color: #f3f4f6; }
         
-        .today-mark {
-            background: #fe800d; color: white; padding: 2px 6px;
-            border-radius: 4px; font-size: 12px;
-        }
+        .calendar-grid { display: grid; width: 100%; background: #e5e7eb; gap: 1px; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; grid-template-columns: repeat(1, 1fr); }
+        @media (min-width: 1024px) { .calendar-grid { grid-template-columns: repeat(7, 1fr); } }
+        .calendar-cell { background: white; min-height: 120px; padding: 10px; display: flex; flex-direction: column; }
+        .day-off { background-color: #f9fafb; color: #d1d5db; }
+        .today-mark { background: #fe800d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+        
+        .res-badge { font-size: 10px; background: #f0f7ff; border-left: 3px solid #013267; padding: 4px; margin-top: 4px; border-radius: 2px; color: #013267; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s ease; cursor: pointer; position: relative; z-index: 1; }
+        .res-badge:hover { background-color: #ffffff !important; border-left-color: #fe800d !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: translateY(-2px); white-space: normal !important; z-index: 50 !important; height: auto !important; }
 
-        .res-badge {
-            font-size: 10px; 
-            background: #f0f7ff; 
-            border-left: 3px solid #013267; 
-            padding: 4px; 
-            margin-top: 4px; 
-            border-radius: 2px; 
-            color: #013267;
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-        }
+        .dark .filter-container { background: #18181b !important; border-color: #333 !important; }
+        .dark .filter-label, .dark h2 { color: #ffffff !important; }
+        
+        .dark .inactive-btn { background-color: #27272a !important; color: #ffffff !important; border-color: #333 !important; }
+        .dark .inactive-btn:hover { background-color: #3f3f46 !important; }
+        
+        .dark .calendar-grid { background: #333 !important; border-color: #333 !important; }
+        .dark .calendar-cell { background: #18181b !important; color: #ffffff !important; }
+        .dark .day-off { background-color: #202023 !important; color: #4b5563 !important; }
+        
+        .dark .reset-btn { background: #27272a !important; border-color: #333 !important; color: #ffffff !important; }
+        .dark .reset-btn:hover { background: #3f3f46 !important; }
 
-        .res-badge:hover {
-            background-color: #ffffff !important;
-            border-left-color: #fe800d !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-            white-space: normal !important; 
-            z-index: 50 !important;
-            height: auto !important; /* Allows badge to grow to show the name */
-        }
-
-        /* This is the magic part: */
-        .res-badge:hover .user-details {
-            display: block !important;
-        }
+        .dark .res-badge { background: #1e293b !important; color: #60a5fa !important; border-left-color: #60a5fa !important; }
+        .dark .res-badge:hover { background: #2d3748 !important; border-left-color: #fe800d !important; color: #ffffff !important; }
     </style>
 
     <div class="filter-container">
@@ -116,7 +48,7 @@
             </div>
 
             <div style="display: flex; align-items: flex-end;">
-                <a href="{{ request()->url() }}?month={{ now()->month }}" 
+                <a href="{{ request()->url() }}?month={{ now()->month }}"  class="reset-btn"
                    style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
                    onmouseover="this.style.background='#e5e7eb'" 
                    onmouseout="this.style.background='#f3f4f6'">
@@ -135,7 +67,6 @@
 
     <div class="calendar-grid">
         @foreach($calendarGrid as $day)
-            {{-- Reduced min-height to 90px to fix the 'too much spacing' issue --}}
             <div @class(['calendar-cell', 'day-off' => !$day['isCurrentMonth']]) style="min-height: 90px;">
                 <div style="margin-bottom: 5px;">
                     <span class="{{ $day['isToday'] ? 'today-mark' : 'font-bold' }}">
@@ -149,7 +80,7 @@
                             <strong style="display: block;">{{ $res['room_type'] }}</strong>
                             <span style="font-size: 10px;">{{ $res['time'] }}</span>
                             
-                            <div class="user-details" style="display: none; font-size: 10px; margin-top: 2px; text-transform: uppercase;">
+                            <div style="font-size: 10px; margin-top: 2px; text-transform: uppercase;">
                                 Reserved by: {{ $res['user_name'] }}
                             </div>
                         </div>

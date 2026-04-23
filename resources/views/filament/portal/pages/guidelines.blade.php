@@ -19,7 +19,7 @@
 
         /* Dark Mode: Strict Black & White */
         .dark .guidelines-card {
-            background: #121212;
+            background: #18181b;
             border-color: #374151;
             color: #ffffff;
         }
