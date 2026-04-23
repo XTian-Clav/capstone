@@ -17,7 +17,7 @@
         .filter-label {
             font-size: 11px;
             font-weight: bold;
-            color: #666;
+            color: #555;
             text-transform: uppercase;
             margin-bottom: 10px;
             display: block;
@@ -160,7 +160,7 @@
                             <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #666;">No items returned yet.</td></tr>
+                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No items returned yet.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -189,7 +189,7 @@
                             <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #666;">No supplies replaced yet.</td></tr>
+                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No supplies replaced yet.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -225,7 +225,7 @@
                             <td class="text-orange" style="padding: 10px 15px; font-weight: 600;">{{ $item->date->format('M d, Y') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #666;">No active borrowed items.</td></tr>
+                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No active borrowed items.</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -268,7 +268,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" style="padding: 20px; text-align: center; color: #666;">No overdue items.</td></tr>
+                        <tr><td colspan="5" style="padding: 20px; text-align: center; color: #555;">No overdue items.</td></tr>
                     @endforelse
                 </tbody>
             </table>

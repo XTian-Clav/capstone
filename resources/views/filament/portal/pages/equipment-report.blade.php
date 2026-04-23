@@ -21,7 +21,7 @@
         }
     
         .widget-label, .filter-label {
-            font-size: 11px; font-weight: bold; color: #666;
+            font-size: 11px; font-weight: bold; color: #555;
             text-transform: uppercase; margin-bottom: 10px; display: block;
         }
     
@@ -49,7 +49,7 @@
         .alert-danger,  .table-header-danger  { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
         .alert-warning, .table-header-warning { background: #fff7ed; border: 1px solid #fdba74; color: #c2410c; }
         .alert-low,     .table-header-low     { background: #fefce8; border: 1px solid #facc15; color: #ca8a04; }
-        .alert-success, .featured-card        { background: #f0fdf4; border: 1px solid #86efac; color: #1a2e1a; }
+        .alert-success, .featured-card        { background: #f0fdf4; border: 1px solid #86efac; color: #15803d; }
 
         .dark .widget-card, .dark .filter-container, .dark .table-card { background: #18181b !important; border-color: #333 !important; color: #ffffff; }
         .dark .widget-label, .dark .filter-label, .dark h2, .dark h3 { color: #ffffff !important; }
@@ -134,25 +134,25 @@
             <div class="widget-card">
                 <div class="widget-label">Completed Reservations</div>
                 <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalCompleted }}</div>
-                <div style="color: #666; font-size: 11px;">Successfully returned</div>
+                <div style="color: #555; font-size: 11px;">Successfully returned</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Approved Reservations</div>
                 <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalApproved }}</div>
-                <div style="color: #666; font-size: 11px;">Active reservations</div>
+                <div style="color: #555; font-size: 11px;">Active reservations</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Pending Reservations</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalPending }}</div>
-                <div style="color: #666; font-size: 11px;">Awaiting action</div>
+                <div style="color: #555; font-size: 11px;">Awaiting action</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Rejected Reservations</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalRejected }}</div>
-                <div style="color: #666; font-size: 11px;">Cancelled requests</div>
+                <div style="color: #555; font-size: 11px;">Cancelled requests</div>
             </div>
         </div>
         
@@ -162,25 +162,25 @@
             <div class="widget-card">
                 <div class="widget-label">Total Equipment</div>
                 <div class="text-blue" style="font-size: 20px; font-weight: bold;">{{ $totalEquipment }}</div>
-                <div style="color: #666; font-size: 11px;">Total units</div>
+                <div style="color: #555; font-size: 11px;">Total units</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Available Equipment</div>
                 <div class="text-green" style="font-size: 20px; font-weight: bold;">{{ $totalAvailable }}</div>
-                <div style="color: #666; font-size: 11px;">Ready for use</div>
+                <div style="color: #555; font-size: 11px;">Ready for use</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Reserved Equipment</div>
                 <div class="text-yellow" style="font-size: 20px; font-weight: bold;">{{ $totalReserved }}</div>
-                <div style="color: #666; font-size: 11px;">Currently borrowed</div>
+                <div style="color: #555; font-size: 11px;">Currently borrowed</div>
             </div>
 
             <div class="widget-card">
                 <div class="widget-label">Unavailable Equipment</div>
                 <div class="text-red" style="font-size: 20px; font-weight: bold;">{{ $totalUnavailable }}</div>
-                <div style="color: #666; font-size: 11px;">Out of service</div>
+                <div style="color: #555; font-size: 11px;">Out of service</div>
             </div>
         </div>
 

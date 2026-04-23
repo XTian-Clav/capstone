@@ -1,7 +1,7 @@
 <x-filament-panels::page>
     <style>
         .filter-container { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); margin-bottom: 25px; }
-        .filter-label { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .filter-label { font-size: 11px; font-weight: bold; color: #555; text-transform: uppercase; margin-bottom: 10px; display: block; }
         .filter-btn { padding: 6px 12px; font-size: 12px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid #e5e7eb; }
         .active-btn { background-color: #fe800d; color: white; border-color: #fe800d; }
         .inactive-btn { background-color: #f9fafb; color: #374151; }
