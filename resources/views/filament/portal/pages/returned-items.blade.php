@@ -290,7 +290,7 @@
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Overdue Equipment and Supplies</h2>
 
         {{-- OVERDUE --}}
-        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 40px;">
+        <div style="border-radius: 10px; overflow: hidden;">
             <div class="table-header-danger">
                 <h3 class="text-red" style="font-size: 13px; font-weight: bold;">Overdue Items</h3>
             </div>
@@ -329,5 +329,10 @@
                 </tbody>
             </table>
         </div>
+        @if ($this->getFooterActions())
+            <div class="flex justify-end gap-3 mt-6">
+                <x-filament::actions :actions="$this->getFooterActions()" />
+            </div>
+        @endif
     </div>
 </x-filament-panels::page>

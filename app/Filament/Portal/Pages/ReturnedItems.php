@@ -32,9 +32,15 @@ class ReturnedItems extends Page
             Action::make('print_report')
                 ->label('Print Returned Items')
                 ->icon('heroicon-s-printer')
-                ->color('info')
+                ->color('primary')
                 ->url(route('ReturnedItems', request()->only(['month', 'year'])))
                 ->openUrlInNewTab(),
+        ];
+    }
+
+    protected function getFooterActions(): array
+    {
+        return [
             Action::make('print_overdue_report')
                 ->label('Print Overdue Items')
                 ->icon('heroicon-s-printer')

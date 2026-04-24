@@ -30,7 +30,7 @@ class EventReport extends Page
             Action::make('print_report')
                 ->label('Print')
                 ->icon('heroicon-s-printer')
-                ->color('info')
+                ->color('primary')
                 ->url(route('EventReport', request()->only(['month', 'year'])))
                 ->openUrlInNewTab(),
         ];

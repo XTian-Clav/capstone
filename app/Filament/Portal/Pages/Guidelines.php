@@ -18,7 +18,7 @@ class Guidelines extends Page
     {
         return [
             Action::make('print_report')
-                ->color('info')
+                ->color('primary')
                 ->label('Print')
                 ->icon('heroicon-s-printer')
                 ->url(route('PrintGuidelines'))

@@ -31,7 +31,7 @@ class RoomReport extends Page
             Action::make('print_report')
                 ->label('Print')
                 ->icon('heroicon-s-printer')
-                ->color('info')
+                ->color('primary')
                 ->url(route('RoomReport', request()->only(['month', 'year'])))
                 ->openUrlInNewTab(),
         ];
