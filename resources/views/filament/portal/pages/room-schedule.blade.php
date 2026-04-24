@@ -14,7 +14,6 @@
         .today-mark { background: #fe800d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         
         .res-badge { font-size: 10px; background: #f0f7ff; border-left: 3px solid #013267; padding: 4px; margin-top: 4px; border-radius: 2px; color: #013267; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s ease; cursor: pointer; position: relative; z-index: 1; }
-        .res-badge:hover { background-color: #ffffff !important; border-left-color: #fe800d !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: translateY(-2px); white-space: normal !important; z-index: 50 !important; height: auto !important; }
 
         .dark .filter-container { background: #18181b !important; border-color: #333 !important; }
         .dark .filter-label, .dark h2 { color: #ffffff !important; }
@@ -30,7 +29,6 @@
         .dark .reset-btn:hover { background: #3f3f46 !important; }
 
         .dark .res-badge { background: #1e293b !important; color: #60a5fa !important; border-left-color: #60a5fa !important; }
-        .dark .res-badge:hover { background: #2d3748 !important; border-left-color: #fe800d !important; color: #ffffff !important; }
     </style>
 
     <div class="filter-container">

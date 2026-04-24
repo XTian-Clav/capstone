@@ -16,7 +16,6 @@ use Filament\Enums\UserMenuPosition;
 use App\Filament\Portal\Widgets\Events;
 use Awcodes\LightSwitch\Enums\Alignment;
 use Filament\Navigation\NavigationGroup;
-use Openplain\FilamentShadcnTheme\Color;
 use App\Filament\Portal\Pages\Guidelines;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -62,18 +61,15 @@ class PortalPanelProvider extends PanelProvider
             ->profile(EditProfile::class, isSimple: false)
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
+            
+            ->spa()
+            ->unsavedChangesAlerts()
 
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::Light)
             ->brandLogo(fn () => view('logo-lightmode'))
             ->darkModeBrandLogo(fn () => view('logo-darkmode'))
             ->favicon(asset('assets/favicon/favicon.ico'))
-
-            ->colors([
-                'primary' => Color::Default,
-            ])
-
-            ->viteTheme('resources/css/filament/portal/theme.css')
             
             ->userMenuItems([
                 'profile' => fn (Action $action) => $action->label('Edit profile'),
@@ -133,6 +129,8 @@ class PortalPanelProvider extends PanelProvider
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(false),
             ])
+
+            ->viteTheme('resources/css/filament/portal/theme.css')
 
             ->resourceCreatePageRedirect('index')
             ->resourceEditPageRedirect('index')

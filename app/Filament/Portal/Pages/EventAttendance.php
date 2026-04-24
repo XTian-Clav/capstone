@@ -23,6 +23,16 @@ class EventAttendance extends Page implements HasForms, HasActions
     protected string $view = 'filament.portal.pages.event-attendance';
     protected static ?string $slug = 'event-attendance';
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+    
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
+
     public function getTitle(): string 
     {
         return "Attendance: " . ($this->event->event ?? 'Event');
@@ -36,8 +46,6 @@ class EventAttendance extends Page implements HasForms, HasActions
     public $event;
     public $search = '';
     public $attendees = [];
-
-    public static function shouldRegisterNavigation(): bool { return false; }
 
     public function mount(): void
     {

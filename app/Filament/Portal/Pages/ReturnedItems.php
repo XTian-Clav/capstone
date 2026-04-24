@@ -21,6 +21,11 @@ class ReturnedItems extends Page
         return auth()->user()->hasRole('super_admin');
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
+
     protected function getHeaderActions(): array
     {
         return [
