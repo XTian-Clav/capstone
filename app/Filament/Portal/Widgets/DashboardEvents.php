@@ -63,7 +63,7 @@ class DashboardEvents extends TableWidget
                                 ->colors([
                                     'warning' => 'Upcoming',
                                     'success' => 'Ongoing',
-                                    'cyan' => 'Completed',
+                                    'info' => 'Completed',
                                     'danger' => 'Cancelled',
                                 ]),
                         ]),
