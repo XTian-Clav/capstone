@@ -44,16 +44,17 @@ class ReturnedItems extends Page
 
     public function mount(): void
     {
-        if (!request()->query('month') || !request()->query('year')) {
+        if (!request()->query('month') && !request()->query('year')) {
             $this->redirect(request()->fullUrlWithQuery([
                 'month' => now()->month,
                 'year' => now()->year,
             ]));
+
             return;
         }
 
-        $month = request('month');
-        $year = request('year');
+        $month = request('month'); 
+        $year = request('year', now()->year);
 
         $this->availableYears = ReserveEquipment::selectRaw('YEAR(created_at) as year')
             ->union(ReserveSupply::selectRaw('YEAR(created_at) as year'))
@@ -62,18 +63,24 @@ class ReturnedItems extends Page
             ->pluck('year')
             ->toArray() ?: [now()->year];
 
+        // Equipment query with conditional month filter
         $this->returnedEquipment = ReserveEquipment::with('equipment')
             ->where('status', 'Completed')
             ->whereYear('updated_at', $year)
-            ->whereMonth('updated_at', $month)
-            ->orderByDesc('updated_at')
+            ->when($month, function ($query) use ($month) {
+                $query->whereMonth('updated_at', $month);
+            })
+            ->orderBy('updated_at')
             ->get();
 
+        // Supply query with conditional month filter
         $this->returnedSupply = ReserveSupply::with('supply')
             ->where('status', 'Completed')
             ->whereYear('updated_at', $year)
-            ->whereMonth('updated_at', $month)
-            ->orderByDesc('updated_at')
+            ->when($month, function ($query) use ($month) {
+                $query->whereMonth('updated_at', $month);
+            })
+            ->orderBy('updated_at')
             ->get();
     }
 }
