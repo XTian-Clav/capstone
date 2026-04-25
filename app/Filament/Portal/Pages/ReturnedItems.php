@@ -38,81 +38,42 @@ class ReturnedItems extends Page
         ];
     }
 
-    protected function getFooterActions(): array
-    {
-        return [
-            Action::make('print_overdue_report')
-                ->label('Print Overdue Items')
-                ->icon('heroicon-s-printer')
-                ->color('danger')
-                ->url(route('OverdueItems', request()->only(['month', 'year'])))
-                ->openUrlInNewTab(),
-        ];
-    }
-
     public $returnedEquipment = [];
     public $returnedSupply = [];
-    public $borrowedEquipment = [];
-    public $borrowedSupply = [];
-    public $overdueEquipment = [];
-    public $overdueSupply = [];
     public $availableYears = [];
 
     public function mount(): void
     {
-        if (!request()->query('month') && !request()->query('year')) {
+        if (!request()->query('month') || !request()->query('year')) {
             $this->redirect(request()->fullUrlWithQuery([
                 'month' => now()->month,
                 'year' => now()->year,
             ]));
             return;
         }
-    
+
         $month = request('month');
-        $year = request('year', now()->year);
-        $now = Carbon::now();
-    
+        $year = request('year');
+
         $this->availableYears = ReserveEquipment::selectRaw('YEAR(created_at) as year')
             ->union(ReserveSupply::selectRaw('YEAR(created_at) as year'))
             ->distinct()
             ->orderBy('year', 'desc')
             ->pluck('year')
             ->toArray() ?: [now()->year];
-    
-        $allEquipment = ReserveEquipment::with('equipment')
-            ->whereIn('status', ['Completed', 'Approved'])
+
+        $this->returnedEquipment = ReserveEquipment::with('equipment')
+            ->where('status', 'Completed')
+            ->whereYear('updated_at', $year)
+            ->whereMonth('updated_at', $month)
+            ->orderByDesc('updated_at')
             ->get();
-    
-        $this->returnedEquipment = $allEquipment->where('status', 'Completed')
-            ->filter(function ($item) use ($month, $year) {
-                $date = Carbon::parse($item->updated_at);
-                return $date->year == $year && (!$month || $date->month == $month);
-            })->sortByDesc('updated_at');
-    
-        $this->borrowedEquipment = $allEquipment->where('status', 'Approved')
-            ->where('end_date', '>=', $now)
-            ->sortByDesc('end_date');
-    
-        $this->overdueEquipment = $allEquipment->where('status', 'Approved')
-            ->where('end_date', '<', $now)
-            ->sortByDesc('end_date');
-    
-        $allSupplies = ReserveSupply::with('supply')
-            ->whereIn('status', ['Completed', 'Approved'])
+
+        $this->returnedSupply = ReserveSupply::with('supply')
+            ->where('status', 'Completed')
+            ->whereYear('updated_at', $year)
+            ->whereMonth('updated_at', $month)
+            ->orderByDesc('updated_at')
             ->get();
-    
-        $this->returnedSupply = $allSupplies->where('status', 'Completed')
-            ->filter(function ($item) use ($month, $year) {
-                $date = Carbon::parse($item->updated_at);
-                return $date->year == $year && (!$month || $date->month == $month);
-            })->sortByDesc('updated_at');
-    
-        $this->borrowedSupply = $allSupplies->where('status', 'Approved')
-            ->where('end_date', '>=', $now)
-            ->sortByDesc('end_date');
-    
-        $this->overdueSupply = $allSupplies->where('status', 'Approved')
-            ->where('end_date', '<', $now)
-            ->sortByDesc('end_date');
     }
 }

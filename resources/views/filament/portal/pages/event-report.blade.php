@@ -83,16 +83,22 @@
                 <span class="filter-label" style="margin-bottom: 14px;">Month</span>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
                     @foreach(range(1, 12) as $m)
-                        <a href="{{ request()->fullUrlWithQuery(['month' => $m]) }}" 
-                        class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}">
+                        <button 
+                            type="button"
+                            onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => $m]) }}'"
+                            class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}"
+                            style="cursor: pointer;">
                             {{ date('M', mktime(0, 0, 0, $m, 1)) }}
-                        </a>
+                        </button>
                     @endforeach
-
-                    <a href="{{ request()->fullUrlWithQuery(['month' => null]) }}" 
-                    class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}">
+            
+                    <button 
+                        type="button"
+                        onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => null]) }}'"
+                        class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}"
+                        style="cursor: pointer;">
                         All Months
-                    </a>
+                    </button>
                 </div>
             </div>
 
@@ -109,8 +115,8 @@
                         <x-filament::dropdown.list>
                             @foreach($availableYears as $y)
                                 <x-filament::dropdown.list.item 
-                                    tag="a" 
-                                    href="{{ request()->fullUrlWithQuery(['year' => $y]) }}"
+                                    tag="button"
+                                    onclick="window.location.href = '{{ request()->fullUrlWithQuery(['year' => $y]) }}'"
                                     :color="$currentYear == $y ? 'warning' : 'gray'">
                                     {{ $y }}
                                 </x-filament::dropdown.list.item>
@@ -119,13 +125,16 @@
                     </x-filament::dropdown>
                 </div>
 
-                <a href="{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}" class="reset-btn"
-                style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #374151; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s;"
-                onmouseover="this.style.background='#e5e7eb'" 
-                onmouseout="this.style.background='#f3f4f6'">
+                <button 
+                    type="button"
+                    onclick="window.location.href = '{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}'"
+                    class="reset-btn"
+                    style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #27272a; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;"
+                    onmouseover="this.style.background='#e5e7eb'" 
+                    onmouseout="this.style.background='#f3f4f6'">
                     <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
                     Reset
-                </a>
+                </button>
             </div>
         </div>
     </div>

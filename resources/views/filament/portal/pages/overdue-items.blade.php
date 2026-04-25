@@ -104,127 +104,113 @@
     @php
         $currentMonth = request('month');
         $currentYear = request('year', now()->year);
+
+        // Merge Current
+        $mergedCurrent = collect($borrowedEquipment)->map(fn($i) => (object)[
+            'borrower' => $i->reserved_by,
+            'item' => $i->equipment?->equipment_name,
+            'qty' => $i->quantity,
+            'date' => $i->end_date,
+            'type' => 'Equipment'
+        ])->concat(collect($borrowedSupply)->map(fn($i) => (object)[
+            'borrower' => $i->reserved_by,
+            'item' => $i->supply?->item_name,
+            'qty' => $i->quantity,
+            'date' => $i->end_date,
+            'type' => 'Supply'
+        ]))->sortBy('date');
+
+        // Merge Overdue
+        $mergedOverdue = collect($overdueEquipment)->map(fn($i) => (object)[
+            'borrower' => $i->reserved_by,
+            'item' => $i->equipment?->equipment_name,
+            'qty' => $i->quantity,
+            'date' => $i->end_date,
+            'type' => 'Equipment'
+        ])->concat(collect($overdueSupply)->map(fn($i) => (object)[
+            'borrower' => $i->reserved_by,
+            'item' => $i->supply?->item_name,
+            'qty' => $i->quantity,
+            'date' => $i->end_date,
+            'type' => 'Supply'
+        ]))->sortBy('date');
     @endphp
 
-    <div class="filter-container">
-        <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-end;">
-            
-            <div style="flex: 1; min-width: 300px;">
-                <span class="filter-label" style="margin-bottom: 14px;">Month</span>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-                    @foreach(range(1, 12) as $m)
-                        <button 
-                            type="button"
-                            onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => $m]) }}'"
-                            class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}"
-                            style="cursor: pointer;">
-                            {{ date('M', mktime(0, 0, 0, $m, 1)) }}
-                        </button>
-                    @endforeach
-            
-                    <button 
-                        type="button"
-                        onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => null]) }}'"
-                        class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}"
-                        style="cursor: pointer;">
-                        All Months
-                    </button>
-                </div>
-            </div>
-
-            <div style="display: flex; gap: 10px; align-items: flex-end;">
-                <div style="width: 140px;">
-                    <span class="filter-label">Year</span>
-                    <x-filament::dropdown placement="bottom-start">
-                        <x-slot name="trigger">
-                            <button type="button" class="year-dropdown-btn" style="width: 100%; height: 36px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; background: white; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; font-weight: 500; color: #374151;">
-                                {{ $currentYear }}
-                                <x-filament::icon icon="heroicon-m-chevron-down" style="width: 16px; height: 16px; color: #9ca3af;" />
-                            </button>
-                        </x-slot>
-                        <x-filament::dropdown.list>
-                            @foreach($availableYears as $y)
-                                <x-filament::dropdown.list.item 
-                                    tag="button"
-                                    onclick="window.location.href = '{{ request()->fullUrlWithQuery(['year' => $y]) }}'"
-                                    :color="$currentYear == $y ? 'warning' : 'gray'">
-                                    {{ $y }}
-                                </x-filament::dropdown.list.item>
-                            @endforeach
-                        </x-filament::dropdown.list>
-                    </x-filament::dropdown>
-                </div>
-
-                <button 
-                    type="button"
-                    onclick="window.location.href = '{{ request()->url() }}?month={{ now()->month }}&year={{ now()->year }}'"
-                    class="reset-btn"
-                    style="height: 36px; padding: 0 12px; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; display: flex; align-items: center; gap: 5px; color: #27272a; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s;"
-                    onmouseover="this.style.background='#e5e7eb'" 
-                    onmouseout="this.style.background='#f3f4f6'">
-                    <x-filament::icon icon="heroicon-m-arrow-path" style="width: 14px; height: 14px;" />
-                    Reset
-                </button>
-            </div>
-        </div>
-    </div>
-
     <div>
-        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Returned Equipment and Supplies</h2>
+        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Borrowed Equipment and Supplies</h2>
 
-        {{-- RETURNED EQUIPMENT --}}
+        {{-- CURRENTLY BORROWED --}}
         <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
-            <div class="table-header-success">
-                <h3 class="text-green" style="font-size: 13px; font-weight: bold;">Returned Equipment (Completed)</h3>
+            <div class="table-header-warning">
+                <h3 class="text-orange" style="font-size: 13px; font-weight: bold;">Currently Borrowed Items</h3>
             </div>
             <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
-                        <th style="padding: 10px 15px; text-align: left; color: #374151;">Equipment</th>
+                        <th style="padding: 10px 15px; text-align: left; color: #374151;">Item & Type</th>
                         <th style="padding: 10px 15px; text-align: center; width: 10%;">Qty</th>
-                        <th style="padding: 10px 15px; text-align: left; width: 25%;">Returned Date</th>
+                        <th style="padding: 10px 15px; text-align: left; width: 25%;">Expected Return</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($returnedEquipment as $item)
+                    @forelse($mergedCurrent as $item)
                         <tr style="border-bottom: 1px solid #f3f4f6;">
-                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
-                            <td style="padding: 10px 15px;">{{ $item->equipment?->equipment_name }}</td>
-                            <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->quantity }}</td>
-                            <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
+                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->borrower }}</td>
+                            <td style="padding: 10px 15px;">
+                                <div style="font-weight: 500; margin-bottom: 4px;">{{ $item->item }}</div>
+                                <span style="background: {{ $item->type === 'Equipment' ? '#e0f2fe' : '#fef3c7' }}; color: {{ $item->type === 'Equipment' ? '#0369a1' : '#92400e' }}; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase;">
+                                    {{ $item->type }}
+                                </span>
+                            </td>
+                            <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->qty }}</td>
+                            <td class="text-orange" style="padding: 10px 15px; font-weight: 600;">{{ $item->date->format('M d, Y') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No items returned yet.</td></tr>
+                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No active borrowed items.</td></tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
-        {{-- RETURNED SUPPLIES --}}
-        <div style="border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
-            <div class="table-header-success">
-                <h3 class="text-green" style="font-size: 13px; font-weight: bold;">Replaced Supplies (Completed)</h3>
+        <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Overdue Equipment and Supplies</h2>
+
+        {{-- OVERDUE --}}
+        <div style="border-radius: 10px; overflow: hidden;">
+            <div class="table-header-danger">
+                <h3 class="text-red" style="font-size: 13px; font-weight: bold;">Overdue Items</h3>
             </div>
             <table class="table-card" style="width: 100%; border-collapse: collapse; font-size: 11px;">
                 <thead>
                     <tr style="background-color: #f9fafb; border-bottom: 1px solid #e5e7eb;">
                         <th style="padding: 10px 15px; text-align: left; color: #374151;">Borrower</th>
-                        <th style="padding: 10px 15px; text-align: left; color: #374151;">Supply</th>
+                        <th style="padding: 10px 15px; text-align: left; color: #374151;">Item & Type</th>
                         <th style="padding: 10px 15px; text-align: center; width: 10%;">Qty</th>
-                        <th style="padding: 10px 15px; text-align: left; width: 25%;">Replacement Date</th>
+                        <th style="padding: 10px 15px; text-align: left; width: 15%;">Deadline</th>
+                        <th style="padding: 10px 15px; text-align: right; width: 10%;">Late</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($returnedSupply as $item)
+                    @forelse($mergedOverdue as $item)
+                        @php 
+                            $daysLate = $item->date->startOfDay()->diffInDays(now()->startOfDay()); 
+                        @endphp
                         <tr style="border-bottom: 1px solid #f3f4f6;">
-                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
-                            <td style="padding: 10px 15px;">{{ $item->supply?->item_name }}</td>
-                            <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->quantity }}</td>
-                            <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
+                            <td style="padding: 10px 15px; font-weight: bold;">{{ $item->borrower }}</td>
+                            <td style="padding: 10px 15px; vertical-align: middle;">
+                                <div style="font-weight: 500; margin-bottom: 4px;">{{ $item->item }}</div>
+                                <span class="badge-item {{ $item->type === 'Equipment' ? 'badge-equipment' : 'badge-supply' }}">
+                                    {{ $item->type }}
+                                </span>
+                            </td>
+                            <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->qty }}</td>
+                            <td style="padding: 10px 15px; font-weight: 600;">{{ $item->date->format('M d, Y') }}</td>
+                            <td class="text-red" style="padding: 10px 15px; text-align: right; font-weight: 600;">
+                                {{ (int) $daysLate }} Days
+                            </td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No supplies replaced yet.</td></tr>
+                        <tr><td colspan="5" style="padding: 20px; text-align: center; color: #555;">No overdue items.</td></tr>
                     @endforelse
                 </tbody>
             </table>
