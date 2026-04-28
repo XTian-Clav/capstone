@@ -118,8 +118,8 @@ class StartupForm
 
                             //FILE SIZE LIMIT
                             ->maxSize(5120)
-                            ->helperText('Photo file size limit is 5mb. ')
-                            ->disabled(fn ($record, $context) => $context === 'edit'),
+                            ->helperText('Photo file size limit is 5mb. '),
+                            //->disabled(fn ($record, $context) => $context === 'edit'),
                     ])->columnSpanFull()->compact(),
 
                     Section::make('Startup Proposal Upload')

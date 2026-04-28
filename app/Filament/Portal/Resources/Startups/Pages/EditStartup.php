@@ -41,13 +41,16 @@ class EditStartup extends EditRecord
 
         $status = strtolower($data['status'] ?? 'updated');
 
+        //Notification when a startup is editted
         Notification::make()
+            ->iconColor('warning')
+            ->icon('heroicon-m-bell-alert')
             ->title('Startup Proposal Update')
             ->body('Your startup proposal titled ' . $data['startup_name'] . ' has been ' . $status . '.')
             ->actions([
                 Action::make('view')
                     ->button()
-                    ->color('secondary')
+                    ->color('gray')
                     ->url(ViewStartup::getUrl([
                         'record' => $record->getRouteKey(),
                     ]), shouldOpenInNewTab: true),
@@ -55,6 +58,8 @@ class EditStartup extends EditRecord
             ->sendToDatabase($owner);
 
         Notification::make()
+            ->iconColor('warning')
+            ->icon('heroicon-m-bell-alert')
             ->title('Startup Proposal Update Sent')
             ->body('You have ' . $status . ' the startup proposal for ' . $data['startup_name'] . '.')
             ->actions([
@@ -66,7 +71,7 @@ class EditStartup extends EditRecord
                     ]), shouldOpenInNewTab: true),
                 Action::make('edit')
                     ->button()
-                    ->color('secondary')
+                    ->color('warning')
                     ->url(EditStartup::getUrl([
                         'record' => $record->getRouteKey(),
                     ]), shouldOpenInNewTab: true),
