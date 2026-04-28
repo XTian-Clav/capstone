@@ -29,7 +29,7 @@ class SupplyReport extends Page
     {
         return [
             Action::make('print_report')
-                ->label('Print')
+                ->label('Print Supply Report')
                 ->icon('heroicon-s-printer')
                 ->color('primary')
                 ->url(route('SupplyReport', request()->only(['month', 'year'])))

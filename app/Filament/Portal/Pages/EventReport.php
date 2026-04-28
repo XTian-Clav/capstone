@@ -28,7 +28,7 @@ class EventReport extends Page
     {
         return [
             Action::make('print_report')
-                ->label('Print')
+                ->label('Print Event Report')
                 ->icon('heroicon-s-printer')
                 ->color('primary')
                 ->url(route('EventReport', request()->only(['month', 'year'])))

@@ -41,7 +41,7 @@ class GuidesTable
                         ->sortable() 
                         ->searchable()
                         ->weight('semibold')
-                        ->iconColor('pitbi-orange')
+                        ->iconColor('primary')
                         ->icon(Heroicon::DocumentText)
                         ->url(fn ($record) => $record->url)
                         ->openUrlInNewTab()

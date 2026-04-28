@@ -29,7 +29,7 @@ class EquipmentReport extends Page
     {
         return [
             Action::make('print_report')
-                ->label('Print')
+                ->label('Print Equipment Report')
                 ->icon('heroicon-s-printer')
                 ->color('primary')
                 ->url(route('EquipmentReport', request()->only(['month', 'year'])))

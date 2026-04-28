@@ -29,7 +29,7 @@ class RoomReport extends Page
     {
         return [
             Action::make('print_report')
-                ->label('Print')
+                ->label('Print Room Report')
                 ->icon('heroicon-s-printer')
                 ->color('primary')
                 ->url(route('RoomReport', request()->only(['month', 'year'])))
