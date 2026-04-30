@@ -3,8 +3,10 @@
 namespace App\Filament\Portal\Resources\ReserveRooms\Pages;
 
 use App\Models\Room;
+use Filament\Support\Enums\Size;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Actions\Room\RoomSchedule;
 use App\Filament\Portal\Resources\ReserveRooms\ReserveRoomResource;
 
 class CreateReserveRoom extends CreateRecord
@@ -31,5 +33,12 @@ class CreateReserveRoom extends CreateRecord
         }
 
         return $data;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            RoomSchedule::make()->size(Size::Medium)->label("Room Schedules"),
+        ];
     }
 }
