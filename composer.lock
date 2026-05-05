@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "857b3715c58269aba0dac07be213de1d",
+    "content-hash": "182e3ece66df022ffd3eb78eff71a212",
     "packages": [
         {
             "name": "awcodes/light-switch",
@@ -12634,10 +12634,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2",
-        "ext-intl": "*",
-        "ext-zip": "*",
-        "ext-gd": "*"
+        "php": "^8.2"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
