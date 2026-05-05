@@ -41,12 +41,18 @@ class EditMilestone extends EditRecord
                 $milestoneTitle = $record->title ?? ($data['title'] ?? 'your milestone');
 
                 Notification::make()
+                    ->color('success')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->title('Milestone Completed')
                     ->body('Your milestone "' . $milestoneTitle . '" has been marked as done.')
                     ->sendToDatabase($owner);
 
                 
                 Notification::make()
+                    ->color('success')
+                    ->iconColor('sucess')
+                    ->icon('heroicon-m-check-circle')
                     ->title('Milestone Marked as Done')
                     ->body('You have marked "' . $milestoneTitle . '" as completed for ' . $owner->name . '.')
                     ->sendToDatabase($admin);

@@ -89,20 +89,25 @@ class MilestonesTable
                     ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
             ])
             ->recordActions([
+                EditAction::make('incubatee view')
+                    ->button()
+                    ->color('primary')
+                    ->label('View Task')
+                    ->visible(fn () => auth()->user()->hasRole('incubatee')),
+                
                 ActionGroup::make([
-                    ViewAction::make()->color('gray'),
-                    EditAction::make()->color('gray')
-                        ->label(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin']) 
-                        ? 'Edit Task' 
-                        : 'Comply Task'),
+                    EditAction::make()
+                        ->color('gray')
+                        ->label('View Task'),
                     DeleteAction::make()
                         ->authorize(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
                 ])
-                ->label('Actions')
-                ->icon('heroicon-o-bars-arrow-down')
+                ->button()
                 ->color('gray')
+                ->label('Actions')
                 ->size(Size::ExtraSmall)
-                ->button(),
+                ->icon('heroicon-o-bars-arrow-down')
+                ->visible(fn () => auth()->user()->hasAnyRole(['super_admin', 'admin'])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

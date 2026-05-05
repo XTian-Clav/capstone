@@ -8,6 +8,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Text;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -58,43 +59,49 @@ class MilestoneForm
                         ->rows(8)
                         ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),  
                 ])->columns(3)->columnSpanFull()->compact()->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                Section::make('Milestone Submission')
+                
+                Section::make('View Task Submission')
                 ->schema([
-                    Action::make('submission_link')
-                        ->link()
-                        ->color('success')
-                        ->label('View Submission Link')
-                        ->icon('heroicon-m-folder-arrow-down')
-                        ->url(fn ($record) => $record->url ?? '#')
-                        ->openUrlInNewTab()
-                        ->tooltip(fn ($record) => $record->url ?? 'No link yet')
-                        ->disabled(fn ($record) => !$record?->url),
-                            
-                    Textarea::make('summary')
-                        ->label('Summarize your submission report')
-                        ->default('Enter summary here.')
-                        ->nullable()
-                        ->rows(4)
-                        ->disabled(fn () => ! auth()->user()->hasRole('incubatee')),
-                ])->columnSpan(2)->compact()->secondary(),
+                    Section::make()
+                    ->schema([  
+                        Textarea::make('summary')
+                            ->label('Incubatee Comment')
+                            ->default('Enter summary here.')
+                            ->nullable()
+                            ->rows(4)
+                            ->disabled(fn () => ! auth()->user()->hasRole('incubatee')),
 
-                Section::make()
-                ->Schema([
-                    Textarea::make('admin_comment')
-                        ->rows(4)
-                        ->nullable()
-                        ->columnSpanFull()
-                        ->label('Admin Comment')
-                        ->default('Enter comment here.')
-                        ->helperText('Admins will leave a comment once your submission is reviewed.')
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                    Toggle::make('is_done')
-                        ->label('Mark as Done')
-                        ->onColor('success')
-                        ->offColor('danger')
-                        ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin']))
-                        ->visible(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin'])),
-                ])->columnSpan(2)->compact()->secondary(),
+                        Action::make('submission_link')
+                            ->button()
+                            ->outlined()
+                            ->color('success')
+                            ->label('View Submission')
+                            ->icon('heroicon-m-folder-arrow-down')
+                            ->url(fn ($record) => $record->url ?? '#')
+                            ->openUrlInNewTab()
+                            ->tooltip(fn ($record) => $record->url ?? 'No link yet')
+                            ->disabled(fn ($record) => !$record?->url),
+                    ])->columnSpan(2)->compact(),
+
+                    Section::make()
+                    ->Schema([
+                        Textarea::make('admin_comment')
+                            ->rows(4)
+                            ->nullable()
+                            ->columnSpanFull()
+                            ->label('Admin Comment')
+                            ->default('Enter comment here.')
+                            ->helperText('Admins will leave a comment once your submission is reviewed.')
+                            ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                        Toggle::make('is_done')
+                            ->label(fn () => auth()->user()->hasAnyRole(['admin', 'super_admin']) 
+                                ? 'Mark as done' 
+                                : 'Milestone Status')
+                            ->onColor('success')
+                            ->offColor('danger')
+                            ->disabled(fn () => ! auth()->user()->hasAnyRole(['admin', 'super_admin'])),
+                    ])->columnSpan(2)->compact(),
+                ])->columnSpanFull()->columns(4)->collapsed(fn () => ! auth()->user()->hasRole('incubatee'))->compact(),
             ])->columns(4);
     }
 }

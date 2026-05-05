@@ -27,12 +27,18 @@ class CreateMilestone extends CreateRecord
         $body = $body ?: 'A new milestone was added to your startup.';
 
         Notification::make()
+            ->color('warning')
+            ->iconColor('warning')
+            ->icon('heroicon-m-trophy')
             ->title('New Milestone: ' . ($milestone->title ?? 'Untitled'))
             ->body(Str::limit($body, 300))
             ->sendToDatabase($owner);
         
         if ($admin = auth()->user()) {
             Notification::make()
+                ->color('warning')
+                ->iconColor('warning')
+                ->icon('heroicon-m-trophy')
                 ->title('Milestone Created')
                 ->body('You created "' . ($milestone->title ?? 'a milestone') . '" for ' . ($startup->startup_name ?? 'the startup') . '.')
                 ->sendToDatabase($admin);
