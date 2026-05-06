@@ -39,13 +39,10 @@ class AppServiceProvider extends ServiceProvider
             'warning' => Color::Yellow,
         ]);
         
-        /* Hosting with no SSH access
-        $this->app->bind('path.public', function () {
-            return base_path() . '/public_html';
-        });
-        
-        app()->usePublicPath(base_path() . '/public_html');
-        */
+        /* Hostinger shared hosting plan*/
+        if (is_dir(base_path('public_html'))) {
+            $this->app->usePublicPath(base_path('public_html'));
+        }
     }
 
     /**
