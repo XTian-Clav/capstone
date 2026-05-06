@@ -19,6 +19,7 @@ class RoomForm
                 ->description('Fill up the form and make sure all details are correct.')
                 ->schema([
                     TextInput::make('room_type')
+                        ->label('Room Name')
                         ->required()
                         ->minLength(2)
                         ->maxLength(255)
