@@ -38,14 +38,11 @@ class OverdueItems extends Page
         ];
     }
 
-    public $borrowedEquipment = [];
-    public $borrowedSupply = [];
-    public $overdueEquipment = [];
-    public $overdueSupply = [];
+    public $search = '';
 
-    public function mount(): void
+    public function getViewData(): array
     {
-        $startOfToday = Carbon::today(); 
+        $startOfToday = Carbon::today();
 
         $allEquipment = ReserveEquipment::with('equipment')
             ->where('status', 'Approved')
@@ -55,17 +52,47 @@ class OverdueItems extends Page
             ->where('status', 'Approved')
             ->get();
 
-        $this->borrowedEquipment = $allEquipment->where('end_date', '>=', $startOfToday)
+        $borrowedEquipment = $allEquipment->where('end_date', '>=', $startOfToday)
             ->sortByDesc('end_date');
 
-        $this->borrowedSupply = $allSupplies->where('end_date', '>=', $startOfToday)
+        $borrowedSupply = $allSupplies->where('end_date', '>=', $startOfToday)
             ->sortByDesc('end_date');
 
-        $this->overdueEquipment = $allEquipment->where('end_date', '<', $startOfToday)
+        $overdueEquipment = $allEquipment->where('end_date', '<', $startOfToday)
             ->sortByDesc('end_date');
 
-        $this->overdueSupply = $allSupplies->where('end_date', '<', $startOfToday)
+        $overdueSupply = $allSupplies->where('end_date', '<', $startOfToday)
             ->sortByDesc('end_date');
+
+        if ($this->search) {
+            $search = strtolower($this->search);
+
+            $borrowedEquipment = $borrowedEquipment->filter(fn ($i) =>
+                str_contains(strtolower($i->reserved_by), $search) ||
+                str_contains(strtolower($i->equipment?->equipment_name), $search)
+            );
+
+            $borrowedSupply = $borrowedSupply->filter(fn ($i) =>
+                str_contains(strtolower($i->reserved_by), $search) ||
+                str_contains(strtolower($i->supply?->item_name), $search)
+            );
+
+            $overdueEquipment = $overdueEquipment->filter(fn ($i) =>
+                str_contains(strtolower($i->reserved_by), $search) ||
+                str_contains(strtolower($i->equipment?->equipment_name), $search)
+            );
+
+            $overdueSupply = $overdueSupply->filter(fn ($i) =>
+                str_contains(strtolower($i->reserved_by), $search) ||
+                str_contains(strtolower($i->supply?->item_name), $search)
+            );
+        }
+
+        return [
+            'borrowedEquipment' => $borrowedEquipment,
+            'borrowedSupply' => $borrowedSupply,
+            'overdueEquipment' => $overdueEquipment,
+            'overdueSupply' => $overdueSupply,
+        ];
     }
 }
-

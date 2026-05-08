@@ -41,6 +41,8 @@ class ReturnedItems extends Page
     public $returnedEquipment = [];
     public $returnedSupply = [];
     public $availableYears = [];
+    public $allEquipment = [];
+    public $allSupply = [];
 
     public function mount(): void
     {
@@ -55,6 +57,15 @@ class ReturnedItems extends Page
 
         $month = request('month'); 
         $year = request('year', now()->year);
+
+        $this->allEquipment = ReserveEquipment::with('equipment')
+            ->where('status', 'Completed')
+            ->whereYear('updated_at', $year)
+            ->get();
+
+        $this->allSupply = ReserveSupply::with('supply')
+            ->where('status', 'Completed')
+            ->get();
 
         $this->availableYears = ReserveEquipment::selectRaw('YEAR(created_at) as year')
             ->union(ReserveSupply::selectRaw('YEAR(created_at) as year'))

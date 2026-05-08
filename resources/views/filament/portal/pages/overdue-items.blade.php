@@ -74,6 +74,25 @@
             color: #92400e;
         }
 
+        #searchInput {
+            width: 100%; 
+            height: 40px; 
+            padding: 0 12px;
+            border: 1px solid #d1d5db; 
+            border-radius: 8px; 
+            font-size: 13px; 
+            background: white; 
+            color: #111827; 
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #fe800d;
+            ring: 2px;
+            box-shadow: 0 0 0 2px rgba(254, 128, 13, 0.2);
+        }
+
         .dark .widget-card, .dark .filter-container, .dark .table-card { background: #18181b !important; border-color: #333 !important; color: #ffffff; }
         .dark .widget-label, .dark .filter-label, .dark h2, .dark h3 { color: #ffffff !important; }
     
@@ -98,6 +117,17 @@
         .dark .badge-supply {
             background-color: #92400e;
             color: #fef3c7;
+        }
+
+        .dark #searchInput {
+            background: #27272a !important;
+            border-color: #3f3f46 !important;
+            color: #ffffff !important;
+        }
+
+        .dark #searchInput:focus {
+            border-color: #fe800d !important;
+            box-shadow: 0 0 0 2px rgba(254, 128, 13, 0.4);
         }
     </style>
 
@@ -135,6 +165,17 @@
             'type' => 'Supply'
         ]))->sortBy('date');
     @endphp
+
+    <div class="filter-container">
+        <span class="filter-label">Search</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            wire:model.live.debounce.300ms="search"
+            placeholder="Search borrower, equipment, or supply..."
+        >
+    </div>
 
     <div>
         <h2 style="font-size: 18px; font-weight: bold; margin-bottom: 20px; color: #374151; padding-left: 10px;">Borrowed Equipment and Supplies</h2>

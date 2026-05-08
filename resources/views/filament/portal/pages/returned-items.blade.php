@@ -74,6 +74,26 @@
             color: #92400e;
         }
 
+        #searchInput {
+            width: 100%; 
+            height: 40px; 
+            padding: 0 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid #d1d5db; 
+            border-radius: 8px; 
+            font-size: 13px; 
+            background: white; 
+            color: #111827; 
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+
+        #searchInput:focus {
+            border-color: #fe800d;
+            ring: 2px;
+            box-shadow: 0 0 0 2px rgba(254, 128, 13, 0.2);
+        }
+
         .dark .widget-card, .dark .filter-container, .dark .table-card { background: #18181b !important; border-color: #333 !important; color: #ffffff; }
         .dark .widget-label, .dark .filter-label, .dark h2, .dark h3 { color: #ffffff !important; }
     
@@ -99,6 +119,17 @@
             background-color: #92400e;
             color: #fef3c7;
         }
+
+        .dark #searchInput {
+            background: #27272a !important;
+            border-color: #3f3f46 !important;
+            color: #ffffff !important;
+        }
+
+        .dark #searchInput:focus {
+            border-color: #fe800d !important;
+            box-shadow: 0 0 0 2px rgba(254, 128, 13, 0.4);
+        }
     </style>
 
     @php
@@ -107,6 +138,14 @@
     @endphp
 
     <div class="filter-container">
+        <span class="filter-label">Search Name</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search borrower, equipment, or supply..."
+        >
+        
         <div style="display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-end;">
             
             <div style="flex: 1; min-width: 300px;">
@@ -116,17 +155,22 @@
                         <button 
                             type="button"
                             onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => $m]) }}'"
+                            id="month-btn-{{ $m }}"
                             class="filter-btn {{ $currentMonth == $m ? 'active-btn' : 'inactive-btn' }}"
                             style="cursor: pointer;">
                             {{ date('M', mktime(0, 0, 0, $m, 1)) }}
                         </button>
                     @endforeach
             
-                    <button 
+                    <button
                         type="button"
-                        onclick="window.location.href = '{{ request()->fullUrlWithQuery(['month' => null]) }}'"
+                        id="all-months-btn"
+                        onclick="window.location.href='{{ url()->current() . '?' . http_build_query([
+                            'year' => $currentYear,
+                        ]) }}'"
                         class="filter-btn {{ is_null($currentMonth) ? 'active-btn' : 'inactive-btn' }}"
-                        style="cursor: pointer;">
+                        style="cursor: pointer;"
+                    >
                         All Months
                     </button>
                 </div>
@@ -186,16 +230,18 @@
                         <th style="padding: 10px 15px; text-align: left; width: 25%;">Returned Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="equipmentTable">
                     @forelse($returnedEquipment as $item)
-                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                        <tr class="month-row" style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->equipment?->equipment_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->quantity }}</td>
                             <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No items returned yet.</td></tr>
+                        <tr class="month-row-empty">
+                            <td colspan="4" style="padding: 20px; text-align: center; color: #555;">No items returned yet.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -215,19 +261,115 @@
                         <th style="padding: 10px 15px; text-align: left; width: 25%;">Replacement Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="supplyTable">
                     @forelse($returnedSupply as $item)
-                        <tr style="border-bottom: 1px solid #f3f4f6;">
+                        <tr class="month-row" style="border-bottom: 1px solid #f3f4f6;">
                             <td style="padding: 10px 15px; font-weight: bold;">{{ $item->reserved_by }}</td>
                             <td style="padding: 10px 15px;">{{ $item->supply?->item_name }}</td>
                             <td style="padding: 10px 15px; text-align: center; font-weight: 600;">{{ $item->quantity }}</td>
                             <td class="text-green" style="padding: 10px 15px; font-weight: 600;">{{ $item->updated_at->format('M d, Y h:i A') }}</td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" style="padding: 20px; text-align: center; color: #555;">No supplies replaced yet.</td></tr>
+                        <tr class="month-row-empty">
+                            <td colspan="4" style="padding: 20px; text-align: center; color: #555;">No supplies replaced yet.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script>
+        const allEquipment = @json($allEquipment);
+        const allSupply = @json($allSupply);
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const equipmentTable = document.getElementById('equipmentTable');
+            const supplyTable = document.getElementById('supplyTable');
+    
+            searchInput.addEventListener('keyup', function () {
+    
+                const search = this.value.toLowerCase().trim();
+
+                const monthButtons = document.querySelectorAll('.month-btn');
+                const allMonthsBtn = document.getElementById('all-months-btn');
+
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active-btn');
+                    btn.classList.add('inactive-btn');
+                });
+                
+                allMonthsBtn.classList.remove('inactive-btn');
+                allMonthsBtn.classList.add('active-btn');
+    
+                if (search === '') {
+                    location.reload();
+                    return;
+                }
+    
+                const equipmentResults = allEquipment.filter(item =>
+                    item.reserved_by?.toLowerCase().includes(search) ||
+                    item.equipment?.equipment_name?.toLowerCase().includes(search)
+                );
+    
+                const supplyResults = allSupply.filter(item =>
+                    item.reserved_by?.toLowerCase().includes(search) ||
+                    item.supply?.item_name?.toLowerCase().includes(search)
+                );
+    
+                equipmentTable.innerHTML = '';
+    
+                if (equipmentResults.length > 0) {
+                    equipmentResults.forEach(item => {
+                        equipmentTable.innerHTML += `
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 10px 15px; font-weight: bold;">${item.reserved_by ?? ''}</td>
+                                <td style="padding: 10px 15px;">${item.equipment?.equipment_name ?? ''}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">${item.quantity ?? ''}</td>
+                                <td class="text-green" style="padding: 10px 15px; font-weight: 600;">
+                                    ${new Date(item.updated_at).toLocaleString()}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    equipmentTable.innerHTML = `
+                        <tr>
+                            <td colspan="4" style="padding: 20px; text-align: center; color: #555;">
+                                No matching equipment found.
+                            </td>
+                        </tr>
+                    `;
+                }
+    
+                supplyTable.innerHTML = '';
+    
+                if (supplyResults.length > 0) {
+                    supplyResults.forEach(item => {
+                        supplyTable.innerHTML += `
+                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                <td style="padding: 10px 15px; font-weight: bold;">${item.reserved_by ?? ''}</td>
+                                <td style="padding: 10px 15px;">${item.supply?.item_name ?? ''}</td>
+                                <td style="padding: 10px 15px; text-align: center; font-weight: 600;">${item.quantity ?? ''}</td>
+                                <td class="text-green" style="padding: 10px 15px; font-weight: 600;">
+                                    ${new Date(item.updated_at).toLocaleString()}
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    supplyTable.innerHTML = `
+                        <tr>
+                            <td colspan="4" style="padding: 20px; text-align: center; color: #555;">
+                                No matching supplies found.
+                            </td>
+                        </tr>
+                    `;
+                }
+    
+            });
+    
+        });
+    </script>
 </x-filament-panels::page>
