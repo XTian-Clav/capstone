@@ -13,7 +13,8 @@
         .day-off { background-color: #f9fafb; color: #d1d5db; }
         .today-mark { background: #fe800d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         
-        .res-badge { font-size: 10px; background: #f0f7ff; border-left: 3px solid #013267; padding: 4px; margin-top: 4px; border-radius: 2px; color: #013267; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s ease; cursor: pointer; position: relative; z-index: 1; }
+        .res-badge { font-size: 10px; background: #f0f7ff; height: 80px; border-left: 3px solid #013267; padding: 4px; margin-top: 4px; border-radius: 2px; color: #013267; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s ease; cursor: pointer; position: relative; z-index: 1; }
+        .res-badge strong { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .day-badge { background: #60a5fa; color: #f0f7ff; padding: 1px 4px; border-radius: 3px; font-size: 8px; font-weight: 900; text-transform: uppercase; float: right; }
 
         .dark .filter-container { background: #18181b !important; border-color: #333 !important; }
@@ -110,7 +111,7 @@
                                 </div>
                             </div>
                         @else
-                            <div style="height: 67px; margin-bottom: 4px; visibility: hidden;" aria-hidden="true"></div>
+                            <div style="height: 80px; margin-bottom: 4px; visibility: hidden;" aria-hidden="true"></div>
                         @endif
                     @endfor
                 @endif
