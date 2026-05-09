@@ -14,6 +14,7 @@
         .today-mark { background: #fe800d; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         
         .res-badge { font-size: 10px; background: #f0f7ff; border-left: 3px solid #013267; padding: 4px; margin-top: 4px; border-radius: 2px; color: #013267; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.2s ease; cursor: pointer; position: relative; z-index: 1; }
+        .day-badge { background: #60a5fa; color: #f0f7ff; padding: 1px 4px; border-radius: 3px; font-size: 8px; font-weight: 900; text-transform: uppercase; float: right; }
 
         .dark .filter-container { background: #18181b !important; border-color: #333 !important; }
         .dark .filter-label, .dark h2 { color: #ffffff !important; }
@@ -29,6 +30,7 @@
         .dark .reset-btn:hover { background: #3f3f46 !important; }
 
         .dark .res-badge { background: #1e293b !important; color: #60a5fa !important; border-left-color: #60a5fa !important; }
+        .dark .day-badge { background: #60a5fa; color: #1e293b; }
     </style>
 
     <div class="filter-container">
@@ -77,18 +79,40 @@
                         {{ $day['date']->day }}
                     </span>
                 </div>
-
+    
                 @if($day['isCurrentMonth'] && isset($reservationsByDay[$day['date']->day]))
-                    @foreach($reservationsByDay[$day['date']->day] as $res)
-                        <div class="res-badge">
-                            <strong style="display: block;">{{ $res['room_type'] }}</strong>
-                            <span style="font-size: 10px;">{{ $res['time'] }}</span>
-                            
-                            <div style="font-size: 10px; margin-top: 2px; text-transform: uppercase;">
-                                Reserved by: {{ $res['user_name'] }}
+                    @php 
+                        $dayReservations = $reservationsByDay[$day['date']->day];
+                        $maxLane = max(array_keys($dayReservations));
+                    @endphp
+    
+                    @for($i = 0; $i <= $maxLane; $i++)
+                        @if(isset($dayReservations[$i]))
+                            @php $res = $dayReservations[$i]; @endphp
+                            <div class="res-badge">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;">
+                                    <strong style="flex: 1; display: block; word-break: break-word; line-height: 1.2;">
+                                        {{ $res['room_type'] }}
+                                    </strong>
+                                    
+                                    @if(isset($res['day_label']))
+                                        <span class="day-badge">
+                                            {{ $res['day_label'] }}
+                                        </span>
+                                    @endif
+                                </div>
+    
+                                <span style="font-size: 10px;">{{ $res['time'] }}</span>
+                                
+                                <div style="font-size: 10px;">
+                                    <div style="opacity: 0.8; margin-top: 5px;">Reserved by:</div>
+                                    <div style="font-weight: 600; word-break: break-word; text-transform: uppercase; line-height: 1.2">{{ $res['user_name'] }}</div>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @else
+                            <div style="height: 67px; margin-bottom: 4px; visibility: hidden;" aria-hidden="true"></div>
+                        @endif
+                    @endfor
                 @endif
             </div>
         @endforeach
