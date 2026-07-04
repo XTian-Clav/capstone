@@ -27,13 +27,13 @@ class EventAttendance extends Page implements HasForms, HasActions
     {
         return false;
     }
-    
+
     public static function canAccess(): bool
     {
-        return auth()->user()->hasRole('super_admin');
+        return auth()->user()->hasAnyRole(['super_admin', 'admin']);
     }
 
-    public function getTitle(): string 
+    public function getTitle(): string
     {
         return "Attendance: " . ($this->event->event ?? 'Event');
     }
@@ -75,7 +75,7 @@ class EventAttendance extends Page implements HasForms, HasActions
                 ->label('Search Name')
                 ->placeholder('Search attendees...')
                 ->live()
-                ->afterStateUpdated(fn () => $this->loadAttendees()),
+                ->afterStateUpdated(fn() => $this->loadAttendees()),
         ];
     }
 
@@ -98,11 +98,12 @@ class EventAttendance extends Page implements HasForms, HasActions
     {
         return Action::make('updateStatus')
             ->badge()
-            ->label(fn (array $arguments) => $this->attendees[$arguments['index']]['is_attending'] ? 'Attending' : 'Not Attending')
-            ->color(fn (array $arguments) => $this->attendees[$arguments['index']]['is_attending'] ? 'success' : 'danger')
-            ->icon(fn (array $arguments) => $this->attendees[$arguments['index']]['is_attending'] 
-                ? 'heroicon-m-check-circle' 
-                : 'heroicon-m-x-circle'
+            ->label(fn(array $arguments) => $this->attendees[$arguments['index']]['is_attending'] ? 'Attending' : 'Not Attending')
+            ->color(fn(array $arguments) => $this->attendees[$arguments['index']]['is_attending'] ? 'success' : 'danger')
+            ->icon(
+                fn(array $arguments) => $this->attendees[$arguments['index']]['is_attending']
+                    ? 'heroicon-m-check-circle'
+                    : 'heroicon-m-x-circle'
             )
             ->tooltip('Click to change status')
             ->requiresConfirmation()
@@ -117,7 +118,7 @@ class EventAttendance extends Page implements HasForms, HasActions
                 EventUser::where('event_id', $this->event->id)
                     ->where('user_id', $userId)
                     ->update(['is_attending' => $newStatus]);
-                
+
                 $user = User::find($userId);
                 if ($user) {
                     $user->notify(new EventAttendanceAdmin($this->event, $newStatus));
@@ -127,7 +128,7 @@ class EventAttendance extends Page implements HasForms, HasActions
                     ->title('Status updated and user notified')
                     ->success()
                     ->send();
-    
+
                 $this->loadAttendees();
             });
     }
