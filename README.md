@@ -1,61 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PITBI Portal
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **An Enterprise-Grade Incubation Management System for Operational Governance, Resource Tracking, and Stakeholder Engagement.**
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Executive Summary
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The **PITBI Portal** is a centralized web application engineered to optimize and automate the comprehensive operational lifecycles within an incubation hub. The platform bridges the gap between early-stage business development and resource administration by providing rigorous tracking mechanisms for physical hub assets (real estate facilities, hardware infrastructure, and operational supplies), milestone compliance tracking, data-driven ecosystem event management, and secure stakeholder directories.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Equipped with an analytical reporting subsystem, the system generates monthly and annual auditing metrics regarding asset utilization, financial trends, and programmatic engagement—empowering hub directors with actionable institutional intelligence.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Technology Stack & System Core
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The application architecture relies on a highly modular backend paired with a rapid administrative interface engine to deliver strict state control, secure access management, and rich user dashboards.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Core Framework:** Laravel 12.x
+- **Administrative Interface (Dashboard UI):** Filament PHP 4.x (Powering all core administrative, operational, and data views)
+- **Access Control Security:** Filament Shield (`bezhansalleh/filament-shield`)
+- **Database Engine:** MySQL
+- **Document Compilation Engine:** DomPDF for Laravel (`barryvdh/laravel-dompdf`)
+- **Data Visualization:** Apex Charts for Filament (`leandrocfe/filament-apex-charts`)
+- **Storage Optimization Strategy:** Direct URL redirection to external cloud storage providers (e.g., Google Drive links) for media components and heavy documents, eliminating server-side storage overhead.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🔐 Access Control & Role-Based Governance
 
-### Premium Partners
+The system enforces a strict, hierarchical **Role-Based Access Control (RBAC)** model managed via Filament Shield. To preserve data integrity and system security, **public self-registration is entirely disabled**. All user accounts are provisioned exclusively through secure administrative assignment.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Incubatee Role
 
-## Contributing
+Incubatees represent the primary programmatic beneficiaries of the incubation hub. Their accessible interface focuses on developmental compliance and resource allocation:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Incubation Compliance Workflow:** Submission of startup venture proposals and ongoing progressive tracking of assigned institutional milestone tasks.
+- **Asset Allocation Requests:** Submission of reservation requests across three isolated inventory domains:
+    - **Facilities (Rooms):** Booking management for incubation spaces, meeting rooms, or event halls.
+    - **Fixed Assets (Equipment):** Non-consumable physical hardware, devices, or electronic assets.
+    - **Consumable Inventories (Supplies):** Essential office consumables.
+- **Ecosystem Mentorship Directory:** Read-only access to profiles of vetted industry mentors.
+- **Programmatic Engagement:** Portal for viewing upcoming hub events and logging digital attendance.
+- **Knowledge Repository:** On-demand access to learning resource records. To optimize system storage, video assets and instructional guides are saved as raw, external hyperlinks pointing directly to resource locations hosted on Google Drive.
 
-## Code of Conduct
+### 2. Investor Role
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Investors act as external ecosystem stakeholders, permitted restricted read-only access for strategic market scouting:
 
-## Security Vulnerabilities
+- **Venture Capital Discovery:** Exclusive directory access to view profiles of **approved startups only**. _Note: Communication, networking, and procurement protocols are handled externally._
+- **Event Access:** General access to view public hub events and log digital attendance.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Admin Role
 
-## License
+Administrators maintain the operational equilibrium of the hub, overseeing logistics and user lifecycle touchpoints:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Venture Pipeline Management:** Authority to evaluate, approve, or reject incoming startup applications, alongside a task creation engine to enforce startup accountability via specific milestone dependencies.
+- **Logistical Queue Management:** Multi-category validation queue to systematically approve or reject reservation requests for facilities, equipment, and supplies.
+- **Knowledge Management Systems:** Creation of learning resource indices. Video training content and written documentation are managed by inserting direct external links to Google Drive to keep server storage unburdened.
+- **Consultant Profiling:** Production of a public mentor registry detailing professional profiles, expertise domains, and contact indices.
+- **Event Lifecycle Control:** Manual operational control over the status of hub events (Create, Start, Cancel, or Complete). _Note: State transitions are executed manually due to localized environment scheduling constraints._
+- **Auditing Directory:** Read-only surveillance of user account sheets across the ecosystem (structural modifications, credential alterations, and user deletions are strictly restricted at this tier).
+
+### 4. Superadmin Role
+
+The Superadmin possesses absolute root governance over the system infrastructure, account provisioning, and macro-level analytical aggregation:
+
+- **Global Overrides:** Comprehensive inheritance of all operational capabilities assigned to the standard Admin role.
+- **Identity & Access Provisioning:** The exclusive administrative tier authorized to generate, configure, and initialize system credentials and user accounts.
+- **Auditing & Analytical Reporting Subsystem:** Advanced compilation engine capable of rendering exhaustive **Monthly and Annual analytical reports with PDF export capability** across six distinct tracking tables:
+
+| Report Subsystem                             | Operational Metrics & Analytical Vectors                                                                                                                                                                                                                                                                                                                  |
+| :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 📊 **Facility Metrics (Rooms)**              | Audits financial indicators by tracking generated income alongside computed income deficits derived directly from approved vs. rejected reservation slots.                                                                                                                                                                                                |
+| 🛠️ **Fixed Asset Auditing (Equipment)**      | Renders comprehensive utilization metrics including total Borrow Frequency alongside real-time availability states (_Available_, _Reserved_, _Unavailable_). Integrates an automated **Stock Level Alert System**: <br>• ❌ _Out of Stock_ (0% Volume)<br>• ⚠️ _Critical Status_ (< 25% Availability)<br>• 📉 _Low Stock Status_ (26% – 50% Availability) |
+| 📦 **Consumable Logistics (Supplies)**       | Replicates the architectural tracking and alert thresholds of the Fixed Asset module, isolated within a dedicated user interface to optimize visual ergonomics and data separation.                                                                                                                                                                       |
+| 📅 **Event Analytics**                       | Aggregates data from concluded events to isolate Total Attendance Volume, "Attending" indicators, "Declined" indicators, and overall programmatic Attendance Efficiency Rates.                                                                                                                                                                            |
+| 🔄 **Inventory Reconciliation (Returned)**   | A ledger tracking the successful termination of asset distributions. Logs structural data including Borrower Identity, Asset Specifications, Transacted Quantity, and exact Timestamp of Return.                                                                                                                                                          |
+| ⚠️ **Risk & Delinquency Tracking (Overdue)** | Monitors unreturned assets and active, non-concluded transactions outside the inventory pool. Isolates the Borrower's Identity, Item Class/Type, Quantity, Agreed Deadline, and an **Incremental Latency Counter** (e.g., _89 Days Past Maturity_). This matrix also renders active borrowed resources currently waiting for return.                      |
