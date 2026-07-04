@@ -1,6 +1,3 @@
-Here is your exact layout, fully preserved. I have modified only the specific names inside the table rows and headers to match your Filament sidebar navigation precisely, while keeping the structural Markdown code untouched.
-
-```markdown
 # PITBI Portal: A management system for operations, tracking, and engagement
 
 > **An Enterprise-Grade Incubation Management System for Operational Governance, Resource Tracking, and Stakeholder Engagement.**
@@ -97,4 +94,3 @@ The Superadmin possesses absolute root governance over the system infrastructure
 | 📅 **Event Report**     | Aggregates data from concluded events to isolate Total Attendance Volume, "Attending" indicators, "Declined" indicators, and overall programmatic Attendance Efficiency Rates. <br><br> ![Event Reports Dashboard](public/assets/readme/event-report.png)                                                                                                                                                                                         |
 | 🔄 **Returned Items**   | A ledger tracking the successful termination of asset distributions. Logs structural data including Borrower Identity, Asset Specifications, Transacted Quantity, and exact Timestamp of Return. <br><br> ![Returned Inventory Logs](public/assets/readme/returned-report.png)                                                                                                                                                                    |
 | ⚠️ **Overdue Items**    | Monitors unreturned assets and active, non-concluded transactions outside the inventory pool. Isolates the Borrower's Identity, Item Class/Type, Quantity, Agreed Deadline, and an **Incremental Latency Counter** (e.g., _89 Days Past Maturity_). This matrix also renders active borrowed resources currently waiting for return. <br><br> ![Overdue Items & Active Delinquency Tracker](public/assets/readme/overdue-report.png)              |
-```
