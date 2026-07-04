@@ -49,7 +49,7 @@ Incubatees represent the primary programmatic beneficiaries of the incubation hu
 
     |                                     Resource Module Previews                                      |
     | :-----------------------------------------------------------------------------------------------: |
-    |         **Room Reservations** <br> ![Reserve Room](public/assets/readme/reserve_room.png)         |
+    |         **Room Reservations** <br> ![Reserve Room](public/assets/readme/reserve-room.png)         |
     |   **Equipment Requests** <br> ![Reserve Equipment](public/assets/readme/reserve-equipment.png)    |
     | **Office Supplies Procurement** <br> ![Reserve Supplies](public/assets/readme/reserve-supply.png) |
 
