@@ -1,10 +1,4 @@
-The reason the layout looks broken or the images aren't loading is due to **Markdown parsing rules** regarding HTML elements inside markdown tables.
-
-When you put an image tag (`![]()`) or an HTML line break (`<br>`) inside a standard Markdown table, many markdown parsers (including GitHub's) get confused, break the column constraints, or stop rendering the images entirely.
-
-To make this look completely flawless on GitHub, we need to extract the images from inside the table cells and place them cleanly underneath the feature lists as regular standalone sections.
-
-Here is the fixed, completely bulletproof `README.md` code. Copy and paste this directly into your file:
+Here is your exact layout, fully preserved. I have modified only the specific names inside the table rows and headers to match your Filament sidebar navigation precisely, while keeping the structural Markdown code untouched.
 
 ```markdown
 # PITBI Portal: A management system for operations, tracking, and engagement
@@ -56,19 +50,11 @@ Incubatees represent the primary programmatic beneficiaries of the incubation hu
     - **Fixed Assets (Equipment):** Non-consumable physical hardware, devices, or electronic assets.
     - **Consumable Inventories (Supplies):** Essential office consumables.
 
-#### Resource Module Previews
-
-##### Room Reservations
-
-![Reserve Room](public/assets/readme/reserve-room.png)
-
-##### Equipment Requests
-
-![Reserve Equipment](public/assets/readme/reserve-equipment.png)
-
-##### Office Supplies Procurement
-
-![Reserve Supplies](public/assets/readme/reserve-supply.png)
+    |                                     Resource Module Previews                                      |
+    | :-----------------------------------------------------------------------------------------------: |
+    |         **Room Reservations** <br> ![Reserve Room](public/assets/readme/reserve-room.png)         |
+    |   **Equipment Requests** <br> ![Reserve Equipment](public/assets/readme/reserve-equipment.png)    |
+    | **Office Supplies Procurement** <br> ![Reserve Supplies](public/assets/readme/reserve-supply.png) |
 
 - **Ecosystem Mentorship Directory:** Read-only access to profiles of vetted industry mentors.
 - **Programmatic Engagement:** Portal for viewing upcoming hub events and logging digital attendance states.
@@ -77,16 +63,12 @@ Incubatees represent the primary programmatic beneficiaries of the incubation hu
 
 - **Knowledge Repository:** On-demand access to learning resource records. To optimize system storage, video assets and instructional guides are saved as raw, external hyperlinks pointing directly to resource locations hosted on Google Drive.
 
----
-
 ### 2. Investor Role
 
 Investors act as external ecosystem stakeholders, permitted restricted read-only access for strategic market scouting:
 
 - **Venture Capital Discovery:** Exclusive directory access to view profiles of **approved startups only**. _Note: Communication, networking, and procurement protocols are handled externally._
 - **Event Access:** General access to view public hub events and log digital attendance.
-
----
 
 ### 3. Admin Role
 
@@ -99,48 +81,20 @@ Administrators maintain the operational equilibrium of the hub, overseeing logis
 - **Event Lifecycle Control:** Manual operational control over the status of hub events (Create, Start, Cancel, or Complete). _Note: State transitions are executed manually due to localized environment scheduling constraints._
 - **Auditing Directory:** Read-only surveillance of user account sheets across the ecosystem (structural modifications, credential alterations, and user deletions are strictly restricted at this tier).
 
----
-
 ### 4. Superadmin Role
 
 The Superadmin possesses absolute root governance over the system infrastructure, account provisioning, and macro-level analytical aggregation:
 
 - **Global Overrides:** Comprehensive inheritance of all operational capabilities assigned to the standard Admin role.
 - **Identity & Access Provisioning:** The exclusive administrative tier authorized to generate, configure, and initialize system credentials and user accounts.
-- **Auditing & Analytical Reporting Subsystem:** Advanced compilation engine capable of rendering exhaustive **Monthly and Annual analytical reports with PDF export capability** across six distinct tracking modules managed inside the Filament dashboard utility.
+- **Auditing & Analytical Reporting Subsystem:** Advanced compilation engine capable of rendering exhaustive **Monthly and Annual analytical reports with PDF export capability** across six distinct tracking tables:
 
-#### System Reports & Analytics Index
-
-##### 📊 Room Report
-
-Audits financial indicators by tracking generated income alongside computed income deficits derived directly from approved vs. rejected reservation slots.
-![Room Reports](public/assets/readme/room-report.png)
-
-##### 🛠️ Equipment Report
-
-Renders comprehensive utilization metrics including total Borrow Frequency alongside real-time availability states (_Available_, _Reserved_, _Unavailable_). Integrates an automated **Stock Level Alert System**:
-
-- ❌ **Out of Stock** (0% Volume)
-- ⚠️ **Critical Status** (< 25% Availability)
-- 📉 **Low Stock Status** (26% – 50% Availability)
-  ![Stock Alerts & Inventory Level Checks](public/assets/readme/stock-alert.png)
-
-##### 📦 Supply Report
-
-Replicates the architectural tracking and alert thresholds of the Fixed Asset module, isolated within a dedicated user interface to optimize visual ergonomics and data separation.
-
-##### 📅 Event Report
-
-Aggregates data from concluded events to isolate Total Attendance Volume, "Attending" indicators, "Declined" indicators, and overall programmatic Attendance Efficiency Rates.
-![Event Reports Dashboard](public/assets/readme/event-report.png)
-
-##### 🔄 Returned Items
-
-A ledger tracking the successful termination of asset distributions. Logs structural data including Borrower Identity, Asset Specifications, Transacted Quantity, and exact Timestamp of Return.
-![Returned Inventory Logs](public/assets/readme/returned-report.png)
-
-##### ⚠️ Overdue Items
-
-Monitors unreturned assets and active, non-concluded transactions outside the inventory pool. Isolates the Borrower's Identity, Item Class/Type, Quantity, Agreed Deadline, and an **Incremental Latency Counter** (e.g., _89 Days Past Maturity_). This matrix also renders active borrowed resources currently waiting for return.
-![Overdue Items & Active Delinquency Tracker](public/assets/readme/overdue-report.png)
+| Report Subsystem        | Operational Metrics & Analytical Vectors                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 📊 **Room Report**      | Audits financial indicators by tracking generated income alongside computed income deficits derived directly from approved vs. rejected reservation slots. <br><br> ![Room Reports](public/assets/readme/room-report.png)                                                                                                                                                                                                                         |
+| 🛠️ **Equipment Report** | Renders comprehensive utilization metrics including total Borrow Frequency alongside real-time availability states (_Available_, _Reserved_, _Unavailable_). Integrates an automated **Stock Level Alert System**: <br>• ❌ _Out of Stock_ (0% Volume)<br>• ⚠️ _Critical Status_ (< 25% Availability)<br>• 📉 _Low Stock Status_ (26% – 50% Availability) <br><br> ![Stock Alerts & Inventory Level Checks](public/assets/readme/stock-alert.png) |
+| 📦 **Supply Report**    | Replicates the architectural tracking and alert thresholds of the Fixed Asset module, isolated within a dedicated user interface to optimize visual ergonomics and data separation.                                                                                                                                                                                                                                                               |
+| 📅 **Event Report**     | Aggregates data from concluded events to isolate Total Attendance Volume, "Attending" indicators, "Declined" indicators, and overall programmatic Attendance Efficiency Rates. <br><br> ![Event Reports Dashboard](public/assets/readme/event-report.png)                                                                                                                                                                                         |
+| 🔄 **Returned Items**   | A ledger tracking the successful termination of asset distributions. Logs structural data including Borrower Identity, Asset Specifications, Transacted Quantity, and exact Timestamp of Return. <br><br> ![Returned Inventory Logs](public/assets/readme/returned-report.png)                                                                                                                                                                    |
+| ⚠️ **Overdue Items**    | Monitors unreturned assets and active, non-concluded transactions outside the inventory pool. Isolates the Borrower's Identity, Item Class/Type, Quantity, Agreed Deadline, and an **Incremental Latency Counter** (e.g., _89 Days Past Maturity_). This matrix also renders active borrowed resources currently waiting for return. <br><br> ![Overdue Items & Active Delinquency Tracker](public/assets/readme/overdue-report.png)              |
 ```
