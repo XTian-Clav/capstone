@@ -12,7 +12,7 @@ Equipped with an analytical reporting subsystem, the system generates monthly an
 
 ### Platform Interface Preview
 
-![Landing Page](public/assets/readme/landing_page.png)
+![Landing Page](public/assets/readme/landing-page.png)
 
 ---
 
@@ -40,7 +40,7 @@ Incubatees represent the primary programmatic beneficiaries of the incubation hu
 
 - **Incubation Compliance Workflow:** Submission of startup venture proposals and ongoing progressive tracking of assigned institutional milestone tasks.
 
-    ![Startup Proposal Submission](public/assets/readme/startup_proposal.png)
+    ![Startup Proposal Submission](public/assets/readme/startup-proposal.png)
 
 - **Asset Allocation Requests:** Submission of reservation requests across three isolated inventory domains:
     - **Facilities (Rooms):** Booking management for incubation spaces, meeting rooms, or event halls.
