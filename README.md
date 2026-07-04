@@ -1,14 +1,14 @@
-# PITBI Portal: A management system for operations, tracking, and engagement
+# PITBI Portal: A Management System for Operations, Tracking, and Engagement
 
-> **An Enterprise-Grade Incubation Management System for Operational Governance, Resource Tracking, and Stakeholder Engagement.**
+> **An incubation management system for tracking hub resources, monitoring startup progress, and coordinating stakeholders.**
 
 ---
 
-## 📌 Executive Summary
+## 📌 Overview
 
-The **PITBI Portal** is a centralized web application engineered to optimize and automate the comprehensive operational lifecycles within an incubation hub. The platform bridges the gap between early-stage business development and resource administration by providing rigorous tracking mechanisms for physical hub assets (real estate facilities, hardware infrastructure, and operational supplies), milestone compliance tracking, data-driven ecosystem event management, and secure stakeholder directories.
+**PITBI Portal** is a web application built to manage the day-to-day operations of an incubation hub. It centralizes the tracking of physical resources (rooms, equipment, and supplies), monitors startup milestone progress, organizes hub events, and maintains directories for mentors, startups, and investors.
 
-Equipped with an analytical reporting subsystem, the system generates monthly and annual auditing metrics regarding asset utilization, financial trends, and programmatic engagement—empowering hub directors with actionable institutional intelligence.
+The system also includes a reporting module that compiles monthly and annual data on resource usage, financial performance, and event participation, giving hub administrators a clear view of how the program is running.
 
 ### Platform Interface Preview
 
@@ -16,36 +16,34 @@ Equipped with an analytical reporting subsystem, the system generates monthly an
 
 ---
 
-## 🛠️ Technology Stack & System Core
-
-The application architecture relies on a highly modular backend paired with a rapid administrative interface engine to deliver strict state control, secure access management, and rich user dashboards.
+## 🛠️ Technology Stack
 
 - **Core Framework:** Laravel 12.x
-- **Administrative Interface (Dashboard UI):** Filament PHP 4.x (Powering all core administrative, operational, and data views)
-- **Access Control Security:** Filament Shield (`bezhansalleh/filament-shield`)
-- **Database Engine:** MySQL
-- **Document Compilation Engine:** DomPDF for Laravel (`barryvdh/laravel-dompdf`)
+- **Admin Dashboard UI:** Filament PHP 4.x (used for all administrative and operational views)
+- **Access Control:** Filament Shield (`bezhansalleh/filament-shield`)
+- **Database:** MySQL
+- **PDF Generation:** DomPDF for Laravel (`barryvdh/laravel-dompdf`)
 - **Data Visualization:** Apex Charts for Filament (`leandrocfe/filament-apex-charts`)
-- **Storage Optimization Strategy:** Direct URL redirection to external cloud storage providers (e.g., Google Drive links) for media components and heavy documents, eliminating server-side storage overhead.
+- **Storage Approach:** Media and large files are linked externally (e.g., Google Drive) rather than stored on the server, keeping storage costs down.
 
 ---
 
-## 🔐 Access Control & Role-Based Governance
+## 🔐 Access Control & User Roles
 
-The system enforces a strict, hierarchical **Role-Based Access Control (RBAC)** model managed via Filament Shield. To preserve data integrity and system security, **public self-registration is entirely disabled**. All user accounts are provisioned exclusively through secure administrative assignment.
+Access is managed through a role-based system using Filament Shield. Public registration is disabled — all accounts are created by an administrator.
 
-### 1. Incubatee Role
+### 1. Incubatee
 
-Incubatees represent the primary programmatic beneficiaries of the incubation hub. Their accessible interface focuses on developmental compliance and resource allocation:
+Incubatees are the startups going through the incubation program. Their access is focused on submitting progress and requesting resources:
 
-- **Incubation Compliance Workflow:** Submission of startup venture proposals and ongoing progressive tracking of assigned institutional milestone tasks.
+- **Startup Compliance:** Submit venture proposals and track progress on assigned milestones.
 
     ![Startup Proposal Submission](public/assets/readme/startup-proposal.png)
 
-- **Asset Allocation Requests:** Submission of reservation requests across three isolated inventory domains:
-    - **Facilities (Rooms):** Booking management for incubation spaces, meeting rooms, or event halls.
-    - **Fixed Assets (Equipment):** Non-consumable physical hardware, devices, or electronic assets.
-    - **Consumable Inventories (Supplies):** Essential office consumables.
+- **Resource Requests:** Submit reservation requests across three categories:
+    - **Facilities (Rooms):** Incubation spaces, meeting rooms, or event halls.
+    - **Fixed Assets (Equipment):** Reusable hardware and devices.
+    - **Consumables (Supplies):** Office supplies and consumable materials.
 
     |                                     Resource Module Previews                                      |
     | :-----------------------------------------------------------------------------------------------: |
@@ -53,44 +51,44 @@ Incubatees represent the primary programmatic beneficiaries of the incubation hu
     |   **Equipment Requests** <br> ![Reserve Equipment](public/assets/readme/reserve-equipment.png)    |
     | **Office Supplies Procurement** <br> ![Reserve Supplies](public/assets/readme/reserve-supply.png) |
 
-- **Ecosystem Mentorship Directory:** Read-only access to profiles of vetted industry mentors.
-- **Programmatic Engagement:** Portal for viewing upcoming hub events and logging digital attendance states.
+- **Mentor Directory:** View profiles of available industry mentors.
+- **Event Participation:** View upcoming hub events and confirm attendance.
 
     ![Event Attendance Confirmation](public/assets/readme/event-attendance.png)
 
-- **Knowledge Repository:** On-demand access to learning resource records. To optimize system storage, video assets and instructional guides are saved as raw, external hyperlinks pointing directly to resource locations hosted on Google Drive.
+- **Knowledge Repository:** Access learning materials. Videos and guides are stored as external links (Google Drive) rather than uploaded directly.
 
-### 2. Investor Role
+### 2. Investor
 
-Investors act as external ecosystem stakeholders, permitted restricted read-only access for strategic market scouting:
+Investors are external stakeholders with limited, read-only access for sourcing opportunities:
 
-- **Venture Capital Discovery:** Exclusive directory access to view profiles of **approved startups only**. _Note: Communication, networking, and procurement protocols are handled externally._
-- **Event Access:** General access to view public hub events and log digital attendance.
+- **Startup Directory:** View profiles of **approved startups only**. Communication and deal-making happen outside the platform.
+- **Event Access:** View public hub events and confirm attendance.
 
-### 3. Admin Role
+### 3. Admin
 
-Administrators maintain the operational equilibrium of the hub, overseeing logistics and user lifecycle touchpoints:
+Admins handle the daily operations of the hub:
 
-- **Venture Pipeline Management:** Authority to evaluate, approve, or reject incoming startup applications, alongside a task creation engine to enforce startup accountability via specific milestone dependencies.
-- **Logistical Queue Management:** Multi-category validation queue to systematically approve or reject reservation requests for facilities, equipment, and supplies.
-- **Knowledge Management Systems:** Creation of learning resource indices. Video training content and written documentation are managed by inserting direct external links to Google Drive to keep server storage unburdened.
-- **Consultant Profiling:** Production of a public mentor registry detailing professional profiles, expertise domains, and contact indices.
-- **Event Lifecycle Control:** Manual operational control over the status of hub events (Create, Start, Cancel, or Complete). _Note: State transitions are executed manually due to localized environment scheduling constraints._
-- **Auditing Directory:** Read-only surveillance of user account sheets across the ecosystem (structural modifications, credential alterations, and user deletions are strictly restricted at this tier).
+- **Startup Pipeline:** Review, approve, or reject startup applications, and assign milestone tasks to track their progress.
+- **Reservation Approvals:** Review and approve or reject reservation requests for rooms, equipment, and supplies.
+- **Knowledge Management:** Add learning resources by linking external videos and documents.
+- **Mentor Directory Management:** Maintain the public mentor registry, including profiles, expertise, and contact details.
+- **Event Management:** Create, start, cancel, or complete hub events. _Note: Event status changes are done manually since the system doesn't run on a hosted scheduler._
+- **User Auditing:** View user account activity (read-only — account edits, credential changes, and deletions are restricted to Superadmins).
 
-### 4. Superadmin Role
+### 4. Superadmin
 
-The Superadmin possesses absolute root governance over the system infrastructure, account provisioning, and macro-level analytical aggregation:
+Superadmins have full control over the system, including account provisioning and reporting:
 
-- **Global Overrides:** Comprehensive inheritance of all operational capabilities assigned to the standard Admin role.
-- **Identity & Access Provisioning:** The exclusive administrative tier authorized to generate, configure, and initialize system credentials and user accounts.
-- **Auditing & Analytical Reporting Subsystem:** Advanced compilation engine capable of rendering exhaustive **Monthly and Annual analytical reports with PDF export capability** across six distinct tracking tables:
+- **Full Admin Access:** Inherits all Admin capabilities.
+- **Account Provisioning:** The only role that can create and configure new user accounts.
+- **Reporting Module:** Generates monthly and annual reports, exportable as PDF, across six categories:
 
-| Report Subsystem        | Operational Metrics & Analytical Vectors                                                                                                                                                                                                                                                                                                                                                                                                          |
-| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 📊 **Room Report**      | Audits financial indicators by tracking generated income alongside computed income deficits derived directly from approved vs. rejected reservation slots. <br><br> ![Room Reports](public/assets/readme/room-report.png)                                                                                                                                                                                                                         |
-| 🛠️ **Equipment Report** | Renders comprehensive utilization metrics including total Borrow Frequency alongside real-time availability states (_Available_, _Reserved_, _Unavailable_). Integrates an automated **Stock Level Alert System**: <br>• ❌ _Out of Stock_ (0% Volume)<br>• ⚠️ _Critical Status_ (< 25% Availability)<br>• 📉 _Low Stock Status_ (26% – 50% Availability) <br><br> ![Stock Alerts & Inventory Level Checks](public/assets/readme/stock-alert.png) |
-| 📦 **Supply Report**    | Replicates the architectural tracking and alert thresholds of the Fixed Asset module, isolated within a dedicated user interface to optimize visual ergonomics and data separation.                                                                                                                                                                                                                                                               |
-| 📅 **Event Report**     | Aggregates data from concluded events to isolate Total Attendance Volume, "Attending" indicators, "Declined" indicators, and overall programmatic Attendance Efficiency Rates. <br><br> ![Event Reports Dashboard](public/assets/readme/event-report.png)                                                                                                                                                                                         |
-| 🔄 **Returned Items**   | A ledger tracking the successful termination of asset distributions. Logs structural data including Borrower Identity, Asset Specifications, Transacted Quantity, and exact Timestamp of Return. <br><br> ![Returned Inventory Logs](public/assets/readme/returned-report.png)                                                                                                                                                                    |
-| ⚠️ **Overdue Items**    | Monitors unreturned assets and active, non-concluded transactions outside the inventory pool. Isolates the Borrower's Identity, Item Class/Type, Quantity, Agreed Deadline, and an **Incremental Latency Counter** (e.g., _89 Days Past Maturity_). This matrix also renders active borrowed resources currently waiting for return. <br><br> ![Overdue Items & Active Delinquency Tracker](public/assets/readme/overdue-report.png)              |
+| Report                  | What It Covers                                                                                                                                                                                                                                                                                                                                          |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 📊 **Room Report**      | Tracks income earned from approved room reservations, and income lost from rejected ones. <br><br> ![Room Reports](public/assets/readme/room-report.png)                                                                                                                                                                                                |
+| 🛠️ **Equipment Report** | Shows how often each item is borrowed and its current availability (_Available_, _Reserved_, _Unavailable_), with automatic stock alerts:<br>• ❌ _Out of Stock_ (0% remaining)<br>• ⚠️ _Critical_ (under 25% remaining)<br>• 📉 _Low Stock_ (26–50% remaining) <br><br> ![Stock Alerts & Inventory Level Checks](public/assets/readme/stock-alert.png) |
+| 📦 **Supply Report**    | Uses the same tracking and stock alert system as the Equipment Report, shown in its own dedicated view for supplies. <br><br> ![Stock Alerts & Inventory Level Checks](public/assets/readme/supply-report.png)                                                                                                                                          |
+| 📅 **Event Report**     | Summarizes attendance for completed events — total attendees, "Attending" vs. "Declined" counts, and overall attendance rate. <br><br> ![Event Reports Dashboard](public/assets/readme/event-report.png)                                                                                                                                                |
+| 🔄 **Returned Items**   | Logs completed returns, including who borrowed the item, what it was, how many, and when it was returned. <br><br> ![Returned Inventory Logs](public/assets/readme/returned-report.png)                                                                                                                                                                 |
+| ⚠️ **Overdue Items**    | Tracks items that haven't been returned on time, showing the borrower, item, quantity, due date, and days overdue. <br><br> ![Overdue Items & Active Delinquency Tracker](public/assets/readme/overdue-report.png)                                                                                                                                      |
